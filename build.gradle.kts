@@ -4,8 +4,8 @@ import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.4.20"
-    id("org.jetbrains.compose") version "0.3.0-build135"
+    kotlin("jvm") version "1.4.21"
+    id("org.jetbrains.compose") version "0.3.0-build139"
     `maven-publish`
 }
 
