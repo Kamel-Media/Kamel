@@ -47,8 +47,8 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             groupId = "io.kamel"
-            artifactId = "core"
-            version = "0.1.0"
+            artifactId = "kamel-core"
+            version = "0.0.1"
 
             from(components["kotlin"])
         }
