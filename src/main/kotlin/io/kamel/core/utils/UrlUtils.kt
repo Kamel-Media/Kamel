@@ -1,10 +1,7 @@
 package io.kamel.core.utils
 
-import androidx.compose.ui.graphics.ImageBitmap
 import io.kamel.core.Resource
-import io.kamel.core.decoder.ImageBitmapDecoder
 import io.ktor.http.*
-import io.ktor.utils.io.*
 import java.net.URI
 import java.net.URL
 
@@ -14,15 +11,9 @@ internal fun URL.toUrl(): Url = toURI().toUrl()
 
 internal fun String.toUrl(): Url = Url(this)
 
-internal suspend fun ByteReadChannel.asResource() =
-    ImageBitmapDecoder
-        .decode(this)
-        .toResource()
-
-
-private fun Result<ImageBitmap>.toResource(): Resource<ImageBitmap> {
+internal fun <T> Result<T>.toResource(): Resource<T> {
     return fold(
-        onSuccess = { imageBitmap -> Resource.Success(imageBitmap) },
+        onSuccess = { value -> Resource.Success(value) },
         onFailure = { exception -> Resource.Failure(exception) }
     )
 }
