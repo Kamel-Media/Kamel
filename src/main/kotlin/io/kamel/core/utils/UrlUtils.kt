@@ -11,7 +11,7 @@ internal fun URL.toUrl(): Url = toURI().toUrl()
 
 internal fun String.toUrl(): Url = Url(this)
 
-internal fun <T> Result<T>.toResource(): Resource<T> {
+public fun <T> Result<T>.toResource(): Resource<T> {
     return fold(
         onSuccess = { value -> Resource.Success(value) },
         onFailure = { exception -> Resource.Failure(exception) }

@@ -2,13 +2,17 @@ package io.kamel.core
 
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ProvidableAmbient
+import androidx.compose.runtime.staticAmbientOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.DefaultAlpha
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import io.kamel.core.config.KamelConfig
 
+// Make it inline by removing null blocks?
 @Composable
 public fun LazyImage(
     resource: Resource<ImageBitmap>,
@@ -26,3 +30,5 @@ public fun LazyImage(
         is Resource.Failure -> if (onFailure != null) onFailure(resource.exception)
     }
 }
+
+public val AmbientKamelConfig: ProvidableAmbient<KamelConfig> = staticAmbientOf { KamelConfig.Default }
