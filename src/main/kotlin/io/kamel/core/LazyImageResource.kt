@@ -2,53 +2,34 @@ package io.kamel.core
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.ImageBitmap
-import io.kamel.core.fetcher.FileFetcher
-import io.kamel.core.fetcher.HttpFetcher
-import io.kamel.core.utils.asResource
-import io.kamel.core.utils.toUrl
-import io.ktor.client.request.*
-import io.ktor.http.*
-import java.io.File
-
-internal val EmptyRequestBuilder: HttpRequestBuilder.() -> Unit get() = {}
+import io.kamel.core.fetcher.Fetcher
+import io.kamel.core.utils.findDecoder
+import io.kamel.core.utils.findFetcher
+import io.kamel.core.utils.toResource
+import kotlinx.coroutines.flow.collect
 
 @Composable
-public fun lazyImageResource(
-    data: File,
+public inline fun <reified T : Any, R : Fetcher.Config> lazyImageResource(
+    data: T,
+    config: R,
 ): Resource<ImageBitmap> {
 
-    var resource by remember(data) { mutableStateOf<Resource<ImageBitmap>>(Resource.Loading) }
+    var resource by remember(data, config) { mutableStateOf<Resource<ImageBitmap>>(Resource.Loading) }
 
-    LaunchedEffect(data) {
-        resource = FileFetcher.fetch(data)
-            .mapCatching { it.asResource() }
-            .getOrElse { Resource.Failure(it) }
-    }
+    val fetcher = AmbientKamelConfig.current.findFetcher<T, R>()
 
-    return resource
-}
+    val decoder = AmbientKamelConfig.current.findDecoder<ImageBitmap>()
 
-@Composable
-public fun lazyImageResource(
-    data: String,
-    requestBuilder: HttpRequestBuilder.() -> Unit = EmptyRequestBuilder
-): Resource<ImageBitmap> = lazyImageResource(data.toUrl(), requestBuilder)
-
-@Composable
-public fun lazyImageResource(
-    data: Url,
-    requestBuilder: HttpRequestBuilder.() -> Unit = EmptyRequestBuilder
-): Resource<ImageBitmap> {
-
-    var resource by remember(data) { mutableStateOf<Resource<ImageBitmap>>(Resource.Loading) }
-
-    val client = AmbientHttpClient.current
-
-    LaunchedEffect(data, client, requestBuilder) {
-        resource = HttpFetcher(client, requestBuilder)
-            .fetch(data)
-            .mapCatching { it.asResource() }
-            .getOrElse { Resource.Failure(it) }
+    LaunchedEffect(data, config) {
+        fetcher
+            .fetch(data, config)
+            .collect {
+                resource = when (it) {
+                    is Resource.Loading -> it
+                    is Resource.Success -> decoder.decode(it.value).toResource()
+                    is Resource.Failure -> it
+                }
+            }
     }
 
     return resource
