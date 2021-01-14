@@ -21,11 +21,11 @@ public fun LazyImage(
     contentScale: ContentScale = ContentScale.Fit,
     alpha: Float = DefaultAlpha,
     colorFilter: ColorFilter? = null,
-    onLoading: @Composable (() -> Unit)? = null,
+    onLoading: @Composable ((Float) -> Unit)? = null,
     onFailure: @Composable ((Throwable) -> Unit)? = null,
 ) {
     when (resource) {
-        is Resource.Loading -> if (onLoading != null) onLoading()
+        is Resource.Loading -> if (onLoading != null) onLoading(resource.progress.div(100))
         is Resource.Success -> Image(resource.value, modifier, alignment, contentScale, alpha, colorFilter)
         is Resource.Failure -> if (onFailure != null) onFailure(resource.exception)
     }

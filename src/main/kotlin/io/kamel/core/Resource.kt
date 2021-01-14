@@ -2,7 +2,7 @@ package io.kamel.core
 
 public sealed class Resource<out T> {
 
-    public object Loading : Resource<Nothing>()
+    public data class Loading(public val progress: Float) : Resource<Nothing>()
 
     public data class Success<T>(public val value: T) : Resource<T>()
 
@@ -26,12 +26,12 @@ public val Resource<*>.isFailure: Boolean
     get() = this is Resource.Failure
 
 public inline fun <T> Resource<T>.fold(
-    onLoading: () -> Unit,
+    onLoading: (Float) -> Unit,
     onSuccess: (T) -> Unit,
     onFailure: (Throwable) -> Unit,
 ) {
     when (this) {
-        is Resource.Loading -> onLoading()
+        is Resource.Loading -> onLoading(progress)
         is Resource.Success -> onSuccess(value)
         is Resource.Failure -> onFailure(exception)
     }

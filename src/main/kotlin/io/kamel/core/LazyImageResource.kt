@@ -14,7 +14,7 @@ public inline fun <reified T : Any, R : Fetcher.Config> lazyImageResource(
     config: R,
 ): Resource<ImageBitmap> {
 
-    var resource by remember(data, config) { mutableStateOf<Resource<ImageBitmap>>(Resource.Loading) }
+    var resource by remember(data, config) { mutableStateOf<Resource<ImageBitmap>>(Resource.Loading(0F)) }
 
     val fetcher = AmbientKamelConfig.current.findFetcher<T, R>()
 
