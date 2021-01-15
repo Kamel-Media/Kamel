@@ -25,6 +25,7 @@ dependencies {
     implementation("io.ktor:ktor-client-core:$ktor_version")
     implementation("io.ktor:ktor-client-core-jvm:$ktor_version")
     implementation("io.ktor:ktor-client-apache:$ktor_version")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.4.21")
 }
 
 kotlin {
