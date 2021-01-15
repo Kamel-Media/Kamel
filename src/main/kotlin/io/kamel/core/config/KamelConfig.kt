@@ -5,16 +5,15 @@ import io.kamel.core.decoder.ImageBitmapDecoder
 import io.kamel.core.fetcher.Fetcher
 import io.kamel.core.fetcher.FileFetcher
 import io.kamel.core.fetcher.HttpFetcher
-import io.kamel.core.utils.PairList
 import io.ktor.client.*
 
 public fun KamelConfig(block: KamelConfigBuilder.() -> Unit): KamelConfig = KamelConfigBuilder().apply(block).build()
 
 public interface KamelConfig {
 
-    public val fetchers: PairList<Fetcher<Any, Fetcher.Config>, Class<Any>>
+    public val fetchers: List<Fetcher<Any, Fetcher.Config>>
 
-    public val decoders: PairList<Decoder<Any>, Class<Any>>
+    public val decoders: List<Decoder<Any>>
 
     public companion object {
 

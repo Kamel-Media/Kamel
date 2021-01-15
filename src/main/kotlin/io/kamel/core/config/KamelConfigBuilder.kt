@@ -4,39 +4,31 @@ import io.kamel.core.decoder.Decoder
 import io.kamel.core.fetcher.Fetcher
 import io.kamel.core.fetcher.FileFetcher
 import io.kamel.core.fetcher.HttpFetcher
-import io.kamel.core.utils.PairList
 import io.ktor.client.*
 import io.ktor.client.engine.*
 
 public class KamelConfigBuilder {
 
-    private val fetchers: PairList<Fetcher<Any, Fetcher.Config>, Class<Any>> = mutableListOf()
+    private val fetchers: MutableList<Fetcher<Any, Fetcher.Config>> = mutableListOf()
 
-    private val decoders: PairList<Decoder<Any>, Class<Any>> = mutableListOf()
+    private val decoders: MutableList<Decoder<Any>> = mutableListOf()
 
-    public inline fun <reified T : Any, R : Fetcher.Config> fetcher(fetcher: Fetcher<T, R>) {
-        fetcher(fetcher as Fetcher<Any, Fetcher.Config>, T::class.java as Class<Any>)
+    public fun <T : Any, R : Fetcher.Config> fetcher(fetcher: Fetcher<T, R>) {
+        fetchers += fetcher as Fetcher<Any, Fetcher.Config>
     }
 
-    public fun <T : Any, R : Fetcher.Config> fetcher(fetcher: Fetcher<T, R>, type: Class<T>) {
-        fetchers += fetcher as Fetcher<Any, Fetcher.Config> to type as Class<Any>
-    }
-
-    public inline fun <reified T : Any> decoder(decoder: Decoder<T>) {
-        decoder(decoder, T::class.java)
-    }
-
-    public fun <T : Any> decoder(decoder: Decoder<T>, type: Class<T>) {
-        decoders += decoder to type as Class<Any>
+    public fun <T : Any> decoder(decoder: Decoder<T>) {
+        decoders += decoder as Decoder<Any>
     }
 
     internal fun build(): KamelConfig = object : KamelConfig {
 
-        override val fetchers: PairList<Fetcher<Any, Fetcher.Config>, Class<Any>>
+        override val fetchers: List<Fetcher<Any, Fetcher.Config>>
             get() = this@KamelConfigBuilder.fetchers
 
-        override val decoders: PairList<Decoder<Any>, Class<Any>>
+        override val decoders: List<Decoder<Any>>
             get() = this@KamelConfigBuilder.decoders
+
     }
 
 }

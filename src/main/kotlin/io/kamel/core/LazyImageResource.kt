@@ -16,9 +16,11 @@ public inline fun <reified T : Any, R : Fetcher.Config> lazyImageResource(
 
     var resource by remember(data, config) { mutableStateOf<Resource<ImageBitmap>>(Resource.Loading(0F)) }
 
-    val fetcher = AmbientKamelConfig.current.findFetcher<T, R>()
+    val kamelConfig = AmbientKamelConfig.current
 
-    val decoder = AmbientKamelConfig.current.findDecoder<ImageBitmap>()
+    val fetcher = kamelConfig.findFetcher<T, R>()
+
+    val decoder = kamelConfig.findDecoder<ImageBitmap>()
 
     LaunchedEffect(data, config) {
         fetcher
