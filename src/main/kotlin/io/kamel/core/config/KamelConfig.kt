@@ -8,7 +8,7 @@ public fun KamelConfig(block: KamelConfigBuilder.() -> Unit): KamelConfig = Kame
 
 public interface KamelConfig {
 
-    public val fetchers: List<Fetcher<Any, Fetcher.Config>>
+    public val fetchers: List<Fetcher<Any>>
 
     public val decoders: List<Decoder<Any>>
 

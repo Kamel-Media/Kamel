@@ -2,31 +2,46 @@ package io.kamel.core
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.ImageBitmap
-import io.kamel.core.fetcher.Fetcher
+import io.kamel.core.config.KamelConfig
+import io.kamel.core.config.ResourceConfig
+import io.kamel.core.config.ResourceConfigBuilder
 import io.kamel.core.utils.findDecoder
 import io.kamel.core.utils.findFetcher
 import io.kamel.core.utils.toResource
+import kotlinx.coroutines.withContext
 
 @Composable
-public inline fun <reified T : Any, R : Fetcher.Config> lazyImageResource(
+public inline fun <reified T : Any> lazyImageResource(
     data: T,
-    config: R,
+    crossinline block: ResourceConfigBuilder.() -> Unit = {},
 ): Resource<ImageBitmap> {
 
-    var resource by remember(data, config) { mutableStateOf<Resource<ImageBitmap>>(Resource.Loading) }
+    val resourceConfig = ResourceConfigBuilder().apply(block).build()
+
+    var resource by remember(data, resourceConfig) { mutableStateOf<Resource<ImageBitmap>>(Resource.Loading) }
 
     val kamelConfig = AmbientKamelConfig.current
 
-    val fetcher = kamelConfig.findFetcher<T, R>()
+    LaunchedEffect(data, resourceConfig) {
+        resource = kamelConfig.loadImageResource(data, resourceConfig)
+    }
 
-    val decoder = kamelConfig.findDecoder<ImageBitmap>()
+    return resource
+}
 
-    LaunchedEffect(data, config) {
-        resource = fetcher.fetch(data, config)
+public suspend inline fun <reified T : Any> KamelConfig.loadImageResource(
+    data: T,
+    config: ResourceConfig
+): Resource<ImageBitmap> {
+
+    val fetcher = findFetcher<T>()
+
+    val decoder = findDecoder<ImageBitmap>()
+
+    return withContext(config.dispatcher) {
+        fetcher.fetch(data, config)
             .mapCatching { decoder.decode(it) }
             .getOrElse { Result.failure(it) }
             .toResource()
     }
-
-    return resource
 }

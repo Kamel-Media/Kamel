@@ -11,14 +11,14 @@ import io.ktor.client.engine.*
 
 public class KamelConfigBuilder {
 
-    private val fetchers: MutableList<Fetcher<Any, Fetcher.Config>> = mutableListOf()
+    private val fetchers: MutableList<Fetcher<Any>> = mutableListOf()
 
     private val decoders: MutableList<Decoder<Any>> = mutableListOf()
 
     private val mappers: MutableList<Mapper<Any, Any>> = mutableListOf()
 
-    public fun <T : Any, R : Fetcher.Config> fetcher(fetcher: Fetcher<T, R>) {
-        fetchers += fetcher as Fetcher<Any, Fetcher.Config>
+    public fun <T : Any> fetcher(fetcher: Fetcher<T>) {
+        fetchers += fetcher as Fetcher<Any>
     }
 
     public fun <T : Any> decoder(decoder: Decoder<T>) {
@@ -31,7 +31,7 @@ public class KamelConfigBuilder {
 
     internal fun build(): KamelConfig = object : KamelConfig {
 
-        override val fetchers: List<Fetcher<Any, Fetcher.Config>>
+        override val fetchers: List<Fetcher<Any>>
             get() = this@KamelConfigBuilder.fetchers
 
         override val decoders: List<Decoder<Any>>

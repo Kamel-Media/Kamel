@@ -8,7 +8,9 @@ import kotlin.reflect.full.isSupertypeOf
 import kotlin.reflect.typeOf
 
 @OptIn(ExperimentalStdlibApi::class)
-public inline fun <reified T : Any, R : Fetcher.Config> KamelConfig.findFetcher(): Fetcher<T, R> {
+public inline fun <reified T : Any> KamelConfig.findFetcher(): Fetcher<T> {
+
+    val type = typeOf<T>()
 
     val fetcher = fetchers
         .find { fetcher ->
@@ -20,18 +22,18 @@ public inline fun <reified T : Any, R : Fetcher.Config> KamelConfig.findFetcher(
                 ?.firstOrNull()
                 ?.type ?: error("Unable to find a fetcher type for ${fetcher::class}")
 
-            val type = typeOf<T>()
-
             fetcherType.isSupertypeOf(type) || fetcherType.isSubtypeOf(type)
         }
 
     checkNotNull(fetcher) { "Unable to find a fetcher for ${T::class}" }
 
-    return fetcher as Fetcher<T, R>
+    return fetcher as Fetcher<T>
 }
 
 @OptIn(ExperimentalStdlibApi::class)
 public inline fun <reified T : Any> KamelConfig.findDecoder(): Decoder<T> {
+
+    val type = typeOf<T>()
 
     val decoder = decoders.find { decoder ->
 
@@ -41,8 +43,6 @@ public inline fun <reified T : Any> KamelConfig.findDecoder(): Decoder<T> {
             ?.arguments
             ?.firstOrNull()
             ?.type ?: error("Unable to find a decoder type for ${decoder::class}")
-
-        val type = typeOf<T>()
 
         decoderType.isSupertypeOf(type) || decoderType.isSubtypeOf(type)
     }

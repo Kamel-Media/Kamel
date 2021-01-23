@@ -12,7 +12,6 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import io.kamel.core.config.KamelConfig
 
-// Make it inline by removing null blocks?
 @Composable
 public fun LazyImage(
     resource: Resource<ImageBitmap>,
