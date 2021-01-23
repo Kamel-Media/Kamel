@@ -1,5 +1,6 @@
 package io.kamel.core.fetcher
 
+import io.kamel.core.DataSource
 import io.kamel.core.config.ResourceConfig
 import io.ktor.utils.io.*
 
@@ -18,12 +19,5 @@ public interface Fetcher<T : Any> {
      * @param data type of data to fetch.
      * */
     public suspend fun fetch(data: T, resourceConfig: ResourceConfig): Result<ByteReadChannel>
-
-    /**
-     * Represents the source from where data has been loaded.
-     * */
-    public enum class DataSource {
-        Disk, Memory, Network,
-    }
 
 }
