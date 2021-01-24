@@ -9,7 +9,7 @@ import io.ktor.utils.io.*
 
 /**
  * Fetcher that fetchers [ByteReadChannel] from network using [Url].
- * */
+ */
 internal class HttpFetcher(private val client: HttpClient) : Fetcher<Url> {
 
     override val source: DataSource
