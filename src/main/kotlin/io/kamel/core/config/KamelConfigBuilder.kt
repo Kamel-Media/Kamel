@@ -1,5 +1,8 @@
 package io.kamel.core.config
 
+import androidx.compose.ui.graphics.ImageBitmap
+import io.kamel.core.cache.Cache
+import io.kamel.core.cache.LruCache
 import io.kamel.core.decoder.Decoder
 import io.kamel.core.decoder.ImageBitmapDecoder
 import io.kamel.core.fetcher.Fetcher
@@ -16,6 +19,14 @@ public class KamelConfigBuilder {
     private val decoders: MutableList<Decoder<Any>> = mutableListOf()
 
     private val mappers: MutableList<Mapper<Any, Any>> = mutableListOf()
+
+    public var imageBitmapCacheSize: Int = 0
+        set(value) {
+            field = value
+            imageBitmapCache = LruCache(value)
+        }
+
+    private var imageBitmapCache = LruCache<Any, ImageBitmap>(imageBitmapCacheSize)
 
     public fun <T : Any> fetcher(fetcher: Fetcher<T>) {
         fetchers += fetcher as Fetcher<Any>
@@ -40,6 +51,9 @@ public class KamelConfigBuilder {
         override val mappers: List<Mapper<Any, Any>>
             get() = this@KamelConfigBuilder.mappers
 
+        override val imageBitmapCache: Cache<Any, ImageBitmap>
+            get() = this@KamelConfigBuilder.imageBitmapCache
+
     }
 
 }
@@ -49,7 +63,6 @@ public fun KamelConfigBuilder.httpFetcher(engine: HttpClientEngine, block: HttpC
 
 public fun KamelConfigBuilder.httpFetcher(block: HttpClientConfig<*>.() -> Unit = {}): Unit =
     fetcher(HttpFetcher(HttpClient(block)))
-
 
 public fun KamelConfigBuilder.fileFetcher(): Unit = fetcher(FileFetcher)
 
