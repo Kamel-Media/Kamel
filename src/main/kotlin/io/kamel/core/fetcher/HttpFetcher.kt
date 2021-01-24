@@ -16,8 +16,9 @@ internal class HttpFetcher(private val client: HttpClient) : Fetcher<Url> {
         get() = DataSource.Network
 
     override suspend fun fetch(data: Url, resourceConfig: ResourceConfig): Result<ByteReadChannel> = runCatching {
-        client.get(data) {
+        client.get {
             takeFrom(resourceConfig.requestData)
+            url(data)
         }
     }
 
