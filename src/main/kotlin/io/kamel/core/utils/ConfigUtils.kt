@@ -1,7 +1,6 @@
 package io.kamel.core.utils
 
 import androidx.compose.ui.graphics.ImageBitmap
-import io.kamel.core.Resource
 import io.kamel.core.config.KamelConfig
 import io.kamel.core.config.ResourceConfig
 import io.kamel.core.decoder.Decoder
@@ -14,17 +13,23 @@ import kotlin.reflect.typeOf
 public suspend inline fun <reified T : Any> KamelConfig.loadImageResource(
     data: T,
     config: ResourceConfig
-): Resource<ImageBitmap> {
+): Result<ImageBitmap> {
+    return when (val imageBitmap = imageBitmapCache[data]) {
+        null -> {
 
-    val fetcher = findFetcher<T>()
+            val fetcher = findFetcher<T>()
 
-    val decoder = findDecoder<ImageBitmap>()
+            val decoder = findDecoder<ImageBitmap>()
 
-    return withContext(config.dispatcher) {
-        fetcher.fetch(data, config)
-            .mapCatching { decoder.decode(it) }
-            .getOrElse { Result.failure(it) }
-            .toResource()
+            withContext(config.dispatcher) {
+                fetcher.fetch(data, config)
+                    .map { decoder.decode(it) }
+                    .getOrElse { Result.failure(it) }
+                    .onSuccess { imageBitmapCache[data] = it }
+            }
+
+        }
+        else -> Result.success(imageBitmap)
     }
 }
 
@@ -33,18 +38,17 @@ public inline fun <reified T : Any> KamelConfig.findFetcher(): Fetcher<T> {
 
     val type = typeOf<T>()
 
-    val fetcher = fetchers
-        .find { fetcher ->
+    val fetcher = fetchers.find { fetcher ->
 
-            val fetcherType = fetcher::class
-                .supertypes
-                .firstOrNull()
-                ?.arguments
-                ?.firstOrNull()
-                ?.type ?: error("Unable to find a fetcher type for ${fetcher::class}")
+        val fetcherType = fetcher::class
+            .supertypes
+            .firstOrNull()
+            ?.arguments
+            ?.firstOrNull()
+            ?.type ?: error("Unable to find a fetcher type for ${fetcher::class}")
 
-            fetcherType.isSupertypeOf(type) || fetcherType.isSubtypeOf(type)
-        }
+        fetcherType.isSupertypeOf(type) || fetcherType.isSubtypeOf(type)
+    }
 
     checkNotNull(fetcher) { "Unable to find a fetcher for ${T::class}" }
 

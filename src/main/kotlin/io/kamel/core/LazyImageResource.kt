@@ -4,6 +4,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.ImageBitmap
 import io.kamel.core.config.ResourceConfigBuilder
 import io.kamel.core.utils.loadImageResource
+import io.kamel.core.utils.toResource
 
 @Composable
 public inline fun <reified T : Any> lazyImageResource(
@@ -13,12 +14,13 @@ public inline fun <reified T : Any> lazyImageResource(
 
     val resourceConfig = ResourceConfigBuilder().apply(block).build()
 
-    var resource by remember(data, resourceConfig) { mutableStateOf<Resource<ImageBitmap>>(Resource.Loading) }
+    var resource by remember(data) { mutableStateOf<Resource<ImageBitmap>>(Resource.Loading) }
 
     val kamelConfig = AmbientKamelConfig.current
 
-    LaunchedEffect(data, resourceConfig) {
+    LaunchedEffect(Unit) {
         resource = kamelConfig.loadImageResource(data, resourceConfig)
+            .toResource()
     }
 
     return resource
