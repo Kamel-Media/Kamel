@@ -6,24 +6,22 @@ import io.kamel.core.config.ResourceConfig
 import io.kamel.core.decoder.Decoder
 import io.kamel.core.fetcher.Fetcher
 import kotlinx.coroutines.withContext
+import kotlin.reflect.full.createType
 import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.full.isSupertypeOf
 import kotlin.reflect.typeOf
 
-public suspend inline fun <reified T : Any> KamelConfig.loadImageResource(
-    data: T,
-    config: ResourceConfig
-): Result<ImageBitmap> {
+public suspend fun <T : Any> KamelConfig.loadImageResource(data: T, config: ResourceConfig): Result<ImageBitmap> {
     return when (val imageBitmap = imageBitmapCache[data]) {
         null -> {
 
-            val fetcher = findFetcher<T>()
+            val fetcher = findFetcherFor(data)
 
-            val decoder = findDecoder<ImageBitmap>()
+            val decoder = findDecoderFor<ImageBitmap>()
 
             withContext(config.dispatcher) {
                 fetcher.fetch(data, config)
-                    .map { decoder.decode(it) }
+                    .mapCatching { decoder.decode(it) }
                     .getOrElse { Result.failure(it) }
                     .onSuccess { imageBitmapCache[data] = it }
             }
@@ -33,46 +31,39 @@ public suspend inline fun <reified T : Any> KamelConfig.loadImageResource(
     }
 }
 
-@OptIn(ExperimentalStdlibApi::class)
-public inline fun <reified T : Any> KamelConfig.findFetcher(): Fetcher<T> {
+internal fun <T : Any> KamelConfig.findFetcherFor(data: T): Fetcher<T> {
 
-    val type = typeOf<T>()
+    val type = data::class.createType()
 
-    val fetcher = fetchers.find { fetcher ->
+    val fetcher = fetchers.findLast { fetcher ->
 
-        val fetcherType = fetcher::class
-            .supertypes
+        val fetcherType = fetcher::class.supertypes
             .firstOrNull()
             ?.arguments
             ?.firstOrNull()
-            ?.type ?: error("Unable to find a fetcher type for ${fetcher::class}")
+            ?.type ?: error("Unable to find type for $fetcher")
 
         fetcherType.isSupertypeOf(type) || fetcherType.isSubtypeOf(type)
     }
 
-    checkNotNull(fetcher) { "Unable to find a fetcher for ${T::class}" }
+    checkNotNull(fetcher) { "Unable to find a fetcher for $type" }
 
     return fetcher as Fetcher<T>
 }
 
 @OptIn(ExperimentalStdlibApi::class)
-public inline fun <reified T : Any> KamelConfig.findDecoder(): Decoder<T> {
+internal inline fun <reified T : Any> KamelConfig.findDecoderFor(): Decoder<ImageBitmap> {
 
-    val type = typeOf<T>()
+    val type = typeOf<Decoder<T>>()
 
-    val decoder = decoders.find { decoder ->
+    val decoder = decoders.findLast { decoder ->
 
-        val decoderType = decoder::class
-            .supertypes
-            .firstOrNull()
-            ?.arguments
-            ?.firstOrNull()
-            ?.type ?: error("Unable to find a decoder type for ${decoder::class}")
+        val decoderType = decoder::class.createType()
 
         decoderType.isSupertypeOf(type) || decoderType.isSubtypeOf(type)
     }
 
-    checkNotNull(decoder) { "Unable to find a decoder for ${T::class}" }
+    checkNotNull(decoder) { "Unable to find a decoder for $type" }
 
-    return decoder as Decoder<T>
+    return decoder as Decoder<ImageBitmap>
 }

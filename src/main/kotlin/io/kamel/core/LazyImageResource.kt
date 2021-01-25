@@ -7,14 +7,11 @@ import io.kamel.core.utils.loadImageResource
 import io.kamel.core.utils.toResource
 
 @Composable
-public inline fun <reified T : Any> lazyImageResource(
-    data: T,
-    block: ResourceConfigBuilder.() -> Unit = {},
-): Resource<ImageBitmap> {
-
-    val resourceConfig = ResourceConfigBuilder().apply(block).build()
+public inline fun <T : Any> lazyImageResource(data: T, block: ResourceConfigBuilder.() -> Unit = {}): Resource<ImageBitmap> {
 
     var resource by remember(data) { mutableStateOf<Resource<ImageBitmap>>(Resource.Loading) }
+
+    val resourceConfig = ResourceConfigBuilder().apply(block).build()
 
     val kamelConfig = AmbientKamelConfig.current
 
