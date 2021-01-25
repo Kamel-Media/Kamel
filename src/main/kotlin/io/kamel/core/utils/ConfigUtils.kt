@@ -15,12 +15,14 @@ public suspend fun <T : Any> KamelConfig.loadImageResource(data: T, config: Reso
     return when (val imageBitmap = imageBitmapCache[data]) {
         null -> {
 
-            val fetcher = findFetcherFor(data)
+            val output = mapInput(data)
+
+            val fetcher = findFetcherFor(output)
 
             val decoder = findDecoderFor<ImageBitmap>()
 
             withContext(config.dispatcher) {
-                fetcher.fetch(data, config)
+                fetcher.fetch(output, config)
                     .mapCatching { decoder.decode(it) }
                     .getOrElse { Result.failure(it) }
                     .onSuccess { imageBitmapCache[data] = it }
@@ -66,4 +68,22 @@ internal inline fun <reified T : Any> KamelConfig.findDecoderFor(): Decoder<Imag
     checkNotNull(decoder) { "Unable to find a decoder for $type" }
 
     return decoder as Decoder<ImageBitmap>
+}
+
+internal fun KamelConfig.mapInput(input: Any): Any {
+
+    var output: Any? = null
+
+    mappers.find {
+
+        output = try {
+            it.map(input)
+        } catch (e: Throwable) {
+            null
+        }
+
+        output != null
+    }
+
+    return output ?: input
 }
