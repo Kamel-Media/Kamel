@@ -24,6 +24,9 @@ public interface KamelConfig {
         public val Default: KamelConfig = KamelConfig {
             imageBitmapCacheSize = DefaultImageBitmapCacheSize
             imageBitmapDecoder()
+            stringMapper()
+            urlMapper()
+            uriMapper()
             fileFetcher()
             httpFetcher {
                 Logging {
