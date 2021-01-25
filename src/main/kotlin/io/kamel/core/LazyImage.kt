@@ -15,6 +15,7 @@ import io.kamel.core.config.KamelConfig
 @Composable
 public fun LazyImage(
     resource: Resource<ImageBitmap>,
+    contentDescription: String?,
     modifier: Modifier = Modifier,
     alignment: Alignment = Alignment.Center,
     contentScale: ContentScale = ContentScale.Fit,
@@ -25,7 +26,15 @@ public fun LazyImage(
 ) {
     when (resource) {
         is Resource.Loading -> if (onLoading != null) onLoading()
-        is Resource.Success -> Image(resource.value, modifier, alignment, contentScale, alpha, colorFilter)
+        is Resource.Success -> Image(
+            resource.value,
+            contentDescription,
+            modifier,
+            alignment,
+            contentScale,
+            alpha,
+            colorFilter
+        )
         is Resource.Failure -> if (onFailure != null) onFailure(resource.exception)
     }
 }

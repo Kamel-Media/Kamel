@@ -2,8 +2,8 @@ import org.jetbrains.compose.compose
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 
 plugins {
-    kotlin("jvm") version "1.4.21"
-    id("org.jetbrains.compose") version "0.3.0-build141"
+    kotlin("jvm") version "1.4.21-2"
+    id("org.jetbrains.compose") version "0.0.0-vsync-build30"
     `maven-publish`
 }
 
@@ -32,6 +32,7 @@ kotlin {
     target {
         compilations.all {
             kotlinOptions {
+                useIR = true
                 jvmTarget = "11"
                 freeCompilerArgs = listOf("-Xallow-result-return-type", "-Xopt-in=kotlin.RequiresOptIn")
             }
