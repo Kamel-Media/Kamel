@@ -12,6 +12,12 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import io.kamel.core.config.KamelConfig
 
+/**
+ * A composable that displays an image resource.
+ * To load an image resource use [lazyImageResource].
+ * @param onLoading Composable that can be used while loading the image.
+ * @param onFailure Composable that can be used when the image result is failure.
+ */
 @Composable
 public fun LazyImage(
     resource: Resource<ImageBitmap>,
@@ -39,4 +45,8 @@ public fun LazyImage(
     }
 }
 
+
+/**
+ * Ambient that provides default configuration of [KamelConfig].
+ */
 public val AmbientKamelConfig: ProvidableAmbient<KamelConfig> = staticAmbientOf { KamelConfig.Default }

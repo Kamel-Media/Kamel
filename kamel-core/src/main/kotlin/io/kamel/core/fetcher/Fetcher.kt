@@ -12,11 +12,12 @@ public interface Fetcher<T : Any> {
     /**
      * Source from where data has been loaded.
      */
-    public val source: io.kamel.core.DataSource
+    public val source: DataSource
 
     /**
-     * fetches data asynchronously.
+     * fetches data [T] asynchronously as [ByteReadChannel].
      * @param data type of data to fetch.
+     * @param resourceConfig configuration used while fetching the resource.
      */
     public suspend fun fetch(data: T, resourceConfig: ResourceConfig): Result<ByteReadChannel>
 

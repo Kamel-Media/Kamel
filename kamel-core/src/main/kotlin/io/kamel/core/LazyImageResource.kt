@@ -2,12 +2,22 @@ package io.kamel.core
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.ImageBitmap
+import io.kamel.core.config.ResourceConfig
 import io.kamel.core.config.ResourceConfigBuilder
-import io.kamel.core.utils.loadImageResource
+import io.kamel.core.utils.loadImage
 import io.kamel.core.utils.toResource
+import io.ktor.http.*
+import java.io.File
 
+/**
+ * Loads an image resource asynchronously.
+ * @param data Can be anything such as [String], [Url] or a [File].
+ * @param block configuration for [ResourceConfig].
+ * @return [ImageBitmap] resource that can be used to display an Image.
+ * @see LazyImage
+ */
 @Composable
-public inline fun <T : Any> lazyImageResource(data: T, block: ResourceConfigBuilder.() -> Unit = {}): Resource<ImageBitmap> {
+public fun <T : Any> lazyImageResource(data: T, block: ResourceConfigBuilder.() -> Unit = {}): Resource<ImageBitmap> {
 
     var resource by remember(data) { mutableStateOf<Resource<ImageBitmap>>(Resource.Loading) }
 
@@ -16,8 +26,7 @@ public inline fun <T : Any> lazyImageResource(data: T, block: ResourceConfigBuil
     val kamelConfig = AmbientKamelConfig.current
 
     LaunchedEffect(Unit) {
-        resource = kamelConfig.loadImageResource(data, resourceConfig)
-            .toResource()
+        resource = kamelConfig.loadImage(data, resourceConfig).toResource()
     }
 
     return resource

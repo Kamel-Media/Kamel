@@ -7,7 +7,7 @@ import io.ktor.utils.io.*
 import org.jetbrains.skija.Image as SkijaImage
 
 /**
- * Decodes and transfers [ByteReadChannel] to [ImageBitmap]
+ * Decodes and transfers [ByteReadChannel] to [ImageBitmap] using [SkijaImage].
  */
 internal object ImageBitmapDecoder : Decoder<ImageBitmap> {
 

@@ -1,17 +1,28 @@
 package io.kamel.core.utils
 
 import androidx.compose.ui.graphics.ImageBitmap
+import io.kamel.core.cache.Cache
 import io.kamel.core.config.KamelConfig
 import io.kamel.core.config.ResourceConfig
 import io.kamel.core.decoder.Decoder
 import io.kamel.core.fetcher.Fetcher
+import io.kamel.core.mapper.Mapper
 import kotlinx.coroutines.withContext
 import kotlin.reflect.full.createType
 import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.full.isSupertypeOf
 import kotlin.reflect.typeOf
 
-public suspend fun <T : Any> KamelConfig.loadImageResource(data: T, config: ResourceConfig): Result<ImageBitmap> {
+/**
+ * Loads an [ImageBitmap]. This includes mapping, fetching, decoding and caching.
+ * @see Fetcher
+ * @see Decoder
+ * @see Mapper
+ * @see Cache
+ */
+public suspend fun <T : Any> KamelConfig.loadImage(data: T, config: ResourceConfig): Result<ImageBitmap> {
+
+    // Check if there's an image with same key [data].
     return when (val imageBitmap = imageBitmapCache[data]) {
         null -> {
 
@@ -21,12 +32,12 @@ public suspend fun <T : Any> KamelConfig.loadImageResource(data: T, config: Reso
 
             val decoder = findDecoderFor<ImageBitmap>()
 
-//            withContext(config.dispatcher) {
+            withContext(config.dispatcher) {
                 fetcher.fetch(output, config)
                     .mapCatching { decoder.decode(it) }
                     .getOrElse { Result.failure(it) }
                     .onSuccess { imageBitmapCache[data] = it }
-//            }
+            }
 
         }
         else -> Result.success(imageBitmap)

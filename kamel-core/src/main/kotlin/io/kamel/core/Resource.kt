@@ -1,13 +1,28 @@
 package io.kamel.core
 
+/**
+ * A class represents an asynchronous resource loading.
+ */
 public sealed class Resource<out T> {
 
+    /**
+     * Represents the resource is still in the loading state.
+     */
     public object Loading : Resource<Nothing>()
 
+    /**
+     * Represents the resource as a successful outcome.
+     */
     public data class Success<T>(public val value: T) : Resource<T>()
 
+    /**
+     * Represents the resource as a failure outcome.
+     */
     public data class Failure(public val exception: Throwable) : Resource<Nothing>()
 
+    /**
+     * Returns value if the resource is [Success] or `null` otherwise.
+     */
     public fun getOrNull(): T? = when (this) {
         is Loading -> null
         is Success -> value
@@ -16,37 +31,30 @@ public sealed class Resource<out T> {
 
 }
 
+/**
+ * Returns true if the resource still in the loading state, false otherwise.
+ */
 public val Resource<*>.isLoading: Boolean
     get() = this is Resource.Loading
 
+/**
+ * Returns true if the resource represents a successful outcome, false otherwise.
+ */
 public val Resource<*>.isSuccess: Boolean
     get() = this is Resource.Success
 
+/**
+ * Returns true if the resource represents a failure outcome, false otherwise.
+ */
 public val Resource<*>.isFailure: Boolean
     get() = this is Resource.Failure
 
-public inline fun <T> Resource<T>.fold(
-    onLoading: () -> Unit,
-    onSuccess: (T) -> Unit,
-    onFailure: (Throwable) -> Unit,
-) {
-    when (this) {
-        is Resource.Loading -> onLoading()
-        is Resource.Success -> onSuccess(value)
-        is Resource.Failure -> onFailure(exception)
-    }
-}
-
-public inline fun <T> Resource<T>.getOrElse(block: (Throwable?) -> T): T {
-    return when (this) {
-        is Resource.Loading -> block(null)
-        is Resource.Success -> value
-        is Resource.Failure -> block(exception)
-    }
-}
-
+/**
+ * Returns [Resource.Success] with the [transform] function applied on the value if the resource represents success.
+ * or [Resource.Failure] with the original exception if the resource represents failure.
+ */
 public inline fun <T, R> Resource<T>.map(transform: (T) -> R): Resource<R> = when (this) {
-    is Resource.Loading -> this
+    is Resource.Loading -> Resource.Loading
     is Resource.Success -> Resource.Success(transform(value))
-    is Resource.Failure -> this
+    is Resource.Failure -> Resource.Failure(exception)
 }

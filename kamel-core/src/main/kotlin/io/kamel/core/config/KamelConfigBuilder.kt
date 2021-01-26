@@ -40,7 +40,7 @@ public class KamelConfigBuilder {
     }
 
     public fun <I : Any, O : Any> mapper(mapper: Mapper<I, O>) {
-        mappers.add(mapper as Mapper<Any, Any>)
+        mappers += mapper as Mapper<Any, Any>
     }
 
     internal fun build(): KamelConfig = object : KamelConfig {
