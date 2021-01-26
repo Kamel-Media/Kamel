@@ -21,12 +21,12 @@ public suspend fun <T : Any> KamelConfig.loadImageResource(data: T, config: Reso
 
             val decoder = findDecoderFor<ImageBitmap>()
 
-            withContext(config.dispatcher) {
+//            withContext(config.dispatcher) {
                 fetcher.fetch(output, config)
                     .mapCatching { decoder.decode(it) }
                     .getOrElse { Result.failure(it) }
                     .onSuccess { imageBitmapCache[data] = it }
-            }
+//            }
 
         }
         else -> Result.success(imageBitmap)
@@ -74,7 +74,7 @@ internal fun KamelConfig.mapInput(input: Any): Any {
 
     var output: Any? = null
 
-    mappers.find {
+    mappers.findLast {
 
         output = try {
             it.map(input)

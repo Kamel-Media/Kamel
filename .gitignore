@@ -10,8 +10,6 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 *build/*
-remote/build/*
-app/build/*
 # Package Files #
 *.jar
 *.war
@@ -22,7 +20,7 @@ app/build/*
 *.rar
 *.idea/*
 *.build/*
-*/build*
+*/build/*
 build/*
 build
 .gradle/*

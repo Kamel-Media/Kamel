@@ -7,4 +7,4 @@ pluginManagement {
     
 }
 rootProject.name = "Kamel"
-
+include("kamel-core")

@@ -11,8 +11,8 @@ import java.io.File
  */
 internal object FileFetcher : Fetcher<File> {
 
-    override val source: DataSource
-        get() = DataSource.Disk
+    override val source: io.kamel.core.DataSource
+        get() = io.kamel.core.DataSource.Disk
 
     override suspend fun fetch(data: File, resourceConfig: ResourceConfig): Result<ByteReadChannel> = runCatching {
         data.readChannel()

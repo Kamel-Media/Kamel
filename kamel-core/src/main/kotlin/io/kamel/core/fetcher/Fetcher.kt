@@ -12,7 +12,7 @@ public interface Fetcher<T : Any> {
     /**
      * Source from where data has been loaded.
      */
-    public val source: DataSource
+    public val source: io.kamel.core.DataSource
 
     /**
      * fetches data asynchronously.

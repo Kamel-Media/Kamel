@@ -12,8 +12,8 @@ import io.ktor.utils.io.*
  */
 internal class HttpFetcher(private val client: HttpClient) : Fetcher<Url> {
 
-    override val source: DataSource
-        get() = DataSource.Network
+    override val source: io.kamel.core.DataSource
+        get() = io.kamel.core.DataSource.Network
 
     override suspend fun fetch(data: Url, resourceConfig: ResourceConfig): Result<ByteReadChannel> = runCatching {
         client.get {
