@@ -32,15 +32,16 @@ public fun LazyImage(
 ) {
     when (resource) {
         is Resource.Loading -> if (onLoading != null) onLoading()
-        is Resource.Success -> Image(
-            resource.value,
-            contentDescription,
-            modifier,
-            alignment,
-            contentScale,
-            alpha,
-            colorFilter
-        )
+        is Resource.Success ->
+            Image(
+                resource.value,
+                contentDescription,
+                modifier,
+                alignment,
+                contentScale,
+                alpha,
+                colorFilter
+            )
         is Resource.Failure -> if (onFailure != null) onFailure(resource.exception)
     }
 }

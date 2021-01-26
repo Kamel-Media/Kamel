@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "io.kamel"
-version = "0.0.3"
+version = "0.0.4"
 
 allprojects {
     repositories {
@@ -30,7 +30,7 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "io.kamel"
             artifactId = "kamel-core"
-            version = "0.0.3"
+            version = "0.0.4"
 
             from(components["kotlin"])
         }

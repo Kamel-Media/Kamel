@@ -1,5 +1,7 @@
 package io.kamel.core
 
+import io.kamel.core.Resource.*
+
 /**
  * A class represents an asynchronous resource loading.
  */
@@ -35,26 +37,26 @@ public sealed class Resource<out T> {
  * Returns true if the resource still in the loading state, false otherwise.
  */
 public val Resource<*>.isLoading: Boolean
-    get() = this is Resource.Loading
+    get() = this is Loading
 
 /**
  * Returns true if the resource represents a successful outcome, false otherwise.
  */
 public val Resource<*>.isSuccess: Boolean
-    get() = this is Resource.Success
+    get() = this is Success
 
 /**
  * Returns true if the resource represents a failure outcome, false otherwise.
  */
 public val Resource<*>.isFailure: Boolean
-    get() = this is Resource.Failure
+    get() = this is Failure
 
 /**
- * Returns [Resource.Success] with the [transform] function applied on the value if the resource represents success.
- * or [Resource.Failure] with the original exception if the resource represents failure.
+ * Returns [Success] with the [transform] function applied on the value if the resource represents success.
+ * or [Failure] with the original exception if the resource represents failure.
  */
 public inline fun <T, R> Resource<T>.map(transform: (T) -> R): Resource<R> = when (this) {
-    is Resource.Loading -> Resource.Loading
-    is Resource.Success -> Resource.Success(transform(value))
-    is Resource.Failure -> Resource.Failure(exception)
+    is Loading -> Loading
+    is Success -> Success(transform(value))
+    is Failure -> Failure(exception)
 }
