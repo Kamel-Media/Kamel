@@ -14,6 +14,11 @@ import io.kamel.core.mapper.URIMapper
 import io.kamel.core.mapper.URLMapper
 import io.ktor.client.*
 import io.ktor.client.engine.*
+import io.ktor.http.*
+import java.io.File
+import java.net.URI
+import java.net.URL
+import java.util.*
 
 public class KamelConfigBuilder {
 
@@ -61,18 +66,44 @@ public class KamelConfigBuilder {
 
 }
 
-public fun KamelConfigBuilder.httpFetcher(engine: HttpClientEngine, block: HttpClientConfig<*>.() -> Unit = {}): Unit =
-    fetcher(HttpFetcher(HttpClient(engine, block)))
+/**
+ * Adds an Http fetcher to the [KamelConfigBuilder] using the specified [engine]
+ * and an optional [block] for configuring this client.
+ */
+public fun KamelConfigBuilder.httpFetcher(
+    engine: HttpClientEngine,
+    block: HttpClientConfig<*>.() -> Unit = {}
+): Unit = fetcher(HttpFetcher(HttpClient(engine, block)))
 
-public fun KamelConfigBuilder.httpFetcher(block: HttpClientConfig<*>.() -> Unit = {}): Unit =
-    fetcher(HttpFetcher(HttpClient(block)))
+/**
+ * Adds an Http fetcher to the [KamelConfigBuilder] by loading an [HttpClientEngine] from [ServiceLoader]
+ * and an optional [block] for configuring this client.
+ */
+public fun KamelConfigBuilder.httpFetcher(
+    block: HttpClientConfig<*>.() -> Unit = {}
+): Unit = fetcher(HttpFetcher(HttpClient(block)))
 
+/**
+ * Adds a [File] fetcher to the [KamelConfigBuilder].
+ */
 public fun KamelConfigBuilder.fileFetcher(): Unit = fetcher(FileFetcher)
 
+/**
+ * Adds an [ImageBitmap] decoder to the [KamelConfigBuilder].
+ */
 public fun KamelConfigBuilder.imageBitmapDecoder(): Unit = decoder(ImageBitmapDecoder)
 
+/**
+ * Adds a [URL] to [Url] mapper to the [KamelConfigBuilder].
+ */
 public fun KamelConfigBuilder.urlMapper(): Unit = mapper(URLMapper)
 
+/**
+ * Adds a [String] to [Url] mapper to the [KamelConfigBuilder].
+ */
 public fun KamelConfigBuilder.stringMapper(): Unit = mapper(StringMapper)
 
+/**
+ * Adds a [URI] to [Url] mapper to the [KamelConfigBuilder].
+ */
 public fun KamelConfigBuilder.uriMapper(): Unit = mapper(URIMapper)
