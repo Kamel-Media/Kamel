@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 plugins {
     kotlin("jvm")
     id("org.jetbrains.compose") version "0.3.0-build143"
+    `maven-publish`
 }
 
 repositories {
@@ -22,4 +23,16 @@ dependencies {
 
 kotlin {
     explicitApi = ExplicitApiMode.Warning
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "io.kamel"
+            artifactId = "kamel-core"
+            version = "0.0.4"
+
+            from(components["kotlin"])
+        }
+    }
 }

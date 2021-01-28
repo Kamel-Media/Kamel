@@ -15,7 +15,7 @@ public sealed class Resource<out T> {
     /**
      * Represents the resource as a successful outcome.
      */
-    public data class Success<T>(public val value: T) : Resource<T>()
+    public data class Success<out T>(public val value: T) : Resource<T>()
 
     /**
      * Represents the resource as a failure outcome.
