@@ -25,7 +25,7 @@ repositories {
 
 ```kotlin
 dependencies {
-    implementation("io.kamel:kamel-core:0.4.0")
+    implementation("io.kamel:kamel-core:0.0.4")
 }
 ```
 
