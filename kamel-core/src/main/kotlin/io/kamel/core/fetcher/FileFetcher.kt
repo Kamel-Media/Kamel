@@ -1,7 +1,10 @@
 package io.kamel.core.fetcher
 
 import io.kamel.core.DataSource
+import io.kamel.core.ExperimentalKamelApi
+import io.kamel.core.Resource
 import io.kamel.core.config.ResourceConfig
+import io.kamel.core.utils.tryCatching
 import io.ktor.util.cio.*
 import io.ktor.utils.io.*
 import java.io.File
@@ -18,4 +21,9 @@ internal object FileFetcher : Fetcher<File> {
         data.readChannel()
     }
 
+    @ExperimentalKamelApi
+    override suspend fun fetchResource(data: File, resourceConfig: ResourceConfig): Resource<ByteReadChannel> =
+        tryCatching {
+            data.readChannel()
+        }
 }

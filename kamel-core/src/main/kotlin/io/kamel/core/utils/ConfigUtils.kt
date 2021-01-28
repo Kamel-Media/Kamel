@@ -1,6 +1,8 @@
 package io.kamel.core.utils
 
 import androidx.compose.ui.graphics.ImageBitmap
+import io.kamel.core.ExperimentalKamelApi
+import io.kamel.core.Resource
 import io.kamel.core.cache.Cache
 import io.kamel.core.config.KamelConfig
 import io.kamel.core.config.ResourceConfig
@@ -42,6 +44,60 @@ public suspend fun <T : Any> KamelConfig.loadImage(data: T, config: ResourceConf
         }
         else -> Result.success(imageBitmap)
     }
+}
+
+
+@ExperimentalKamelApi
+internal inline fun <R, T> Resource<T>.mapCatching(transform: (value: T) -> R): Resource<R> {
+    return when (this) {
+        is Resource.Loading -> Resource.Loading
+        is Resource.Success -> tryCatching { transform(value) }
+        is Resource.Failure -> Resource.Failure(exception)
+    }
+}
+
+
+@ExperimentalKamelApi
+internal inline fun <T> Resource<T>.getOrElse(block: (Throwable?) -> T): T {
+    return when (this) {
+        is Resource.Loading -> block(null)
+        is Resource.Success -> value
+        is Resource.Failure -> block(exception)
+    }
+}
+
+// This API Will be removed when https://github.com/JetBrains/compose-jb/issues/189 is fixed.
+@ExperimentalKamelApi
+public suspend fun <T : Any> KamelConfig.loadImageResource(data: T, config: ResourceConfig): Resource<ImageBitmap> {
+
+    // Check if there's an image with same key [data].
+    return when (val imageBitmap = imageBitmapCache[data]) {
+        null -> {
+
+            val output = mapInput(data)
+
+            val fetcher = findFetcherFor(output)
+
+            val decoder = findDecoderFor<ImageBitmap>()
+
+            withContext(config.dispatcher) {
+                fetcher.fetchResource(output, config)
+                    .mapCatching { decoder.decodeResource(it) }
+                    .getOrElse { exception ->
+                        if (exception == null)
+                            Resource.Loading
+                        else
+                            Resource.Failure(exception)
+                    }.apply {
+                        if (this is Resource.Success)
+                            imageBitmapCache[data] = value
+                    }
+            }
+
+        }
+        else -> Resource.Success(imageBitmap)
+    }
+
 }
 
 internal fun <T : Any> KamelConfig.findFetcherFor(data: T): Fetcher<T> {

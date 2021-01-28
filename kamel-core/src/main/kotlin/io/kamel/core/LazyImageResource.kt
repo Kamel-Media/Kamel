@@ -4,8 +4,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.ImageBitmap
 import io.kamel.core.config.ResourceConfig
 import io.kamel.core.config.ResourceConfigBuilder
-import io.kamel.core.utils.loadImage
-import io.kamel.core.utils.toResource
+import io.kamel.core.utils.loadImageResource
 import io.ktor.http.*
 import java.io.File
 
@@ -16,6 +15,7 @@ import java.io.File
  * @return [ImageBitmap] resource that can be used to display an Image.
  * @see LazyImage
  */
+@OptIn(ExperimentalKamelApi::class)
 @Composable
 public fun <T : Any> lazyImageResource(data: T, block: ResourceConfigBuilder.() -> Unit = {}): Resource<ImageBitmap> {
 
@@ -26,7 +26,7 @@ public fun <T : Any> lazyImageResource(data: T, block: ResourceConfigBuilder.() 
     val kamelConfig = AmbientKamelConfig.current
 
     LaunchedEffect(Unit) {
-        resource = kamelConfig.loadImage(data, resourceConfig).toResource()
+        resource = kamelConfig.loadImageResource(data, resourceConfig)
     }
 
     return resource
