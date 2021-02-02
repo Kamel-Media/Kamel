@@ -2,8 +2,8 @@ package io.kamel.core
 
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ProvidableAmbient
-import androidx.compose.runtime.staticAmbientOf
+import androidx.compose.runtime.ProvidableCompositionLocal
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -50,4 +50,4 @@ public fun LazyImage(
 /**
  * Ambient that provides default configuration of [KamelConfig].
  */
-public val AmbientKamelConfig: ProvidableAmbient<KamelConfig> = staticAmbientOf { KamelConfig.Default }
+public val LocalKamelConfig: ProvidableCompositionLocal<KamelConfig> = staticCompositionLocalOf { KamelConfig.Default }

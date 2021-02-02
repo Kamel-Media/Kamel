@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 
 plugins {
     kotlin("jvm")
-    id("org.jetbrains.compose") version "0.3.0-build143"
+    id("org.jetbrains.compose") version "0.3.0-build147"
     `maven-publish`
 }
 

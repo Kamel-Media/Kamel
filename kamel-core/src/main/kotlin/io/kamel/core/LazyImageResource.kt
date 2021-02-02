@@ -23,7 +23,7 @@ public fun <T : Any> lazyImageResource(data: T, block: ResourceConfigBuilder.() 
 
     val resourceConfig = ResourceConfigBuilder().apply(block).build()
 
-    val kamelConfig = AmbientKamelConfig.current
+    val kamelConfig = LocalKamelConfig.current
 
     LaunchedEffect(Unit) {
         resource = kamelConfig.loadImageResource(data, resourceConfig)
