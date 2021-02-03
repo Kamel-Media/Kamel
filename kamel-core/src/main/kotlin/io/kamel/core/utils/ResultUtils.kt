@@ -7,7 +7,7 @@ internal fun <T> Result<T>.toResource(): Resource<T> = fold(
     onFailure = { exception -> Resource.Failure(exception) }
 )
 
-public inline fun <T, R> T.tryCatching(block: T.() -> R): Resource<R> {
+internal inline fun <T, R> T.tryCatching(block: T.() -> R): Resource<R> {
     return try {
         Resource.Success(block())
     } catch (e: Throwable) {

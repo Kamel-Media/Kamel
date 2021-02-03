@@ -48,6 +48,6 @@ public fun LazyImage(
 
 
 /**
- * Ambient that provides default configuration of [KamelConfig].
+ * CompositionLocal that provides default configuration of [KamelConfig].
  */
 public val LocalKamelConfig: ProvidableCompositionLocal<KamelConfig> = staticCompositionLocalOf { KamelConfig.Default }

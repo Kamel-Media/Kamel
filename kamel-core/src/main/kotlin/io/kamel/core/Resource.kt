@@ -22,15 +22,6 @@ public sealed class Resource<out T> {
      */
     public data class Failure(public val exception: Throwable) : Resource<Nothing>()
 
-    /**
-     * Returns value if the resource is [Success] or `null` otherwise.
-     */
-    public fun getOrNull(): T? = when (this) {
-        is Loading -> null
-        is Success -> value
-        is Failure -> null
-    }
-
 }
 
 /**
@@ -59,4 +50,22 @@ public inline fun <T, R> Resource<T>.map(transform: (T) -> R): Resource<R> = whe
     is Loading -> Loading
     is Success -> Success(transform(value))
     is Failure -> Failure(exception)
+}
+
+/**
+ * Returns value if the resource is [Success] or `null` otherwise.
+ */
+public fun <T> Resource<T>.getOrNull(): T? = when (this) {
+    is Loading -> null
+    is Success -> value
+    is Failure -> null
+}
+
+/**
+ * Returns value if the resource is [Success] or result of [block] function if it is [Failure] or [Loading].
+ */
+public inline fun <T> Resource<T>.getOrElse(block: (Throwable?) -> T): T = when (this) {
+    is Loading -> block(null)
+    is Success -> value
+    is Failure -> block(exception)
 }

@@ -8,7 +8,9 @@ import io.kamel.core.config.KamelConfig
 import io.kamel.core.config.ResourceConfig
 import io.kamel.core.decoder.Decoder
 import io.kamel.core.fetcher.Fetcher
+import io.kamel.core.getOrElse
 import io.kamel.core.mapper.Mapper
+import io.ktor.utils.io.*
 import kotlinx.coroutines.withContext
 import kotlin.reflect.full.createType
 import kotlin.reflect.full.isSubtypeOf
@@ -53,16 +55,6 @@ internal inline fun <R, T> Resource<T>.mapCatching(transform: (value: T) -> R): 
         is Resource.Loading -> Resource.Loading
         is Resource.Success -> tryCatching { transform(value) }
         is Resource.Failure -> Resource.Failure(exception)
-    }
-}
-
-
-@ExperimentalKamelApi
-internal inline fun <T> Resource<T>.getOrElse(block: (Throwable?) -> T): T {
-    return when (this) {
-        is Resource.Loading -> block(null)
-        is Resource.Success -> value
-        is Resource.Failure -> block(exception)
     }
 }
 

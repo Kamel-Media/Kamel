@@ -2,6 +2,7 @@ package io.kamel.core.decoder
 
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
+import io.kamel.core.ExperimentalKamelApi
 import io.kamel.core.Resource
 import io.kamel.core.utils.tryCatching
 import io.ktor.util.*
@@ -19,6 +20,7 @@ internal object ImageBitmapDecoder : Decoder<ImageBitmap> {
             .asImageBitmap()
     }
 
+    @ExperimentalKamelApi
     override suspend fun decodeResource(channel: ByteReadChannel): Resource<ImageBitmap> = tryCatching {
         SkijaImage
             .makeFromEncoded(channel.toByteArray())

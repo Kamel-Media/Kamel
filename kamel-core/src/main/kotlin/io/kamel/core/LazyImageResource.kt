@@ -14,6 +14,7 @@ import java.io.File
  * @param block configuration for [ResourceConfig].
  * @return [ImageBitmap] resource that can be used to display an Image.
  * @see LazyImage
+ * @see LocalKamelConfig
  */
 @OptIn(ExperimentalKamelApi::class)
 @Composable
