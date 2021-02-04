@@ -1,8 +1,8 @@
 # Kamel
 
-[![Latest version](https://img.shields.io/github/tag/alialbaali/Kamel.svg?color=1081c2)](https://github.com/alialbaali/Kamel/releases)
+[![Latest version](https://img.shields.io/github/tag/alialbaali/Kamel.svg?color=B2DFDB)](https://github.com/alialbaali/Kamel/releases)
 
-Kamel is an asynchronous media loading library for Compose. It can fetch, decode and cache resources.
+Kamel is an asynchronous image loading library for Compose. It can fetch, decode and cache resources.
 
 Currently, Kamel supports:
 
@@ -24,7 +24,7 @@ repositories {
 }
 ```
 
-Add the dependency which supports both Android and Desktop.
+Add the dependency which currently supports only Desktop.
 
 ```kotlin
 dependencies {
@@ -36,7 +36,7 @@ dependencies {
 
 ### Loading an image resource:
 
-Images can be load from different sources:
+Images can be loaded from different sources:
 
 ```kotlin
 // String
@@ -149,10 +149,10 @@ val myKamelConfig = KamelConfig { // this -> KamelConfigBuilder
 
 ```
 
-You can make ```AmbientKamelConfig``` to use the new configuration:
+You can make ```LocalKamelConfig``` to use the new configuration:
 
 ```kotlin
-Providers(AmbientKamelConfig provides myKamelConfig) {
+Providers(LocalKamelConfig provides myKamelConfig) {
     lazyImageResource("image.jpg")
 }
 ```
