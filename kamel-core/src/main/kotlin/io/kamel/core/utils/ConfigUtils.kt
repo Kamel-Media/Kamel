@@ -10,7 +10,6 @@ import io.kamel.core.decoder.Decoder
 import io.kamel.core.fetcher.Fetcher
 import io.kamel.core.getOrElse
 import io.kamel.core.mapper.Mapper
-import io.ktor.utils.io.*
 import kotlinx.coroutines.withContext
 import kotlin.reflect.full.createType
 import kotlin.reflect.full.isSubtypeOf
@@ -75,12 +74,10 @@ public suspend fun <T : Any> KamelConfig.loadImageResource(data: T, config: Reso
             withContext(config.dispatcher) {
                 fetcher.fetchResource(output, config)
                     .mapCatching { decoder.decodeResource(it) }
-                    .getOrElse { exception ->
-                        if (exception == null)
-                            Resource.Loading
-                        else
-                            Resource.Failure(exception)
-                    }.apply {
+                    .getOrElse(
+                        onLoading = { Resource.Loading },
+                        onFailure = { Resource.Failure(it) }
+                    ).apply {
                         if (this is Resource.Success)
                             imageBitmapCache[data] = value
                     }

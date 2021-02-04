@@ -62,10 +62,14 @@ public fun <T> Resource<T>.getOrNull(): T? = when (this) {
 }
 
 /**
- * Returns value if the resource is [Success] or result of [block] function if it is [Failure] or [Loading].
+ * Returns value if the resource is [Success], result of [onFailure] function if it is [Failure]
+ * or result of [onLoading] function if it is [Loading].
  */
-public inline fun <T> Resource<T>.getOrElse(block: (Throwable?) -> T): T = when (this) {
-    is Loading -> block(null)
+public inline fun <T> Resource<T>.getOrElse(
+    onLoading: () -> T,
+    onFailure: (Throwable) -> T,
+): T = when (this) {
+    is Loading -> onLoading()
     is Success -> value
-    is Failure -> block(exception)
+    is Failure -> onFailure(exception)
 }
