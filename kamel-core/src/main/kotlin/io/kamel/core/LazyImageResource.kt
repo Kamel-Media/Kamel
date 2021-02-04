@@ -18,7 +18,7 @@ import java.io.File
  */
 @OptIn(ExperimentalKamelApi::class)
 @Composable
-public fun <T : Any> lazyImageResource(data: T, block: ResourceConfigBuilder.() -> Unit = {}): Resource<ImageBitmap> {
+public inline fun <T : Any> lazyImageResource(data: T, block: ResourceConfigBuilder.() -> Unit = {}): Resource<ImageBitmap> {
 
     var resource by remember(data) { mutableStateOf<Resource<ImageBitmap>>(Resource.Loading) }
 
