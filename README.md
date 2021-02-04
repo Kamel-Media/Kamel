@@ -2,17 +2,16 @@
 
 [![Latest version](https://img.shields.io/github/tag/alialbaali/Kamel.svg?color=B2DFDB)](https://github.com/alialbaali/Kamel/releases)
 
-Kamel is an asynchronous image loading library for Compose. It can fetch, decode and cache resources.
+Kamel is an asynchronous media loading library for Compose. It provides a simple, customizable and efficient way to
+load, cache, decode and display images in your application. By default, it uses Ktor client for loading resources.
 
-Currently, Kamel supports:
-
-- [x] Image
-- [x] LRU Memory Caching
-- [ ] Disk Caching
-- [ ] Svg
-- [ ] Gif
-- [ ] Video
-- [ ] Progress while loading
+## Roadmap
+- [ ] Add svg decoder
+- [ ] Add gif decoder
+- [ ] Add video decoder
+- [ ] Support Android platform
+- [ ] Implement disk caching
+- [ ] Support progress while loading resources
 
 ## Setup
 
@@ -40,29 +39,29 @@ Images can be loaded from different sources:
 
 ```kotlin
 // String
-lazyImageResource("https://www.example.com/image.jpg")
+lazyImageResource(data = "https://www.example.com/image.jpg")
 
 // Ktor Url
-lazyImageResource(Url("https://www.example.com/image.jpg"))
+lazyImageResource(data = Url("https://www.example.com/image.jpg"))
 
 // URI
-lazyImageResource(URI("https://www.example.com/image.jpg"))
+lazyImageResource(data = URI("https://www.example.com/image.jpg"))
 
 // URL
-lazyImageResource(URL("https://www.example.com/image.jpg"))
+lazyImageResource(data = URL("https://www.example.com/image.jpg"))
 
 // File
-lazyImageResource(File("/path/to/image.jpg"))
+lazyImageResource(data = File("/path/to/image.jpg"))
 ```
 
-You can configure the resource:
+### Configuring an image resource:
 
 ```kotlin
 val imageResource: Resource<ImageBitmap> = lazyImageResource("https://www.example.com/image.jpg") {
 
-    dispatcher = Dispatchers.IO // by default
+    dispatcher = Dispatchers.IO // Coroutine Dispatcher to be used while loading.
 
-    requestBuilder { // this -> HttpRequestBuilder
+    requestBuilder { // this: HttpRequestBuilder
         header("Key", "Value")
         parameter("Key", "Value")
         cacheControl(CacheControl.MAX_AGE)
@@ -70,7 +69,7 @@ val imageResource: Resource<ImageBitmap> = lazyImageResource("https://www.exampl
 }
 ```
 
-Displaying the image resource:
+### Displaying an image resource:
 
 ```kotlin
 LazyImage(
@@ -79,13 +78,12 @@ LazyImage(
 )
 ```
 
-You can also customize what happens in failure or loading cases.
+You can display different content in failure or loading states:
 
 ```kotlin
 LazyImage(
     resource = imageResource,
     contentDescription = "Profile",
-    modifier = Modifier.alpha(0.5F),
     onLoading = {
         CircularProgressIndicator()
     },
@@ -97,42 +95,52 @@ LazyImage(
 )
 ```
 
-You can provide your own implementation using a simple when expression:
+You can also provide your own implementation using a simple when expression:
 
 ```kotlin
-val resource = lazyImageResource("https://www.example.com/image.jpg")
-
-when (resource) {
+when (val resource = lazyImageResource("https://www.example.com/image.jpg")) {
     is Resource.Loading -> {
         Text("Loading...")
     }
     is Resource.Success -> {
         val bitmap: ImageBitmap = resource.value
-        Image(bitmap, modifier = Modifier.clip(CircleShape))
+        Image(bitmap, null, modifier = Modifier.clip(CircleShape))
     }
     is Resource.Failure -> {
         log(resource.exception)
         val fallbackImage = imageResource("/path/to/fallbackImage.jpg")
-        Image(fallbackImage)
+        Image(fallbackImage, null)
     }
 }
 
 ```
 
-### Configuring Kamel:
+#### Crossfade animation
 
-Configuration is done through:
+You can enable, disable or customize crossfade (fade-in) animation through the ```crossfade``` and ```animationSpec```
+parameters:
 
 ```kotlin
-val myKamelConfig = KamelConfig { // this -> KamelConfigBuilder
+LazyImage(
+    resource = imageResource,
+    contentDescription = "Profile",
+    crossfade = true, // false by default
+    animationSpec = tween(),
+)
+```
 
-    imageBitmapCacheSize = 1000 // Number of entries to cache.
+### Configuring Kamel:
+
+The default implementation is ```KamelConfig.Default```. If you wish to configure it, you can do like so:
+
+```kotlin
+val myKamelConfig = KamelConfig {
 
     imageBitmapDecoder() // adds an ImageBitmapDecoder
 
     fileFetcher() // adds a FileFetcher
 
-    httpFetcher { // Configure Ktor HttpClient
+    httpFetcher { // Configuring Ktor HttpClient
         defaultRequest {
             url("https://www.example.com/")
         }
@@ -142,17 +150,47 @@ val myKamelConfig = KamelConfig { // this -> KamelConfigBuilder
         }
     }
 
-    fetcher(MyCustomFetcher)
-    decoder(MyCustomDecoder)
-    mapper(MyCustomMapper)
+    // more functionality available.
 }
 
 ```
 
-You can make ```LocalKamelConfig``` to use the new configuration:
+#### Cache size (number of entries)
+
+To Configure memory cache size, you can change the ```imageBitmapCacheSize``` property:
+
+```kotlin
+KamelConfig {
+    imageBitmapCacheSize = 1000
+}
+```
+
+To override the default ```KamelConfig```, you can set ```LocalKamelConfig``` to use your custom ```KamelConfig```:
 
 ```kotlin
 Providers(LocalKamelConfig provides myKamelConfig) {
     lazyImageResource("image.jpg")
 }
+```
+
+## Contributions
+
+Contributions are always welcome!. If you'd like to contribute, please feel free to create a PR.
+
+## License
+
+```
+Copyright 2021 Kamel Contributors
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 ```
