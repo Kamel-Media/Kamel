@@ -1,5 +1,8 @@
 package io.kamel.core
 
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.FiniteAnimationSpec
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ProvidableCompositionLocal
@@ -17,9 +20,53 @@ import io.kamel.core.config.KamelConfig
  * To load an image resource use [lazyImageResource].
  * @param onLoading Composable that can be used while loading the image.
  * @param onFailure Composable that can be used when the image result is failure.
+ * @param crossfade whether [Crossfade] is enabled or not.
+ * @param animationSpec a [FiniteAnimationSpec] to be used in [crossfade] animation.
  */
 @Composable
 public fun LazyImage(
+    resource: Resource<ImageBitmap>,
+    contentDescription: String?,
+    modifier: Modifier = Modifier,
+    alignment: Alignment = Alignment.Center,
+    contentScale: ContentScale = ContentScale.Fit,
+    alpha: Float = DefaultAlpha,
+    colorFilter: ColorFilter? = null,
+    onLoading: @Composable (() -> Unit)? = null,
+    onFailure: @Composable ((Throwable) -> Unit)? = null,
+    crossfade: Boolean = false,
+    animationSpec: FiniteAnimationSpec<Float> = tween()
+) {
+    if (crossfade)
+        Crossfade(resource, animationSpec = animationSpec) {
+            LazyImage(
+                it,
+                contentDescription,
+                modifier,
+                alignment,
+                contentScale,
+                alpha,
+                colorFilter,
+                onLoading,
+                onFailure,
+            )
+        }
+    else
+        LazyImage(
+            resource,
+            contentDescription,
+            modifier,
+            alignment,
+            contentScale,
+            alpha,
+            colorFilter,
+            onLoading,
+            onFailure,
+        )
+}
+
+@Composable
+private fun LazyImage(
     resource: Resource<ImageBitmap>,
     contentDescription: String?,
     modifier: Modifier = Modifier,
