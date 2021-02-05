@@ -6,6 +6,7 @@ Kamel is an asynchronous media loading library for Compose. It provides a simple
 load, cache, decode and display images in your application. By default, it uses Ktor client for loading resources.
 
 ## Roadmap
+
 - [ ] Add svg decoder
 - [ ] Add gif decoder
 - [ ] Add video decoder
@@ -15,7 +16,7 @@ load, cache, decode and display images in your application. By default, it uses 
 
 ## Setup
 
-Kamel is published on Maven Central.
+Kamel is published on Maven Central:
 
 ```kotlin
 repositories {
@@ -23,7 +24,7 @@ repositories {
 }
 ```
 
-Add the dependency which currently supports only Desktop.
+Add the dependency which currently supports only Desktop:
 
 ```kotlin
 dependencies {
@@ -35,7 +36,7 @@ dependencies {
 
 ### Loading an image resource:
 
-Images can be loaded from different sources:
+To load an image, use ```lazyImageResource```, it can load images from different data sources:
 
 ```kotlin
 // String
@@ -56,6 +57,8 @@ lazyImageResource(data = File("/path/to/image.jpg"))
 
 ### Configuring an image resource:
 
+```lazyImageResource``` takes a trailing lambda for configuration:
+
 ```kotlin
 val imageResource: Resource<ImageBitmap> = lazyImageResource("https://www.example.com/image.jpg") {
 
@@ -71,6 +74,9 @@ val imageResource: Resource<ImageBitmap> = lazyImageResource("https://www.exampl
 
 ### Displaying an image resource:
 
+```LazyImage``` is a composable function that takes an ```ImageBitmap``` resource, display it and provide extra
+functionality:
+
 ```kotlin
 LazyImage(
     resource = imageResource,
@@ -78,7 +84,8 @@ LazyImage(
 )
 ```
 
-You can display different content in failure or loading states:
+```LazyImage``` can display custom content in failure or loading states through ```onFailure``` and ```onLoading```
+parameters:
 
 ```kotlin
 LazyImage(
@@ -95,7 +102,7 @@ LazyImage(
 )
 ```
 
-You can also provide your own implementation using a simple when expression:
+You can also provide your own custom implementation using a simple when expression:
 
 ```kotlin
 when (val resource = lazyImageResource("https://www.example.com/image.jpg")) {
