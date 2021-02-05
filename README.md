@@ -28,7 +28,7 @@ Add the dependency which currently supports only Desktop:
 
 ```kotlin
 dependencies {
-    implementation("io.kamel:kamel-core:0.0.4")
+    implementation("com.alialbaali.kamel:kamel-core:0.0.5")
 }
 ```
 
@@ -36,7 +36,7 @@ dependencies {
 
 ### Loading an image resource:
 
-To load an image, use ```lazyImageResource```, it can load images from different data sources:
+To load an image, you can use ```lazyImageResource``` composable, it can load images from different data sources:
 
 ```kotlin
 // String
@@ -57,7 +57,7 @@ lazyImageResource(data = File("/path/to/image.jpg"))
 
 ### Configuring an image resource:
 
-```lazyImageResource``` takes a trailing lambda for configuration:
+```lazyImageResource``` supports configuration using trailing lambda:
 
 ```kotlin
 val imageResource: Resource<ImageBitmap> = lazyImageResource("https://www.example.com/image.jpg") {
@@ -69,6 +69,7 @@ val imageResource: Resource<ImageBitmap> = lazyImageResource("https://www.exampl
         parameter("Key", "Value")
         cacheControl(CacheControl.MAX_AGE)
     }
+    
 }
 ```
 
@@ -187,7 +188,7 @@ Contributions are always welcome!. If you'd like to contribute, please feel free
 ## License
 
 ```
-Copyright 2021 Kamel Contributors
+Copyright 2021 Ali Albaali
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
