@@ -1,25 +1,19 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    kotlin("jvm") version "1.4.21-2"
+    id("org.jetbrains.dokka") version "1.4.20"
 }
-
-group = "io.kamel"
-version = "0.0.4"
 
 allprojects {
     repositories {
         jcenter()
         mavenCentral()
+        maven(url = "https://dl.bintray.com/kotlin/dokka")
     }
-}
 
-allprojects {
-    tasks.withType<KotlinCompile> {
-        kotlinOptions {
-            useIR = true
-            jvmTarget = "11"
-            freeCompilerArgs = listOf("-Xallow-result-return-type", "-Xopt-in=kotlin.RequiresOptIn")
-        }
+    ext {
+        set("GroupId", "com.alialbaali.kamel")
+        set("Version", "0.0.5")
     }
+
+    group = ext["GroupId"] as String
+    version = ext["Version"] as String
 }
