@@ -10,15 +10,9 @@ import io.kamel.core.fetcher.FileFetcher
 import io.kamel.core.fetcher.HttpFetcher
 import io.kamel.core.mapper.Mapper
 import io.kamel.core.mapper.StringMapper
-import io.kamel.core.mapper.URIMapper
-import io.kamel.core.mapper.URLMapper
 import io.ktor.client.*
 import io.ktor.client.engine.*
 import io.ktor.http.*
-import java.io.File
-import java.net.URI
-import java.net.URL
-import java.util.*
 
 public class KamelConfigBuilder {
 
@@ -94,11 +88,6 @@ public fun KamelConfigBuilder.fileFetcher(): Unit = fetcher(FileFetcher)
 public fun KamelConfigBuilder.imageBitmapDecoder(): Unit = decoder(ImageBitmapDecoder)
 
 /**
- * Adds a [URL] to [Url] mapper to the [KamelConfigBuilder].
- */
-public fun KamelConfigBuilder.urlMapper(): Unit = mapper(URLMapper)
-
-/**
  * Adds a [String] to [Url] mapper to the [KamelConfigBuilder].
  */
 public fun KamelConfigBuilder.stringMapper(): Unit = mapper(StringMapper)
@@ -106,4 +95,9 @@ public fun KamelConfigBuilder.stringMapper(): Unit = mapper(StringMapper)
 /**
  * Adds a [URI] to [Url] mapper to the [KamelConfigBuilder].
  */
-public fun KamelConfigBuilder.uriMapper(): Unit = mapper(URIMapper)
+public expect fun KamelConfigBuilder.uriMapper()
+
+/**
+ * Adds a [URL] to [Url] mapper to the [KamelConfigBuilder].
+ */
+public expect fun KamelConfigBuilder.urlMapper()

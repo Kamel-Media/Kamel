@@ -1,9 +1,9 @@
 package io.kamel.core.config
 
+import io.kamel.core.utils.IO
 import io.ktor.client.request.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-
 
 public class ResourceConfigBuilder {
 

@@ -11,10 +11,6 @@ import io.kamel.core.fetcher.Fetcher
 import io.kamel.core.getOrElse
 import io.kamel.core.mapper.Mapper
 import kotlinx.coroutines.withContext
-import kotlin.reflect.full.createType
-import kotlin.reflect.full.isSubtypeOf
-import kotlin.reflect.full.isSupertypeOf
-import kotlin.reflect.typeOf
 
 /**
  * Loads an [ImageBitmap]. This includes mapping, fetching, decoding and caching.
@@ -44,16 +40,6 @@ public suspend fun <T : Any> KamelConfig.loadImage(data: T, config: ResourceConf
 
         }
         else -> Result.success(imageBitmap)
-    }
-}
-
-
-@ExperimentalKamelApi
-internal inline fun <R, T> Resource<T>.mapCatching(transform: (value: T) -> R): Resource<R> {
-    return when (this) {
-        is Resource.Loading -> Resource.Loading
-        is Resource.Success -> tryCatching { transform(value) }
-        is Resource.Failure -> Resource.Failure(exception)
     }
 }
 
@@ -89,57 +75,18 @@ public suspend fun <T : Any> KamelConfig.loadImageResource(data: T, config: Reso
 
 }
 
-internal fun <T : Any> KamelConfig.findFetcherFor(data: T): Fetcher<T> {
-
-    val type = data::class.createType()
-
-    val fetcher = fetchers.findLast { fetcher ->
-
-        val fetcherType = fetcher::class.supertypes
-            .firstOrNull()
-            ?.arguments
-            ?.firstOrNull()
-            ?.type ?: error("Unable to find type for $fetcher")
-
-        fetcherType.isSupertypeOf(type) || fetcherType.isSubtypeOf(type)
+@ExperimentalKamelApi
+internal inline fun <R, T> Resource<T>.mapCatching(transform: (value: T) -> R): Resource<R> {
+    return when (this) {
+        is Resource.Loading -> Resource.Loading
+        is Resource.Success -> tryCatching { transform(value) }
+        is Resource.Failure -> Resource.Failure(exception)
     }
-
-    checkNotNull(fetcher) { "Unable to find a fetcher for $type" }
-
-    return fetcher as Fetcher<T>
 }
+
+internal expect fun <T : Any> KamelConfig.findFetcherFor(data: T): Fetcher<T>
 
 @OptIn(ExperimentalStdlibApi::class)
-internal inline fun <reified T : Any> KamelConfig.findDecoderFor(): Decoder<ImageBitmap> {
+internal expect inline fun <reified T : Any> KamelConfig.findDecoderFor(): Decoder<ImageBitmap>
 
-    val type = typeOf<Decoder<T>>()
-
-    val decoder = decoders.findLast { decoder ->
-
-        val decoderType = decoder::class.createType()
-
-        decoderType.isSupertypeOf(type) || decoderType.isSubtypeOf(type)
-    }
-
-    checkNotNull(decoder) { "Unable to find a decoder for $type" }
-
-    return decoder as Decoder<ImageBitmap>
-}
-
-internal fun KamelConfig.mapInput(input: Any): Any {
-
-    var output: Any? = null
-
-    mappers.findLast {
-
-        output = try {
-            it.map(input)
-        } catch (e: Throwable) {
-            null
-        }
-
-        output != null
-    }
-
-    return output ?: input
-}
+internal expect fun KamelConfig.mapInput(input: Any): Any
