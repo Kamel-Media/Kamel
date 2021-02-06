@@ -4,9 +4,7 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.FiniteAnimationSpec
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ProvidableCompositionLocal
-import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -24,7 +22,7 @@ import io.kamel.core.config.KamelConfig
  * @param animationSpec a [FiniteAnimationSpec] to be used in [crossfade] animation.
  */
 @Composable
-public fun LazyImage(
+public fun KamelImage(
     resource: Resource<ImageBitmap>,
     contentDescription: String?,
     modifier: Modifier = Modifier,
@@ -39,7 +37,7 @@ public fun LazyImage(
 ) {
     if (crossfade)
         Crossfade(resource, animationSpec = animationSpec) {
-            LazyImage(
+            KamelImage(
                 it,
                 contentDescription,
                 modifier,
@@ -52,7 +50,7 @@ public fun LazyImage(
             )
         }
     else
-        LazyImage(
+        KamelImage(
             resource,
             contentDescription,
             modifier,
@@ -66,7 +64,7 @@ public fun LazyImage(
 }
 
 @Composable
-private fun LazyImage(
+private fun KamelImage(
     resource: Resource<ImageBitmap>,
     contentDescription: String?,
     modifier: Modifier = Modifier,

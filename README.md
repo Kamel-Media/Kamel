@@ -75,21 +75,21 @@ val imageResource: Resource<ImageBitmap> = lazyImageResource("https://www.exampl
 
 ### Displaying an image resource:
 
-```LazyImage``` is a composable function that takes an ```ImageBitmap``` resource, display it and provide extra
+```KamelImage``` is a composable function that takes an ```ImageBitmap``` resource, display it and provide extra
 functionality:
 
 ```kotlin
-LazyImage(
+KamelImage(
     resource = imageResource,
     contentDescription = "Profile"
 )
 ```
 
-```LazyImage``` can display custom content in failure or loading states through ```onFailure``` and ```onLoading```
+```KamelImage``` can display custom content in failure or loading states through ```onFailure``` and ```onLoading```
 parameters:
 
 ```kotlin
-LazyImage(
+KamelImage(
     resource = imageResource,
     contentDescription = "Profile",
     onLoading = {
@@ -129,7 +129,7 @@ You can enable, disable or customize crossfade (fade-in) animation through the `
 parameters:
 
 ```kotlin
-LazyImage(
+KamelImage(
     resource = imageResource,
     contentDescription = "Profile",
     crossfade = true, // false by default

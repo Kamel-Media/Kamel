@@ -13,7 +13,7 @@ import io.ktor.http.*
  * @param data Can be anything such as [String], [Url] or a [File].
  * @param block configuration for [ResourceConfig].
  * @return [ImageBitmap] resource that can be used to display an Image.
- * @see LazyImage
+ * @see KamelImage
  * @see LocalKamelConfig
  */
 @OptIn(ExperimentalKamelApi::class)
