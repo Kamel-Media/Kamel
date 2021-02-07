@@ -4,7 +4,9 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.FiniteAnimationSpec
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ProvidableCompositionLocal
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -18,7 +20,7 @@ import io.kamel.core.config.KamelConfig
  * To load an image resource use [lazyImageResource].
  * @param onLoading Composable that can be used while loading the image.
  * @param onFailure Composable that can be used when the image result is failure.
- * @param crossfade whether [Crossfade] is enabled or not.
+ * @param crossfade whether [Crossfade] (fade-in) animation is enabled or not.
  * @param animationSpec a [FiniteAnimationSpec] to be used in [crossfade] animation.
  */
 @Composable
@@ -36,9 +38,9 @@ public fun KamelImage(
     animationSpec: FiniteAnimationSpec<Float> = tween()
 ) {
     if (crossfade)
-        Crossfade(resource, animationSpec = animationSpec) {
-            KamelImage(
-                it,
+        Crossfade(resource, animationSpec = animationSpec) { animatedResource ->
+            DefaultImage(
+                animatedResource,
                 contentDescription,
                 modifier,
                 alignment,
@@ -50,7 +52,7 @@ public fun KamelImage(
             )
         }
     else
-        KamelImage(
+        DefaultImage(
             resource,
             contentDescription,
             modifier,
@@ -64,7 +66,7 @@ public fun KamelImage(
 }
 
 @Composable
-private fun KamelImage(
+private fun DefaultImage(
     resource: Resource<ImageBitmap>,
     contentDescription: String?,
     modifier: Modifier = Modifier,

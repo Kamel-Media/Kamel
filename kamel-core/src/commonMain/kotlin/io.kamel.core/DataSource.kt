@@ -1,7 +1,6 @@
 package io.kamel.core
 
 import io.kamel.core.cache.Cache
-import io.kamel.core.utils.File
 import io.ktor.http.*
 
 /**

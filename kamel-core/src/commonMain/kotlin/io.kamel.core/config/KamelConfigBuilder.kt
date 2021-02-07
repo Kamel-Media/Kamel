@@ -6,7 +6,6 @@ import io.kamel.core.cache.LruCache
 import io.kamel.core.decoder.Decoder
 import io.kamel.core.decoder.ImageBitmapDecoder
 import io.kamel.core.fetcher.Fetcher
-import io.kamel.core.fetcher.FileFetcher
 import io.kamel.core.fetcher.HttpFetcher
 import io.kamel.core.mapper.Mapper
 import io.kamel.core.mapper.StringMapper
@@ -80,7 +79,7 @@ public fun KamelConfigBuilder.httpFetcher(
 /**
  * Adds a [File] fetcher to the [KamelConfigBuilder].
  */
-public fun KamelConfigBuilder.fileFetcher(): Unit = fetcher(FileFetcher)
+public expect fun KamelConfigBuilder.fileFetcher()
 
 /**
  * Adds an [ImageBitmap] decoder to the [KamelConfigBuilder].

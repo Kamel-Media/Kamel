@@ -4,7 +4,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.ImageBitmap
 import io.kamel.core.config.ResourceConfig
 import io.kamel.core.config.ResourceConfigBuilder
-import io.kamel.core.utils.File
 import io.kamel.core.utils.loadImageResource
 import io.ktor.http.*
 

@@ -10,7 +10,6 @@ load, cache, decode and display images in your application. By default, it uses 
 - [ ] Add svg decoder
 - [ ] Add gif decoder
 - [ ] Add video decoder
-- [ ] Support Android platform
 - [ ] Implement disk caching
 - [ ] Support progress while loading resources
 
@@ -34,7 +33,7 @@ dependencies {
 
 ## Usage
 
-### Loading an image resource:
+### Loading an image resource
 
 To load an image, you can use ```lazyImageResource``` composable, it can load images from different data sources:
 
@@ -55,7 +54,7 @@ lazyImageResource(data = URL("https://www.example.com/image.jpg"))
 lazyImageResource(data = File("/path/to/image.jpg"))
 ```
 
-### Configuring an image resource:
+### Configuring an image resource
 
 ```lazyImageResource``` supports configuration using trailing lambda:
 
@@ -73,7 +72,7 @@ val imageResource: Resource<ImageBitmap> = lazyImageResource("https://www.exampl
 }
 ```
 
-### Displaying an image resource:
+### Displaying an image resource
 
 ```KamelImage``` is a composable function that takes an ```ImageBitmap``` resource, display it and provide extra
 functionality:
@@ -137,9 +136,9 @@ KamelImage(
 )
 ```
 
-### Configuring Kamel:
+### Configuring Kamel
 
-The default implementation is ```KamelConfig.Default```. If you wish to configure it, you can do like so:
+The default implementation is ```KamelConfig.Default```. If you wish to configure it, you can do it like so:
 
 ```kotlin
 val myKamelConfig = KamelConfig {
@@ -173,7 +172,9 @@ KamelConfig {
 }
 ```
 
-To override the default ```KamelConfig```, you can set ```LocalKamelConfig``` to use your custom ```KamelConfig```:
+### Applying Kamel Configuration
+
+You can use ```LocalKamelConfig``` to apply your custom configuration: 
 
 ```kotlin
 Providers(LocalKamelConfig provides myKamelConfig) {
