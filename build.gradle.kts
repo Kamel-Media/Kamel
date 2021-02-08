@@ -31,7 +31,7 @@ allprojects {
 
     ext {
         set("GroupId", "com.alialbaali.kamel")
-        set("Version", "0.0.5")
+        set("Version", "0.0.6")
     }
 
     group = ext["GroupId"] as String
