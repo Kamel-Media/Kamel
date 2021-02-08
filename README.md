@@ -1,17 +1,26 @@
 # Kamel
 
-[![Latest version](https://img.shields.io/github/tag/alialbaali/Kamel.svg?color=B2DFDB)](https://github.com/alialbaali/Kamel/releases)
+    [![Latest version](https://img.shields.io/github/tag/alialbaali/Kamel.svg?color=B2DFDB)](https://github.com/alialbaali/Kamel/releases)
 
-Kamel is an asynchronous media loading library for Compose. It provides a simple, customizable and efficient way to
-load, cache, decode and display images in your application. By default, it uses Ktor client for loading resources.
+Kamel is an asynchronous media loading library for Compose. It provides a simple, customizable and efficient way to load, cache, decode and display
+images in your application. By default, it uses Ktor client for loading resources.
 
-## Roadmap
+## Table of contents
 
-- [ ] Add svg decoder
-- [ ] Add gif decoder
-- [ ] Add video decoder
-- [ ] Implement disk caching
-- [ ] Support progress while loading resources
+- [Setup](#setup)
+    - [Multiplatform](#multiplatform)
+    - [Desktop](#desktop-single-platform)
+    - [Android](#android-single-platform)   
+- [Usage](#usage)
+    - [Loading an image resource](#loading-an-image-resource)
+    - [Configuring an image resource](#configuring-an-image-resource)
+    - [Displaying an image resource](#displaying-an-image-resource)
+        - [Crossfade animation](#crossfade-animation)
+    - [Configuring Kamel](#configuring-kamel)
+        - [Cache size (number of entries)](#cache-size-number-of-entries)
+    - [Applying Kamel configuration](#applying-kamel-configuration)
+- [Contributions](#contributions)
+- [License](#license)
 
 ## Setup
 
@@ -20,14 +29,50 @@ Kamel is published on Maven Central:
 ```kotlin
 repositories {
     mavenCentral()
+    // ...
 }
 ```
 
-Add the dependency which currently supports only Desktop:
+#### Multiplatform
+
+Add the common dependency which currently only work for Android and Common source sets. For desktop you need to add its own dependency.
+
+```kotlin
+commonMain {
+    dependencies {
+        // ...
+        implementation("com.alialbaali.kamel:kamel-core:<version>")
+    }
+}
+
+named("desktopMain") {
+    dependencies {
+        // ...
+        implementation("com.alialbaali.kamel:kamel-core-desktop:<version>")
+    }
+}
+
+```
+
+#### Desktop (single-platform)
+
+Add the dependency which supports Desktop:
 
 ```kotlin
 dependencies {
-    implementation("com.alialbaali.kamel:kamel-core:0.0.5")
+    // ...
+    implementation("com.alialbaali.kamel:kamel-core-desktop:<version>")
+}
+```
+
+#### Android (single-platform)
+
+Add the dependency which supports Android:
+
+```kotlin
+dependencies {
+    // ...
+    implementation("com.alialbaali.kamel:kamel-core:<version>")
 }
 ```
 
@@ -68,14 +113,13 @@ val imageResource: Resource<ImageBitmap> = lazyImageResource("https://www.exampl
         parameter("Key", "Value")
         cacheControl(CacheControl.MAX_AGE)
     }
-    
+
 }
 ```
 
 ### Displaying an image resource
 
-```KamelImage``` is a composable function that takes an ```ImageBitmap``` resource, display it and provide extra
-functionality:
+```KamelImage``` is a composable function that takes an ```ImageBitmap``` resource, display it and provide extra functionality:
 
 ```kotlin
 KamelImage(
@@ -172,9 +216,9 @@ KamelConfig {
 }
 ```
 
-### Applying Kamel Configuration
+### Applying Kamel configuration
 
-You can use ```LocalKamelConfig``` to apply your custom configuration: 
+You can use ```LocalKamelConfig``` to apply your custom configuration:
 
 ```kotlin
 Providers(LocalKamelConfig provides myKamelConfig) {

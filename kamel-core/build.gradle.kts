@@ -1,6 +1,5 @@
 import org.jetbrains.kotlin.config.LanguageFeature
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
-import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompile
 import java.util.*
 
 plugins {
