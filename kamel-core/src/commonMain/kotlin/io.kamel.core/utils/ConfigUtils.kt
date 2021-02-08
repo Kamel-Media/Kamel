@@ -84,9 +84,25 @@ internal inline fun <R, T> Resource<T>.mapCatching(transform: (value: T) -> R): 
     }
 }
 
+internal fun KamelConfig.mapInput(input: Any): Any {
+
+    var output: Any? = null
+
+    mappers.findLast {
+
+        output = try {
+            it.map(input)
+        } catch (e: Throwable) {
+            null
+        }
+
+        output != null
+    }
+
+    return output ?: input
+}
+
 internal expect fun <T : Any> KamelConfig.findFetcherFor(data: T): Fetcher<T>
 
 @OptIn(ExperimentalStdlibApi::class)
 internal expect inline fun <reified T : Any> KamelConfig.findDecoderFor(): Decoder<ImageBitmap>
-
-internal expect fun KamelConfig.mapInput(input: Any): Any

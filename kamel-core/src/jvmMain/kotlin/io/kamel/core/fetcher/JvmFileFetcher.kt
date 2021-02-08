@@ -12,7 +12,7 @@ import java.io.File
 /**
  * Fetcher that fetchers [ByteReadChannel] from a file.
  */
-internal object FileFetcher : Fetcher<File> {
+internal actual object FileFetcher : Fetcher<File> {
 
     override val source: DataSource
         get() = DataSource.Disk

@@ -1,6 +1,5 @@
 import org.jetbrains.kotlin.config.LanguageFeature
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
-import java.util.*
 
 plugins {
     kotlin("multiplatform")
@@ -48,11 +47,9 @@ kotlin {
 
     explicitApi = ExplicitApiMode.Warning
 
-    android {
-        publishLibraryVariants("release", "debug")
-    }
+    android()
     jvm("desktop")
-    jvm("commonJvm")
+    jvm()
 
     sourceSets {
 
@@ -70,40 +67,39 @@ kotlin {
 
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
+                api(kotlin("test-common"))
+                api(kotlin("test-annotations-common"))
+                api("io.ktor:ktor-client-mock:$ktorVersion")
             }
         }
 
-        val commonJvmMain by getting {
+        val jvmMain by getting {
             dependencies {
                 api("org.jetbrains.kotlin:kotlin-reflect:1.4.21-2")
-                implementation(kotlin("test-junit"))
+            }
+        }
+
+        val jvmTest by getting {
+            dependencies {
+                api(kotlin("test-junit"))
             }
         }
 
         val desktopMain by getting {
+            dependsOn(jvmMain)
             dependencies {
-                dependsOn(commonJvmMain)
                 api("io.ktor:ktor-client-cio:$ktorVersion")
             }
         }
 
-        val desktopTest by getting
-
         val androidMain by getting {
-            dependsOn(commonJvmMain)
+            dependsOn(jvmMain)
             dependencies {
                 api("io.ktor:ktor-client-android:$ktorVersion")
                 api("androidx.appcompat:appcompat:1.2.0")
                 api("androidx.core:core-ktx:1.3.2")
-                api("org.jetbrains.kotlin:kotlin-reflect:1.4.21-2")
-                api("io.ktor:ktor-client-core:$ktorVersion")
-                api("io.ktor:ktor-client-logging:$ktorVersion")
             }
-            kotlin.srcDirs("src/jvmMain/kotlin")
         }
-
 
         all {
             languageSettings.apply {
