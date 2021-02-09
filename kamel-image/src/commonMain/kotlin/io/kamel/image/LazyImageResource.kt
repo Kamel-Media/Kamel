@@ -1,11 +1,14 @@
-package io.kamel.core
+package io.kamel.image
 
+//import io.kamel.core.utils.File
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.ImageBitmap
+import io.kamel.core.ExperimentalKamelApi
+import io.kamel.core.Resource
 import io.kamel.core.config.ResourceConfig
 import io.kamel.core.config.ResourceConfigBuilder
-import io.kamel.core.utils.File
 import io.kamel.core.utils.loadImageResource
+import io.kamel.image.config.LocalKamelConfig
 import io.ktor.http.*
 
 /**
