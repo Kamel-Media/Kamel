@@ -9,8 +9,7 @@ images in your application. By default, it uses Ktor client for loading resource
 
 - [Setup](#setup)
     - [Multiplatform](#multiplatform)
-    - [Desktop](#desktop-single-platform)
-    - [Android](#android-single-platform)   
+    - [Single-platform](#single-platform)
 - [Usage](#usage)
     - [Loading an image resource](#loading-an-image-resource)
     - [Configuring an image resource](#configuring-an-image-resource)
@@ -35,44 +34,27 @@ repositories {
 
 #### Multiplatform
 
-Add the common dependency which currently only work for Android and Common source sets. For desktop you need to add its own dependency.
+Add the dependency to the common source-set:
 
 ```kotlin
-commonMain {
-    dependencies {
-        // ...
-        implementation("com.alialbaali.kamel:kamel-core:<version>")
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation("com.alialbaali.kamel:kamel-image:0.0.7")
+            }
+        }
     }
-}
-
-named("desktopMain") {
-    dependencies {
-        // ...
-        implementation("com.alialbaali.kamel:kamel-core-desktop:<version>")
-    }
-}
-
-```
-
-#### Desktop (single-platform)
-
-Add the dependency which supports Desktop:
-
-```kotlin
-dependencies {
-    // ...
-    implementation("com.alialbaali.kamel:kamel-core-desktop:<version>")
 }
 ```
 
-#### Android (single-platform)
+#### Single-platform
 
-Add the dependency which supports Android:
+Add the dependency to the dependencies block:
 
 ```kotlin
 dependencies {
-    // ...
-    implementation("com.alialbaali.kamel:kamel-core:<version>")
+    implementation("com.alialbaali.kamel:kamel-image:0.0.7")
 }
 ```
 
