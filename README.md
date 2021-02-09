@@ -42,6 +42,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation("com.alialbaali.kamel:kamel-image:0.0.7")
+                // ...
             }
         }
     }
@@ -55,6 +56,7 @@ Add the dependency to the dependencies block:
 ```kotlin
 dependencies {
     implementation("com.alialbaali.kamel:kamel-image:0.0.7")
+    // ...
 }
 ```
 

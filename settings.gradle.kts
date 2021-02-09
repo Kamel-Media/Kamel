@@ -9,4 +9,4 @@ enableFeaturePreview("GRADLE_METADATA")
 
 rootProject.name = "Kamel"
 
-include("kamel-core" , "kamel-image")
+include("kamel-samples", "kamel-core", "kamel-image")

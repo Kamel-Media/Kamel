@@ -41,6 +41,12 @@ kotlin {
             }
         }
 
+        val jvmTest by getting {
+            dependencies {
+                implementation(kotlin("test-junit"))
+            }
+        }
+
         all {
             languageSettings.apply {
                 useExperimentalAnnotation("kotlin.Experimental")

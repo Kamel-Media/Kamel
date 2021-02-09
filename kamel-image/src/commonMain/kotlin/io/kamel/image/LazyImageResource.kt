@@ -1,6 +1,5 @@
 package io.kamel.image
 
-//import io.kamel.core.utils.File
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.ImageBitmap
 import io.kamel.core.ExperimentalKamelApi
@@ -10,6 +9,9 @@ import io.kamel.core.config.ResourceConfigBuilder
 import io.kamel.core.utils.loadImageResource
 import io.kamel.image.config.LocalKamelConfig
 import io.ktor.http.*
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 /**
  * Loads an image resource asynchronously.
