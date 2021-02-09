@@ -104,5 +104,4 @@ internal fun KamelConfig.mapInput(input: Any): Any {
 
 internal expect fun <T : Any> KamelConfig.findFetcherFor(data: T): Fetcher<T>
 
-@OptIn(ExperimentalStdlibApi::class)
-internal expect inline fun <reified T : Any> KamelConfig.findDecoderFor(): Decoder<ImageBitmap>
+internal expect inline fun <reified T : Any> KamelConfig.findDecoderFor(): Decoder<T>

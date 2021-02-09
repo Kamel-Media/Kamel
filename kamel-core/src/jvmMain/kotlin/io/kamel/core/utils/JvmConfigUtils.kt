@@ -1,6 +1,5 @@
 package io.kamel.core.utils
 
-import androidx.compose.ui.graphics.ImageBitmap
 import io.kamel.core.config.KamelConfig
 import io.kamel.core.decoder.Decoder
 import io.kamel.core.fetcher.Fetcher
@@ -30,7 +29,7 @@ internal actual fun <T : Any> KamelConfig.findFetcherFor(data: T): Fetcher<T> {
 }
 
 @OptIn(ExperimentalStdlibApi::class)
-internal actual inline fun <reified T : Any> KamelConfig.findDecoderFor(): Decoder<ImageBitmap> {
+internal actual inline fun <reified T : Any> KamelConfig.findDecoderFor(): Decoder<T> {
 
     val type = typeOf<Decoder<T>>()
 
@@ -43,5 +42,5 @@ internal actual inline fun <reified T : Any> KamelConfig.findDecoderFor(): Decod
 
     checkNotNull(decoder) { "Unable to find a decoder for $type" }
 
-    return decoder as Decoder<ImageBitmap>
+    return decoder as Decoder<T>
 }
