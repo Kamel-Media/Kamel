@@ -1,17 +1,17 @@
-package io.kamel.core
+package io.kamel.image
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.FiniteAnimationSpec
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.DefaultAlpha
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import io.kamel.core.config.KamelConfig
+import io.kamel.core.Resource
 
 /**
  * A composable that displays an image resource.
@@ -36,9 +36,9 @@ public fun KamelImage(
     animationSpec: FiniteAnimationSpec<Float> = tween()
 ) {
     if (crossfade)
-        Crossfade(resource, animationSpec = animationSpec) {
+        Crossfade(resource, animationSpec = animationSpec) { animatedResource ->
             DefaultImage(
-                it,
+                animatedResource,
                 contentDescription,
                 modifier,
                 alignment,
@@ -90,9 +90,3 @@ private fun DefaultImage(
         is Resource.Failure -> if (onFailure != null) onFailure(resource.exception)
     }
 }
-
-
-/**
- * CompositionLocal that provides default configuration of [KamelConfig].
- */
-public val LocalKamelConfig: ProvidableCompositionLocal<KamelConfig> = staticCompositionLocalOf { KamelConfig.Default }
