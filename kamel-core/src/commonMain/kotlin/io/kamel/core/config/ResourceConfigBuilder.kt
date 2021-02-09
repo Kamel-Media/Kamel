@@ -22,3 +22,19 @@ public class ResourceConfigBuilder {
     }
 
 }
+
+/**
+ * Copies all the data from [builder] and uses it as base for [this].
+ */
+public fun ResourceConfigBuilder.takeFrom(builder: ResourceConfigBuilder): ResourceConfigBuilder = takeFrom(builder.build())
+
+/**
+ * Copies all the data from [config] and uses it as base for [this].
+ */
+public fun ResourceConfigBuilder.takeFrom(config: ResourceConfig): ResourceConfigBuilder {
+    dispatcher = config.dispatcher
+    requestBuilder {
+        takeFrom(config.requestData)
+    }
+    return this
+}

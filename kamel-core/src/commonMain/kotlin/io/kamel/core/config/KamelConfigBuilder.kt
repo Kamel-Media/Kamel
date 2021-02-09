@@ -13,6 +13,7 @@ import io.kamel.core.mapper.URIMapper
 import io.kamel.core.mapper.URLMapper
 import io.ktor.client.*
 import io.ktor.client.engine.*
+import io.ktor.client.request.*
 import io.ktor.http.*
 
 public class KamelConfigBuilder {
@@ -97,3 +98,20 @@ public fun KamelConfigBuilder.uriMapper(): Unit = mapper(URIMapper)
  * Adds a [URL] to [Url] mapper to the [KamelConfigBuilder].
  */
 public fun KamelConfigBuilder.urlMapper(): Unit = mapper(URLMapper)
+
+/**
+ * Copies all the data from [builder] and uses it as base for [this].
+ */
+public fun KamelConfigBuilder.takeFrom(builder: KamelConfigBuilder): KamelConfigBuilder = takeFrom(builder.build())
+
+/**
+ * Copies all the data from [config] and uses it as base for [this].
+ */
+public fun KamelConfigBuilder.takeFrom(config: KamelConfig): KamelConfigBuilder {
+    imageBitmapCacheSize = config.imageBitmapCache.maxSize
+    config.fetchers.forEach { fetcher(it) }
+    config.decoders.forEach { decoder(it) }
+    config.mappers.forEach { mapper(it) }
+
+    return this
+}
