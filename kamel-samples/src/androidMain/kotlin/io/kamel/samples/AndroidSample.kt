@@ -9,7 +9,7 @@ class AndroidSample : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            SampleImages()
+            GallerySample()
         }
     }
 
