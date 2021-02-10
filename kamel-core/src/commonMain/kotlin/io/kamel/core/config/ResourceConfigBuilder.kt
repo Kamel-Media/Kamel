@@ -11,14 +11,14 @@ public class ResourceConfigBuilder {
 
     public var dispatcher: CoroutineDispatcher = Dispatchers.IO
 
-    public fun requestBuilder(block: HttpRequestBuilder. () -> Unit): HttpRequestBuilder = requestBuilder.apply(block)
+    public fun requestBuilder(block: HttpRequestBuilder.() -> Unit): HttpRequestBuilder = requestBuilder.apply(block)
 
     public fun build(): ResourceConfig = object : ResourceConfig {
-        override val requestData: HttpRequestData
-            get() = this@ResourceConfigBuilder.requestBuilder.build()
 
-        override val dispatcher: CoroutineDispatcher
-            get() = this@ResourceConfigBuilder.dispatcher
+        override val requestData: HttpRequestData = requestBuilder.build()
+
+        override val dispatcher: CoroutineDispatcher = this@ResourceConfigBuilder.dispatcher
+
     }
 
 }

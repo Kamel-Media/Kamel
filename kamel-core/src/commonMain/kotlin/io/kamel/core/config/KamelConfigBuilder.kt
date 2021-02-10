@@ -18,19 +18,13 @@ import io.ktor.http.*
 
 public class KamelConfigBuilder {
 
-    private val fetchers: MutableList<Fetcher<Any>> = mutableListOf()
+    internal val fetchers: MutableList<Fetcher<Any>> = mutableListOf()
 
-    private val decoders: MutableList<Decoder<Any>> = mutableListOf()
+    internal val decoders: MutableList<Decoder<Any>> = mutableListOf()
 
-    private val mappers: MutableList<Mapper<Any, Any>> = mutableListOf()
+    internal val mappers: MutableList<Mapper<Any, Any>> = mutableListOf()
 
     public var imageBitmapCacheSize: Int = 0
-        set(value) {
-            field = value
-            imageBitmapCache = LruCache(value)
-        }
-
-    private var imageBitmapCache = LruCache<Any, ImageBitmap>(imageBitmapCacheSize)
 
     public fun <T : Any> fetcher(fetcher: Fetcher<T>) {
         fetchers += fetcher as Fetcher<Any>
@@ -46,17 +40,13 @@ public class KamelConfigBuilder {
 
     internal fun build(): KamelConfig = object : KamelConfig {
 
-        override val fetchers: List<Fetcher<Any>>
-            get() = this@KamelConfigBuilder.fetchers
+        override val fetchers: List<Fetcher<Any>> = this@KamelConfigBuilder.fetchers
 
-        override val decoders: List<Decoder<Any>>
-            get() = this@KamelConfigBuilder.decoders
+        override val decoders: List<Decoder<Any>> = this@KamelConfigBuilder.decoders
 
-        override val mappers: List<Mapper<Any, Any>>
-            get() = this@KamelConfigBuilder.mappers
+        override val mappers: List<Mapper<Any, Any>> = this@KamelConfigBuilder.mappers
 
-        override val imageBitmapCache: Cache<Any, ImageBitmap>
-            get() = this@KamelConfigBuilder.imageBitmapCache
+        override val imageBitmapCache: Cache<Any, ImageBitmap> = LruCache(imageBitmapCacheSize)
 
     }
 
