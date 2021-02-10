@@ -1,3 +1,4 @@
+import org.jetbrains.compose.compose
 import org.jetbrains.kotlin.config.LanguageFeature
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 
@@ -30,8 +31,11 @@ kotlin {
 
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
+                api(kotlin("test-common"))
+                api(kotlin("test-annotations-common"))
+                api("io.ktor:ktor-client-mock:$ktorVersion")
+                api("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2")
+                api(compose("org.jetbrains.compose.ui:ui-test-junit4"))
             }
         }
 
@@ -43,7 +47,7 @@ kotlin {
 
         val jvmTest by getting {
             dependencies {
-                implementation(kotlin("test-junit"))
+                api(kotlin("test-junit"))
             }
         }
 

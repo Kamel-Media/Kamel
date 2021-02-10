@@ -1,3 +1,4 @@
+import org.jetbrains.compose.compose
 import org.jetbrains.kotlin.config.LanguageFeature
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 
@@ -65,12 +66,20 @@ kotlin {
                 api(kotlin("test-common"))
                 api(kotlin("test-annotations-common"))
                 api("io.ktor:ktor-client-mock:$ktorVersion")
+                api(compose("org.jetbrains.compose.ui:ui-test-junit4"))
             }
         }
 
         val desktopMain by getting {
             dependencies {
                 api("io.ktor:ktor-client-cio:$ktorVersion")
+            }
+        }
+
+        val desktopTest by getting {
+            dependencies {
+                implementation(compose.desktop.currentOs)
+                api(kotlin("test-junit"))
             }
         }
 
