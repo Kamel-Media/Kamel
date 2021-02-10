@@ -19,7 +19,7 @@ internal class HttpFetcher(private val client: HttpClient) : Fetcher<Url> {
         get() = DataSource.Network
 
     override suspend fun fetch(data: Url, resourceConfig: ResourceConfig): Result<ByteReadChannel> = runCatching {
-        client.get {
+        client.request {
             takeFrom(resourceConfig.requestData)
             url(data)
         }
@@ -28,7 +28,7 @@ internal class HttpFetcher(private val client: HttpClient) : Fetcher<Url> {
     @ExperimentalKamelApi
     override suspend fun fetchResource(data: Url, resourceConfig: ResourceConfig): Resource<ByteReadChannel> =
         tryCatching {
-            client.get {
+            client.request {
                 takeFrom(resourceConfig.requestData)
                 url(data)
             }
