@@ -36,7 +36,7 @@ Properties().apply {
 allprojects {
 
     group = "com.alialbaali.kamel"
-    version = "0.0.7-SNAPSHOT"
+    version = "0.0.7"
 
     repositories {
         google()
