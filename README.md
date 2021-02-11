@@ -83,6 +83,8 @@ lazyImageResource(data = URL("https://www.example.com/image.jpg"))
 
 // File
 lazyImageResource(data = File("/path/to/image.jpg"))
+
+// and more...
 ```
 
 ### Configuring an image resource
@@ -207,7 +209,7 @@ KamelConfig {
 You can use ```LocalKamelConfig``` to apply your custom configuration:
 
 ```kotlin
-Providers(LocalKamelConfig provides myKamelConfig) {
+CompositionLocalProvider(LocalKamelConfig provides myKamelConfig) {
     lazyImageResource("image.jpg")
 }
 ```
