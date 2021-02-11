@@ -41,7 +41,7 @@ kotlin {
 
         val jvmMain by getting {
             dependencies {
-                api("org.jetbrains.kotlin:kotlin-reflect:1.4.21-2")
+                api("org.jetbrains.kotlin:kotlin-reflect:1.4.30")
             }
         }
 
