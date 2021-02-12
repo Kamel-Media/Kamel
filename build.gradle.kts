@@ -57,8 +57,8 @@ if (file.exists()) {
 
 allprojects {
 
-    group = ext("GroupId")
-    version = ext("Version")
+    group = rootProject.ext["GroupId"] as String
+    version = rootProject.ext["Version"] as String
 
     repositories {
         google()
@@ -140,10 +140,9 @@ allprojects {
 
 }
 
-
 nexusStaging {
-    packageGroup = ext("GroupId").toString()
-    stagingProfileId = ext("stagingProfileId").toString()
-    username = ext("ossrh.username").toString()
-    password = ext("ossrh.password").toString()
+    packageGroup = rootProject.ext["GroupId"] as String
+    stagingProfileId = rootProject.ext["stagingProfileId"] as String
+    username = rootProject.ext["ossrh.username"] as String
+    password = rootProject.ext["ossrh.password"] as String
 }
