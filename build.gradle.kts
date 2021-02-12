@@ -23,23 +23,42 @@ buildscript {
     }
 }
 
-Properties().apply {
-    load(rootProject.file("local.properties").inputStream())
+ext {
+    set("GroupId", "com.alialbaali.kamel")
+    set("Version", "com.alialbaali.kamel")
+}
+
+val file = project.file("local.properties")
+
+if (file.exists()) {
+    Properties().apply {
+        val inputStream = file.inputStream()
+        load(inputStream)
+        ext {
+            set("signing.keyId", getProperty("signing.keyId"))
+            set("signing.password", getProperty("signing.password"))
+            set("ossrh.username", getProperty("ossrh.username"))
+            set("ossrh.password", getProperty("ossrh.password"))
+            set("signing.secretKeyRingFile", getProperty("signing.secretKeyRingFile"))
+            set("stagingProfileId", getProperty("stagingProfileId"))
+        }
+        inputStream.close()
+    }
+} else {
     ext {
-        set("signing.keyId", getProperty("signing.keyId"))
-        set("signing.password", getProperty("signing.password"))
-        set("ossrh.username", getProperty("ossrh.username"))
-        set("ossrh.password", getProperty("ossrh.password"))
-        set("signing.secretKeyRingFile", getProperty("signing.secretKeyRingFile"))
-        set("GroupId", "com.alialbaali.kamel")
-        set("stagingProfileId", getProperty("stagingProfileId"))
+        set("signing.keyId", System.getenv("SIGNING_KEY_ID"))
+        set("signing.password", System.getenv("SIGNING_PASSWORD"))
+        set("ossrh.username", System.getenv("SIGNING_SECRET_KEY_RING_FILE"))
+        set("ossrh.password", System.getenv("OSSRH_USERNAME"))
+        set("signing.secretKeyRingFile", System.getenv("OSSRH_PASSWORD"))
+        set("stagingProfileId", System.getenv("STAGING_PROFILE_ID"))
     }
 }
 
 allprojects {
 
-    group = "com.alialbaali.kamel"
-    version = "0.1.1-SNAPSHOT"
+    group = ext("GroudId")
+    version = ext("Version")
 
     repositories {
         google()
