@@ -3,6 +3,7 @@ import java.util.*
 
 plugins {
     id("org.jetbrains.dokka") version "1.4.20"
+    id("io.codearte.nexus-staging") version ("0.22.0")
 }
 
 buildscript {
@@ -30,13 +31,15 @@ Properties().apply {
         set("ossrh.username", getProperty("ossrh.username"))
         set("ossrh.password", getProperty("ossrh.password"))
         set("signing.secretKeyRingFile", getProperty("signing.secretKeyRingFile"))
+        set("GroupId", "com.alialbaali.kamel")
+        set("stagingProfileId", getProperty("stagingProfileId"))
     }
 }
 
 allprojects {
 
     group = "com.alialbaali.kamel"
-    version = "0.1.0"
+    version = "0.1.1-SNAPSHOT"
 
     repositories {
         google()
@@ -116,4 +119,12 @@ allprojects {
         }
     }
 
+}
+
+
+nexusStaging {
+    packageGroup = ext("GroupId").toString()
+    stagingProfileId = ext("stagingProfileId").toString()
+    username = ext("ossrh.username").toString()
+    password = ext("ossrh.password").toString()
 }
