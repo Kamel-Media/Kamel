@@ -18,14 +18,14 @@ buildscript {
 
     dependencies {
         classpath("org.jetbrains.compose:compose-gradle-plugin:0.3.0-build152")
-        classpath("com.android.tools.build:gradle:7.0.0-alpha05")
+        classpath("com.android.tools.build:gradle:7.0.0-alpha06")
         classpath(kotlin("gradle-plugin", version = "1.4.30"))
     }
 }
 
 ext {
     set("GroupId", "com.alialbaali.kamel")
-    set("Version", "com.alialbaali.kamel")
+    set("Version", "0.1.1-SNAPSHOT")
 }
 
 val file = project.file("local.properties")
@@ -57,7 +57,7 @@ if (file.exists()) {
 
 allprojects {
 
-    group = ext("GroudId")
+    group = ext("GroupId")
     version = ext("Version")
 
     repositories {
