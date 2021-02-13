@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package io.kamel.core.utils
 
 import io.kamel.core.config.KamelConfig

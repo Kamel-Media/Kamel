@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package io.kamel.core.config
 
 import androidx.compose.ui.graphics.ImageBitmap
