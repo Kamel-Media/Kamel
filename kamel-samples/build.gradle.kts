@@ -36,6 +36,13 @@ android {
         create("testApi")
         create("testDebugApi")
         create("testReleaseApi")
+        named("implementation") {
+            exclude(group = "androidx.compose.animation")
+            exclude(group = "androidx.compose.foundation")
+            exclude(group = "androidx.compose.material")
+            exclude(group = "androidx.compose.runtime")
+            exclude(group = "androidx.compose.ui")
+        }
     }
 }
 
@@ -88,7 +95,8 @@ kotlin {
         targets.all {
             compilations.all {
                 kotlinOptions {
-                    freeCompilerArgs = listOf("-Xallow-result-return-type", "-Xopt-in=kotlin.RequiresOptIn")
+                    freeCompilerArgs =
+                        listOf("-Xallow-result-return-type", "-Xopt-in=kotlin.RequiresOptIn")
                 }
             }
         }
