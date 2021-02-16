@@ -25,7 +25,7 @@ buildscript {
 
 ext {
     set("GroupId", "com.alialbaali.kamel")
-    set("Version", "0.1.1")
+    set("Version", "0.1.2-SNAPSHOT")
 }
 
 val file = project.file("local.properties")
