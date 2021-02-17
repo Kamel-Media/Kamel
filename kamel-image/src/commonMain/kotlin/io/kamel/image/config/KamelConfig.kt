@@ -5,7 +5,6 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.ImageBitmap
 import io.kamel.core.config.*
 import io.kamel.image.decoder.ImageBitmapDecoder
-import io.ktor.client.features.logging.*
 
 public val KamelConfig.Companion.Default: KamelConfig
     get() = KamelConfig {
