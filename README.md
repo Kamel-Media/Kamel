@@ -124,7 +124,9 @@ KamelImage(
     resource = imageResource,
     contentDescription = "Profile",
     onLoading = {
-        CircularProgressIndicator()
+        Box(modifier = Modifier.fillMaxSize()) {
+            CircularProgressIndicator()
+        }
     },
     onFailure = { exception ->
         Snackbar {
