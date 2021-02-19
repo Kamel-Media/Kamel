@@ -15,8 +15,10 @@ import io.ktor.utils.io.*
  */
 internal class HttpFetcher(private val client: HttpClient) : Fetcher<Url> {
 
-    override val source: DataSource
-        get() = DataSource.Network
+    override val source: DataSource = DataSource.Network
+
+    override val Url.isSupported: Boolean
+        get() = protocol.name == "https" || protocol.name == "http"
 
     override suspend fun fetch(data: Url, resourceConfig: ResourceConfig): Result<ByteReadChannel> = runCatching {
         client.request {

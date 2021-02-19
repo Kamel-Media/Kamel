@@ -14,8 +14,10 @@ import java.io.File
  */
 internal actual object FileFetcher : Fetcher<File> {
 
-    override val source: DataSource
-        get() = DataSource.Disk
+    override val source: DataSource = DataSource.Disk
+
+    override val File.isSupported: Boolean
+        get() = exists() && isFile
 
     override suspend fun fetch(data: File, resourceConfig: ResourceConfig): Result<ByteReadChannel> = runCatching {
         data.readChannel()

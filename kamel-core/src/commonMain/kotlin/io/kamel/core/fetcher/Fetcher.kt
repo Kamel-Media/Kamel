@@ -17,6 +17,11 @@ public interface Fetcher<T : Any> {
     public val source: DataSource
 
     /**
+     * Whether fetching from [T] is supported or not.
+     */
+    public val T.isSupported: Boolean
+
+    /**
      * fetches data [T] asynchronously as [ByteReadChannel].
      * @param data type of data to fetch.
      * @param resourceConfig configuration used while fetching the resource.
