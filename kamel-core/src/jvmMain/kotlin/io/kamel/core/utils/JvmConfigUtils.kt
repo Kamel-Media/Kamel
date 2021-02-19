@@ -22,7 +22,9 @@ internal actual fun <T : Any> KamelConfig.findFetcherFor(data: T): Fetcher<T> {
             ?.firstOrNull()
             ?.type ?: error("Unable to find type for $fetcher")
 
-        fetcherType.isSupertypeOf(type) || fetcherType.isSubtypeOf(type)
+        val isSameType = fetcherType.isSupertypeOf(type) || fetcherType.isSubtypeOf(type)
+
+        isSameType && with(fetcher) { data.isSupported }
     }
 
     checkNotNull(fetcher) { "Unable to find a fetcher for $type" }

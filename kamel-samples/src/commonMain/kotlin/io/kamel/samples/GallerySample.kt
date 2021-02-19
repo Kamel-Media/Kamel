@@ -105,7 +105,7 @@ public fun GallerySample() {
 }
 
 @Composable
-public inline fun SampleImage(resource: Resource<ImageBitmap>, modifier: Modifier = Modifier) {
+public fun SampleImage(resource: Resource<ImageBitmap>, modifier: Modifier = Modifier) {
 
     KamelImage(
         resource = resource,
