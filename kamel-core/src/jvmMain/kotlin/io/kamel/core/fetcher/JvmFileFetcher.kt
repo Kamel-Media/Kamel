@@ -23,9 +23,4 @@ internal actual object FileFetcher : Fetcher<File> {
         data.readChannel()
     }
 
-    @ExperimentalKamelApi
-    override suspend fun fetchResource(data: File, resourceConfig: ResourceConfig): Resource<ByteReadChannel> = tryCatching {
-        data.readChannel()
-    }
-
 }
