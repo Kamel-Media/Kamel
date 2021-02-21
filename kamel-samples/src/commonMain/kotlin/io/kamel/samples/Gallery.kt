@@ -9,11 +9,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.unit.dp
 import io.kamel.core.Resource
@@ -34,16 +33,22 @@ public fun Gallery() {
 
             val imageResource: Resource<ImageBitmap> = lazyImageResource(imageUrl)
 
-            SampleImage(
-                resource = imageResource,
+            Card(
                 modifier = Modifier
-                    .padding(8.dp)
-                    .shadow(8.dp)
-                    .clip(RoundedCornerShape(8.dp))
                     .animateContentSize(spring(stiffness = Spring.StiffnessLow))
+                    .padding(16.dp)
                     .fillParentMaxWidth()
-                    .fillParentMaxHeight(0.5F)
-            )
+                    .fillParentMaxHeight(0.5F),
+                shape = RoundedCornerShape(16.dp),
+                elevation = 8.dp,
+            ) {
+
+                SampleImage(
+                    resource = imageResource,
+                    modifier = Modifier.fillMaxSize(),
+                )
+
+            }
 
         }
     }
