@@ -19,7 +19,7 @@ import kotlinx.coroutines.withContext
  * @see Mapper
  * @see Cache
  */
-public suspend fun <T : Any> KamelConfig.loadImage(data: T, config: ResourceConfig): Result<ImageBitmap> {
+public suspend fun KamelConfig.loadImage(data: Any, config: ResourceConfig): Result<ImageBitmap> {
 
     // Check if there's an image with same key [data].
     return when (val imageBitmap = imageBitmapCache[data]) {
@@ -45,7 +45,7 @@ public suspend fun <T : Any> KamelConfig.loadImage(data: T, config: ResourceConf
 
 // This API Will be removed when https://github.com/JetBrains/compose-jb/issues/189 is fixed.
 @ExperimentalKamelApi
-public suspend fun <T : Any> KamelConfig.loadImageResource(data: T, config: ResourceConfig): Resource<ImageBitmap> {
+public suspend fun KamelConfig.loadImageResource(data: Any, config: ResourceConfig): Resource<ImageBitmap> {
 
     // Check if there's an image with same key [data].
     return when (val imageBitmap = imageBitmapCache[data]) {
