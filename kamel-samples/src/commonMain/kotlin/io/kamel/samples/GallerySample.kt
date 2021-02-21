@@ -1,25 +1,28 @@
 package io.kamel.samples
 
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.SnackbarDuration
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.SnackbarHostState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
@@ -27,78 +30,30 @@ import io.kamel.image.lazyImageResource
 
 public fun generateRandomImageUrl(seed: Int = (1..1000).random()): String = "https://picsum.photos/seed/$seed/500/500"
 
-public enum class CellCount {
-    Two,
-    Three,
-    Four,
-}
+public expect val cellCount: Int
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 public fun GallerySample() {
 
-    var cellCount by remember { mutableStateOf(CellCount.Three) }
-
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-
-        item {
-            Row(
-                Modifier
-                    .fillParentMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                CellCount.values().forEach {
-                    val selected = cellCount == it
-
-                    val backgroundColor by animateColorAsState(if (selected) Color.Blue.copy(0.05F) else Color.White)
-                    val textColor by animateColorAsState(if (selected) Color.Blue.copy(0.5F) else Color.Black)
-
-                    Text(
-                        text = it.name,
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .selectable(selected = selected) { cellCount = it }
-                            .clip(CircleShape)
-                            .background(backgroundColor)
-                            .padding(8.dp),
-                        color = textColor,
-                        fontWeight = FontWeight.Medium,
-                    )
-                }
-            }
-        }
+    LazyVerticalGrid(cells = GridCells.Fixed(count = cellCount), modifier = Modifier.fillMaxSize()) {
 
         items(100) { item ->
 
+            val imageUrl: String = remember(item) { generateRandomImageUrl(item) }
 
-            Row(modifier = Modifier.fillParentMaxWidth()) {
+            val imageResource: Resource<ImageBitmap> = lazyImageResource(imageUrl)
 
-                repeat(4) {
-
-                    val cellNumber = (item + 1) * (item + 1) + it
-
-                    val imageUrl = remember(cellNumber) { generateRandomImageUrl(cellNumber) }
-
-                    val imageResource = lazyImageResource(imageUrl)
-
-                    SampleImage(
-                        resource = imageResource,
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .shadow(8.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                            .animateContentSize(spring(stiffness = Spring.StiffnessLow))
-                            .fillParentMaxSize(
-                                when (cellCount) {
-                                    CellCount.Two -> 0.50F
-                                    CellCount.Three -> 0.33F
-                                    CellCount.Four -> 0.25F
-                                }
-                            )
-                    )
-
-                }
-            }
+            SampleImage(
+                resource = imageResource,
+                modifier = Modifier
+                    .padding(8.dp)
+                    .shadow(8.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .animateContentSize(spring(stiffness = Spring.StiffnessLow))
+                    .fillParentMaxWidth()
+                    .fillParentMaxHeight(0.5F)
+            )
 
         }
     }
@@ -117,7 +72,7 @@ public fun SampleImage(resource: Resource<ImageBitmap>, modifier: Modifier = Mod
                 CircularProgressIndicator()
             }
         },
-        onFailure = { exception ->
+        onFailure = { exception: Throwable ->
 
             val snackbarHostState = remember { SnackbarHostState() }
 
@@ -130,6 +85,7 @@ public fun SampleImage(resource: Resource<ImageBitmap>, modifier: Modifier = Mod
                     duration = SnackbarDuration.Short
                 )
             }
+
         },
         crossfade = true,
     )
