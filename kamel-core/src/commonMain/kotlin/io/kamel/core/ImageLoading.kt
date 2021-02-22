@@ -1,13 +1,15 @@
-package io.kamel.core.utils
+package io.kamel.core
 
 import androidx.compose.ui.graphics.ImageBitmap
-import io.kamel.core.Resource
 import io.kamel.core.cache.Cache
 import io.kamel.core.config.KamelConfig
 import io.kamel.core.config.ResourceConfig
 import io.kamel.core.decoder.Decoder
 import io.kamel.core.fetcher.Fetcher
 import io.kamel.core.mapper.Mapper
+import io.kamel.core.utils.findDecoderFor
+import io.kamel.core.utils.findFetcherFor
+import io.kamel.core.utils.mapInput
 import kotlinx.coroutines.withContext
 
 /**
@@ -19,16 +21,15 @@ import kotlinx.coroutines.withContext
  */
 public suspend fun KamelConfig.loadImageResource(data: Any, resourceConfig: ResourceConfig): Resource<ImageBitmap> {
 
-    // Check if there's an image with same key [data].
-    return when (val imageBitmap = imageBitmapCache[data]) {
-        null -> {
+    val output = mapInput(data)
 
-            val output = mapInput(data)
+    // Check if there's an image with same key [data].
+    return when (val imageBitmap = imageBitmapCache[output]) {
+        null -> {
 
             val fetcher = findFetcherFor(output)
 
             val decoder = findDecoderFor<ImageBitmap>()
-
 
             withContext(resourceConfig.dispatcher) {
 
@@ -37,7 +38,7 @@ public suspend fun KamelConfig.loadImageResource(data: Any, resourceConfig: Reso
                     val channel = fetcher.fetch(output, resourceConfig)
 
                     val bitmap = decoder.decode(channel)
-                        .apply { imageBitmapCache[data] = this }
+                        .apply { imageBitmapCache[output] = this }
 
                     Resource.Success(bitmap)
 

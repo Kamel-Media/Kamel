@@ -2,11 +2,10 @@ package io.kamel.image
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.ImageBitmap
-import io.kamel.core.ExperimentalKamelApi
 import io.kamel.core.Resource
 import io.kamel.core.config.ResourceConfig
 import io.kamel.core.config.ResourceConfigBuilder
-import io.kamel.core.utils.loadImageResource
+import io.kamel.core.loadImageResource
 import io.kamel.image.config.LocalKamelConfig
 import io.ktor.http.*
 
@@ -18,7 +17,6 @@ import io.ktor.http.*
  * @see KamelImage
  * @see LocalKamelConfig
  */
-@OptIn(ExperimentalKamelApi::class)
 @Composable
 public inline fun lazyImageResource(data: Any, block: ResourceConfigBuilder.() -> Unit = {}): Resource<ImageBitmap> {
 
