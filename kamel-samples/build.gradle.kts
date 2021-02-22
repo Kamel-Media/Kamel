@@ -88,7 +88,6 @@ kotlin {
         all {
             languageSettings.apply {
                 useExperimentalAnnotation("kotlin.Experimental")
-                enableLanguageFeature(LanguageFeature.AllowResultInReturnType.toString())
             }
         }
 
@@ -96,7 +95,7 @@ kotlin {
             compilations.all {
                 kotlinOptions {
                     freeCompilerArgs =
-                        listOf("-Xallow-result-return-type", "-Xopt-in=kotlin.RequiresOptIn")
+                        listOf("-Xopt-in=kotlin.RequiresOptIn")
                 }
             }
         }
@@ -107,7 +106,7 @@ kotlin {
 compose {
     desktop {
         application {
-            mainClass = "io.kamel.samples.MainKt"
+            mainClass = "io.kamel.samples.DesktopSampleKt"
         }
     }
 }

@@ -1,5 +1,4 @@
 import org.jetbrains.compose.compose
-import org.jetbrains.kotlin.config.LanguageFeature
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 
 plugins {
@@ -63,45 +62,44 @@ kotlin {
 
         val commonTest by getting {
             dependencies {
-                api(kotlin("test-common"))
-                api(kotlin("test-annotations-common"))
-                api("io.ktor:ktor-client-mock:$ktorVersion")
-                api(compose("org.jetbrains.compose.ui:ui-test-junit4"))
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-annotations-common"))
+                implementation("io.ktor:ktor-client-mock:$ktorVersion")
+                implementation(compose("org.jetbrains.compose.ui:ui-test-junit4"))
             }
         }
 
         val desktopMain by getting {
             dependencies {
-                api("io.ktor:ktor-client-cio:$ktorVersion")
+                implementation("io.ktor:ktor-client-cio:$ktorVersion")
             }
         }
 
         val desktopTest by getting {
             dependencies {
                 implementation(compose.desktop.currentOs)
-                api(kotlin("test-junit"))
+                implementation(kotlin("test-junit"))
             }
         }
 
         val androidMain by getting {
             dependencies {
-                api("io.ktor:ktor-client-android:$ktorVersion")
-                api("androidx.appcompat:appcompat:1.2.0")
-                api("androidx.core:core-ktx:1.3.2")
+                implementation("io.ktor:ktor-client-android:$ktorVersion")
+                implementation("androidx.appcompat:appcompat:1.2.0")
+                implementation("androidx.core:core-ktx:1.3.2")
             }
         }
 
         all {
             languageSettings.apply {
                 useExperimentalAnnotation("kotlin.Experimental")
-                enableLanguageFeature(LanguageFeature.AllowResultInReturnType.toString())
             }
         }
 
         targets.all {
             compilations.all {
                 kotlinOptions {
-                    freeCompilerArgs = listOf("-Xallow-result-return-type", "-Xopt-in=kotlin.RequiresOptIn")
+                    freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
                 }
             }
         }

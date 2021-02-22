@@ -1,5 +1,4 @@
 import org.jetbrains.compose.compose
-import org.jetbrains.kotlin.config.LanguageFeature
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 
 plugins {
@@ -31,37 +30,36 @@ kotlin {
 
         val commonTest by getting {
             dependencies {
-                api(kotlin("test-common"))
-                api(kotlin("test-annotations-common"))
-                api("io.ktor:ktor-client-mock:$ktorVersion")
-                api("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2")
-                api(compose("org.jetbrains.compose.ui:ui-test-junit4"))
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-annotations-common"))
+                implementation("io.ktor:ktor-client-mock:$ktorVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2")
+                implementation(compose("org.jetbrains.compose.ui:ui-test-junit4"))
             }
         }
 
         val jvmMain by getting {
             dependencies {
-                api("org.jetbrains.kotlin:kotlin-reflect:1.4.30")
+                implementation("org.jetbrains.kotlin:kotlin-reflect:1.4.30")
             }
         }
 
         val jvmTest by getting {
             dependencies {
-                api(kotlin("test-junit"))
+                implementation(kotlin("test-junit"))
             }
         }
 
         all {
             languageSettings.apply {
                 useExperimentalAnnotation("kotlin.Experimental")
-                enableLanguageFeature(LanguageFeature.AllowResultInReturnType.toString())
             }
         }
 
         targets.all {
             compilations.all {
                 kotlinOptions {
-                    freeCompilerArgs = listOf("-Xallow-result-return-type", "-Xopt-in=kotlin.RequiresOptIn")
+                    freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
                 }
             }
         }
