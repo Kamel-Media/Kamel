@@ -1,23 +1,47 @@
 package io.kamel.core.config
 
+import androidx.compose.ui.unit.Density
 import io.kamel.core.utils.IO
 import io.ktor.client.request.*
+import io.ktor.http.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
 public class ResourceConfigBuilder {
 
+    /**
+     * [HttpRequestBuilder] to configure the request for this resource.
+     * @see ResourceConfig.requestData
+     */
     private val requestBuilder: HttpRequestBuilder = HttpRequestBuilder()
 
+    /**
+     * Dispatcher used while loading the resource.
+     * @see ResourceConfig.dispatcher
+     */
     public var dispatcher: CoroutineDispatcher = Dispatchers.IO
 
+    /**
+     * Screen density.
+     * @see ResourceConfig.density
+     */
+    public lateinit var density: Density
+
+    /**
+     * Executes a [block] that configures the [HttpRequestBuilder] associated with this request.
+     */
     public fun requestBuilder(block: HttpRequestBuilder.() -> Unit): HttpRequestBuilder = requestBuilder.apply(block)
 
+    /**
+     * Creates immutable [ResourceConfig].
+     */
     public fun build(): ResourceConfig = object : ResourceConfig {
 
         override val requestData: HttpRequestData = requestBuilder.build()
 
         override val dispatcher: CoroutineDispatcher = this@ResourceConfigBuilder.dispatcher
+
+        override val density: Density = this@ResourceConfigBuilder.density
 
     }
 

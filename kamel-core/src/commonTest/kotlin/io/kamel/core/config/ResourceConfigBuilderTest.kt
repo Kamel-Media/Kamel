@@ -1,5 +1,6 @@
 package io.kamel.core.config
 
+import androidx.compose.ui.unit.Density
 import io.kamel.core.utils.cacheControl
 import io.ktor.client.request.*
 import io.ktor.client.utils.CacheControl
@@ -15,6 +16,7 @@ class ResourceConfigBuilderTest {
     @BeforeTest
     fun setup() {
         builder = ResourceConfigBuilder()
+            .apply { density = Density(1F) }
     }
 
     @Test
@@ -42,6 +44,15 @@ class ResourceConfigBuilderTest {
         assertTrue { requestData.headers.contains(HttpHeaders.CacheControl, CacheControl.NO_CACHE) }
         assertTrue { requestData.method == HttpMethod.Put }
         assertEquals(expected = "example/items", actual = requestData.url.encodedPath)
+    }
+
+    @Test
+    fun testDensity() {
+        builder.density = Density(5F)
+        val config = builder.build()
+
+        assertFalse { config == Density(1F) }
+        assertTrue { config.density == builder.density }
     }
 
 
