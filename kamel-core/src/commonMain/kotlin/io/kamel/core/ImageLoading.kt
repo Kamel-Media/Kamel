@@ -25,30 +25,31 @@ public suspend fun KamelConfig.loadImageResource(data: Any, resourceConfig: Reso
 
     // Check if there's an image with same key [data].
     return when (val imageBitmap = imageBitmapCache[output]) {
-        null -> {
-
-            val fetcher = findFetcherFor(output)
-
-            val decoder = findDecoderFor<ImageBitmap>()
-
-            withContext(resourceConfig.dispatcher) {
-
-                try {
-
-                    val channel = fetcher.fetch(output, resourceConfig)
-
-                    val bitmap = decoder.decode(channel)
-                        .apply { imageBitmapCache[output] = this }
-
-                    Resource.Success(bitmap)
-
-                } catch (throwable: Throwable) {
-                    Resource.Failure(throwable)
-                }
-
-            }
-
-        }
+        null -> requestImageResource(output, resourceConfig)
         else -> Resource.Success(imageBitmap)
+    }
+}
+
+private suspend fun KamelConfig.requestImageResource(output: Any, resourceConfig: ResourceConfig): Resource<ImageBitmap> {
+
+    val fetcher = findFetcherFor(output)
+
+    val decoder = findDecoderFor<ImageBitmap>()
+
+    return withContext(resourceConfig.dispatcher) {
+
+        try {
+
+            val channel = fetcher.fetch(output, resourceConfig)
+
+            val bitmap = decoder.decode(channel)
+                .apply { imageBitmapCache[output] = this }
+
+            Resource.Success(bitmap)
+
+        } catch (exception: Throwable) {
+            Resource.Failure(exception)
+        }
+
     }
 }
