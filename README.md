@@ -16,6 +16,7 @@ load, cache, decode and display images in your application. By default, it uses 
     - [Single-platform](#single-platform)
 - [Usage](#usage)
     - [Loading an image resource](#loading-an-image-resource)
+        - [Platform specific fetchers](#platform-specific-fetchers)
     - [Configuring an image resource](#configuring-an-image-resource)
     - [Displaying an image resource](#displaying-an-image-resource)
         - [Crossfade animation](#crossfade-animation)
