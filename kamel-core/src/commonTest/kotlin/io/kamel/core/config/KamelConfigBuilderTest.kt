@@ -5,7 +5,7 @@ import io.kamel.core.fetcher.HttpFetcher
 import io.kamel.core.mapper.StringMapper
 import io.kamel.core.mapper.URIMapper
 import io.kamel.core.mapper.URLMapper
-import io.kamel.core.utils.testHttpFetcher
+import io.kamel.tests.HttpMockEngine
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -30,7 +30,7 @@ class KamelConfigBuilderTest {
 
     @Test
     fun testAddHttpFetcher() {
-        builder.testHttpFetcher()
+        builder.httpFetcher(HttpMockEngine)
 
         assertTrue { builder.fetchers.size == 1 }
         assertTrue { builder.fetchers.any { it as? HttpFetcher != null } }
