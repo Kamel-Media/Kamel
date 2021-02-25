@@ -1,10 +1,9 @@
-import org.jetbrains.kotlin.config.LanguageFeature
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 
 plugins {
-    kotlin("multiplatform")
-    id("com.android.application")
-    id("org.jetbrains.compose")
+    multiplatform
+    compose
+    `android-application`
 }
 
 android {
@@ -72,10 +71,9 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
-                implementation("androidx.core:core-ktx:1.3.2")
-                implementation("androidx.appcompat:appcompat:1.2.0")
-                implementation("com.google.android.material:material:1.3.0")
-                implementation("androidx.activity:activity-compose:1.3.0-alpha02")
+                implementation(Dependencies.Android.Appcompat)
+                implementation(Dependencies.Android.Core)
+                implementation(Dependencies.Android.ActivityCompose)
             }
         }
 

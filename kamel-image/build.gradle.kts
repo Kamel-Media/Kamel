@@ -2,9 +2,9 @@ import org.jetbrains.compose.compose
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 
 plugins {
-    kotlin("multiplatform")
-    id("org.jetbrains.compose")
-    id("com.android.library")
+    multiplatform
+    compose
+    `android-library`
     `maven-publish`
     signing
 }
@@ -23,6 +23,11 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 
     sourceSets {
         named("main") {
@@ -39,6 +44,7 @@ android {
         create("testDebugApi")
         create("testReleaseApi")
     }
+
 }
 
 kotlin {
@@ -52,8 +58,6 @@ kotlin {
 
     sourceSets {
 
-        val ktorVersion = "1.5.1"
-
         val commonMain by getting {
             dependencies {
                 api(project(":kamel-core"))
@@ -62,16 +66,17 @@ kotlin {
 
         val commonTest by getting {
             dependencies {
+                implementation(project(":kamel-tests"))
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
-                implementation("io.ktor:ktor-client-mock:$ktorVersion")
-                implementation(compose("org.jetbrains.compose.ui:ui-test-junit4"))
+                implementation(Dependencies.Testing.Ktor)
+                implementation(Dependencies.Testing.Compose)
             }
         }
 
         val desktopMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-cio:$ktorVersion")
+                implementation(Dependencies.Ktor.CIO)
             }
         }
 
@@ -84,9 +89,15 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-android:$ktorVersion")
-                implementation("androidx.appcompat:appcompat:1.2.0")
-                implementation("androidx.core:core-ktx:1.3.2")
+                implementation(Dependencies.Ktor.Android)
+                implementation(Dependencies.Android.Appcompat)
+                implementation(Dependencies.Android.Core)
+            }
+        }
+
+        val androidTest by getting {
+            dependencies {
+                implementation("androidx.test:core:1.3.0")
             }
         }
 

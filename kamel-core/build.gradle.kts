@@ -2,8 +2,8 @@ import org.jetbrains.compose.compose
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 
 plugins {
-    kotlin("multiplatform")
-    id("org.jetbrains.compose")
+    multiplatform
+    compose
     `maven-publish`
     signing
 }
@@ -16,31 +16,30 @@ kotlin {
 
     sourceSets {
 
-        val ktorVersion = "1.5.1"
-
         val commonMain by getting {
             dependencies {
                 api(compose.ui)
                 api(compose.foundation)
                 api(compose.runtime)
-                api("io.ktor:ktor-client-core:$ktorVersion")
-                api("io.ktor:ktor-client-logging:$ktorVersion")
+                api(Dependencies.Ktor.Core)
+                api(Dependencies.Ktor.Logging)
             }
         }
 
         val commonTest by getting {
             dependencies {
+                implementation(project(":kamel-tests"))
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
-                implementation("io.ktor:ktor-client-mock:$ktorVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2")
-                implementation(compose("org.jetbrains.compose.ui:ui-test-junit4"))
+                implementation(Dependencies.Testing.Ktor)
+                implementation(Dependencies.Testing.Coroutines)
+                implementation(Dependencies.Testing.Compose)
             }
         }
 
         val jvmMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-reflect:1.4.30")
+                implementation(Dependencies.KotlinReflect)
             }
         }
 

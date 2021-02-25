@@ -2,8 +2,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.util.*
 
 plugins {
-    id("org.jetbrains.dokka") version "1.4.20"
-    id("io.codearte.nexus-staging") version ("0.22.0")
+    dokka
+    `nexus-staging`
 }
 
 buildscript {
@@ -17,15 +17,10 @@ buildscript {
     }
 
     dependencies {
-        classpath("org.jetbrains.compose:compose-gradle-plugin:0.3.0-build154")
-        classpath("com.android.tools.build:gradle:7.0.0-alpha06")
-        classpath(kotlin("gradle-plugin", version = "1.4.30"))
+        classpath(Dependencies.ComposeGradlePlugin)
+        classpath(Dependencies.KotlinGradlePlugin)
+        classpath(Dependencies.Android.GradlePlugin)
     }
-}
-
-ext {
-    set("GroupId", "com.alialbaali.kamel")
-    set("Version", "0.1.2-SNAPSHOT")
 }
 
 val file = project.file("local.properties")
@@ -57,8 +52,8 @@ if (file.exists()) {
 
 allprojects {
 
-    group = rootProject.ext["GroupId"] as String
-    version = rootProject.ext["Version"] as String
+    group = Kamel.Group
+    version = Kamel.Version
 
     repositories {
         google()
@@ -141,7 +136,7 @@ allprojects {
 }
 
 nexusStaging {
-    packageGroup = rootProject.ext["GroupId"] as String
+    packageGroup = Kamel.Group
     stagingProfileId = rootProject.ext["stagingProfileId"] as String
     username = rootProject.ext["ossrh.username"] as String
     password = rootProject.ext["ossrh.password"] as String
