@@ -6,8 +6,8 @@
 [![Kotlin](https://img.shields.io/badge/kotlin-v1.4.30-blue.svg?logo=kotlin)](http://kotlinlang.org)
 [![Compose](https://img.shields.io/badge/compose-v0.3.0.build154-v?logo=compose&color=blue)](http://kotlinlang.org)
 
-Kamel is an asynchronous media loading library for Compose. It provides a simple, customizable and efficient way to load, cache, decode and display
-images in your application. By default, it uses Ktor client for loading resources.
+Kamel is an asynchronous media loading library for Compose. It provides a simple, customizable and efficient way to
+load, cache, decode and display images in your application. By default, it uses Ktor client for loading resources.
 
 ## Table of contents
 
@@ -78,15 +78,37 @@ lazyImageResource(data = "https://www.example.com/image.jpg")
 lazyImageResource(data = Url("https://www.example.com/image.jpg"))
 
 // URI
-lazyImageResource(data = URI("https://www.example.com/image.jpg"))
+lazyImageResource(data = URI("https://www.example.com/image.png"))
+
+// File
+lazyImageResource(data = File("/path/to/image.png"))
 
 // URL
 lazyImageResource(data = URL("https://www.example.com/image.jpg"))
 
-// File
-lazyImageResource(data = File("/path/to/image.jpg"))
-
 // and more...
+```
+
+#### Platform specific fetchers
+
+Since there isn't any shared resource system between Android and Desktop, some data fetchers are only available for a
+specific platform:
+
+To load an image file from desktop application resources, you have to add `resourcesFetcher` to the `KamelConfig`:
+
+```kotlin
+val desktopConfig = KamelConfig {
+    takeFrom(KamelConfig.Default)
+    resourcesFetcher() // Available only on Desktop.
+}
+```
+
+Assuming there's an `image.png` file in the `/resources` directory in the project:
+
+```kotlin
+CompositionLocalProvider(LocalKamelConfig provides desktopConfig) {
+    lazyImageResource("image.png")
+}
 ```
 
 ### Configuring an image resource
@@ -109,7 +131,8 @@ val imageResource: Resource<ImageBitmap> = lazyImageResource("https://www.exampl
 
 ### Displaying an image resource
 
-```KamelImage``` is a composable function that takes an ```ImageBitmap``` resource, display it and provide extra functionality:
+```KamelImage``` is a composable function that takes an ```ImageBitmap``` resource, display it and provide extra
+functionality:
 
 ```kotlin
 KamelImage(

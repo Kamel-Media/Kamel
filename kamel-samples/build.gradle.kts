@@ -64,6 +64,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":kamel-image"))
+                implementation(project(":kamel-tests"))
                 implementation(compose.material)
                 implementation(compose.animation)
             }
