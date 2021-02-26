@@ -31,4 +31,4 @@ public interface KamelConfig {
 /**
  * Configures [KamelConfig] using [KamelConfigBuilder].
  */
-public fun KamelConfig(block: KamelConfigBuilder.() -> Unit): KamelConfig = KamelConfigBuilder().apply(block).build()
+public inline fun KamelConfig(block: KamelConfigBuilder.() -> Unit): KamelConfig = KamelConfigBuilder().apply(block).build()

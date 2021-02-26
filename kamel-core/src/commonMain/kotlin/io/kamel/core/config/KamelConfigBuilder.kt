@@ -40,7 +40,7 @@ public class KamelConfigBuilder {
         mappers += mapper as Mapper<Any, Any>
     }
 
-    internal fun build(): KamelConfig = object : KamelConfig {
+    public fun build(): KamelConfig = object : KamelConfig {
 
         override val fetchers: List<Fetcher<Any>> = this@KamelConfigBuilder.fetchers
 
