@@ -3,6 +3,7 @@ package io.kamel.image.fetcher
 import io.kamel.core.DataSource
 import io.kamel.core.config.ResourceConfig
 import io.kamel.core.fetcher.Fetcher
+import io.kamel.image.utils.path
 import io.ktor.http.*
 import io.ktor.utils.io.*
 
@@ -20,7 +21,5 @@ internal object ResourcesFetcher : Fetcher<Url> {
 
         return ByteReadChannel(bytes)
     }
-
-    private val Url.path get() = encodedPath.removePrefix("/")
 
 }

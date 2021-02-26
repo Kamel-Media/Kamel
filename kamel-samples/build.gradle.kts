@@ -21,6 +21,12 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
+    packagingOptions{
+        resources {
+            excludes += setOf("META-INF/AL2.0", "META-INF/LGPL2.1")
+        }
+    }
+
     sourceSets {
         named("main") {
             manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -75,6 +81,7 @@ kotlin {
                 implementation(Dependencies.Android.Appcompat)
                 implementation(Dependencies.Android.Core)
                 implementation(Dependencies.Android.ActivityCompose)
+                implementation(Dependencies.Android.Material)
             }
         }
 

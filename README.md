@@ -16,7 +16,9 @@ load, cache, decode and display images in your application. By default, it uses 
     - [Single-platform](#single-platform)
 - [Usage](#usage)
     - [Loading an image resource](#loading-an-image-resource)
-        - [Platform specific fetchers](#platform-specific-fetchers)
+        - [Platform specific implementations](#platform-specific-implementations)
+          -[Desktop only implementations](#desktop-only-implementations)
+          -[Android only implementations](#android-only-implementations)
     - [Configuring an image resource](#configuring-an-image-resource)
     - [Displaying an image resource](#displaying-an-image-resource)
         - [Crossfade animation](#crossfade-animation)
@@ -69,7 +71,7 @@ dependencies {
 
 ### Loading an image resource
 
-To load an image, you can use ```lazyImageResource``` composable, it can load images from different data sources:
+To load an image, you can use ```lazyImageResource``` composable, it can load images from different data sources.
 
 ```kotlin
 // String
@@ -90,10 +92,12 @@ lazyImageResource(data = URL("https://www.example.com/image.jpg"))
 // and more...
 ```
 
-#### Platform specific fetchers
+#### Platform specific implementations
 
-Since there isn't any shared resource system between Android and Desktop, some data fetchers are only available for a
-specific platform:
+Since there isn't any shared resource system between Android and Desktop, some implementations (e.g. fetchers and
+mappers) are only available for a specific platform:
+
+#### Desktop only implementations
 
 To load an image file from desktop application resources, you have to add `resourcesFetcher` to the `KamelConfig`:
 
@@ -109,6 +113,29 @@ Assuming there's an `image.png` file in the `/resources` directory in the projec
 ```kotlin
 CompositionLocalProvider(LocalKamelConfig provides desktopConfig) {
     lazyImageResource("image.png")
+}
+```
+
+#### Android only implementations
+
+To load an image file from android application resources, you have to add `resourcesFetcher` and `resourcesIdMapper` to
+the `KamelConfig`:
+
+```kotlin
+val context : Context = LocalContext.current
+
+val androidConfig = KamelConfig {
+    takeFrom(KamelConfig.Default)
+    resourcesFetcher(context) // Available only on Android.
+    resourcesIdMapper(context) // Available only on Android. 
+}
+```
+
+Assuming there's an `image.png` file in the `/res/raw` directory in the project:
+
+```kotlin
+CompositionLocalProvider(LocalKamelConfig provides androidConfig) {
+    lazyImageResource(R.raw.image)
 }
 ```
 

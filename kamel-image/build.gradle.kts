@@ -97,7 +97,10 @@ kotlin {
 
         val androidTest by getting {
             dependencies {
+                implementation(kotlin("test"))
+                implementation(kotlin("test-junit"))
                 implementation("androidx.test:core:1.3.0")
+                implementation("androidx.test.ext:junit:1.1.2")
             }
         }
 

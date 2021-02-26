@@ -9,6 +9,7 @@ object Dependencies {
         const val Core = "androidx.core:core-ktx:${Versions.Android.Core}"
         const val ActivityCompose = "androidx.activity:activity-compose:${Versions.Android.ActivityCompose}"
         const val GradlePlugin = "com.android.tools.build:gradle:${Versions.AGP}"
+        const val Material = "com.google.android.material:material:${Versions.Android.Material}"
     }
 
     object Ktor {
@@ -38,6 +39,7 @@ private object Versions {
         const val Appcompat = "1.2.0"
         const val Core = "1.3.2"
         const val ActivityCompose = "1.3.0-alpha02"
+        const val Material = "1.3.0"
     }
 
 }
