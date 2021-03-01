@@ -42,7 +42,7 @@ private suspend fun KamelConfig.requestImageResource(output: Any, resourceConfig
 
             val channel = fetcher.fetch(output, resourceConfig)
 
-            val bitmap = decoder.decode(channel)
+            val bitmap = decoder.decode(channel, resourceConfig)
                 .apply { imageBitmapCache[output] = this }
 
             Resource.Success(bitmap)

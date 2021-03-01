@@ -79,7 +79,7 @@ class ConfigUtilsTest {
 fun KamelConfigBuilder.fakeImageBitmapDecoder() = decoder(FakeImageBitmapDecoder)
 
 private object FakeImageBitmapDecoder : Decoder<ImageBitmap> {
-    override suspend fun decode(channel: ByteReadChannel): ImageBitmap {
+    override suspend fun decode(channel: ByteReadChannel, resourceConfig: ResourceConfig): ImageBitmap {
         return ImageBitmap(1, 1)
     }
 }
