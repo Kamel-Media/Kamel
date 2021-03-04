@@ -3,8 +3,8 @@
 [![Version](https://img.shields.io/maven-central/v/com.alialbaali.kamel/kamel-core?label=version&color=blue)](https://search.maven.org/search?q=com.alialbaali.kamel)
 [![Snapshot](https://img.shields.io/nexus/s/com.alialbaali.kamel/kamel-core?label=snapshot&server=https%3A%2F%2Foss.sonatype.org)](https://oss.sonatype.org/content/repositories/snapshots/com/alialbaali/kamel/)
 [![License](https://img.shields.io/github/license/alialbaali/kamel)](http://www.apache.org/licenses/LICENSE-2.0)
-[![Kotlin](https://img.shields.io/badge/kotlin-v1.4.30-blue.svg?logo=kotlin)](http://kotlinlang.org)
-[![Compose](https://img.shields.io/badge/compose-v0.3.0.build154-v?logo=compose&color=blue)](http://kotlinlang.org)
+[![Kotlin](https://img.shields.io/badge/kotlin-v1.4.31-blue.svg?logo=kotlin)](http://kotlinlang.org)
+[![Compose](https://img.shields.io/badge/compose-v0.3.2-v?logo=compose&color=blue)](http://kotlinlang.org)
 
 Kamel is an asynchronous media loading library for Compose. It provides a simple, customizable and efficient way to
 load, cache, decode and display images in your application. By default, it uses Ktor client for loading resources.
@@ -17,8 +17,8 @@ load, cache, decode and display images in your application. By default, it uses 
 - [Usage](#usage)
     - [Loading an image resource](#loading-an-image-resource)
         - [Platform specific implementations](#platform-specific-implementations)
-          -[Desktop only implementations](#desktop-only-implementations)
-          -[Android only implementations](#android-only-implementations)
+          - [Desktop only implementations](#desktop-only-implementations)
+          - [Android only implementations](#android-only-implementations)
     - [Configuring an image resource](#configuring-an-image-resource)
     - [Displaying an image resource](#displaying-an-image-resource)
         - [Crossfade animation](#crossfade-animation)
@@ -48,7 +48,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation("com.alialbaali.kamel:kamel-image:0.1.1")
+                implementation("com.alialbaali.kamel:kamel-image:0.2.0")
                 // ...
             }
         }
@@ -62,7 +62,7 @@ Add the dependency to the dependencies block:
 
 ```kotlin
 dependencies {
-    implementation("com.alialbaali.kamel:kamel-image:0.1.1")
+    implementation("com.alialbaali.kamel:kamel-image:0.2.0")
     // ...
 }
 ```
