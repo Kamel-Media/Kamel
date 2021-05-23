@@ -9,7 +9,6 @@ plugins {
 buildscript {
     repositories {
         google()
-        jcenter()
         mavenCentral()
         maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
         maven(url = "https://dl.bintray.com/kotlin/dokka")
@@ -57,7 +56,6 @@ allprojects {
 
     repositories {
         google()
-        jcenter()
         mavenCentral()
         maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
         maven(url = "https://dl.bintray.com/kotlin/dokka")
