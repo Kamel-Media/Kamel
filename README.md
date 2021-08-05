@@ -4,7 +4,7 @@
 [![Snapshot](https://img.shields.io/nexus/s/com.alialbaali.kamel/kamel-core?label=snapshot&server=https%3A%2F%2Foss.sonatype.org)](https://oss.sonatype.org/content/repositories/snapshots/com/alialbaali/kamel/)
 [![License](https://img.shields.io/github/license/alialbaali/kamel)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Kotlin](https://img.shields.io/badge/kotlin-v1.5.21-blue.svg?logo=kotlin)](http://kotlinlang.org)
-[![Compose](https://img.shields.io/badge/compose-v1.0.0-alpha2-v?logo=compose&color=blue)](http://kotlinlang.org)
+[![Compose](https://img.shields.io/badge/compose-v1.0.0-alpha2?logo=compose&color=blue)](http://kotlinlang.org)
 
 Kamel is an asynchronous media loading library for Compose. It provides a simple, customizable and efficient way to
 load, cache, decode and display images in your application. By default, it uses Ktor client for loading resources.
