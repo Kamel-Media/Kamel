@@ -8,7 +8,8 @@ import io.kamel.image.decoder.ImageBitmapDecoder
 
 public val KamelConfig.Companion.Default: KamelConfig
     get() = KamelConfig {
-        imageBitmapCacheSize = DefaultImageBitmapCacheSize
+        imageBitmapCacheSize = DefaultCacheSize
+        imageVectorCacheSize = DefaultCacheSize
         imageBitmapDecoder()
         stringMapper()
         urlMapper()

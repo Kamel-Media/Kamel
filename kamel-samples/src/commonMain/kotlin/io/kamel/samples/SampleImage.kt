@@ -11,14 +11,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 
 @Composable
-public fun SampleImage(resource: Resource<ImageBitmap>, modifier: Modifier = Modifier) {
+public fun SampleImage(resource: Resource<Painter>, modifier: Modifier = Modifier) {
 
     KamelImage(
         resource = resource,

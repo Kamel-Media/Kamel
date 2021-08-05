@@ -15,6 +15,7 @@ import io.kamel.image.config.LocalKamelConfig
 import io.kamel.image.config.resourcesFetcher
 import io.kamel.image.config.resourcesIdMapper
 import io.kamel.image.lazyImageResource
+import io.kamel.image.lazyPainterResource
 
 class ResourcesSample : AppCompatActivity() {
 
@@ -32,7 +33,7 @@ class ResourcesSample : AppCompatActivity() {
 
             CompositionLocalProvider(LocalKamelConfig provides androidConfig) {
 
-                val imageResource = lazyImageResource(R.raw.compose)
+                val imageResource = lazyPainterResource(R.raw.compose)
 
                 KamelImage(
                     resource = imageResource,

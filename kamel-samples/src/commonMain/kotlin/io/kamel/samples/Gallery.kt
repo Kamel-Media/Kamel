@@ -14,9 +14,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import io.kamel.core.Resource
-import io.kamel.image.lazyImageResource
+import io.kamel.image.lazyPainterResource
 
 private const val ItemsCount: Int = 100
 public expect val cellsCount: Int
@@ -31,7 +32,7 @@ public fun Gallery() {
 
             val imageUrl: String = remember(item) { generateRandomImageUrl(item) }
 
-            val imageResource: Resource<ImageBitmap> = lazyImageResource(imageUrl)
+            val imageResource: Resource<Painter> = lazyPainterResource(imageUrl)
 
             Card(
                 modifier = Modifier

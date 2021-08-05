@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.DefaultAlpha
-import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import io.kamel.core.Resource
 
@@ -23,7 +23,7 @@ import io.kamel.core.Resource
  */
 @Composable
 public fun KamelImage(
-    resource: Resource<ImageBitmap>,
+    resource: Resource<Painter>,
     contentDescription: String?,
     modifier: Modifier = Modifier,
     alignment: Alignment = Alignment.Center,
@@ -65,7 +65,7 @@ public fun KamelImage(
 
 @Composable
 private fun DefaultImage(
-    resource: Resource<ImageBitmap>,
+    resource: Resource<Painter>,
     contentDescription: String?,
     modifier: Modifier = Modifier,
     alignment: Alignment = Alignment.Center,
