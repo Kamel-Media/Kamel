@@ -18,7 +18,7 @@ import io.ktor.http.*
  * @see KamelImage
  * @see LocalKamelConfig
  */
-@Deprecated("Deprecated in favor of lazyPainterResource")
+@Deprecated("Deprecated in favor of lazyPainterResource.")
 @Composable
 public inline fun lazyImageResource(data: Any, block: ResourceConfigBuilder.() -> Unit = {}): Resource<ImageBitmap> {
 

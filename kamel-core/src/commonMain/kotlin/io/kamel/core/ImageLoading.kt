@@ -71,7 +71,7 @@ private suspend fun KamelConfig.requestImageBitmapResource(output: Any, resource
 
     val decoder = findDecoderFor<ImageBitmap>()
 
-    return withContext(resourceConfig.dispatcher) {
+    return withContext(resourceConfig.coroutineContext) {
 
         try {
 
@@ -96,7 +96,7 @@ private suspend fun KamelConfig.requestImageVectorResource(output: Any, resource
 
     val decoder = findDecoderFor<ImageVector>()
 
-    return withContext(resourceConfig.dispatcher) {
+    return withContext(resourceConfig.coroutineContext) {
 
         try {
 

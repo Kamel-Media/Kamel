@@ -6,6 +6,8 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlin.coroutines.CoroutineContext
 
 public class ResourceConfigBuilder {
 
@@ -16,9 +18,16 @@ public class ResourceConfigBuilder {
     private val requestBuilder: HttpRequestBuilder = HttpRequestBuilder()
 
     /**
+     * CoroutineContext used while loading the resource.
+     * @see ResourceConfig.coroutineContext
+     */
+    public val coroutineContext: CoroutineContext = Job() + Dispatchers.IO
+
+    /**
      * Dispatcher used while loading the resource.
      * @see ResourceConfig.dispatcher
      */
+    @Deprecated("Use coroutineContext property for better control.")
     public var dispatcher: CoroutineDispatcher = Dispatchers.IO
 
     /**
@@ -38,6 +47,8 @@ public class ResourceConfigBuilder {
     public fun build(): ResourceConfig = object : ResourceConfig {
 
         override val requestData: HttpRequestData = requestBuilder.build()
+
+        override val coroutineContext: CoroutineContext = this@ResourceConfigBuilder.coroutineContext
 
         override val dispatcher: CoroutineDispatcher = this@ResourceConfigBuilder.dispatcher
 
