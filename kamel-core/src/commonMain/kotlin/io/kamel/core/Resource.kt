@@ -5,22 +5,22 @@ import io.kamel.core.Resource.*
 /**
  * A class represents an asynchronous resource loading.
  */
-public sealed class Resource<out T> {
+public sealed interface Resource<out T> {
 
     /**
      * Represents the resource is still in the loading state.
      */
-    public object Loading : Resource<Nothing>()
+    public object Loading : Resource<Nothing>
 
     /**
      * Represents the resource as a successful outcome.
      */
-    public data class Success<out T>(public val value: T) : Resource<T>()
+    public data class Success<out T>(public val value: T) : Resource<T>
 
     /**
      * Represents the resource as a failure outcome.
      */
-    public data class Failure(public val exception: Throwable) : Resource<Nothing>()
+    public data class Failure(public val exception: Throwable) : Resource<Nothing>
 
 }
 
