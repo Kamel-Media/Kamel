@@ -20,9 +20,9 @@ import io.ktor.http.*
  * @see LocalKamelConfig
  */
 @Composable
-public inline fun lazyPainterResource(data: Any, block: ResourceConfigBuilder.() -> Unit = {}): Resource<Painter> {
+public inline fun lazyPainterResource(data: Any, key: Any? = data, block: ResourceConfigBuilder.() -> Unit = {}): Resource<Painter> {
 
-    var painterResource by remember(data) { mutableStateOf<Resource<Painter>>(Resource.Loading) }
+    var painterResource by remember(key) { mutableStateOf<Resource<Painter>>(Resource.Loading) }
 
     val resourceConfig = ResourceConfigBuilder()
         .apply { density = LocalDensity.current }
