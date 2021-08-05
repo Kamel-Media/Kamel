@@ -29,17 +29,17 @@ object Dependencies {
 
 private object Versions {
 
-    const val Kotlin = "1.5.0"
-    const val Ktor = "1.5.4"
-    const val Coroutines = "1.5.0"
-    const val Compose = "0.4.0-build209"
-    const val AGP = "7.0.0-beta02"
+    const val Kotlin = "1.5.21"
+    const val Ktor = "1.6.2"
+    const val Coroutines = "1.5.1"
+    const val Compose = "1.0.0-alpha2"
+    const val AGP = "7.0.0"
 
     object Android {
-        const val Appcompat = "1.3.0"
-        const val Core = "1.5.0"
-        const val ActivityCompose = "1.3.0-alpha08"
-        const val Material = "1.3.0"
+        const val Appcompat = "1.3.1"
+        const val Core = "1.6.0"
+        const val ActivityCompose = "1.3.1"
+        const val Material = "1.4.0"
     }
 
 }

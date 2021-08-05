@@ -15,6 +15,7 @@ android {
     defaultConfig {
         minSdk = 21
         targetSdk = 30
+        multiDexEnabled = true
     }
 
     compileOptions {

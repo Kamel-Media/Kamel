@@ -14,6 +14,7 @@ android {
         targetSdkVersion(30)
         versionCode = 1
         versionName = "1.0"
+        multiDexEnabled = true
     }
 
     compileOptions {
