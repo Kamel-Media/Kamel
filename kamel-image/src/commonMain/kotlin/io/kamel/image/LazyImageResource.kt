@@ -6,7 +6,7 @@ import androidx.compose.ui.platform.LocalDensity
 import io.kamel.core.Resource
 import io.kamel.core.config.ResourceConfig
 import io.kamel.core.config.ResourceConfigBuilder
-import io.kamel.core.loadImageResource
+import io.kamel.core.loadImageBitmapResource
 import io.kamel.image.config.LocalKamelConfig
 import io.ktor.http.*
 
@@ -18,6 +18,7 @@ import io.ktor.http.*
  * @see KamelImage
  * @see LocalKamelConfig
  */
+@Deprecated("Deprecated in favor of lazyPainterResource")
 @Composable
 public inline fun lazyImageResource(data: Any, block: ResourceConfigBuilder.() -> Unit = {}): Resource<ImageBitmap> {
 
@@ -31,7 +32,7 @@ public inline fun lazyImageResource(data: Any, block: ResourceConfigBuilder.() -
     val kamelConfig = LocalKamelConfig.current
 
     LaunchedEffect(data, resourceConfig) {
-        resource = kamelConfig.loadImageResource(data, resourceConfig)
+        resource = kamelConfig.loadImageBitmapResource(data, resourceConfig)
     }
 
     return resource
