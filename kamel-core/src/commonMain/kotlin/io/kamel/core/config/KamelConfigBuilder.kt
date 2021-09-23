@@ -106,6 +106,7 @@ public fun KamelConfigBuilder.takeFrom(builder: KamelConfigBuilder): KamelConfig
  */
 public fun KamelConfigBuilder.takeFrom(config: KamelConfig): KamelConfigBuilder {
     imageBitmapCacheSize = config.imageBitmapCache.maxSize
+    imageVectorCacheSize = config.imageVectorCache.maxSize
     config.fetchers.forEach { fetcher(it) }
     config.decoders.forEach { decoder(it) }
     config.mappers.forEach { mapper(it) }
