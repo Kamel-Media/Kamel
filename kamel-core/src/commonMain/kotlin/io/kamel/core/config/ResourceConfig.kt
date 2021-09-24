@@ -2,7 +2,6 @@ package io.kamel.core.config
 
 import androidx.compose.ui.unit.Density
 import io.ktor.client.request.*
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -10,7 +9,6 @@ import kotlin.coroutines.CoroutineContext
  * @see ResourceConfigBuilder to create mutable configuration.
  */
 public interface ResourceConfig {
-
     /**
      * Http Request configuration.
      * @see ResourceConfigBuilder.requestBuilder
@@ -24,16 +22,8 @@ public interface ResourceConfig {
     public val coroutineContext: CoroutineContext
 
     /**
-     * Dispatcher used while loading the resource.
-     * @see ResourceConfigBuilder.dispatcher
-     */
-    @Deprecated("Use coroutineContext property for better control.")
-    public val dispatcher: CoroutineDispatcher
-
-    /**
      * Screen density.
      * @see ResourceConfigBuilder.density
      */
     public val density: Density
-
 }
