@@ -53,8 +53,8 @@ public fun ResourceConfigBuilder.takeFrom(builder: ResourceConfigBuilder): Resou
  * Copies all the data from [config] and uses it as base for [this].
  */
 public fun ResourceConfigBuilder.takeFrom(config: ResourceConfig): ResourceConfigBuilder {
-    requestBuilder {
-        takeFrom(config.requestData)
-    }
+    coroutineContext = config.coroutineContext
+    density = config.density
+    requestBuilder { takeFrom(config.requestData) }
     return this
 }
