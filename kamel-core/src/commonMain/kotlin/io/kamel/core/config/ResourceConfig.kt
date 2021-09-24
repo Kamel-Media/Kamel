@@ -9,6 +9,7 @@ import kotlin.coroutines.CoroutineContext
  * @see ResourceConfigBuilder to create mutable configuration.
  */
 public interface ResourceConfig {
+
     /**
      * Http Request configuration.
      * @see ResourceConfigBuilder.requestBuilder
@@ -26,4 +27,5 @@ public interface ResourceConfig {
      * @see ResourceConfigBuilder.density
      */
     public val density: Density
+
 }

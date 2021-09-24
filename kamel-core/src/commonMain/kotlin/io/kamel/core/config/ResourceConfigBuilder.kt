@@ -8,6 +8,7 @@ import kotlinx.coroutines.Job
 import kotlin.coroutines.CoroutineContext
 
 public class ResourceConfigBuilder {
+
     /**
      * [HttpRequestBuilder] to configure the request for this resource.
      * @see ResourceConfig.requestData
@@ -24,7 +25,7 @@ public class ResourceConfigBuilder {
      * Screen density.
      * @see ResourceConfig.density
      */
-    public lateinit var density: Density
+    public var density: Density = Density(1F, 1F)
 
     /**
      * Executes a [block] that configures the [HttpRequestBuilder] associated with this request.
@@ -36,11 +37,16 @@ public class ResourceConfigBuilder {
      * Creates immutable [ResourceConfig].
      */
     public fun build(): ResourceConfig = object : ResourceConfig {
+
         override val requestData: HttpRequestData = requestBuilder.build()
+
         override val coroutineContext: CoroutineContext =
             this@ResourceConfigBuilder.coroutineContext
+
         override val density: Density = this@ResourceConfigBuilder.density
+
     }
+
 }
 
 /**
