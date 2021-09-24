@@ -18,7 +18,7 @@ public class ResourceConfigBuilder {
      * CoroutineContext used while loading the resource.
      * @see ResourceConfig.coroutineContext
      */
-    public val coroutineContext: CoroutineContext = Job() + Dispatchers.IO
+    public var coroutineContext: CoroutineContext = Job() + Dispatchers.IO
 
     /**
      * Screen density.
