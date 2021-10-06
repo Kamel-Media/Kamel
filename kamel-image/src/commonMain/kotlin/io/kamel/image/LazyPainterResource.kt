@@ -7,12 +7,9 @@ import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalDensity
-import io.kamel.core.Resource
+import io.kamel.core.*
 import io.kamel.core.config.ResourceConfig
 import io.kamel.core.config.ResourceConfigBuilder
-import io.kamel.core.loadImageBitmapResource
-import io.kamel.core.loadImageVectorResource
-import io.kamel.core.map
 import io.kamel.image.config.LocalKamelConfig
 import io.ktor.http.*
 import kotlinx.coroutines.flow.collect
@@ -43,6 +40,7 @@ public inline fun lazyPainterResource(
         .build()
 
     val painterFlow = when (data.toString().substringAfterLast(".")) {
+        "svg" -> kamelConfig.loadSvgResource(data, resourceConfig)
         "xml" -> kamelConfig.loadImageVectorResource(data, resourceConfig).map { resource ->
             resource.map { imageVector ->
                 rememberVectorPainter(imageVector)

@@ -1,6 +1,7 @@
 package io.kamel.core.config
 
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import io.kamel.core.cache.Cache
 import io.kamel.core.decoder.Decoder
@@ -31,10 +32,13 @@ public interface KamelConfig {
 
     public val imageVectorCache: Cache<Any, ImageVector>
 
+    public val svgCache: Cache<Any, Painter>
+
     public companion object
 }
 
 /**
  * Configures [KamelConfig] using [KamelConfigBuilder].
  */
-public inline fun KamelConfig(block: KamelConfigBuilder.() -> Unit): KamelConfig = KamelConfigBuilder().apply(block).build()
+public inline fun KamelConfig(block: KamelConfigBuilder.() -> Unit): KamelConfig =
+    KamelConfigBuilder().apply(block).build()

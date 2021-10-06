@@ -3,6 +3,7 @@
 package io.kamel.core.config
 
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import io.kamel.core.cache.Cache
 import io.kamel.core.cache.LruCache
@@ -31,6 +32,8 @@ public class KamelConfigBuilder {
 
     public var imageVectorCacheSize: Int = 0
 
+    public var svgCacheSize: Int = 0
+
     public fun <T : Any> fetcher(fetcher: Fetcher<T>) {
         fetchers += fetcher as Fetcher<Any>
     }
@@ -55,6 +58,7 @@ public class KamelConfigBuilder {
 
         override val imageVectorCache: Cache<Any, ImageVector> = LruCache(imageVectorCacheSize)
 
+        override val svgCache: Cache<Any, Painter> = LruCache(svgCacheSize)
     }
 
 }
@@ -107,6 +111,7 @@ public fun KamelConfigBuilder.takeFrom(builder: KamelConfigBuilder): KamelConfig
 public fun KamelConfigBuilder.takeFrom(config: KamelConfig): KamelConfigBuilder {
     imageBitmapCacheSize = config.imageBitmapCache.maxSize
     imageVectorCacheSize = config.imageVectorCache.maxSize
+    svgCacheSize = config.svgCache.maxSize
     config.fetchers.forEach { fetcher(it) }
     config.decoders.forEach { decoder(it) }
     config.mappers.forEach { mapper(it) }
