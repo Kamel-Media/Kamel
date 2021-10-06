@@ -10,7 +10,7 @@ public sealed interface Resource<out T> {
     /**
      * Represents the resource is still in the loading state.
      */
-    public object Loading : Resource<Nothing>
+    public data class Loading(public val progress: Float) : Resource<Nothing>
 
     /**
      * Represents the resource as a successful outcome.
@@ -47,7 +47,7 @@ public val Resource<*>.isFailure: Boolean
  * or [Failure] with the original exception if the resource represents failure.
  */
 public inline fun <T, R> Resource<T>.map(transform: (T) -> R): Resource<R> = when (this) {
-    is Loading -> Loading
+    is Loading -> Loading(progress)
     is Success -> Success(transform(value))
     is Failure -> Failure(exception)
 }
@@ -66,10 +66,10 @@ public fun <T> Resource<T>.getOrNull(): T? = when (this) {
  * or result of [onLoading] function if it is [Loading].
  */
 public inline fun <T> Resource<T>.getOrElse(
-    onLoading: () -> T,
+    onLoading: (Float) -> T,
     onFailure: (Throwable) -> T,
 ): T = when (this) {
-    is Loading -> onLoading()
+    is Loading -> onLoading(progress)
     is Success -> value
     is Failure -> onFailure(exception)
 }
