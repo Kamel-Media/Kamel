@@ -1,9 +1,12 @@
 package io.kamel.core.fetcher
 
 import io.kamel.core.DataSource
+import io.kamel.core.Resource
 import io.kamel.core.config.ResourceConfig
 import io.ktor.util.cio.*
 import io.ktor.utils.io.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import java.io.File
 
 /**
@@ -16,8 +19,12 @@ internal actual object FileFetcher : Fetcher<File> {
     override val File.isSupported: Boolean
         get() = exists() && isFile
 
-    override suspend fun fetch(data: File, resourceConfig: ResourceConfig): ByteReadChannel {
-        return data.readChannel()
+    override fun fetch(
+        data: File,
+        resourceConfig: ResourceConfig
+    ): Flow<Resource<ByteReadChannel>> = flow {
+        val bytes = data.readChannel(coroutineContext = resourceConfig.coroutineContext)
+        emit(Resource.Success(bytes))
     }
 
 }
