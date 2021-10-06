@@ -1,11 +1,7 @@
 package io.kamel.core
 
-import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.painter.BitmapPainter
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import io.kamel.core.cache.Cache
 import io.kamel.core.config.KamelConfig
 import io.kamel.core.config.ResourceConfig
@@ -15,27 +11,10 @@ import io.kamel.core.mapper.Mapper
 import io.kamel.core.utils.findDecoderFor
 import io.kamel.core.utils.findFetcherFor
 import io.kamel.core.utils.mapInput
-import kotlinx.coroutines.withContext
-
-
-@Composable
-public fun KamelConfig.loadPainterResource(data: Any, resourceConfig: ResourceConfig): Resource<Painter> {
-    var imageBitmapResource by remember(data) { mutableStateOf<Resource<ImageBitmap>>(Resource.Loading) }
-    var imageVectorResource by remember(data) { mutableStateOf<Resource<ImageVector>>(Resource.Loading) }
-
-    val isVector = data.toString().substringAfterLast(".") == "xml"
-
-    LaunchedEffect(data, resourceConfig) {
-        if (isVector)
-            imageVectorResource = loadImageVectorResource(data, resourceConfig)
-        else
-            imageBitmapResource = loadImageBitmapResource(data, resourceConfig)
-    }
-    return if (isVector)
-        imageVectorResource.map { rememberVectorPainter(it) }
-    else
-        imageBitmapResource.map { BitmapPainter(it) }
-}
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
 /**
  * Loads an [ImageBitmap]. This includes mapping, fetching, decoding and caching the image resource.
@@ -44,72 +23,69 @@ public fun KamelConfig.loadPainterResource(data: Any, resourceConfig: ResourceCo
  * @see Mapper
  * @see Cache
  */
-public suspend fun KamelConfig.loadImageBitmapResource(data: Any, resourceConfig: ResourceConfig): Resource<ImageBitmap> {
-    val output = mapInput(data)
-
-    // Check if there's an image with same key [data].
-    return when (val imageBitmap = imageBitmapCache[output]) {
-        null -> requestImageBitmapResource(output, resourceConfig)
-        else -> Resource.Success(imageBitmap)
+public fun KamelConfig.loadImageBitmapResource(
+    data: Any,
+    resourceConfig: ResourceConfig
+): Flow<Resource<ImageBitmap>> = flow {
+    try {
+        val output = mapInput(data)
+        when (val imageBitmap = imageBitmapCache[output]) {
+            null -> emitAll(requestImageBitmapResource(output, resourceConfig))
+            else -> emit(Resource.Success(imageBitmap))
+        }
+    } catch (exception: Throwable) {
+        emit(Resource.Failure(exception))
     }
 }
 
-public suspend fun KamelConfig.loadImageVectorResource(data: Any, resourceConfig: ResourceConfig): Resource<ImageVector> {
-    val output = mapInput(data)
-
-    // Check if there's an image with same key [data].
-    return when (val imageVector = imageVectorCache[output]) {
-        null -> requestImageVectorResource(output, resourceConfig)
-        else -> Resource.Success(imageVector)
+/**
+ * Loads an [ImageVector]. This includes mapping, fetching, decoding and caching the image resource.
+ * @see Fetcher
+ * @see Decoder
+ * @see Mapper
+ * @see Cache
+ */
+public fun KamelConfig.loadImageVectorResource(
+    data: Any,
+    resourceConfig: ResourceConfig
+): Flow<Resource<ImageVector>> = flow {
+    try {
+        val output = mapInput(data)
+        when (val imageVector = imageVectorCache[output]) {
+            null -> emitAll(requestImageVectorResource(output, resourceConfig))
+            else -> emit(Resource.Success(imageVector))
+        }
+    } catch (exception: Throwable) {
+        emit(Resource.Failure(exception))
     }
 }
 
-
-private suspend fun KamelConfig.requestImageBitmapResource(output: Any, resourceConfig: ResourceConfig): Resource<ImageBitmap> {
-
+private fun KamelConfig.requestImageBitmapResource(
+    output: Any,
+    resourceConfig: ResourceConfig
+): Flow<Resource<ImageBitmap>> {
     val fetcher = findFetcherFor(output)
-
     val decoder = findDecoderFor<ImageBitmap>()
-
-    return withContext(resourceConfig.coroutineContext) {
-
-        try {
-
-            val channel = fetcher.fetch(output, resourceConfig)
-
-            val bitmap = decoder.decode(channel, resourceConfig)
-                .apply { imageBitmapCache[output] = this }
-
-            Resource.Success(bitmap)
-
-        } catch (exception: Throwable) {
-            Resource.Failure(exception)
+    return fetcher.fetch(output, resourceConfig)
+        .map { resource ->
+            resource.map { channel ->
+                decoder.decode(channel, resourceConfig)
+                    .apply { imageBitmapCache[output] = this }
+            }
         }
-
-    }
 }
 
-
-private suspend fun KamelConfig.requestImageVectorResource(output: Any, resourceConfig: ResourceConfig): Resource<ImageVector> {
-
+private fun KamelConfig.requestImageVectorResource(
+    output: Any,
+    resourceConfig: ResourceConfig
+): Flow<Resource<ImageVector>> {
     val fetcher = findFetcherFor(output)
-
     val decoder = findDecoderFor<ImageVector>()
-
-    return withContext(resourceConfig.coroutineContext) {
-
-        try {
-
-            val channel = fetcher.fetch(output, resourceConfig)
-
-            val vector = decoder.decode(channel, resourceConfig)
-                .apply { imageVectorCache[output] = this }
-
-            Resource.Success(vector)
-
-        } catch (exception: Throwable) {
-            Resource.Failure(exception)
+    return fetcher.fetch(output, resourceConfig)
+        .map { resource ->
+            resource.map { channel ->
+                decoder.decode(channel, resourceConfig)
+                    .apply { imageVectorCache[output] = this }
+            }
         }
-
-    }
 }

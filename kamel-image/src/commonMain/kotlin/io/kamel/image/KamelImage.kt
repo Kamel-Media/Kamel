@@ -30,7 +30,7 @@ public fun KamelImage(
     contentScale: ContentScale = ContentScale.Fit,
     alpha: Float = DefaultAlpha,
     colorFilter: ColorFilter? = null,
-    onLoading: @Composable (() -> Unit)? = null,
+    onLoading: @Composable ((Float) -> Unit)? = null,
     onFailure: @Composable ((Throwable) -> Unit)? = null,
     crossfade: Boolean = false,
     animationSpec: FiniteAnimationSpec<Float> = tween()
@@ -72,11 +72,11 @@ private fun DefaultImage(
     contentScale: ContentScale = ContentScale.Fit,
     alpha: Float = DefaultAlpha,
     colorFilter: ColorFilter? = null,
-    onLoading: @Composable (() -> Unit)? = null,
+    onLoading: @Composable ((Float) -> Unit)? = null,
     onFailure: @Composable ((Throwable) -> Unit)? = null,
 ) {
     when (resource) {
-        is Resource.Loading -> if (onLoading != null) onLoading()
+        is Resource.Loading -> if (onLoading != null) onLoading(resource.progress)
         is Resource.Success ->
             Image(
                 resource.value,
