@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion(30)
+    compileSdk = 31
 
     defaultConfig {
-        minSdkVersion(21)
-        targetSdkVersion(30)
+        minSdk = 21
+        targetSdk = 31
         versionCode = 1
         versionName = "1.0"
         multiDexEnabled = true
@@ -22,7 +22,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    packagingOptions{
+    packagingOptions {
         resources {
             excludes += setOf("META-INF/AL2.0", "META-INF/LGPL2.1")
         }
@@ -60,7 +60,6 @@ kotlin {
     jvm("desktop") {
         compilations.all {
             kotlinOptions {
-                useIR = true
                 jvmTarget = "11"
             }
         }
@@ -94,7 +93,7 @@ kotlin {
 
         all {
             languageSettings.apply {
-                useExperimentalAnnotation("kotlin.Experimental")
+                optIn("kotlin.Experimental")
             }
         }
 

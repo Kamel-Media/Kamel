@@ -10,11 +10,11 @@ plugins {
 }
 
 android {
-    compileSdk = 30
+    compileSdk = 31
 
     defaultConfig {
         minSdk = 21
-        targetSdk = 30
+        targetSdk = 31
         multiDexEnabled = true
     }
 
@@ -99,14 +99,14 @@ kotlin {
             dependencies {
                 implementation(kotlin("test"))
                 implementation(kotlin("test-junit"))
-                implementation("androidx.test:core:1.3.0")
-                implementation("androidx.test.ext:junit:1.1.2")
+                implementation("androidx.test:core:1.4.0")
+                implementation("androidx.test.ext:junit:1.1.3")
             }
         }
 
         all {
             languageSettings.apply {
-                useExperimentalAnnotation("kotlin.Experimental")
+                optIn("kotlin.Experimental")
             }
         }
 
