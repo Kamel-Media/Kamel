@@ -27,7 +27,7 @@ public fun SampleImage(resource: Resource<Painter>, modifier: Modifier = Modifie
         contentScale = ContentScale.Crop,
         onLoading = {
             Box(modifier, contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
+                CircularProgressIndicator(it)
             }
         },
         onFailure = { exception: Throwable ->

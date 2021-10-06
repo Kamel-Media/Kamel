@@ -1,9 +1,12 @@
 package io.kamel.samples
 
-import androidx.compose.desktop.Window
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.application
 
 public actual val cellsCount: Int = 4
 
-public fun main(): Unit = Window {
-    Gallery()
+public fun main(): Unit = application {
+    Window(onCloseRequest = { exitApplication() }) {
+        Gallery()
+    }
 }
