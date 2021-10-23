@@ -34,10 +34,14 @@ public inline fun lazyPainterResource(
 
     var painterResource by remember(key) { mutableStateOf<Resource<Painter>>(Resource.Loading(0F)) }
     val kamelConfig = LocalKamelConfig.current
-    val resourceConfig = ResourceConfigBuilder()
-        .apply { density = LocalDensity.current }
-        .apply(block)
-        .build()
+    val density = LocalDensity.current
+
+    val resourceConfig = remember(key, density) {
+        ResourceConfigBuilder()
+            .apply { this.density = density }
+            .apply(block)
+            .build()
+    }
 
     val painterFlow = when (data.toString().substringAfterLast(".")) {
         "svg" -> kamelConfig.loadSvgResource(data, resourceConfig)
