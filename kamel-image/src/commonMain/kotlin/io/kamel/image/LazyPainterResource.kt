@@ -24,10 +24,14 @@ public inline fun lazyPainterResource(data: Any, key: Any? = data, block: Resour
 
     var painterResource by remember(key) { mutableStateOf<Resource<Painter>>(Resource.Loading) }
 
-    val resourceConfig = ResourceConfigBuilder()
-        .apply { density = LocalDensity.current }
-        .apply(block)
-        .build()
+    val density = LocalDensity.current
+
+    val resourceConfig = remember(key, density) {
+        ResourceConfigBuilder()
+            .apply { this.density = density }
+            .apply(block)
+            .build()
+    }
 
     val kamelConfig = LocalKamelConfig.current
 
