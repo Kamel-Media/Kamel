@@ -35,7 +35,6 @@ public inline fun lazyPainterResource(
     var painterResource by remember(key) { mutableStateOf<Resource<Painter>>(Resource.Loading(0F)) }
     val kamelConfig = LocalKamelConfig.current
     val density = LocalDensity.current
-
     val resourceConfig = remember(key, density) {
         ResourceConfigBuilder()
             .apply { this.density = density }
