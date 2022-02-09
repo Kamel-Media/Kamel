@@ -5,9 +5,8 @@ import io.kamel.core.Resource
 import io.kamel.core.config.ResourceConfig
 import io.ktor.client.*
 import io.ktor.client.call.*
-import io.ktor.client.features.*
+import io.ktor.client.plugins.*
 import io.ktor.client.request.*
-import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.utils.io.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -29,7 +28,7 @@ internal class HttpFetcher(private val client: HttpClient) : Fetcher<Url> {
         data: Url,
         resourceConfig: ResourceConfig
     ): Flow<Resource<ByteReadChannel>> = channelFlow {
-        val response = client.request<HttpResponse> {
+        val response = client.request {
             onDownload { bytesSentTotal, contentLength ->
                 val progress = (bytesSentTotal.toFloat() / contentLength).coerceAtMost(1.0F)
                 send(Resource.Loading(progress))
@@ -37,7 +36,7 @@ internal class HttpFetcher(private val client: HttpClient) : Fetcher<Url> {
             takeFrom(resourceConfig.requestData)
             url(data)
         }
-        val bytes = response.receive<ByteReadChannel>()
+        val bytes = response.body<ByteReadChannel>()
         send(Resource.Success(bytes))
     }
 
