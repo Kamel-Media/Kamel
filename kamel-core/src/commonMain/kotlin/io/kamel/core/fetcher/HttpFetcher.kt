@@ -36,7 +36,7 @@ internal class HttpFetcher(private val client: HttpClient) : Fetcher<Url> {
             takeFrom(resourceConfig.requestData)
             url(data)
         }
-        val bytes = response.body<ByteReadChannel>()
+        val bytes = response.bodyAsChannel()
         send(Resource.Success(bytes))
     }
 
