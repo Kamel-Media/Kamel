@@ -82,12 +82,14 @@ kotlin {
                 implementation(Dependencies.Android.Core)
                 implementation(Dependencies.Android.ActivityCompose)
                 implementation(Dependencies.Android.Material)
+                implementation(Dependencies.Ktor.Android)
             }
         }
 
         val desktopMain by getting {
             dependencies {
                 implementation(compose.desktop.currentOs)
+                implementation(Dependencies.Ktor.CIO)
             }
         }
 
