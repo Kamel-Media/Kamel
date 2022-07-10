@@ -1,7 +1,7 @@
 package io.kamel.image.decoder
 
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.toComposeImageBitmap
 import io.kamel.core.config.ResourceConfig
 import io.kamel.core.decoder.Decoder
 import io.ktor.util.*
@@ -16,6 +16,6 @@ internal actual object ImageBitmapDecoder : Decoder<ImageBitmap> {
     override suspend fun decode(
         channel: ByteReadChannel,
         resourceConfig: ResourceConfig
-    ): ImageBitmap = Image.makeFromEncoded(channel.toByteArray()).asImageBitmap()
+    ): ImageBitmap = Image.makeFromEncoded(channel.toByteArray()).toComposeImageBitmap()
 
 }
