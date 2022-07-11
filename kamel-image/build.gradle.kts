@@ -74,26 +74,17 @@ kotlin {
             }
         }
 
-        val desktopMain by getting {
-            dependencies {
-                implementation(Dependencies.Ktor.CIO)
-            }
-        }
+        val desktopMain by getting
 
         val desktopTest by getting {
             dependencies {
+                implementation(Dependencies.Ktor.CIO)
                 implementation(compose.desktop.currentOs)
                 implementation(kotlin("test-junit"))
             }
         }
 
-        val androidMain by getting {
-            dependencies {
-                implementation(Dependencies.Ktor.Android)
-                implementation(Dependencies.Android.Appcompat)
-                implementation(Dependencies.Android.Core)
-            }
-        }
+        val androidMain by getting
 
         val androidTest by getting {
             dependencies {

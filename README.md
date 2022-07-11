@@ -39,6 +39,10 @@ repositories {
 }
 ```
 
+#### Engine
+
+Make sure to choose a Ktor Engine for your chosen platforms here: https://ktor.io/docs/http-client-engines.html
+
 #### Multiplatform
 
 Add the dependency to the common source-set:

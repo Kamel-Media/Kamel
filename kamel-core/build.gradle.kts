@@ -22,7 +22,6 @@ kotlin {
                 api(compose.foundation)
                 api(compose.runtime)
                 api(Dependencies.Ktor.Core)
-                api(Dependencies.Ktor.Logging)
             }
         }
 
