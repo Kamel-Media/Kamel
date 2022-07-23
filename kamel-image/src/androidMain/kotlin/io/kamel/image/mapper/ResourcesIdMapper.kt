@@ -7,13 +7,13 @@ import io.kamel.core.mapper.Mapper
 import io.ktor.http.*
 
 
-internal class ResourcesIdMapper(private val context: Context) : Mapper<@DrawableRes Int, Url> {
+internal class ResourcesIdMapper(private val context: Context) : Mapper<@receiver:DrawableRes Int, Url> {
 
     override fun map(@DrawableRes input: Int): Url {
         val packageName = context.packageName
         val protocol = URLProtocol(name = ContentResolver.SCHEME_ANDROID_RESOURCE, defaultPort = -1)
 
-        return URLBuilder(protocol = protocol, host = packageName, encodedPath = input.toString())
+        return URLBuilder(protocol = protocol, host = packageName, pathSegments = listOf(input.toString()))
             .build()
     }
 }

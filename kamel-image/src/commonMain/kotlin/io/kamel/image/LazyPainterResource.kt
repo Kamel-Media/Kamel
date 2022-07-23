@@ -12,7 +12,6 @@ import io.kamel.core.config.ResourceConfig
 import io.kamel.core.config.ResourceConfigBuilder
 import io.kamel.image.config.LocalKamelConfig
 import io.ktor.http.*
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 

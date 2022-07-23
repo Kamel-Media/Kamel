@@ -24,22 +24,22 @@ object Dependencies {
         const val Coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.Coroutines}"
         const val Compose = "org.jetbrains.compose.ui:ui-test-junit4:${Versions.Compose}"
     }
-    
+
 }
 
 private object Versions {
 
-    const val Kotlin = "1.6.10"
-    const val Ktor = "2.0.0"
-    const val Coroutines = "1.6.0"
-    const val Compose = "1.0.1"
-    const val AGP = "7.1.3"
+    const val Kotlin = "1.7.0"
+    const val Ktor = "2.0.3"
+    const val Coroutines = "1.6.3"
+    const val Compose = "1.2.0-alpha01-dev750"
+    const val AGP = "7.2.1"
 
     object Android {
-        const val Appcompat = "1.4.1"
-        const val Core = "1.6.0"
-        const val ActivityCompose = "1.4.0"
-        const val Material = "1.5.0"
+        const val Appcompat = "1.4.2"
+        const val Core = "1.8.0"
+        const val ActivityCompose = "1.5.0"
+        const val Material = "1.6.1"
     }
 
 }

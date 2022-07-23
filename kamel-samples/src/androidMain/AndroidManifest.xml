@@ -16,8 +16,8 @@
         android:theme="@style/Theme.MyApplication">
         <activity
             android:name=".AndroidSample"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.MyApplication.NoActionBar">
+            android:theme="@style/Theme.MyApplication.NoActionBar"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

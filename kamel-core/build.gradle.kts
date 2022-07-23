@@ -50,7 +50,7 @@ kotlin {
 
         all {
             languageSettings.apply {
-                useExperimentalAnnotation("kotlin.Experimental")
+                optIn("kotlin.Experimental")
             }
         }
 
