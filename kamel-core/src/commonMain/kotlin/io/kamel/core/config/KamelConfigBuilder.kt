@@ -64,6 +64,11 @@ public class KamelConfigBuilder {
 }
 
 /**
+ * Adds an Http fetcher to the [KamelConfigBuilder] using the specified [client].
+ */
+public fun KamelConfigBuilder.httpFetcher(client: HttpClient): Unit = fetcher(HttpFetcher(client))
+
+/**
  * Adds an Http fetcher to the [KamelConfigBuilder] using the specified [engine]
  * and an optional [block] for configuring this client.
  */
@@ -103,7 +108,8 @@ public fun KamelConfigBuilder.urlMapper(): Unit = mapper(URLMapper)
 /**
  * Copies all the data from [builder] and uses it as base for [this].
  */
-public fun KamelConfigBuilder.takeFrom(builder: KamelConfigBuilder): KamelConfigBuilder = takeFrom(builder.build())
+public fun KamelConfigBuilder.takeFrom(builder: KamelConfigBuilder): KamelConfigBuilder =
+    takeFrom(builder.build())
 
 /**
  * Copies all the data from [config] and uses it as base for [this].
