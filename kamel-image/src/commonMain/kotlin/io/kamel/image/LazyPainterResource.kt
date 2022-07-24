@@ -2,9 +2,11 @@ package io.kamel.image
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.FilterQuality
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalDensity
 import io.kamel.core.*
@@ -12,8 +14,6 @@ import io.kamel.core.config.ResourceConfig
 import io.kamel.core.config.ResourceConfigBuilder
 import io.kamel.image.config.LocalKamelConfig
 import io.ktor.http.*
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 
 /**
  * Loads a [Painter] resource asynchronously.
@@ -31,7 +31,6 @@ public inline fun lazyPainterResource(
     block: ResourceConfigBuilder.() -> Unit = {},
 ): Resource<Painter> {
 
-    var painterResource by remember(key) { mutableStateOf<Resource<Painter>>(Resource.Loading(0F)) }
     val kamelConfig = LocalKamelConfig.current
     val density = LocalDensity.current
     val resourceConfig = remember(key, density) {
@@ -41,25 +40,19 @@ public inline fun lazyPainterResource(
             .build()
     }
 
-    val painterFlow = when (data.toString().substringAfterLast(".")) {
-        "svg" -> kamelConfig.loadSvgResource(data, resourceConfig)
-        "xml" -> kamelConfig.loadImageVectorResource(data, resourceConfig).map { resource ->
-            resource.map { imageVector ->
-                rememberVectorPainter(imageVector)
-            }
+    val painterResource by remember(data, resourceConfig) {
+        when (data.toString().substringAfterLast(".")) {
+            "svg" -> kamelConfig.loadSvgResource(data, resourceConfig)
+            "xml" -> kamelConfig.loadImageVectorResource(data, resourceConfig)
+            else -> kamelConfig.loadImageBitmapResource(data, resourceConfig)
         }
-        else -> kamelConfig.loadImageBitmapResource(data, resourceConfig).map { resource ->
-            resource.map { imageBitmap ->
-                BitmapPainter(imageBitmap, filterQuality = filterQuality)
-            }
+    }.collectAsState(Resource.Loading(0F), resourceConfig.coroutineContext)
+
+    return painterResource.map { value ->
+        when (value) {
+            is ImageVector -> rememberVectorPainter(value)
+            is ImageBitmap -> remember(value) { BitmapPainter(value, filterQuality = filterQuality) }
+            else -> remember(value) { value as Painter }
         }
     }
-
-    LaunchedEffect(key) {
-        withContext(resourceConfig.coroutineContext) {
-            painterFlow.collect { painterResource = it }
-        }
-    }
-
-    return painterResource
 }
