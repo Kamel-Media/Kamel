@@ -1,5 +1,6 @@
 package io.kamel.core.config
 
+import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.unit.Density
 import io.ktor.client.request.*
 import kotlin.coroutines.CoroutineContext
@@ -27,5 +28,11 @@ public interface ResourceConfig {
      * @see ResourceConfigBuilder.density
      */
     public val density: Density
+
+    /**
+     * Filter quality for ImageBitmap.
+     * @see ResourceConfigBuilder.filterQuality
+     */
+    public val filterQuality: FilterQuality
 
 }

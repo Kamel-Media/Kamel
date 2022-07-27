@@ -1,5 +1,7 @@
 package io.kamel.core.config
 
+import androidx.compose.ui.graphics.FilterQuality
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.unit.Density
 import io.kamel.core.utils.IO
 import io.ktor.client.request.*
@@ -28,6 +30,12 @@ public class ResourceConfigBuilder {
     public var density: Density = Density(1F, 1F)
 
     /**
+     * Screen density.
+     * @see ResourceConfig.filterQuality
+     */
+    public var filterQuality: FilterQuality = DrawScope.DefaultFilterQuality
+
+    /**
      * Executes a [block] that configures the [HttpRequestBuilder] associated with this request.
      */
     public fun requestBuilder(block: HttpRequestBuilder.() -> Unit): HttpRequestBuilder =
@@ -44,6 +52,8 @@ public class ResourceConfigBuilder {
             this@ResourceConfigBuilder.coroutineContext
 
         override val density: Density = this@ResourceConfigBuilder.density
+
+        override val filterQuality: FilterQuality = this@ResourceConfigBuilder.filterQuality
 
     }
 

@@ -27,7 +27,6 @@ import io.ktor.http.*
 public inline fun lazyPainterResource(
     data: Any,
     key: Any? = data,
-    filterQuality: FilterQuality = DrawScope.DefaultFilterQuality,
     block: ResourceConfigBuilder.() -> Unit = {},
 ): Resource<Painter> {
 
@@ -51,8 +50,33 @@ public inline fun lazyPainterResource(
     return painterResource.map { value ->
         when (value) {
             is ImageVector -> rememberVectorPainter(value)
-            is ImageBitmap -> remember(value) { BitmapPainter(value, filterQuality = filterQuality) }
+            is ImageBitmap -> remember(value) {
+                BitmapPainter(
+                    value,
+                    filterQuality = resourceConfig.filterQuality
+                )
+            }
             else -> remember(value) { value as Painter }
         }
     }
+}
+
+/**
+ * Loads a [Painter] resource asynchronously.
+ * @param data Can be anything such as [String], [Url] or a [File].
+ * @param block configuration for [ResourceConfig].
+ * @return [Painter] resource that can be used to display an image.
+ * @see KamelImage
+ * @see LocalKamelConfig
+ */
+@Deprecated("Please provide FilterQuality using the ResourceConfigBuilder parameter.")
+@Composable
+public inline fun lazyPainterResource(
+    data: Any,
+    key: Any? = data,
+    filterQuality: FilterQuality = DrawScope.DefaultFilterQuality,
+    block: ResourceConfigBuilder.() -> Unit = {},
+): Resource<Painter> = lazyPainterResource(data, key) {
+    this.filterQuality = filterQuality
+    block()
 }
