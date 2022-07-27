@@ -10,6 +10,7 @@ public val KamelConfig.Companion.Default: KamelConfig
     get() = KamelConfig {
         imageBitmapCacheSize = DefaultCacheSize
         imageVectorCacheSize = DefaultCacheSize
+        svgCacheSize = DefaultCacheSize
         imageBitmapDecoder()
         stringMapper()
         urlMapper()
