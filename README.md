@@ -6,8 +6,9 @@
 [![Kotlin](https://img.shields.io/badge/kotlin-v1.7.0-blue.svg?logo=kotlin)](http://kotlinlang.org)
 [![Compose](https://img.shields.io/badge/compose-v1.2.0-alpha2?logo=compose&color=blue)](http://kotlinlang.org)
 
-Kamel is an asynchronous media loading library for Compose. It provides a simple, customizable and efficient way to
-load, cache, decode and display images in your application. By default, it uses Ktor client for loading resources.
+Kamel is an asynchronous media loading library for Compose. It provides a simple, customizable and
+efficient way to load, cache, decode and display images in your application. By default, it uses
+Ktor client for loading resources.
 
 ## Table of contents
 
@@ -76,7 +77,8 @@ this [link](https://ktor.io/docs/http-client-engines.html).
 
 ### Loading an image resource
 
-To load an image, you can use ```lazyPainterResource``` composable, it can load images from different data sources:
+To load an image, you can use ```lazyPainterResource``` composable, it can load images from
+different data sources:
 
 ```kotlin
 // String
@@ -97,19 +99,22 @@ lazyPainterResource(data = URL("https://www.example.com/image.jpg"))
 // and more...
 ```
 
-`lazyPainterResource` can be used to load SVG, XML, JPEG, and PNG by default depending on the platform implementation.
+`lazyPainterResource` can be used to load SVG, XML, JPEG, and PNG by default depending on the
+platform implementation.
 
-`lazyPainterResource` returns a `Painter` object which can be used to display the image using `Image` or `Icon`
+`lazyPainterResource` returns a `Painter` object which can be used to display the image
+using `Image` or `Icon`
 composables.
 
 #### Platform specific implementations
 
-Since there isn't any shared resource system between Android and Desktop, some implementations (e.g. fetchers and
-mappers) are only available for a specific platform:
+Since there isn't any shared resource system between Android and Desktop, some implementations (e.g.
+fetchers and mappers) are only available for a specific platform:
 
 #### Desktop only implementations
 
-To load an image file from desktop application resources, you have to add `resourcesFetcher` to the `KamelConfig`:
+To load an image file from desktop application resources, you have to add `resourcesFetcher` to
+the `KamelConfig`:
 
 ```kotlin
 val desktopConfig = KamelConfig {
@@ -129,8 +134,8 @@ CompositionLocalProvider(LocalKamelConfig provides desktopConfig) {
 
 #### Android only implementations
 
-To load an image file from android application resources, you have to add `resourcesFetcher` and `resourcesIdMapper` to
-the `KamelConfig`:
+To load an image file from android application resources, you have to add `resourcesFetcher`
+and `resourcesIdMapper` to the `KamelConfig`:
 
 ```kotlin
 val context: Context = LocalContext.current
@@ -174,8 +179,8 @@ val painterResource: Resource<Painter> = lazyPainterResource("https://www.exampl
 
 ### Displaying an image resource
 
-```KamelImage``` is a composable function that takes a ```Painter``` resource, display it and provide extra
-functionality:
+```KamelImage``` is a composable function that takes a ```Painter``` resource, display it and
+provide extra functionality:
 
 ```kotlin
 KamelImage(
@@ -184,33 +189,34 @@ KamelImage(
 )
 ```
 
-```KamelImage``` can display custom content in failure or loading states through ```onFailure``` and ```onLoading```
-parameters:
+```KamelImage``` can also be used to get the ```exception``` using ```onFailure```,
+and ```progress``` using ```onLoading``` parameters, to display a snackbar or a progress indicator,
+depending on your case:
 
 ```kotlin
 val coroutineScope = rememberCoroutineScope()
 val snackbarHostState = remember { SnackbarHostState() }
-
+val progress by remember { mutableStateOf(0F) }
 SnackbarHost(hostState = snackbarHostState, modifier = Modifier.padding(16.dp))
-
-KamelImage(
-    resource = painterResource,
-    contentDescription = "Profile",
-    onLoading = {
-        Box(modifier = Modifier.fillMaxSize()) {
-            CircularProgressIndicator()
-        }
-    },
-    onFailure = { exception ->
-        scope.launch {
-            snackbarHostState.showSnackbar(
-                message = exception.message.toString(),
-                actionLabel = "Hide",
-                duration = SnackbarDuration.Short
-            )
-        }
+Box {
+    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        CircularProgressIndicator(progress)
     }
-)
+    KamelImage(
+        resource = painterResource,
+        contentDescription = "Profile",
+        onLoading = { progress = it },
+        onFailure = { exception ->
+            scope.launch {
+                snackbarHostState.showSnackbar(
+                    message = exception.message.toString(),
+                    actionLabel = "Hide",
+                    duration = SnackbarDuration.Short
+                )
+            }
+        }
+    )
+}
 ```
 
 You can also provide your own custom implementation using a simple when expression:
@@ -234,7 +240,8 @@ when (val resource = lazyPainterResource("https://www.example.com/image.jpg")) {
 
 #### Crossfade animation
 
-You can enable, disable or customize crossfade (fade-in) animation through the ```crossfade``` and ```animationSpec```
+You can enable, disable or customize crossfade (fade-in) animation through the ```crossfade```
+and ```animationSpec```
 parameters:
 
 ```kotlin
@@ -248,7 +255,8 @@ KamelImage(
 
 ### Configuring Kamel
 
-The default implementation is ```KamelConfig.Default```. If you wish to configure it, you can do it like so:
+The default implementation is ```KamelConfig.Default```. If you wish to configure it, you can do it
+like so:
 
 ```kotlin
 val myKamelConfig = KamelConfig {

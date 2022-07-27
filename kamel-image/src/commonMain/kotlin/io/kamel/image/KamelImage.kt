@@ -4,7 +4,7 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.FiniteAnimationSpec
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -30,8 +30,8 @@ public fun KamelImage(
     contentScale: ContentScale = ContentScale.Fit,
     alpha: Float = DefaultAlpha,
     colorFilter: ColorFilter? = null,
-    onLoading: @Composable ((Float) -> Unit)? = null,
-    onFailure: @Composable ((Throwable) -> Unit)? = null,
+    onLoading: ((Float) -> Unit)? = null,
+    onFailure: ((Throwable) -> Unit)? = null,
     crossfade: Boolean = false,
     animationSpec: FiniteAnimationSpec<Float> = tween()
 ) {
@@ -72,8 +72,8 @@ private fun DefaultImage(
     contentScale: ContentScale = ContentScale.Fit,
     alpha: Float = DefaultAlpha,
     colorFilter: ColorFilter? = null,
-    onLoading: @Composable ((Float) -> Unit)? = null,
-    onFailure: @Composable ((Throwable) -> Unit)? = null,
+    onLoading: ((Float) -> Unit)? = null,
+    onFailure: ((Throwable) -> Unit)? = null,
 ) {
     when (resource) {
         is Resource.Loading -> if (onLoading != null) onLoading(resource.progress)
