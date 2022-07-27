@@ -10,9 +10,6 @@ import io.kamel.core.mapper.Mapper
 
 public const val DefaultCacheSize: Int = 100
 
-@Deprecated("Deprecated in favor of DefaultCacheSize.")
-public const val DefaultImageBitmapCacheSize: Int = DefaultCacheSize
-
 /**
  * Represents global configuration for this library.
  * @see KamelConfig to configure one.
