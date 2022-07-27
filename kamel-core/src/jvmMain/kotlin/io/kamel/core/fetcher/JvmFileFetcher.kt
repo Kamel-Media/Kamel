@@ -24,7 +24,7 @@ internal actual object FileFetcher : Fetcher<File> {
         resourceConfig: ResourceConfig
     ): Flow<Resource<ByteReadChannel>> = flow {
         val bytes = data.readChannel(coroutineContext = resourceConfig.coroutineContext)
-        emit(Resource.Success(bytes))
+        emit(Resource.Success(bytes, source))
     }
 
 }

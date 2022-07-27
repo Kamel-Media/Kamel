@@ -25,7 +25,7 @@ internal object ResourcesFetcher : Fetcher<Url> {
             ?.getResource(data.path)
             ?.readBytes()
             ?.let { ByteReadChannel(it) } ?: error("Unable to find resource $data")
-        emit(Resource.Success(bytes))
+        emit(Resource.Success(bytes, source))
     }
 
 }

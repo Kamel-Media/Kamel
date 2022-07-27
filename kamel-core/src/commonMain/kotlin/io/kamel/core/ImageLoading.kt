@@ -12,11 +12,7 @@ import io.kamel.core.mapper.Mapper
 import io.kamel.core.utils.findDecoderFor
 import io.kamel.core.utils.findFetcherFor
 import io.kamel.core.utils.mapInput
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 
 /**
  * Loads an [ImageBitmap]. This includes mapping, fetching, decoding and caching the image resource.
@@ -32,7 +28,7 @@ public fun KamelConfig.loadImageBitmapResource(
     val output = mapInput(data)
     when (val imageBitmap = imageBitmapCache[output]) {
         null -> emitAll(requestImageBitmapResource(output, resourceConfig))
-        else -> emit(Resource.Success(imageBitmap))
+        else -> emit(Resource.Success(imageBitmap, DataSource.Memory))
     }
 }.catch {
     emit(Resource.Failure(it))
@@ -52,7 +48,7 @@ public fun KamelConfig.loadImageVectorResource(
     val output = mapInput(data)
     when (val imageVector = imageVectorCache[output]) {
         null -> emitAll(requestImageVectorResource(output, resourceConfig))
-        else -> emit(Resource.Success(imageVector))
+        else -> emit(Resource.Success(imageVector, DataSource.Memory))
     }
 }.catch {
     emit(Resource.Failure(it))
@@ -72,7 +68,7 @@ public fun KamelConfig.loadSvgResource(
     val output = mapInput(data)
     when (val imageBitmap = svgCache[output]) {
         null -> emitAll(requestSvgResource(output, resourceConfig))
-        else -> emit(Resource.Success(imageBitmap))
+        else -> emit(Resource.Success(imageBitmap, DataSource.Memory))
     }
 }.catch {
     emit(Resource.Failure(it))

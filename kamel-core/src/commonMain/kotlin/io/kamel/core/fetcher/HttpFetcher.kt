@@ -29,13 +29,13 @@ internal class HttpFetcher(private val client: HttpClient) : Fetcher<Url> {
         val response = client.request {
             onDownload { bytesSentTotal, contentLength ->
                 val progress = (bytesSentTotal.toFloat() / contentLength).coerceAtMost(1.0F)
-                send(Resource.Loading(progress))
+                send(Resource.Loading(progress, source))
             }
             takeFrom(resourceConfig.requestData)
             url(data)
         }
         val bytes = response.bodyAsChannel()
-        send(Resource.Success(bytes))
+        send(Resource.Success(bytes, source))
     }
 
 }
