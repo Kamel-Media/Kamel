@@ -24,15 +24,7 @@ import kotlinx.coroutines.flow.*
 public fun KamelConfig.loadImageBitmapResource(
     data: Any,
     resourceConfig: ResourceConfig
-): Flow<Resource<ImageBitmap>> = flow {
-    val output = mapInput(data)
-    when (val imageBitmap = imageBitmapCache[output]) {
-        null -> emitAll(requestImageBitmapResource(output, resourceConfig))
-        else -> emit(Resource.Success(imageBitmap, DataSource.Memory))
-    }
-}.catch {
-    emit(Resource.Failure(it))
-}
+): Flow<Resource<ImageBitmap>> = loadResource(data, resourceConfig, imageBitmapCache)
 
 /**
  * Loads an [ImageVector]. This includes mapping, fetching, decoding and caching the image resource.
@@ -44,15 +36,7 @@ public fun KamelConfig.loadImageBitmapResource(
 public fun KamelConfig.loadImageVectorResource(
     data: Any,
     resourceConfig: ResourceConfig
-): Flow<Resource<ImageVector>> = flow {
-    val output = mapInput(data)
-    when (val imageVector = imageVectorCache[output]) {
-        null -> emitAll(requestImageVectorResource(output, resourceConfig))
-        else -> emit(Resource.Success(imageVector, DataSource.Memory))
-    }
-}.catch {
-    emit(Resource.Failure(it))
-}
+): Flow<Resource<ImageVector>> = loadResource(data, resourceConfig, imageVectorCache)
 
 /**
  * Loads SVG [Painter]. This includes mapping, fetching, decoding and caching the image resource.
@@ -64,57 +48,29 @@ public fun KamelConfig.loadImageVectorResource(
 public fun KamelConfig.loadSvgResource(
     data: Any,
     resourceConfig: ResourceConfig
-): Flow<Resource<Painter>> = flow {
+): Flow<Resource<Painter>> = loadResource(data, resourceConfig, svgCache)
+
+private inline fun <reified T : Any> KamelConfig.loadResource(
+    data: Any,
+    resourceConfig: ResourceConfig,
+    cache: Cache<Any, T>,
+): Flow<Resource<T>> = flow {
     val output = mapInput(data)
-    when (val imageBitmap = svgCache[output]) {
-        null -> emitAll(requestSvgResource(output, resourceConfig))
-        else -> emit(Resource.Success(imageBitmap, DataSource.Memory))
+    val cachedData = cache[output]
+    if (cachedData != null) {
+        val resource = Resource.Success(cachedData, DataSource.Memory)
+        emit(resource)
+    } else {
+        val fetcher = findFetcherFor(output)
+        val decoder = findDecoderFor<T>()
+        val bytesFlow = fetcher.fetch(output, resourceConfig)
+        val dataFlow = bytesFlow.map { resource ->
+            resource.map { channel ->
+                decoder.decode(channel, resourceConfig).also {
+                    cache[output] = it
+                }
+            }
+        }
+        emitAll(dataFlow)
     }
-}.catch {
-    emit(Resource.Failure(it))
-}
-
-private fun KamelConfig.requestImageBitmapResource(
-    output: Any,
-    resourceConfig: ResourceConfig
-): Flow<Resource<ImageBitmap>> {
-    val fetcher = findFetcherFor(output)
-    val decoder = findDecoderFor<ImageBitmap>()
-    return fetcher.fetch(output, resourceConfig)
-        .map { resource ->
-            resource.map { channel ->
-                decoder.decode(channel, resourceConfig)
-                    .apply { imageBitmapCache[output] = this }
-            }
-        }
-}
-
-private fun KamelConfig.requestImageVectorResource(
-    output: Any,
-    resourceConfig: ResourceConfig
-): Flow<Resource<ImageVector>> {
-    val fetcher = findFetcherFor(output)
-    val decoder = findDecoderFor<ImageVector>()
-    return fetcher.fetch(output, resourceConfig)
-        .map { resource ->
-            resource.map { channel ->
-                decoder.decode(channel, resourceConfig)
-                    .apply { imageVectorCache[output] = this }
-            }
-        }
-}
-
-private fun KamelConfig.requestSvgResource(
-    output: Any,
-    resourceConfig: ResourceConfig
-): Flow<Resource<Painter>> {
-    val fetcher = findFetcherFor(output)
-    val decoder = findDecoderFor<Painter>()
-    return fetcher.fetch(output, resourceConfig)
-        .map { resource ->
-            resource.map { channel ->
-                decoder.decode(channel, resourceConfig)
-                    .apply { svgCache[output] = this }
-            }
-        }
-}
+}.catch { emit(Resource.Failure(it)) }
