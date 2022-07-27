@@ -39,7 +39,7 @@ public inline fun lazyPainterResource(
             .build()
     }
 
-    val painterResource by remember(data, resourceConfig) {
+    val painterResource by remember(key, resourceConfig) {
         when (data.toString().substringAfterLast(".")) {
             "svg" -> kamelConfig.loadSvgResource(data, resourceConfig)
             "xml" -> kamelConfig.loadImageVectorResource(data, resourceConfig)
