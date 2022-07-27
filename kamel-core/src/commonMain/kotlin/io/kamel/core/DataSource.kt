@@ -10,17 +10,22 @@ import io.ktor.http.*
 public enum class DataSource {
 
     /**
-     * Represents an in-memory data source (e.g. [Cache])
+     * Represents an in-memory data source (e.g. [Cache]).
      */
     Memory,
 
     /**
-     * Represents a disk data source (e.g. [File])
+     * Represents a disk data source (e.g. [File]).
      */
     Disk,
 
     /**
-     * Represents a network data source (e.g. [Url])
+     * Represents a network data source (e.g. [Url]).
      */
     Network,
+
+    /**
+     * Represents no data source.
+     */
+    None,
 }
