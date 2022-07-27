@@ -3,8 +3,7 @@ package io.kamel.samples
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.application
+import androidx.compose.ui.window.singleWindowApplication
 import io.kamel.core.config.KamelConfig
 import io.kamel.core.config.takeFrom
 import io.kamel.image.KamelImage
@@ -14,29 +13,24 @@ import io.kamel.image.config.imageVectorDecoder
 import io.kamel.image.config.resourcesFetcher
 import io.kamel.image.lazyPainterResource
 
-public fun main(): Unit = application {
-    Window({ exitApplication() }) {
+public fun main(): Unit = singleWindowApplication {
+    val kamelConfig = KamelConfig {
+        takeFrom(KamelConfig.Default)
+        resourcesFetcher()
+        imageVectorDecoder()
+    }
 
-        val kamelConfig = KamelConfig {
-            takeFrom(KamelConfig.Default)
-            resourcesFetcher()
-            imageVectorDecoder()
-        }
+    CompositionLocalProvider(LocalKamelConfig provides kamelConfig) {
+        val painterResource = lazyPainterResource("Compose.xml")
 
-        CompositionLocalProvider(LocalKamelConfig provides kamelConfig) {
-
-            val painterResource = lazyPainterResource("Compose.xml")
-
-            KamelImage(
-                painterResource,
-                contentDescription = "Compose",
-                modifier = Modifier.fillMaxSize(),
-                onFailure = { throw it },
-                onLoading = {
-                    println(it)
-                }
-            )
-
-        }
+        KamelImage(
+            painterResource,
+            contentDescription = "Compose",
+            modifier = Modifier.fillMaxSize(),
+            onFailure = { throw it },
+            onLoading = {
+                println(it)
+            }
+        )
     }
 }
