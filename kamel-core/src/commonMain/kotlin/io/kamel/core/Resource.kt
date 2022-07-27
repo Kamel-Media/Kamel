@@ -8,20 +8,33 @@ import io.kamel.core.Resource.*
 public sealed interface Resource<out T> {
 
     /**
+     * Source from where data has been loaded.
+     */
+    public val source: DataSource
+
+    /**
      * Represents the resource is still in the loading state.
      */
-    public data class Loading(public val progress: Float) : Resource<Nothing>
+    public data class Loading(
+        public val progress: Float,
+        public override val source: DataSource = DataSource.None,
+    ) : Resource<Nothing>
 
     /**
      * Represents the resource as a successful outcome.
      */
-    public data class Success<out T>(public val value: T) : Resource<T>
+    public data class Success<out T>(
+        public val value: T,
+        public override val source: DataSource = DataSource.None,
+    ) : Resource<T>
 
     /**
      * Represents the resource as a failure outcome.
      */
-    public data class Failure(public val exception: Throwable) : Resource<Nothing>
-
+    public data class Failure(
+        public val exception: Throwable,
+        public override val source: DataSource = DataSource.None,
+    ) : Resource<Nothing>
 }
 
 /**
@@ -47,9 +60,9 @@ public val Resource<*>.isFailure: Boolean
  * or [Failure] with the original exception if the resource represents failure.
  */
 public inline fun <T, R> Resource<T>.map(transform: (T) -> R): Resource<R> = when (this) {
-    is Loading -> Loading(progress)
-    is Success -> Success(transform(value))
-    is Failure -> Failure(exception)
+    is Loading -> Loading(progress, source)
+    is Success -> Success(transform(value), source)
+    is Failure -> Failure(exception, source)
 }
 
 /**
