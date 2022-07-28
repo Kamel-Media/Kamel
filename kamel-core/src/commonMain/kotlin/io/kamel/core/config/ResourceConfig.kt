@@ -29,10 +29,4 @@ public interface ResourceConfig {
      */
     public val density: Density
 
-    /**
-     * Filter quality for ImageBitmap.
-     * @see ResourceConfigBuilder.filterQuality
-     */
-    public val filterQuality: FilterQuality
-
 }
