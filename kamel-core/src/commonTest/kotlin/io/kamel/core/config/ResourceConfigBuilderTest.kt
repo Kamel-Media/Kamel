@@ -21,13 +21,11 @@ class ResourceConfigBuilderTest {
 
     @Test
     fun testDispatcher() {
-        builder.dispatcher = Dispatchers.Unconfined
+        builder.coroutineContext = Dispatchers.Unconfined
 
-
-        assertEquals(expected = Dispatchers.Unconfined, actual = builder.build().dispatcher)
+        assertEquals(expected = Dispatchers.Unconfined, actual = builder.build().coroutineContext)
     }
 
-    @OptIn(KtorExperimentalAPI::class)
     @Test
     fun testRequestBuilder() {
         val requestData = builder.requestBuilder {
@@ -43,7 +41,7 @@ class ResourceConfigBuilderTest {
         assertTrue { requestData.headers.contains("Key", "Value") }
         assertTrue { requestData.headers.contains(HttpHeaders.CacheControl, CacheControl.NO_CACHE) }
         assertTrue { requestData.method == HttpMethod.Put }
-        assertEquals(expected = "example/items", actual = requestData.url.encodedPath)
+        assertEquals(expected = "/example/items", actual = requestData.url.encodedPath)
     }
 
     @Test

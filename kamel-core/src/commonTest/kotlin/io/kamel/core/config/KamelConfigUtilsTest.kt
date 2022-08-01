@@ -13,7 +13,7 @@ import kotlin.test.Test
 import kotlin.test.assertFails
 import kotlin.test.assertTrue
 
-class ConfigUtilsTest {
+class KamelConfigUtilsTest {
 
     private val config = KamelConfig {
         stringMapper()
