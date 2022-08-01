@@ -6,11 +6,15 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.unit.dp
 import io.kamel.core.Resource
+import io.kamel.core.isLoading
+import io.kamel.core.map
 import org.junit.Rule
 import org.junit.Test
 
@@ -28,11 +32,12 @@ class KamelImageTest {
 
         val imageBitmap = ImageBitmap(1, 1)
 
-        val imageResource = Resource.Success(imageBitmap)
+        val painterResource: Resource<Painter> = Resource.Success(imageBitmap)
+            .map { BitmapPainter(it) }
 
         composeTestRule.setContent {
             KamelImage(
-                resource = imageResource,
+                resource = painterResource,
                 contentDescription = ImageContentDescription,
                 modifier = Modifier
                     .size(256.dp)
@@ -47,17 +52,17 @@ class KamelImageTest {
 
     @Test
     fun testDisplayingLoadingImageResource() {
-        val imageResource: Resource<ImageBitmap> = Resource.Loading
-
+        val painterResource: Resource<Painter> = Resource.Loading(0F)
         composeTestRule.setContent {
+            if (painterResource.isLoading)
+                Box(Modifier.size(200.dp).testTag(ImageTag)) {
+                    CircularProgressIndicator()
+                }
+
             KamelImage(
-                resource = imageResource,
+                resource = painterResource,
                 contentDescription = ImageContentDescription,
-                onLoading = {
-                    Box(Modifier.size(200.dp).testTag(ImageTag)) {
-                        CircularProgressIndicator()
-                    }
-                },
+                onLoading = {},
             )
         }
 
@@ -69,16 +74,17 @@ class KamelImageTest {
 
     @Test
     fun testDisplayingFailureImageResource() {
-        val imageResource: Resource<ImageBitmap> = Resource.Failure(Throwable(ErrorMessage))
+        val painterResource: Resource<Painter> = Resource.Failure(Throwable(ErrorMessage))
 
         composeTestRule.setContent {
             KamelImage(
-                resource = imageResource,
+                resource = painterResource,
                 contentDescription = ImageContentDescription,
                 onFailure = {
-                    Text(it.message!!, Modifier.testTag(ImageTag))
                 }
             )
+            if (painterResource is Resource.Failure)
+                Text(painterResource.exception.message!!, Modifier.testTag(ImageTag))
         }
 
         composeTestRule.onNodeWithTag(ImageTag)
