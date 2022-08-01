@@ -32,7 +32,7 @@ private object Versions {
     const val Kotlin = "1.7.0"
     const val Ktor = "2.0.3"
     const val Coroutines = "1.6.3"
-    const val Compose = "1.2.0-alpha01-dev750"
+    const val Compose = "1.2.0-alpha01-dev753"
     const val AGP = "7.2.1"
 
     object Android {
