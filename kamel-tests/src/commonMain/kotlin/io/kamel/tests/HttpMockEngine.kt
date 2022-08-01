@@ -6,9 +6,9 @@ import io.ktor.utils.io.*
 
 val HttpMockEngine = MockEngine { request ->
     when (request.url.encodedPath) {
-        "emptyImage.jpg" -> respond(ByteReadChannel.Empty)
-        "image.jpg" -> respond(resourceImage)
-        "image.svg" -> respond(svgImage)
+        "/emptyImage.jpg" -> respond(ByteReadChannel.Empty)
+        "/image.jpg" -> respond(resourceImage)
+        "/image.svg" -> respond(svgImage)
         else -> respondError(HttpStatusCode.NotFound)
     }
 }
