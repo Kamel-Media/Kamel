@@ -77,8 +77,8 @@ this [link](https://ktor.io/docs/http-client-engines.html).
 
 ### Loading an image resource
 
-To load an image, you can use ```lazyPainterResource``` composable, it can load images from
-different data sources:
+To load an image asynchronously, you can use ```lazyPainterResource``` composable, it can load
+images from different data sources:
 
 ```kotlin
 // String
@@ -102,9 +102,8 @@ lazyPainterResource(data = URL("https://www.example.com/image.jpg"))
 `lazyPainterResource` can be used to load SVG, XML, JPEG, and PNG by default depending on the
 platform implementation.
 
-`lazyPainterResource` returns a `Painter` object which can be used to display the image
-using `Image` or `Icon`
-composables.
+`lazyPainterResource` returns a `Resource<Painter>` object which can be used to display the image
+using `KamelImage` composable.
 
 #### Platform specific implementations
 
@@ -167,7 +166,7 @@ val painterResource: Resource<Painter> = lazyPainterResource("https://www.exampl
     // CoroutineContext to be used while loading the image.
     coroutineContext = Job() + Dispatcher.IO
 
-    // Customize HTTP request
+    // Customizes HTTP request
     requestBuilder { // this: HttpRequestBuilder
         header("Key", "Value")
         parameter("Key", "Value")
@@ -179,35 +178,30 @@ val painterResource: Resource<Painter> = lazyPainterResource("https://www.exampl
 
 ### Displaying an image resource
 
-```KamelImage``` is a composable function that takes a ```Painter``` resource, display it and
-provide extra functionality:
+```KamelImage``` is a composable function that takes a ```Resource<Painter>``` object, display it
+and provide extra functionality:
 
 ```kotlin
 KamelImage(
     resource = painterResource,
-    contentDescription = "Profile"
+    contentDescription = "Profile",
 )
 ```
 
 ```KamelImage``` can also be used to get the ```exception``` using ```onFailure```,
 and ```progress``` using ```onLoading``` parameters, to display a snackbar or a progress indicator,
-depending on your case:
+depending on the case:
 
 ```kotlin
 val coroutineScope = rememberCoroutineScope()
 val snackbarHostState = remember { SnackbarHostState() }
-val progress by remember { mutableStateOf(0F) }
-SnackbarHost(hostState = snackbarHostState, modifier = Modifier.padding(16.dp))
 Box {
-    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        CircularProgressIndicator(progress)
-    }
     KamelImage(
         resource = painterResource,
         contentDescription = "Profile",
-        onLoading = { progress = it },
+        onLoading = { progress -> CircularProgressIndicator(progress) },
         onFailure = { exception ->
-            scope.launch {
+            coroutineScope.launch {
                 snackbarHostState.showSnackbar(
                     message = exception.message.toString(),
                     actionLabel = "Hide",
@@ -216,6 +210,7 @@ Box {
             }
         }
     )
+    SnackbarHost(hostState = snackbarHostState, modifier = Modifier.padding(16.dp))
 }
 ```
 
@@ -228,27 +223,26 @@ when (val resource = lazyPainterResource("https://www.example.com/image.jpg")) {
     }
     is Resource.Success -> {
         val painter: Painter = resource.value
-        Image(painter, null, modifier = Modifier.clip(CircleShape))
+        Image(painter, contentDescription = "Profile")
     }
     is Resource.Failure -> {
         log(resource.exception)
         val fallbackPainter = painterResource("/path/to/fallbackImage.jpg")
-        Image(fallbackPainter, null)
+        Image(fallbackPainter, contentDescription = "Profile")
     }
 }
 ```
 
 #### Crossfade animation
 
-You can enable, disable or customize crossfade (fade-in) animation through the ```crossfade```
-and ```animationSpec```
-parameters:
+You can enable, disable or customize crossfade (fade-in) animation through the ```animationSpec```
+parameter. Setting ```animationSpec``` to `null` will disable the animation:
 
 ```kotlin
 KamelImage(
     resource = imageResource,
     contentDescription = "Profile",
-    crossfade = true, // false by default
+    // null by default
     animationSpec = tween(),
 )
 ```
@@ -256,12 +250,15 @@ KamelImage(
 ### Configuring Kamel
 
 The default implementation is ```KamelConfig.Default```. If you wish to configure it, you can do it
-like so:
+the following way:
 
 ```kotlin
-val myKamelConfig = KamelConfig {
-    // Copy the default implementation
+val customKamelConfig = KamelConfig {
+    // Copies the default implementation if needed
     takeFrom(KamelConfig.Default)
+
+    // Sets the number of images to cache
+    imageBitmapCacheSize = DefaultCacheSize
 
     // adds an ImageBitmapDecoder
     imageBitmapDecoder()
@@ -269,12 +266,20 @@ val myKamelConfig = KamelConfig {
     // adds a FileFetcher
     fileFetcher()
 
-    // Configuring Ktor HttpClient
+    // Configures Ktor HttpClient
     httpFetcher {
         defaultRequest {
             url("https://www.example.com/")
             cacheControl(CacheControl.MaxAge(maxAgeSeconds = 10000))
         }
+
+        install(HttpRequestRetry) {
+            maxRetries = 3
+            retryIf { httpRequest, httpResponse ->
+                !httpResponse.status.isSuccess()
+            }
+        }
+        
         // Requires adding "io.ktor:ktor-client-logging:$ktor_version"
         Logging {
             level = LogLevel.INFO
@@ -289,7 +294,9 @@ val myKamelConfig = KamelConfig {
 
 #### Cache size (number of entries to cache)
 
-To configure memory cache size, you can do it like so:
+Kamel provides a generic `Cache<K,V>` interface, the default implementation uses LRU memory cache
+mechanism backed by `LinkedHashMap`. You can provide a number of entries to cache for each type like
+so:
 
 ```kotlin
 KamelConfig {
@@ -307,14 +314,15 @@ KamelConfig {
 You can use ```LocalKamelConfig``` to apply your custom configuration:
 
 ```kotlin
-CompositionLocalProvider(LocalKamelConfig provides myKamelConfig) {
+CompositionLocalProvider(LocalKamelConfig provides customKamelConfig) {
     lazyPainterResource("image.jpg")
 }
 ```
 
 ## Contributions
 
-Contributions are always welcome!. If you'd like to contribute, please feel free to create a PR.
+Contributions are always welcome!. If you'd like to contribute, please feel free to create a PR or
+open an issue.
 
 ## License
 
