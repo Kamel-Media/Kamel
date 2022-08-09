@@ -1,6 +1,7 @@
 package io.kamel.tests
 
 import io.ktor.utils.io.*
+import io.ktor.utils.io.core.*
 
 
 actual val resourceImage: ByteReadChannel

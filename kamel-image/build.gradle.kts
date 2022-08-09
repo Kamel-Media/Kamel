@@ -56,6 +56,10 @@ kotlin {
     }
     jvm("desktop")
 
+    for (target in Targets.nativeTargets) {
+        targets.add(presets.getByName(target).createTarget(target))
+    }
+
     sourceSets {
 
         val commonMain by getting {
@@ -67,45 +71,72 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(project(":kamel-tests"))
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
+                implementation(kotlin("test"))
                 implementation(Dependencies.Testing.Ktor)
+                implementation(Dependencies.Testing.Coroutines)
+            }
+        }
+
+        val jvmMain by creating {
+            dependsOn(commonMain)
+        }
+
+        val jvmTest by creating {
+            dependsOn(commonTest)
+            dependencies{
+                implementation(compose.material)
                 implementation(Dependencies.Testing.Compose)
             }
         }
-
-        val desktopMain by getting
+        
+        val desktopMain by getting {
+            dependsOn(jvmMain)
+        }
 
         val desktopTest by getting {
+            dependsOn(jvmTest)
             dependencies {
                 implementation(Dependencies.Ktor.CIO)
                 implementation(compose.desktop.currentOs)
-                implementation(kotlin("test-junit"))
             }
         }
 
-        val androidMain by getting
+        val androidMain by getting {
+            dependsOn(jvmMain)
+        }
 
         val androidTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-                implementation(kotlin("test-junit"))
-                implementation("androidx.test:core:1.4.0")
-                implementation("androidx.test.ext:junit:1.1.3")
+            dependsOn(jvmTest)
+        }
+
+        val nonJvmMain by creating {
+            dependsOn(commonMain)
+        }
+
+        val nonJvmTest by creating {
+            dependsOn(commonTest)
+        }
+
+        val darwinMain by creating {
+            dependsOn(nonJvmMain)
+        }
+
+        val darwinTest by creating {
+            dependsOn(nonJvmTest)
+        }
+
+        Targets.darwinTargets.forEach { target ->
+            getByName("${target}Main") {
+                dependsOn(darwinMain)
+            }
+            getByName("${target}Test") {
+                dependsOn(darwinTest)
             }
         }
 
         all {
             languageSettings.apply {
                 optIn("kotlin.Experimental")
-            }
-        }
-
-        targets.all {
-            compilations.all {
-                kotlinOptions {
-                    freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
-                }
             }
         }
 

@@ -14,7 +14,6 @@ import io.kamel.image.config.Default
 import io.kamel.image.config.LocalKamelConfig
 import io.kamel.image.config.resourcesFetcher
 import io.kamel.image.config.resourcesIdMapper
-import io.kamel.image.lazyImageResource
 import io.kamel.image.lazyPainterResource
 
 class ResourcesSample : AppCompatActivity() {

@@ -17,11 +17,6 @@ android {
         multiDexEnabled = true
     }
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
     packagingOptions {
         resources {
             excludes += setOf("META-INF/AL2.0", "META-INF/LGPL2.1")
@@ -42,13 +37,13 @@ android {
         create("testApi")
         create("testDebugApi")
         create("testReleaseApi")
-        named("implementation") {
-            exclude(group = "androidx.compose.animation")
-            exclude(group = "androidx.compose.foundation")
-            exclude(group = "androidx.compose.material")
-            exclude(group = "androidx.compose.runtime")
-            exclude(group = "androidx.compose.ui")
-        }
+//        named("implementation") {
+//            exclude(group = "androidx.compose.animation")
+//            exclude(group = "androidx.compose.foundation")
+//            exclude(group = "androidx.compose.material")
+//            exclude(group = "androidx.compose.runtime")
+//            exclude(group = "androidx.compose.ui")
+//        }
     }
 }
 
@@ -56,14 +51,13 @@ kotlin {
 
     explicitApi = ExplicitApiMode.Warning
 
-    android()
-    jvm("desktop") {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "11"
-            }
-        }
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of("11"))
     }
+
+    android()
+    jvm("desktop")
+
 
     sourceSets {
 
@@ -71,6 +65,8 @@ kotlin {
             dependencies {
                 implementation(project(":kamel-image"))
                 implementation(project(":kamel-tests"))
+                implementation(compose.ui)
+                implementation(compose.foundation)
                 implementation(compose.material)
                 implementation(compose.animation)
             }
@@ -78,8 +74,6 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
-                implementation(Dependencies.Android.Appcompat)
-                implementation(Dependencies.Android.Core)
                 implementation(Dependencies.Android.ActivityCompose)
                 implementation(Dependencies.Android.Material)
                 implementation(Dependencies.Ktor.Android)
@@ -99,15 +93,12 @@ kotlin {
             }
         }
 
-        targets.all {
-            compilations.all {
-                kotlinOptions {
-                    freeCompilerArgs =
-                        listOf("-Xopt-in=kotlin.RequiresOptIn")
-                }
-            }
-        }
+    }
+}
 
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "11"
     }
 }
 

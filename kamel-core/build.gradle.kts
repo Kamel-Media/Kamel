@@ -1,5 +1,6 @@
 import org.jetbrains.compose.compose
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     multiplatform
@@ -13,6 +14,37 @@ kotlin {
     explicitApi = ExplicitApiMode.Warning
 
     jvm()
+
+    for (target in Targets.macosTargets) {
+        targets.add(
+            (presets.getByName(target).createTarget(target) as KotlinNativeTarget).apply {
+                binaries.forEach {
+                    it.apply {
+                        freeCompilerArgs += listOf(
+                            "-linker-option", "-framework", "-linker-option", "Metal"
+                        )
+                    }
+                }
+            }
+        )
+    }
+    for (target in Targets.iosTargets) {
+        targets.add(
+            (presets.getByName(target).createTarget(target) as KotlinNativeTarget).apply {
+                binaries.forEach {
+                    it.apply {
+                        freeCompilerArgs += listOf(
+                            "-linker-option", "-framework", "-linker-option", "Metal",
+                            "-linker-option", "-framework", "-linker-option", "CoreText",
+                            "-linker-option", "-framework", "-linker-option", "CoreGraphics"
+                        )
+                    }
+                }
+            }
+        )
+    }
+
+
 
     sourceSets {
 
@@ -28,11 +60,9 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(project(":kamel-tests"))
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
+                implementation(kotlin("test"))
                 implementation(Dependencies.Testing.Ktor)
                 implementation(Dependencies.Testing.Coroutines)
-                implementation(Dependencies.Testing.Compose)
             }
         }
 
@@ -43,22 +73,36 @@ kotlin {
         }
 
         val jvmTest by getting {
-            dependencies {
-                implementation(kotlin("test-junit"))
+        }
+
+        val nonJvmMain by creating {
+            dependsOn(commonMain)
+        }
+
+        val nonJvmTest by creating {
+            dependsOn(commonTest)
+        }
+
+        val darwinMain by creating {
+            dependsOn(nonJvmMain)
+        }
+
+        val darwinTest by creating {
+            dependsOn(nonJvmTest)
+        }
+
+        Targets.darwinTargets.forEach { target ->
+            getByName("${target}Main") {
+                dependsOn(darwinMain)
+            }
+            getByName("${target}Test") {
+                dependsOn(darwinTest)
             }
         }
 
         all {
             languageSettings.apply {
                 optIn("kotlin.Experimental")
-            }
-        }
-
-        targets.all {
-            compilations.all {
-                kotlinOptions {
-                    freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
-                }
             }
         }
 

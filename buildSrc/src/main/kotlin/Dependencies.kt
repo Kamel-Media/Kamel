@@ -21,6 +21,7 @@ object Dependencies {
         const val Ktor = "io.ktor:ktor-client-mock:${Versions.Ktor}"
         const val Coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.Coroutines}"
         const val Compose = "org.jetbrains.compose.ui:ui-test-junit4:${Versions.Compose}"
+        const val MokoResources = "dev.icerock.moko:resources:${Versions.MokoResources}"
     }
 
 }
@@ -32,6 +33,7 @@ object Versions {
     const val Coroutines = "1.6.4"
     const val Compose = "1.2.0-alpha01-dev745"
     const val AGP = "7.2.2"
+    const val MokoResources = "0.20.1"
 
     object Android {
         const val ActivityCompose = "1.5.1"
