@@ -5,8 +5,6 @@ object Dependencies {
     const val KotlinReflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.Kotlin}"
 
     object Android {
-        const val Appcompat = "androidx.appcompat:appcompat:${Versions.Android.Appcompat}"
-        const val Core = "androidx.core:core-ktx:${Versions.Android.Core}"
         const val ActivityCompose = "androidx.activity:activity-compose:${Versions.Android.ActivityCompose}"
         const val GradlePlugin = "com.android.tools.build:gradle:${Versions.AGP}"
         const val Material = "com.google.android.material:material:${Versions.Android.Material}"
@@ -27,18 +25,16 @@ object Dependencies {
 
 }
 
-private object Versions {
+object Versions {
 
-    const val Kotlin = "1.7.0"
+    const val Kotlin = "1.7.10"
     const val Ktor = "2.0.3"
-    const val Coroutines = "1.6.3"
-    const val Compose = "1.2.0-alpha01-dev753"
-    const val AGP = "7.0.4"
+    const val Coroutines = "1.6.4"
+    const val Compose = "1.2.0-alpha01-dev745"
+    const val AGP = "7.2.2"
 
     object Android {
-        const val Appcompat = "1.4.2"
-        const val Core = "1.8.0"
-        const val ActivityCompose = "1.5.0"
+        const val ActivityCompose = "1.5.1"
         const val Material = "1.6.1"
     }
 

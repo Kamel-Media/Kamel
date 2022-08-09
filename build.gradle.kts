@@ -127,7 +127,7 @@ allprojects {
 
     tasks.withType<KotlinCompile> {
         kotlinOptions {
-            freeCompilerArgs = listOf("-Xallow-result-return-type", "-Xopt-in=kotlin.RequiresOptIn")
+            freeCompilerArgs = listOf("-Xallow-result-return-type")
         }
     }
 
