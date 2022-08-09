@@ -33,7 +33,7 @@ private object Versions {
     const val Ktor = "2.0.3"
     const val Coroutines = "1.6.3"
     const val Compose = "1.2.0-alpha01-dev753"
-    const val AGP = "7.2.1"
+    const val AGP = "7.0.4"
 
     object Android {
         const val Appcompat = "1.4.2"

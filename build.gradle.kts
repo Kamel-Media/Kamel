@@ -9,6 +9,7 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        gradlePluginPortal()
         maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
         maven(url = "https://dl.bintray.com/kotlin/dokka")
         maven(url = "https://kotlin.bintray.com/ktor")
@@ -113,8 +114,8 @@ allprojects {
                     url = if (version.toString().endsWith("SNAPSHOT")) uri(snapshotsRepoUrl) else uri(releasesRepoUrl)
 
                     credentials {
-                        username = rootProject.ext["ossrh.username"] as String
-                        password = rootProject.ext["ossrh.password"] as String
+                        username = rootProject.ext["ossrh.username"] as String? ?: ""
+                        password = rootProject.ext["ossrh.password"] as String? ?: ""
                     }
 
                 }
@@ -134,7 +135,7 @@ allprojects {
 
 nexusStaging {
     packageGroup = Kamel.Group
-    stagingProfileId = rootProject.ext["stagingProfileId"] as String
-    username = rootProject.ext["ossrh.username"] as String
-    password = rootProject.ext["ossrh.password"] as String
+    stagingProfileId = rootProject.ext["stagingProfileId"] as String? ?: ""
+    username = rootProject.ext["ossrh.username"] as String? ?: ""
+    password = rootProject.ext["ossrh.password"] as String? ?: ""
 }
