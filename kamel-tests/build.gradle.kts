@@ -15,12 +15,13 @@ kotlin {
                 implementation(project(":kamel-core"))
                 implementation(Dependencies.Testing.Ktor)
                 implementation(Dependencies.Coroutines.Core)
-                implementation(Dependencies.Testing.MokoResources)
+                api(Dependencies.MokoResources.Core)
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                api(Dependencies.MokoResources.Test)
             }
         }
 

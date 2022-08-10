@@ -31,6 +31,11 @@ object Dependencies {
         const val MokoResources = "dev.icerock.moko:resources:${Versions.MokoResources}"
     }
 
+    object MokoResources {
+        const val Core = "dev.icerock.moko:resources:${Versions.MokoResources}"
+        const val Test = "dev.icerock.moko:resources-test:${Versions.MokoResources}"
+    }
+
 }
 
 object Versions {
