@@ -9,6 +9,7 @@ object Dependencies {
         const val GradlePlugin = "com.android.tools.build:gradle:${Versions.AGP}"
         const val Material = "com.google.android.material:material:${Versions.Android.Material}"
         const val Annotation = "androidx.annotation:annotation:${Versions.Android.Annotation}"
+        const val UIGraphics = "androidx.compose.ui:ui-graphics:${Versions.Android.UIGraphics}"
     }
 
     object Ktor {
@@ -45,6 +46,7 @@ object Versions {
         const val ActivityCompose = "1.5.1"
         const val Material = "1.6.1"
         const val Annotation = "1.4.0"
+        const val UIGraphics = "1.2.1"
     }
 
 }

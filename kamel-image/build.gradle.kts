@@ -105,6 +105,8 @@ kotlin {
             dependsOn(jvmMain)
             dependencies{
                 implementation(Dependencies.Android.Annotation)
+                //todo: remove when resolved https://github.com/JetBrains/compose-jb/issues/2238
+                implementation(Dependencies.Android.UIGraphics)
             }
         }
 
