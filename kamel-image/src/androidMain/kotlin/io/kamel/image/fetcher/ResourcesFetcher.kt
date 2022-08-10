@@ -12,9 +12,12 @@ import io.ktor.utils.io.*
 import io.ktor.utils.io.jvm.javaio.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlin.reflect.KClass
 
 
 internal class ResourcesFetcher(private val context: Context) : Fetcher<Url> {
+
+    override val inputDataKClass: KClass<Url> = Url::class
 
     override val source: DataSource = DataSource.Disk
 

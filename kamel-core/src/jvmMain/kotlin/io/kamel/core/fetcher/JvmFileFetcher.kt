@@ -8,11 +8,14 @@ import io.ktor.utils.io.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.File
+import kotlin.reflect.KClass
 
 /**
  * Fetcher that fetchers [ByteReadChannel] from a file.
  */
 internal actual object FileFetcher : Fetcher<File> {
+
+    override val inputDataKClass: KClass<File> = File::class
 
     override val source: DataSource = DataSource.Disk
 

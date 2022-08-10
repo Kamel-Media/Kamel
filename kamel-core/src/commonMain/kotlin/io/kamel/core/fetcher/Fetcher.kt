@@ -5,11 +5,17 @@ import io.kamel.core.Resource
 import io.kamel.core.config.ResourceConfig
 import io.ktor.utils.io.*
 import kotlinx.coroutines.flow.Flow
+import kotlin.reflect.KClass
 
 /**
  * Fetches and transfers data into a [ByteReadChannel] asynchronously.
  */
 public interface Fetcher<T : Any> {
+
+    /**
+     * The KClass type for which this fetcher supports as a data input
+     */
+    public val inputDataKClass: KClass<T>
 
     /**
      * Source from where data has been loaded.

@@ -9,6 +9,7 @@ import io.kamel.tests.HttpMockEngine
 import io.kamel.tests.TestStringUrl
 import io.ktor.http.*
 import io.ktor.utils.io.*
+import kotlin.reflect.KClass
 import kotlin.test.Test
 import kotlin.test.assertFails
 import kotlin.test.assertTrue
@@ -79,6 +80,9 @@ class KamelConfigUtilsTest {
 fun KamelConfigBuilder.fakeImageBitmapDecoder() = decoder(FakeImageBitmapDecoder)
 
 private object FakeImageBitmapDecoder : Decoder<ImageBitmap> {
+
+    override val outputKClass: KClass<ImageBitmap> = ImageBitmap::class
+
     override suspend fun decode(channel: ByteReadChannel, resourceConfig: ResourceConfig): ImageBitmap {
         return ImageBitmap(1, 1)
     }

@@ -7,11 +7,14 @@ import io.kamel.core.decoder.Decoder
 import io.ktor.util.*
 import io.ktor.utils.io.*
 import org.jetbrains.skia.Image
+import kotlin.reflect.KClass
 
 /**
  * Decodes and transfers [ByteReadChannel] to [ImageBitmap] using Skia [Image].
  */
 internal actual object ImageBitmapDecoder : Decoder<ImageBitmap> {
+
+    override val outputKClass: KClass<ImageBitmap> = ImageBitmap::class
 
     override suspend fun decode(
         channel: ByteReadChannel,
