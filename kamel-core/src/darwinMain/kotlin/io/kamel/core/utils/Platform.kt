@@ -6,7 +6,7 @@ import platform.Foundation.NSFileHandle
 import platform.Foundation.NSURL
 
 
-internal actual val Dispatchers.IO: CoroutineDispatcher get() = kotlinx.coroutines.Dispatchers.IO
+internal actual val Dispatchers.IO: CoroutineDispatcher get() = kotlinx.coroutines.Dispatchers.Default
 
 internal actual typealias File = NSFileHandle
 

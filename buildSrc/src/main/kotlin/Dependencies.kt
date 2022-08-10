@@ -14,6 +14,7 @@ object Dependencies {
         const val Core = "io.ktor:ktor-client-core:${Versions.Ktor}"
         const val Logging = "io.ktor:ktor-client-logging:${Versions.Ktor}"
         const val Android = "io.ktor:ktor-client-android:${Versions.Ktor}"
+        const val Darwin = "io.ktor:ktor-client-darwin:${Versions.Ktor}"
         const val CIO = "io.ktor:ktor-client-cio:${Versions.Ktor}"
     }
 

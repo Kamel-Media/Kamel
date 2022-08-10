@@ -58,6 +58,19 @@ kotlin {
     android()
     jvm("desktop")
 
+    for (target in Targets.macosTargets) {
+        targets.add(
+            (presets.getByName(target)
+                .createTarget(target) as org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget).apply {
+                binaries.executable {
+                    freeCompilerArgs += listOf(
+                        "-linker-option", "-framework", "-linker-option", "Metal"
+                    )
+                }
+            }
+        )
+    }
+
 
     sourceSets {
 
@@ -87,6 +100,16 @@ kotlin {
             }
         }
 
+        val macosMain by creating {
+            dependsOn(commonMain)
+        }
+
+        Targets.macosTargets.forEach { target ->
+            getByName("${target}Main") {
+                dependsOn(macosMain)
+            }
+        }
+
         all {
             languageSettings.apply {
                 optIn("kotlin.Experimental")
@@ -107,5 +130,15 @@ compose {
         application {
             mainClass = "io.kamel.samples.DesktopSampleKt"
         }
+    }
+}
+
+
+compose.desktop.nativeApplication {
+    targets(kotlin.targets.getByName("macosArm64"))
+    distributions {
+        targetFormats(org.jetbrains.compose.desktop.application.dsl.TargetFormat.Dmg)
+        packageName = "Native-Sample"
+        packageVersion = "1.0.0"
     }
 }

@@ -119,6 +119,9 @@ kotlin {
 
         val darwinMain by creating {
             dependsOn(nonJvmMain)
+            dependencies {
+                implementation(Dependencies.Ktor.Darwin)
+            }
         }
 
         val darwinTest by creating {

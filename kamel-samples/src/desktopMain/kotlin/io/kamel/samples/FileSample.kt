@@ -23,7 +23,7 @@ public fun main(): Unit = singleWindowApplication {
 
     CompositionLocalProvider(LocalKamelConfig provides kamelConfig) {
         val painterResource =
-            lazyPainterResource(File("kamel-tests/src/commonMain/resources/Compose.png"))
+            lazyPainterResource(File("kamel-tests/src/commonMain/resources/MR/files/Compose.png"))
 
         KamelImage(
             painterResource,
