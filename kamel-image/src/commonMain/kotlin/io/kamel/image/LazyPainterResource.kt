@@ -34,8 +34,8 @@ public class PainterFailure : Error("Failed to return a Painter")
  */
 @ExperimentalKamelApi
 @Composable
-public inline fun lazyPainterResource(
-    data: Any,
+public inline fun <I : Any> lazyPainterResource(
+    data: I,
     key: Any? = data,
     filterQuality: FilterQuality = DrawScope.DefaultFilterQuality,
     noinline onLoadingPainter: @Composable (Float) -> Result<Painter> = { Result.failure(PainterFailure()) },

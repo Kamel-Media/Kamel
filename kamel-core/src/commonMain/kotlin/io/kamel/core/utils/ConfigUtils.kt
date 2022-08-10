@@ -3,22 +3,10 @@ package io.kamel.core.utils
 import io.kamel.core.config.KamelConfig
 import io.kamel.core.decoder.Decoder
 import io.kamel.core.fetcher.Fetcher
+import kotlin.reflect.KClass
 
-internal fun KamelConfig.mapInput(input: Any): Any {
-
-    var output: Any? = null
-
-    mappers.findLast {
-
-        output = try {
-            it.map(input)
-        } catch (e: Throwable) {
-            null
-        }
-
-        output != null
-    }
-
+internal fun KamelConfig.mapInput(input: Any, inputKClass: KClass<*>): Any {
+    val output = mappers[inputKClass]?.map(input)
     return output ?: input
 }
 

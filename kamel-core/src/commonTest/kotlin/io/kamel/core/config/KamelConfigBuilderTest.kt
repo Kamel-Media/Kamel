@@ -7,6 +7,8 @@ import io.kamel.core.mapper.Mapper
 import io.kamel.core.mapper.StringMapper
 import io.kamel.core.mapper.URIMapper
 import io.kamel.core.mapper.URLMapper
+import io.kamel.core.utils.URI
+import io.kamel.core.utils.URL
 import io.kamel.tests.HttpMockEngine
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -43,7 +45,8 @@ class KamelConfigBuilderTest {
         builder.stringMapper()
 
         assertTrue { builder.mappers.size == 1 }
-        assertTrue { builder.mappers.contains<Mapper<*, *>>(StringMapper) }
+        assertTrue { builder.mappers.keys.contains(String::class) }
+        assertTrue { builder.mappers.values.contains<Mapper<*, *>>(StringMapper) }
     }
 
     @Test
@@ -51,7 +54,8 @@ class KamelConfigBuilderTest {
         builder.urlMapper()
 
         assertTrue { builder.mappers.size == 1 }
-        assertTrue { builder.mappers.contains<Mapper<*,*>>(URLMapper) }
+        assertTrue { builder.mappers.keys.contains(URL::class) }
+        assertTrue { builder.mappers.values.contains<Mapper<*, *>>(URLMapper) }
     }
 
     @Test
@@ -59,7 +63,8 @@ class KamelConfigBuilderTest {
         builder.uriMapper()
 
         assertTrue { builder.mappers.size == 1 }
-        assertTrue { builder.mappers.contains<Mapper<*, *>>(URIMapper) }
+        assertTrue { builder.mappers.keys.contains(URI::class) }
+        assertTrue { builder.mappers.values.contains<Mapper<*, *>>(URIMapper) }
     }
 
     @Test
@@ -83,8 +88,10 @@ class KamelConfigBuilderTest {
         builder.takeFrom(configBuilder)
 
         assertTrue { builder.fetchers.contains<Fetcher<*>>(FileFetcher) }
-        assertTrue { builder.mappers.contains<Mapper<*, *>>(URIMapper) }
-        assertTrue { builder.mappers.contains<Mapper<*, *>>(StringMapper) }
+        assertTrue { builder.mappers.keys.contains(URI::class) }
+        assertTrue { builder.mappers.values.contains<Mapper<*, *>>(URIMapper) }
+        assertTrue { builder.mappers.keys.contains(String::class) }
+        assertTrue { builder.mappers.values.contains<Mapper<*, *>>(StringMapper) }
         assertEquals(100, builder.build().imageBitmapCache.maxSize)
     }
 
@@ -99,8 +106,10 @@ class KamelConfigBuilderTest {
         builder.takeFrom(configBuilder.build())
 
         assertTrue { builder.fetchers.contains<Fetcher<*>>(FileFetcher) }
-        assertTrue { builder.mappers.contains<Mapper<*, *>>(URIMapper) }
-        assertTrue { builder.mappers.contains<Mapper<*, *>>(StringMapper) }
+        assertTrue { builder.mappers.keys.contains(URI::class) }
+        assertTrue { builder.mappers.values.contains<Mapper<*, *>>(URIMapper) }
+        assertTrue { builder.mappers.keys.contains(String::class) }
+        assertTrue { builder.mappers.values.contains<Mapper<*, *>>(StringMapper) }
         assertEquals(100, builder.build().imageBitmapCache.maxSize)
     }
 

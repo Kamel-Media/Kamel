@@ -26,21 +26,21 @@ class KamelConfigUtilsTest {
 
     @Test
     fun testMapStringInput() {
-        val result = config.mapInput(TestStringUrl)
+        val result = config.mapInput(TestStringUrl, String::class)
 
         assertTrue(result is Url)
     }
 
     @Test
     fun testMapURLInput() {
-        val result = config.mapInput(createURL(TestStringUrl))
+        val result = config.mapInput(createURL(TestStringUrl), URL::class)
 
         assertTrue(result is Url)
     }
 
     @Test
     fun testMapURIInput() {
-        val result = config.mapInput(createURI(TestStringUrl))
+        val result = config.mapInput(createURI(TestStringUrl), URI::class)
 
         assertTrue(result is Url)
     }

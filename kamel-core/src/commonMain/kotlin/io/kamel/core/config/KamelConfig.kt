@@ -7,6 +7,7 @@ import io.kamel.core.cache.Cache
 import io.kamel.core.decoder.Decoder
 import io.kamel.core.fetcher.Fetcher
 import io.kamel.core.mapper.Mapper
+import kotlin.reflect.KClass
 
 public const val DefaultCacheSize: Int = 100
 
@@ -20,7 +21,7 @@ public interface KamelConfig {
 
     public val decoders: List<Decoder<Any>>
 
-    public val mappers: List<Mapper<Any, Any>>
+    public val mappers: Map<KClass<*>, Mapper<Any, Any>>
 
     /**
      * Number of entries to cache. Default is 100.

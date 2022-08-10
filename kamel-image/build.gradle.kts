@@ -103,6 +103,9 @@ kotlin {
 
         val androidMain by getting {
             dependsOn(jvmMain)
+            dependencies{
+                implementation(Dependencies.Android.Annotation)
+            }
         }
 
         val androidTest by getting {

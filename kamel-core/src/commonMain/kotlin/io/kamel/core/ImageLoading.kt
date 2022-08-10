@@ -13,6 +13,7 @@ import io.kamel.core.utils.findDecoderFor
 import io.kamel.core.utils.findFetcherFor
 import io.kamel.core.utils.mapInput
 import kotlinx.coroutines.flow.*
+import kotlin.reflect.KClass
 
 /**
  * Loads an [ImageBitmap]. This includes mapping, fetching, decoding and caching the image resource.
@@ -21,10 +22,11 @@ import kotlinx.coroutines.flow.*
  * @see Mapper
  * @see Cache
  */
-public fun KamelConfig.loadImageBitmapResource(
-    data: Any,
-    resourceConfig: ResourceConfig
-): Flow<Resource<ImageBitmap>> = loadResource(data, resourceConfig, imageBitmapCache)
+public fun <I : Any> KamelConfig.loadImageBitmapResource(
+    data: I,
+    resourceConfig: ResourceConfig,
+    dataKClass: KClass<*> = data::class,
+): Flow<Resource<ImageBitmap>> = loadResource(data, dataKClass, resourceConfig, imageBitmapCache)
 
 /**
  * Loads an [ImageVector]. This includes mapping, fetching, decoding and caching the image resource.
@@ -35,8 +37,9 @@ public fun KamelConfig.loadImageBitmapResource(
  */
 public fun KamelConfig.loadImageVectorResource(
     data: Any,
-    resourceConfig: ResourceConfig
-): Flow<Resource<ImageVector>> = loadResource(data, resourceConfig, imageVectorCache)
+    resourceConfig: ResourceConfig,
+    dataKClass: KClass<*> = data::class
+): Flow<Resource<ImageVector>> = loadResource(data, dataKClass, resourceConfig, imageVectorCache)
 
 /**
  * Loads SVG [Painter]. This includes mapping, fetching, decoding and caching the image resource.
@@ -47,15 +50,17 @@ public fun KamelConfig.loadImageVectorResource(
  */
 public fun KamelConfig.loadSvgResource(
     data: Any,
-    resourceConfig: ResourceConfig
-): Flow<Resource<Painter>> = loadResource(data, resourceConfig, svgCache)
+    resourceConfig: ResourceConfig,
+    dataKClass: KClass<*> = data::class
+): Flow<Resource<Painter>> = loadResource(data, dataKClass, resourceConfig, svgCache)
 
 private inline fun <reified T : Any> KamelConfig.loadResource(
     data: Any,
+    dataKClass: KClass<*>,
     resourceConfig: ResourceConfig,
     cache: Cache<Any, T>,
 ): Flow<Resource<T>> = flow {
-    val output = mapInput(data)
+    val output = mapInput(data, dataKClass)
     val cachedData = cache[output]
     if (cachedData != null) {
         val resource = Resource.Success(cachedData, DataSource.Memory)

@@ -22,17 +22,11 @@ internal actual object FileFetcher : Fetcher<File> {
     override val File.isSupported: Boolean
         get() = true// exists() && isFile
 
-    private fun NSData.toByteArray(): ByteArray = ByteArray(this@toByteArray.length.toInt()).apply {
-        usePinned {
-            memcpy(it.addressOf(0), this@toByteArray.bytes, this@toByteArray.length)
-        }
-    }
-
     override fun fetch(
         data: File,
         resourceConfig: ResourceConfig
     ): Flow<Resource<ByteReadChannel>> = flow {
-        val bytes = ByteReadChannel(data.availableData.toByteArray())
+        val bytes = ByteReadChannel(data.availableData)
         emit(Resource.Success(bytes, source))
     }
 
