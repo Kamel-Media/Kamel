@@ -15,6 +15,8 @@ import io.kamel.core.config.ResourceConfigBuilder
 import io.kamel.image.config.LocalKamelConfig
 import io.ktor.http.*
 
+public class PainterFailure : Error("Failed to return a Painter")
+
 /**
  * Loads a [Painter] resource asynchronously.
  * @param data Can be anything such as [String], [Url] or a [File].
@@ -36,8 +38,8 @@ public inline fun lazyPainterResource(
     data: Any,
     key: Any? = data,
     filterQuality: FilterQuality = DrawScope.DefaultFilterQuality,
-    noinline onLoadingPainter: @Composable (Float) -> Painter? = { null },
-    noinline onFailurePainter: @Composable (Throwable) -> Painter? = { null },
+    noinline onLoadingPainter: @Composable (Float) -> Result<Painter> = { Result.failure(PainterFailure()) },
+    noinline onFailurePainter: @Composable (Throwable) -> Result<Painter> = { Result.failure(PainterFailure()) },
     block: ResourceConfigBuilder.() -> Unit = {},
 ): Resource<Painter> {
 
@@ -61,14 +63,17 @@ public inline fun lazyPainterResource(
     val painterResourceWithFallbacks = when (painterResource) {
         is Resource.Loading -> {
             val resource = painterResource as Resource.Loading
-            val painter = onLoadingPainter(resource.progress)
-            if (painter != null) Resource.Success(painter) else painterResource
+            onLoadingPainter(resource.progress)
+                .mapCatching { painter -> Resource.Success(painter) }
+                .getOrDefault(painterResource)
         }
+
         is Resource.Success -> painterResource
         is Resource.Failure -> {
             val resource = painterResource as Resource.Failure
-            val painter = onFailurePainter(resource.exception)
-            if (painter != null) Resource.Success(painter) else painterResource
+            onFailurePainter(resource.exception)
+                .mapCatching { painter -> Resource.Success(painter) }
+                .getOrDefault(painterResource)
         }
     }
 
