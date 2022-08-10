@@ -87,3 +87,29 @@ public inline fun <I : Any> lazyPainterResource(
         }
     }
 }
+
+
+/**
+ * Loads a [Painter] resource asynchronously.
+ * @param data Can be anything such as [String], [Url] or a [File].
+ * @param key That is used in [remember] during composition, usually it's just [data].
+ * @param filterQuality That is used by [BitmapPainter].
+ * @param block Configuration for [ResourceConfig].
+ * @return [Resource] Which contains a [Painter] that can be used to display an image using [KamelImage] or [KamelImageBox].
+ * @see LocalKamelConfig
+ */
+@OptIn(ExperimentalKamelApi::class)
+@Composable
+public inline fun lazyPainterResource(
+    data: Any,
+    key: Any? = data,
+    filterQuality: FilterQuality = DrawScope.DefaultFilterQuality,
+    block: ResourceConfigBuilder.() -> Unit = {},
+): Resource<Painter> = lazyPainterResource(
+    data,
+    key,
+    filterQuality,
+    onLoadingPainter = { Result.failure(PainterFailure()) },
+    onFailurePainter = { Result.failure(PainterFailure()) },
+    block
+)
