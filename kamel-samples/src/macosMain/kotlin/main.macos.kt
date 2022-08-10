@@ -1,44 +1,40 @@
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.window.Window
-import io.kamel.core.config.KamelConfig
-import io.kamel.core.config.takeFrom
-import io.kamel.image.config.Default
-import io.kamel.image.config.LocalKamelConfig
-import io.kamel.image.config.imageVectorDecoder
-import io.kamel.image.config.resourcesFetcher
+import io.kamel.samples.FileSample
+import io.kamel.samples.Gallery
 import platform.AppKit.NSApp
 import platform.AppKit.NSApplication
 
-fun main() {
+public fun main() {
     NSApplication.sharedApplication()
-    Window("FileSample") {
-        FileSample()
-    }
-    NSApp?.run()
-}
-
-@androidx.compose.runtime.Composable
-fun FileSample() {
-    val kamelConfig = KamelConfig {
-        takeFrom(KamelConfig.Default)
-        resourcesFetcher()
-        imageVectorDecoder()
-    }
-
-    CompositionLocalProvider(LocalKamelConfig provides kamelConfig) {
+    Window("Sample") {
+        var sampleIndex by remember { mutableStateOf(0) }
         Column {
-            Text("TEST")
-//            val painterResource =
-//                lazyPainterResource(NSFileHandle.fileHandleForReadingAtPath("kamel-tests/src/commonMain/resources/MR/files/Compose.png")!!)
-//
-//            KamelImage(
-//                painterResource,
-//                contentDescription = "Compose",
-//                modifier = Modifier.fillMaxSize(),
-//                onFailure = { throw it }
-//            )
+            Row {
+                Button({
+                    sampleIndex = 0
+                }) {
+                    Text("Gallery")
+                }
+                Button({
+                    sampleIndex = 1
+                }) {
+                    Text("FileSample")
+                }
+            }
+            when (sampleIndex) {
+                0 -> Gallery()
+                1 -> FileSample()
+                else -> Text("Invalid Sample Index")
+            }
         }
     }
+    NSApp?.run()
 }

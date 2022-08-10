@@ -12,6 +12,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(project(":kamel-core"))
                 implementation(Dependencies.Testing.Ktor)
                 implementation(Dependencies.Coroutines.Core)
                 implementation(Dependencies.Testing.MokoResources)

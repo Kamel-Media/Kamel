@@ -13,6 +13,7 @@ import io.kamel.image.config.imageVectorDecoder
 import io.kamel.image.config.resourcesFetcher
 import io.kamel.image.lazyPainterResource
 import java.io.File
+import io.kamel.tests.MR
 
 public fun main(): Unit = singleWindowApplication {
     val kamelConfig = KamelConfig {
@@ -23,7 +24,7 @@ public fun main(): Unit = singleWindowApplication {
 
     CompositionLocalProvider(LocalKamelConfig provides kamelConfig) {
         val painterResource =
-            lazyPainterResource(File("kamel-tests/src/commonMain/resources/MR/files/Compose.png"))
+            lazyPainterResource(File(MR.files.Compose.filePath))
 
         KamelImage(
             painterResource,
