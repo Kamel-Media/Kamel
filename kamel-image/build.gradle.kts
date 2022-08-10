@@ -73,7 +73,7 @@ kotlin {
                 implementation(project(":kamel-tests"))
                 implementation(kotlin("test"))
                 implementation(Dependencies.Testing.Ktor)
-                implementation(Dependencies.Testing.Coroutines)
+                implementation(Dependencies.Coroutines.Test)
             }
         }
 

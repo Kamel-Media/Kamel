@@ -18,9 +18,13 @@ object Dependencies {
         const val CIO = "io.ktor:ktor-client-cio:${Versions.Ktor}"
     }
 
+    object Coroutines {
+        const val Core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Coroutines}"
+        const val Test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.Coroutines}"
+    }
+
     object Testing {
         const val Ktor = "io.ktor:ktor-client-mock:${Versions.Ktor}"
-        const val Coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.Coroutines}"
         const val Compose = "org.jetbrains.compose.ui:ui-test-junit4:${Versions.Compose}"
         const val MokoResources = "dev.icerock.moko:resources:${Versions.MokoResources}"
     }

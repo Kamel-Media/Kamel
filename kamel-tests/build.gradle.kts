@@ -13,7 +13,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(Dependencies.Testing.Ktor)
-                implementation(Dependencies.Testing.Coroutines)
+                implementation(Dependencies.Coroutines.Core)
                 implementation(Dependencies.Testing.MokoResources)
             }
         }
