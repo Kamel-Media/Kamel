@@ -128,6 +128,7 @@ allprojects {
     tasks.withType<KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xallow-result-return-type")
+            jvmTarget = "11"
         }
     }
 

@@ -6,6 +6,7 @@ object Dependencies {
 
     object Android {
         const val ActivityCompose = "androidx.activity:activity-compose:${Versions.Android.ActivityCompose}"
+        const val Appcompat = "androidx.appcompat:appcompat:${Versions.Android.Appcompat}"
         const val GradlePlugin = "com.android.tools.build:gradle:${Versions.AGP}"
         const val Material = "com.google.android.material:material:${Versions.Android.Material}"
         const val Annotation = "androidx.annotation:annotation:${Versions.Android.Annotation}"
@@ -49,6 +50,7 @@ object Versions {
 
     object Android {
         const val ActivityCompose = "1.5.1"
+        const val Appcompat = "1.4.2"
         const val Material = "1.6.1"
         const val Annotation = "1.4.0"
         const val UIGraphics = "1.2.1"

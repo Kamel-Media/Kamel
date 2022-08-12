@@ -67,6 +67,7 @@ kotlin {
         }
 
         val jvmMain by getting {
+            dependsOn(commonMain)
             dependencies {
                 implementation(Dependencies.KotlinReflect)
             }

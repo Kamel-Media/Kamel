@@ -1,3 +1,4 @@
+import org.jetbrains.compose.compose
 import org.jetbrains.compose.desktop.application.tasks.AbstractNativeMacApplicationPackageAppDirTask
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 import org.jetbrains.kotlin.gradle.plugin.mpp.AbstractExecutable
@@ -24,6 +25,11 @@ android {
         multiDexEnabled = true
     }
 
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
     packagingOptions {
         resources {
             excludes += setOf("META-INF/AL2.0", "META-INF/LGPL2.1")
@@ -44,13 +50,6 @@ android {
         create("testApi")
         create("testDebugApi")
         create("testReleaseApi")
-//        named("implementation") {
-//            exclude(group = "androidx.compose.animation")
-//            exclude(group = "androidx.compose.foundation")
-//            exclude(group = "androidx.compose.material")
-//            exclude(group = "androidx.compose.runtime")
-//            exclude(group = "androidx.compose.ui")
-//        }
     }
 }
 
@@ -85,18 +84,21 @@ kotlin {
             dependencies {
                 implementation(project(":kamel-image"))
                 implementation(project(":kamel-tests"))
-                implementation(compose.ui)
-                implementation(compose.foundation)
-                implementation(compose.material)
-                implementation(compose.animation)
             }
         }
 
         val androidMain by getting {
+            dependsOn(commonMain)
             dependencies {
+                implementation(Dependencies.Android.Appcompat)
                 implementation(Dependencies.Android.ActivityCompose)
                 implementation(Dependencies.Android.Material)
                 implementation(Dependencies.Ktor.Android)
+                //todo: remove below when resolved https://github.com/JetBrains/compose-jb/issues/2238
+                // the app will build without these imports. But Intellij highlights the compose
+                // imports in red if we do not add them here. (this is with the android 7.2
+                // gradle plugin, 7.1 works correctly but causes lint errors when building)
+                implementation("androidx.compose.foundation:foundation:1.2.1")
             }
         }
 
@@ -124,12 +126,6 @@ kotlin {
             }
         }
 
-    }
-}
-
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = "11"
     }
 }
 
