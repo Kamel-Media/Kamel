@@ -5,12 +5,8 @@ import io.kamel.core.Resource
 import io.kamel.core.config.ResourceConfig
 import io.kamel.core.utils.File
 import io.ktor.utils.io.*
-import kotlinx.cinterop.addressOf
-import kotlinx.cinterop.usePinned
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import platform.Foundation.NSData
-import platform.posix.memcpy
 import kotlin.reflect.KClass
 
 /**
@@ -29,8 +25,8 @@ internal actual object FileFetcher : Fetcher<File> {
         data: File,
         resourceConfig: ResourceConfig
     ): Flow<Resource<ByteReadChannel>> = flow {
-        val bytes = ByteReadChannel(data.availableData)
-        emit(Resource.Success(bytes, source))
+        val byteReadChannel = ByteReadChannel(data.availableData)
+        emit(Resource.Success(byteReadChannel, source))
     }
 
 }

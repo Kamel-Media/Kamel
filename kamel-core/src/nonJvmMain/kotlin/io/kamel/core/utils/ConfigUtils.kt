@@ -5,7 +5,6 @@ package io.kamel.core.utils
 import io.kamel.core.config.KamelConfig
 import io.kamel.core.decoder.Decoder
 import io.kamel.core.fetcher.Fetcher
-import kotlin.reflect.typeOf
 
 internal actual fun <T : Any> KamelConfig.findFetcherFor(data: T): Fetcher<T> {
 
