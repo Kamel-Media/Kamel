@@ -14,7 +14,9 @@ kotlin {
     explicitApi = ExplicitApiMode.Warning
 
     jvm()
-
+    js(IR) {
+        browser()
+    }
     for (target in Targets.macosTargets) {
         targets.add(
             (presets.getByName(target).createTarget(target) as KotlinNativeTarget).apply {
@@ -82,6 +84,10 @@ kotlin {
 
         val nonJvmTest by creating {
             dependsOn(commonTest)
+        }
+
+        val jsMain by getting {
+            dependsOn(nonJvmMain)
         }
 
         val darwinMain by creating {

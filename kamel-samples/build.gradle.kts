@@ -1,5 +1,6 @@
 import org.jetbrains.compose.compose
 import org.jetbrains.compose.desktop.application.tasks.AbstractNativeMacApplicationPackageAppDirTask
+import org.jetbrains.compose.experimental.dsl.IOSDevices
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 import org.jetbrains.kotlin.gradle.plugin.mpp.AbstractExecutable
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBinary
@@ -11,6 +12,7 @@ import java.io.FileFilter
 plugins {
     multiplatform
     compose
+    mokoResources
     `android-application`
 }
 
@@ -63,7 +65,10 @@ kotlin {
 
     android()
     jvm("desktop")
-
+    js(IR) {
+        browser()
+        binaries.executable()
+    }
     for (target in Targets.macosTargets) {
         targets.add(
             (presets.getByName(target)
@@ -76,7 +81,6 @@ kotlin {
             }
         )
     }
-
 
     sourceSets {
 
@@ -125,12 +129,22 @@ kotlin {
     }
 }
 
+
+multiplatformResources {
+    multiplatformResourcesPackage = "io.kamel.samples"
+}
+
+
 compose {
     desktop {
         application {
             mainClass = "io.kamel.samples.DesktopSampleKt"
         }
     }
+}
+
+compose.experimental {
+    web.application {}
 }
 
 

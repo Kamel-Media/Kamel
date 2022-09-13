@@ -11,8 +11,6 @@ buildscript {
         mavenCentral()
         gradlePluginPortal()
         maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
-        maven(url = "https://dl.bintray.com/kotlin/dokka")
-        maven(url = "https://kotlin.bintray.com/ktor")
     }
 
     dependencies {
@@ -58,8 +56,6 @@ allprojects {
         google()
         mavenCentral()
         maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
-        maven(url = "https://dl.bintray.com/kotlin/dokka")
-        maven(url = "https://kotlin.bintray.com/ktor")
     }
 
     val emptyJavadocJar by tasks.registering(Jar::class) {
