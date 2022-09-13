@@ -9,7 +9,6 @@ import io.ktor.http.*
 import io.ktor.utils.io.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import java.io.File
 import kotlin.reflect.KClass
 
 internal object ResourcesFetcher : Fetcher<Url> {

@@ -84,6 +84,7 @@ kotlin {
             dependencies {
                 implementation(project(":kamel-image"))
                 implementation(project(":kamel-tests"))
+                implementation(compose.material)
             }
         }
 
@@ -94,11 +95,6 @@ kotlin {
                 implementation(Dependencies.Android.ActivityCompose)
                 implementation(Dependencies.Android.Material)
                 implementation(Dependencies.Ktor.Android)
-                //todo: remove below when resolved https://github.com/JetBrains/compose-jb/issues/2238
-                // the app will build without these imports. But Intellij highlights the compose
-                // imports in red if we do not add them here. (this is with the android 7.2
-                // gradle plugin, 7.1 works correctly but causes lint errors when building)
-                implementation("androidx.compose.foundation:foundation:1.2.1")
             }
         }
 

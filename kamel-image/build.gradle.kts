@@ -103,14 +103,6 @@ kotlin {
 
         val androidMain by getting {
             dependsOn(jvmMain)
-            dependencies{
-                //todo: remove below when resolved https://github.com/JetBrains/compose-jb/issues/2238
-                // the app will build without these imports. But Intellij highlights the compose
-                // imports in red if we do not add them here. (this is with the android 7.2
-                // gradle plugin, 7.1 works correctly but causes lint errors when building)
-                implementation(Dependencies.Android.Annotation)
-                implementation(Dependencies.Android.UIGraphics)
-            }
         }
 
         val androidTest by getting {
