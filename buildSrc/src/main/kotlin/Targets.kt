@@ -1,7 +1,7 @@
 object Targets {
 
     val iosTargets = arrayOf(
-        "iosArm64", "iosX64",
+        "iosArm64", "iosX64", "iosSimulatorArm64",
     )
     val macosTargets = arrayOf(
         "macosX64", "macosArm64",
