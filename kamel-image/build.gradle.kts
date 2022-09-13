@@ -55,7 +55,9 @@ kotlin {
         publishAllLibraryVariants()
     }
     jvm("desktop")
-
+    js(IR) {
+        browser()
+    }
     for (target in Targets.nativeTargets) {
         targets.add(presets.getByName(target).createTarget(target))
     }
@@ -115,6 +117,13 @@ kotlin {
 
         val nonJvmTest by creating {
             dependsOn(commonTest)
+        }
+
+        val jsMain by getting {
+            dependsOn(nonJvmMain)
+            dependencies {
+                implementation(Dependencies.Ktor.Js)
+            }
         }
 
         val darwinMain by creating {

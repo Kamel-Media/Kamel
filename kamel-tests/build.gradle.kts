@@ -5,6 +5,9 @@ plugins {
 
 kotlin {
     jvm()
+    js(IR) {
+        browser()
+    }
     for (target in Targets.nativeTargets) {
         targets.add(presets.getByName(target).createTarget(target))
     }
@@ -12,7 +15,6 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":kamel-core"))
                 implementation(Dependencies.Testing.Ktor)
                 implementation(Dependencies.Coroutines.Core)
                 api(Dependencies.MokoResources.Core)
