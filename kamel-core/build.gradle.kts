@@ -52,9 +52,9 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
-                api(compose.ui)
-                api(compose.foundation)
-                api(compose.runtime)
+                implementation(compose.ui)
+                implementation(compose.foundation)
+                implementation(compose.runtime)
                 api(Dependencies.Ktor.Core)
             }
         }

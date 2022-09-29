@@ -88,6 +88,7 @@ kotlin {
             dependencies {
                 implementation(project(":kamel-image"))
                 implementation(project(":kamel-tests"))
+                implementation(compose.foundation)
                 implementation(compose.material)
             }
         }

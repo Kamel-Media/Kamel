@@ -67,6 +67,9 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(project(":kamel-core"))
+                implementation(compose.ui)
+                implementation(compose.foundation)
+                implementation(compose.runtime)
             }
         }
 
