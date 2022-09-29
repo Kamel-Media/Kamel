@@ -46,7 +46,7 @@ object Versions {
     const val Ktor = "2.0.3"
     const val Coroutines = "1.6.4"
     const val Compose = "1.2.0-alpha01-dev778"
-    const val AGP = "7.3.0-rc01"
+    const val AGP = "7.3.0"
     const val MokoResources = "0.20.1"
 
     object Android {
