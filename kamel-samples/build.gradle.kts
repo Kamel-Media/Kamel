@@ -1,13 +1,14 @@
 import org.jetbrains.compose.compose
 import org.jetbrains.compose.desktop.application.tasks.AbstractNativeMacApplicationPackageAppDirTask
-import org.jetbrains.compose.experimental.dsl.IOSDevices
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 import org.jetbrains.kotlin.gradle.plugin.mpp.AbstractExecutable
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBinary
 import org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink
 import org.jetbrains.kotlin.library.impl.KotlinLibraryLayoutImpl
-import org.jetbrains.kotlin.konan.file.File as KonanFile
+import java.io.File
 import java.io.FileFilter
+import org.jetbrains.compose.experimental.dsl.IOSDevices as IOSDevices1
+import org.jetbrains.kotlin.konan.file.File as KonanFile
 
 plugins {
     multiplatform
@@ -81,6 +82,22 @@ kotlin {
             }
         )
     }
+    for (target in Targets.iosTargets) {
+        targets.add(
+            (presets.getByName(target)
+                .createTarget(target.replace("ios", "uikit"))
+                    as org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget).apply {
+                binaries.executable {
+                    entryPoint = "main"
+                    freeCompilerArgs += listOf(
+                        "-linker-option", "-framework", "-linker-option", "Metal",
+                        "-linker-option", "-framework", "-linker-option", "CoreText",
+                        "-linker-option", "-framework", "-linker-option", "CoreGraphics"
+                    )
+                }
+            }
+        )
+    }
 
     sourceSets {
 
@@ -111,13 +128,29 @@ kotlin {
             }
         }
 
-        val macosMain by creating {
+        val darwinMain by creating {
             dependsOn(commonMain)
+        }
+
+        val macosMain by creating {
+            dependsOn(darwinMain)
         }
 
         Targets.macosTargets.forEach { target ->
             getByName("${target}Main") {
                 dependsOn(macosMain)
+            }
+        }
+
+        val uikitMain by creating {
+            dependsOn(darwinMain)
+        }
+
+        Targets.iosTargets.map { target ->
+            target.replace("ios", "uikit")
+        }.forEach { target ->
+            getByName("${target}Main") {
+                dependsOn(uikitMain)
             }
         }
 
@@ -146,6 +179,25 @@ compose {
 
 compose.experimental {
     web.application {}
+    uikit.application {
+        bundleIdPrefix = "io.kamel.samples"
+        projectName = "kamel samples"
+        deployConfigurations {
+            simulator("IPhone13") {
+                //Usage: ./gradlew iosDeployIPhone8Debug
+                device = IOSDevices1.IPHONE_13
+            }
+            simulator("IPad") {
+                //Usage: ./gradlew iosDeployIPadDebug
+                device = IOSDevices1.IPAD_PRO_11_INCH_3rd_Gen
+            }
+            connectedDevice("Device") {
+                //First need specify your teamId here, or in local.properties (compose.ios.teamId=***)
+                //teamId="***"
+                //Usage: ./gradlew iosDeployDeviceRelease
+            }
+        }
+    }
 }
 
 
@@ -158,6 +210,12 @@ compose.desktop.nativeApplication {
     }
 }
 
+// TODO: remove when https://youtrack.jetbrains.com/issue/KT-50778 fixed
+project.tasks.withType(org.jetbrains.kotlin.gradle.dsl.KotlinJsCompile::class.java).configureEach {
+    kotlinOptions.freeCompilerArgs += listOf(
+        "-Xir-dce-runtime-diagnostic=log"
+    )
+}
 
 // todo: Remove when resolved: https://github.com/icerockdev/moko-resources/issues/372
 tasks.withType<KotlinNativeLink>()
