@@ -42,11 +42,11 @@ object Dependencies {
 
 object Versions {
 
-    const val Kotlin = "1.7.10"
+    const val Kotlin = "1.7.20"
     const val Ktor = "2.0.3"
     const val Coroutines = "1.6.4"
-    const val Compose = "1.2.0-alpha01-dev778"
-    const val AGP = "7.3.0"
+    const val Compose = "1.2.1"
+    const val AGP = "7.3.1"
     const val MokoResources = "0.20.1"
 
     object Android {
