@@ -79,3 +79,18 @@ private inline fun <reified T : Any> KamelConfig.loadResource(
         emitAll(dataFlow)
     }
 }.catch { emit(Resource.Failure(it)) }
+
+/**
+ * Loads a cached [ImageBitmap], [ImageVector], or SVG [Painter] from memory. This includes mapping and loading the
+ * cached image resource. If no resource has been cached for the provided data, `null` is returned.
+ * @see Mapper
+ * @see Cache
+ */
+public fun <T : Any> KamelConfig.loadCachedResourceOrNull(
+    data: Any,
+    cache: Cache<Any, T>,
+    dataKClass: KClass<*> = data::class,
+): Resource<T>? {
+    val output = mapInput(data, dataKClass)
+    return cache[output]?.let { Resource.Success(it, DataSource.Memory) }
+}
