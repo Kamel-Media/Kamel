@@ -9,10 +9,7 @@ import io.kamel.core.config.KamelConfig
 import io.kamel.core.config.takeFrom
 import io.kamel.core.utils.File
 import io.kamel.image.KamelImage
-import io.kamel.image.config.Default
-import io.kamel.image.config.LocalKamelConfig
-import io.kamel.image.config.imageVectorDecoder
-import io.kamel.image.config.resourcesFetcher
+import io.kamel.image.config.*
 import io.kamel.image.lazyPainterResource
 
 @OptIn(ExperimentalKamelApi::class)
@@ -22,16 +19,17 @@ internal fun FileSample() {
         takeFrom(KamelConfig.Default)
         resourcesFetcher()
         imageVectorDecoder()
+        svgDecoder()
     }
 
     CompositionLocalProvider(LocalKamelConfig provides kamelConfig) {
         Column {
-            val file = File(io.kamel.tests.MR.files.Compose.path)
+            val file = File(io.kamel.tests.MR.files.Kotlin.path)
             val painterResource = lazyPainterResource(file)
 
             KamelImage(
                 painterResource,
-                contentDescription = "Compose",
+                contentDescription = "Kotlin",
                 modifier = Modifier.fillMaxSize(),
                 onFailure = { throw it }
             )
