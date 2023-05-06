@@ -11,7 +11,7 @@ internal actual val URLMapper: Mapper<URL, Url> = object : Mapper<URL, Url> {
     override val outputKClass: KClass<Url>
         get() = Url::class
 
-    override fun map(input: URL): Url = StringMapper.map(input.toString())
+    override fun map(input: URL): Url = StringMapper.map(input.toString().removeSuffix("/"))
 }
 
 
