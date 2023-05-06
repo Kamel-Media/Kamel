@@ -55,6 +55,7 @@ kotlin {
                 implementation(compose.ui)
                 implementation(compose.foundation)
                 implementation(compose.runtime)
+                implementation(Dependencies.Coroutines.Core)
                 api(Dependencies.Ktor.Core)
             }
         }

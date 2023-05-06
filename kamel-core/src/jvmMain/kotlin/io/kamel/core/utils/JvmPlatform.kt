@@ -5,7 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import java.net.URI
 import java.net.URL
 
-internal actual val Dispatchers.IO: CoroutineDispatcher get() = IO
+internal actual val Dispatchers.kamel: CoroutineDispatcher get() = IO
 
 internal actual typealias File = java.io.File
 
