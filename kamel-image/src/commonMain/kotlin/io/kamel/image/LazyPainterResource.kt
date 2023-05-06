@@ -40,7 +40,7 @@ public inline fun <I : Any> lazyPainterResource(
     filterQuality: FilterQuality = DrawScope.DefaultFilterQuality,
     noinline onLoadingPainter: @Composable (Float) -> Result<Painter> = { Result.failure(PainterFailure()) },
     noinline onFailurePainter: @Composable (Throwable) -> Result<Painter> = { Result.failure(PainterFailure()) },
-    block: ResourceConfigBuilder.() -> Unit = {},
+    crossinline block: ResourceConfigBuilder.() -> Unit = {},
 ): Resource<Painter> {
 
     val kamelConfig = LocalKamelConfig.current
@@ -104,7 +104,7 @@ public inline fun lazyPainterResource(
     data: Any,
     key: Any? = data,
     filterQuality: FilterQuality = DrawScope.DefaultFilterQuality,
-    block: ResourceConfigBuilder.() -> Unit = {},
+    crossinline block: ResourceConfigBuilder.() -> Unit = {},
 ): Resource<Painter> = lazyPainterResource(
     data,
     key,

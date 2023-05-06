@@ -11,7 +11,7 @@ import platform.Foundation.fileHandleForReadingAtPath
 import platform.posix.memcpy
 
 
-internal actual val Dispatchers.IO: CoroutineDispatcher get() = Default
+internal actual val Dispatchers.IO: CoroutineDispatcher get() = Dispatchers.Default
 
 public actual class File(public val path: String) {
 

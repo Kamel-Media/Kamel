@@ -42,19 +42,19 @@ object Dependencies {
 
 object Versions {
 
-    const val Kotlin = "1.7.20"
-    const val Ktor = "2.0.3"
-    const val Coroutines = "1.6.4"
-    const val Compose = "1.2.1"
-    const val AGP = "7.3.1"
-    const val MokoResources = "0.20.1"
+    const val Kotlin = "1.8.20"
+    const val Ktor = "2.3.0"
+    const val Coroutines = "1.7.0"
+    const val Compose = "1.4.0"
+    const val AGP = "7.4.2"
+    const val MokoResources = "0.22.0"
 
     object Android {
-        const val ActivityCompose = "1.5.1"
-        const val Appcompat = "1.4.2"
-        const val Material = "1.6.1"
-        const val Annotation = "1.4.0"
-        const val UIGraphics = "1.2.1"
+        const val ActivityCompose = "1.7.1"
+        const val Appcompat = "1.6.1"
+        const val Material = "1.8.0"
+        const val Annotation = "1.6.0"
+        const val UIGraphics = "1.4.3"
     }
 
 }
