@@ -6,8 +6,8 @@ import kotlinx.coroutines.Dispatchers
 
 internal actual val Dispatchers.kamel: CoroutineDispatcher get() = Default
 
-internal actual typealias File = org.w3c.files.File
+public actual typealias File = org.w3c.files.File
 
-internal actual typealias URL = org.w3c.dom.url.URL
+public actual typealias URL = org.w3c.dom.url.URL
 
 public actual class URI(public val uri: String)

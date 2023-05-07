@@ -7,8 +7,8 @@ import java.net.URL
 
 internal actual val Dispatchers.kamel: CoroutineDispatcher get() = IO
 
-internal actual typealias File = java.io.File
+public actual typealias File = java.io.File
 
-internal actual typealias URL = URL
+public actual typealias URL = URL
 
-internal actual typealias URI = URI
+public actual typealias URI = URI
