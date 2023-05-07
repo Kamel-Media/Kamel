@@ -2,7 +2,6 @@ import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 import org.jetbrains.kotlin.gradle.plugin.mpp.AbstractExecutable
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBinary
-import org.jetbrains.kotlin.gradle.plugin.mpp.TestExecutable
 import org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink
 import org.jetbrains.kotlin.library.impl.KotlinLibraryLayoutImpl
 import java.io.FileFilter
@@ -12,6 +11,7 @@ plugins {
     compose
     `maven-publish`
     signing
+    mokoResources
 }
 
 kotlin {
@@ -62,6 +62,7 @@ kotlin {
                 implementation(compose.runtime)
                 implementation(Dependencies.Coroutines.Core)
                 api(Dependencies.Ktor.Core)
+                implementation(Dependencies.MokoResources.Core)
             }
         }
 
@@ -169,3 +170,17 @@ tasks.withType<KotlinNativeLink>()
                 }
         }
     }
+
+multiplatformResources {
+    multiplatformResourcesPackage = "io.kamel.core"
+}
+
+// todo: remove after https://github.com/icerockdev/moko-resources/issues/392 resolved
+// copy resources from kamel-tests into the proper directory for kamel-samples so they are packaged for
+// the web app
+tasks.register<Copy>("jsCopyResourcesFromKamelTests") {
+    from("../kamel-tests/build/generated/moko/jsMain/iokameltests/res")
+    into("build/generated/moko/jsMain/iokamelcore/res")
+}
+tasks.getByName("jsProcessResources").dependsOn("jsCopyResourcesFromKamelTests")
+tasks.getByName("jsCopyResourcesFromKamelTests").dependsOn(":kamel-tests:generateMRjsMain")

@@ -11,7 +11,4 @@ local.properties
 !/.idea/codeStyles/
 
 # moko-resources-generated
-kamel-tests/webpack.config.d/moko-resources-generated.js
-kamel-tests/karma.config.d/moko-resources-generated.js
-kamel-samples/webpack.config.d/moko-resources-generated.js
-kamel-samples/karma.config.d/moko-resources-generated.js
+moko-resources-generated.js
