@@ -181,6 +181,6 @@ multiplatformResources {
 tasks.register<Copy>("jsCopyResourcesFromKamelTests") {
     from("../kamel-tests/build/generated/moko/jsMain/iokameltests/res")
     into("build/generated/moko/jsMain/iokamelcore/res")
+    dependsOn(":kamel-tests:generateMRjsMain")
 }
 tasks.getByName("jsProcessResources").dependsOn("jsCopyResourcesFromKamelTests")
-tasks.getByName("jsCopyResourcesFromKamelTests").dependsOn(":kamel-tests:generateMRjsMain")
