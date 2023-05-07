@@ -217,6 +217,17 @@ project.tasks.withType(org.jetbrains.kotlin.gradle.dsl.KotlinJsCompile::class.ja
     )
 }
 
+// todo: remove after https://github.com/icerockdev/moko-resources/issues/392 resolved
+// copy resources from kamel-tests into the proper directory for kamel-samples so they are packaged for
+// the web app
+tasks.register<Copy>("jsCopyResourcesFromKamelTests") {
+    from("../kamel-tests/build/generated/moko/jsMain/iokameltests/res")
+    into("build/generated/moko/jsMain/iokamelsamples/res")
+}
+tasks.getByName("jsProcessResources").dependsOn("jsCopyResourcesFromKamelTests")
+tasks.getByName("jsCopyResourcesFromKamelTests").dependsOn(":kamel-tests:generateMRjsMain")
+
+
 // todo: Remove when resolved: https://github.com/icerockdev/moko-resources/issues/372
 tasks.withType<KotlinNativeLink>()
     .matching { linkTask -> linkTask.binary is AbstractExecutable }
