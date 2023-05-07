@@ -23,6 +23,7 @@ object Dependencies {
     object Coroutines {
         const val Core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Coroutines}"
         const val Test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.Coroutines}"
+        const val Test164 = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
     }
 
     object Testing {

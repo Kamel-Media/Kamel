@@ -60,7 +60,9 @@ kotlin {
                 implementation(project(":kamel-tests"))
                 implementation(kotlin("test"))
                 implementation(Dependencies.Testing.Ktor)
-                implementation(Dependencies.Coroutines.Test)
+                // todo: remove this workaround for running compose tests
+                // when compose updates to coroutines 1.7.0
+                implementation(Dependencies.Coroutines.Test164)
             }
         }
 
