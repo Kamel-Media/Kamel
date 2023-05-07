@@ -6,7 +6,7 @@ import java.io.FileOutputStream
 
 
 public actual suspend fun getFile(fileResource: FileResource, context: Any?): File {
-    val file = java.io.File.createTempFile("temp", null)
+    val file = java.io.File.createTempFile("temp", ".${fileResource.filePath.substringAfterLast(".")}")
     val ins = Thread.currentThread().contextClassLoader.getResource(fileResource.filePath).openStream()
     FileOutputStream(file).use { os ->
         val buffer = ByteArray(4096)
