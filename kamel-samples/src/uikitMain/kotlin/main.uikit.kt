@@ -41,7 +41,6 @@ class SkikoAppDelegate : UIResponder, UIApplicationDelegateProtocol {
         window = UIWindow(frame = UIScreen.mainScreen.bounds)
         val kamelConfig = KamelConfig {
             takeFrom(KamelConfig.Default)
-            resourcesFetcher()
             imageVectorDecoder()
             svgDecoder()
             imageBitmapDecoder()
