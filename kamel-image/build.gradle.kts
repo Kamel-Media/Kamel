@@ -1,4 +1,3 @@
-import org.jetbrains.compose.compose
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 
 plugins {
@@ -14,7 +13,6 @@ android {
 
     defaultConfig {
         minSdk = 21
-        targetSdk = 33
         multiDexEnabled = true
     }
 
@@ -27,22 +25,6 @@ android {
         unitTests {
             isIncludeAndroidResources = true
         }
-    }
-
-    sourceSets {
-        named("main") {
-            manifest.srcFile("src/androidMain/AndroidManifest.xml")
-            res.srcDirs("src/androidMain/res", "src/commonMain/resources")
-        }
-    }
-
-    configurations {
-        create("androidTestApi")
-        create("androidTestDebugApi")
-        create("androidTestReleaseApi")
-        create("testApi")
-        create("testDebugApi")
-        create("testReleaseApi")
     }
 
 }
@@ -110,13 +92,13 @@ kotlin {
             dependsOn(jvmMain)
         }
 
-        val androidTest by getting {
+        val androidUnitTest by getting {
             dependsOn(jvmTest)
         }
 
         val nonJvmMain by creating {
             dependsOn(commonMain)
-            dependencies{
+            dependencies {
                 implementation("io.github.pdvrieze.xmlutil:serialization:0.86.0")
             }
         }
