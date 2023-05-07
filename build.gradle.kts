@@ -152,6 +152,12 @@ allprojects {
     tasks.matching { it.name == "iosArm64ProcessResources" }.configureEach {
         dependsOn(tasks.matching { it.name == "generateMRiosArm64Main" })
     }
+    tasks.matching { it.name == "uikitSimulatorArm64ProcessResources" }.configureEach {
+        dependsOn(tasks.matching { it.name == "generateMRuikitSimulatorArm64Main" })
+    }
+    tasks.matching { it.name == "uikitX64ProcessResources" }.configureEach {
+        dependsOn(tasks.matching { it.name == "generateMRuikitX64Main" })
+    }
     tasks.matching { it.name == "macosArm64ProcessResources" }.configureEach {
         dependsOn(tasks.matching { it.name == "generateMRmacosArm64Main" })
     }
