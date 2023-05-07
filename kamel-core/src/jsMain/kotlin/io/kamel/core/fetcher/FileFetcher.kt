@@ -33,7 +33,7 @@ internal actual object FileFetcher : Fetcher<File> {
         data: File,
         resourceConfig: ResourceConfig
     ): Flow<Resource<ByteReadChannel>> = flow {
-        val byteReadChannel = ByteReadChannel(getBase64(data))
+        val byteReadChannel = ByteReadChannel(getBase64(data.file))
         emit(Resource.Success(byteReadChannel, source))
     }
 

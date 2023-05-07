@@ -19,7 +19,6 @@ public fun main() {
     }
     onWasmReady {
         Window("Sample") {
-            var sampleIndex by remember { mutableStateOf(0) }
             launcher(kamelConfig)
         }
     }

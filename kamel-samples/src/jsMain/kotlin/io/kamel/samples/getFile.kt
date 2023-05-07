@@ -7,8 +7,8 @@ import kotlinx.coroutines.await
 
 public actual suspend fun getFile(fileResource: FileResource, context: Any?): File {
     val blob = window.fetch(fileResource.fileUrl).await().blob().await()
-    return org.w3c.files.File(
+    return File(org.w3c.files.File(
         arrayOf(blob),
-        io.kamel.tests.MR.files.Compose.fileUrl
-    )
+        fileResource.fileUrl
+    ))
 }
