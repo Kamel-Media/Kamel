@@ -15,7 +15,7 @@ import io.kamel.image.lazyPainterResource
 import io.kamel.tests.MR
 
 @androidx.compose.runtime.Composable
-internal fun ImageVectorSample() {
+internal fun XmlFileSample() {
     val kamelConfig = KamelConfig {
         takeFrom(KamelConfig.Default)
         resourcesFetcher()

@@ -22,18 +22,24 @@ public fun launcher(){
             Button({
                 sampleIndex = 1
             }) {
-                Text("FileSample")
+                Text("Bitmap")
             }
             Button({
                 sampleIndex = 2
             }) {
-                Text("ImageVectorSample")
+                Text("Svg")
+            }
+            Button({
+                sampleIndex = 1
+            }) {
+                Text("Xml")
             }
         }
         when (sampleIndex) {
             0 -> Gallery()
-            1 -> FileSample()
-            2 -> ImageVectorSample()
+            1 -> BitmapFileSample()
+            2 -> SvgFileSample()
+            3 -> XmlFileSample()
             else -> Text("Invalid Sample Index")
         }
     }

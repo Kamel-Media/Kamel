@@ -13,17 +13,16 @@ import io.kamel.image.config.*
 import io.kamel.image.lazyPainterResource
 
 @Composable
-internal fun FileSample() {
+internal fun BitmapFileSample() {
     val kamelConfig = KamelConfig {
         takeFrom(KamelConfig.Default)
         resourcesFetcher()
-        imageVectorDecoder()
-        svgDecoder()
+        imageBitmapDecoder()
     }
 
     CompositionLocalProvider(LocalKamelConfig provides kamelConfig) {
         Column {
-            val file = File(io.kamel.tests.MR.files.Kotlin.path)
+            val file = File(io.kamel.tests.MR.files.Compose.path)
             val painterResource = lazyPainterResource(file)
 
             KamelImage(
