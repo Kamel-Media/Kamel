@@ -23,7 +23,6 @@ object Dependencies {
     object Coroutines {
         const val Core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Coroutines}"
         const val Test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.Coroutines}"
-        const val Test164 = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
     }
 
     object Testing {
@@ -47,7 +46,7 @@ object Versions {
 
     const val Kotlin = "1.8.20"
     const val Ktor = "2.3.0"
-    const val Coroutines = "1.7.0"
+    const val Coroutines = "1.6.4"
     const val Compose = "1.4.0"
     const val AGP = "7.4.2"
     const val MokoResources = "0.20.1"
@@ -59,7 +58,6 @@ object Versions {
         const val Appcompat = "1.6.1"
         const val Material = "1.8.0"
         const val Annotation = "1.6.0"
-        const val UIGraphics = "1.4.3"
     }
 
 }
