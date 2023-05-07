@@ -47,7 +47,7 @@ object Versions {
     const val Coroutines = "1.7.0"
     const val Compose = "1.4.0"
     const val AGP = "7.4.2"
-    const val MokoResources = "0.22.0"
+    const val MokoResources = "0.20.1"
 
     object Android {
         const val ActivityCompose = "1.7.1"

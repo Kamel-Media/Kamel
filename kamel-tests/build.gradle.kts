@@ -1,10 +1,12 @@
 plugins {
+    `android-library`
     multiplatform
     mokoResources
 }
 
 kotlin {
     jvm()
+    android()
     js(IR) {
         browser()
     }
@@ -46,9 +48,32 @@ kotlin {
     }
 }
 
+android {
+    compileSdk = 33
+
+    defaultConfig {
+        minSdk = 16
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    defaultConfig {
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    //https://github.com/icerockdev/moko-resources/issues/403
+    sourceSets["main"].res.srcDir(File(buildDir, "generated/moko/androidMain/res"))
+}
+
+
 multiplatformResources {
     multiplatformResourcesPackage = "io.kamel.tests"
 }
 
 tasks.findByName("jvmProcessResources")!!.dependsOn("generateMRcommonMain")
 tasks.findByName("jvmProcessResources")!!.dependsOn("generateMRjvmMain")
+tasks.findByName("jsProcessResources")!!.dependsOn("generateMRcommonMain")
+tasks.findByName("jsProcessResources")!!.dependsOn("generateMRjsMain")

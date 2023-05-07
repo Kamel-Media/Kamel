@@ -217,6 +217,10 @@ tasks.register<Copy>("desktopCopyResourcesFromKamelTests") {
 tasks.getByName("desktopProcessResources").dependsOn("desktopCopyResourcesFromKamelTests")
 tasks.getByName("desktopCopyResourcesFromKamelTests").dependsOn(":kamel-tests:generateMRjvmMain")
 
+tasks.findByName("desktopProcessResources")!!.dependsOn("generateMRcommonMain")
+tasks.findByName("desktopProcessResources")!!.dependsOn("generateMRdesktopMain")
+tasks.findByName("jsProcessResources")!!.dependsOn("generateMRcommonMain")
+tasks.findByName("jsProcessResources")!!.dependsOn("generateMRjsMain")
 
 // todo: Remove when resolved: https://github.com/icerockdev/moko-resources/issues/372
 tasks.withType<KotlinNativeLink>()

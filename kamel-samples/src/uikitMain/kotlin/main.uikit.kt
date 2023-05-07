@@ -3,6 +3,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
+import io.kamel.core.config.KamelConfig
+import io.kamel.core.config.takeFrom
+import io.kamel.image.config.*
 import io.kamel.samples.launcher
 import kotlinx.cinterop.autoreleasepool
 import kotlinx.cinterop.cstr
@@ -36,9 +39,16 @@ class SkikoAppDelegate : UIResponder, UIApplicationDelegateProtocol {
 
     override fun application(application: UIApplication, didFinishLaunchingWithOptions: Map<Any?, *>?): Boolean {
         window = UIWindow(frame = UIScreen.mainScreen.bounds)
+        val kamelConfig = KamelConfig {
+            takeFrom(KamelConfig.Default)
+            resourcesFetcher()
+            imageVectorDecoder()
+            svgDecoder()
+            imageBitmapDecoder()
+        }
         window!!.rootViewController = Application("Sample") {
             Column(Modifier.padding(top = 30.dp)) {
-                launcher()
+                launcher(kamelConfig)
             }
         }
         window!!.makeKeyAndVisible()
