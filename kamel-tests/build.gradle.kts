@@ -72,8 +72,3 @@ android {
 multiplatformResources {
     multiplatformResourcesPackage = "io.kamel.tests"
 }
-
-tasks.findByName("jvmProcessResources")!!.dependsOn("generateMRcommonMain")
-tasks.findByName("jvmProcessResources")!!.dependsOn("generateMRjvmMain")
-tasks.findByName("jsProcessResources")!!.dependsOn("generateMRcommonMain")
-tasks.findByName("jsProcessResources")!!.dependsOn("generateMRjsMain")
