@@ -18,6 +18,9 @@ import androidx.compose.ui.unit.toSize
  * software so it is beneficial to cache the result and render the contents
  * directly through a texture as done by [DrawScope.drawImage]
  */
+// Note copied from here:
+// https://github.com/JetBrains/compose-multiplatform-core/blob/5c26b7b9f5619ee4f319c6caf43192851b8ee15e/compose/ui/ui/src/commonMain/kotlin/androidx/compose/ui/graphics/vector/DrawCache.kt#L39
+// todo: remove when available in common androidx
 internal class DrawCache {
 
     @PublishedApi internal var mCachedImage: ImageBitmap? = null
