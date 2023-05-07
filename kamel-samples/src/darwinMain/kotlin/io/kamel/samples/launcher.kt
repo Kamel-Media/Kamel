@@ -24,10 +24,16 @@ public fun launcher(){
             }) {
                 Text("FileSample")
             }
+            Button({
+                sampleIndex = 2
+            }) {
+                Text("ImageVectorSample")
+            }
         }
         when (sampleIndex) {
             0 -> Gallery()
             1 -> FileSample()
+            2 -> ImageVectorSample()
             else -> Text("Invalid Sample Index")
         }
     }

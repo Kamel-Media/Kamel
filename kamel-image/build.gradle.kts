@@ -116,6 +116,9 @@ kotlin {
 
         val nonJvmMain by creating {
             dependsOn(commonMain)
+            dependencies{
+                implementation("io.github.pdvrieze.xmlutil:serialization:0.86.0")
+            }
         }
 
         val nonJvmTest by creating {
