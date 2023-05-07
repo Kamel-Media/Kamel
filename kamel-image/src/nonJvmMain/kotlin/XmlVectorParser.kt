@@ -67,7 +67,7 @@ internal fun Element.parseVectorRoot(density: Density): ImageVector {
 
 private fun Element.parseVectorNodes(builder: ImageVector.Builder, context: BuildContext) {
     childrenSequence
-        .filterIsInstance<Element>()
+        .filterIsElement()
         .forEach {
             it.parseVectorNode(builder, context)
         }
@@ -139,7 +139,7 @@ private fun parseStringBrush(str: String) = SolidColor(Color(parseColorValue(str
 
 private fun Element.parseElementBrush(): Brush? =
     childrenSequence
-        .filterIsInstance<Element>()
+        .filterIsElement()
         .find { it.nodeName == "gradient" }
         ?.parseGradient()
 
@@ -188,7 +188,7 @@ private fun Element.parseSweepGradient() = Brush.sweepGradient(
 
 private fun Element.parseColorStops(): Array<Pair<Float, Color>> {
     val items = childrenSequence
-        .filterIsInstance<Element>()
+        .filterIsElement()
         .filter { it.nodeName == "item" }
         .toList()
 
@@ -253,7 +253,7 @@ private fun Element.apptAttr(
 ): Element? {
     val prefix = lookupPrefix(namespace) ?: return null
     return childrenSequence
-        .filterIsInstance<Element>()
+        .filterIsElement()
         .find {
             it.namespaceURI == AAPT_NS && it.localName == "attr" &&
                     it.getAttribute("name") == "$prefix:$name"
