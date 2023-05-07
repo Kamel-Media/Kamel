@@ -50,7 +50,7 @@ public fun Gallery() {
                     contentDescription = null,
                     modifier = Modifier
                         .aspectRatio(1F)
-                        .padding(16.dp)
+                        .padding(8.dp)
                         .shadow(elevation = 8.dp, RoundedCornerShape(16.dp))
                         .background(Color.White, RoundedCornerShape(16.dp))
                         .clip(RoundedCornerShape(16.dp)),
