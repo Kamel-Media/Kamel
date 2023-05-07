@@ -1,11 +1,14 @@
-import androidx.compose.ui.window.Application
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.ComposeUIViewController
 import io.kamel.core.config.KamelConfig
 import io.kamel.core.config.takeFrom
-import io.kamel.image.config.*
+import io.kamel.image.config.Default
+import io.kamel.image.config.imageBitmapDecoder
+import io.kamel.image.config.imageVectorDecoder
+import io.kamel.image.config.svgDecoder
 import io.kamel.samples.launcher
 import kotlinx.cinterop.autoreleasepool
 import kotlinx.cinterop.cstr
@@ -25,14 +28,14 @@ fun main() {
     }
 }
 
-class SkikoAppDelegate : UIResponder, UIApplicationDelegateProtocol {
-    companion object : UIResponderMeta(), UIApplicationDelegateProtocolMeta
+internal class SkikoAppDelegate : UIResponder, UIApplicationDelegateProtocol {
+    internal companion object : UIResponderMeta(), UIApplicationDelegateProtocolMeta
 
     @OverrideInit
-    constructor() : super()
+    internal constructor() : super()
 
     private var _window: UIWindow? = null
-    override fun window() = _window
+    override fun window(): UIWindow? = _window
     override fun setWindow(window: UIWindow?) {
         _window = window
     }
@@ -45,7 +48,7 @@ class SkikoAppDelegate : UIResponder, UIApplicationDelegateProtocol {
             svgDecoder()
             imageBitmapDecoder()
         }
-        window!!.rootViewController = Application("Sample") {
+        window!!.rootViewController = ComposeUIViewController {
             Column(Modifier.padding(top = 30.dp)) {
                 launcher(kamelConfig)
             }
