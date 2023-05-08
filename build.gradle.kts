@@ -128,49 +128,6 @@ allprojects {
         }
     }
 
-    // workaround for: https://github.com/icerockdev/moko-resources/issues/421#issuecomment-1484530912
-    // remove after https://github.com/icerockdev/moko-resources/issues/477 resolved and moko-resources can
-    // be updated
-    tasks.matching { it.name == "jvmProcessResources" }.configureEach {
-        dependsOn(tasks.matching { it.name == "generateMRjvmMain" })
-    }
-    tasks.matching { it.name == "desktopProcessResources" }.configureEach {
-        dependsOn(tasks.matching { it.name == "generateMRdesktopMain" })
-    }
-    tasks.matching { it.name == "iosSimulatorArm64ProcessResources" }.configureEach {
-        dependsOn(tasks.matching { it.name == "generateMRiosSimulatorArm64Main" })
-    }
-    tasks.matching { it.name == "metadataIosMainProcessResources" }.configureEach {
-        dependsOn(tasks.matching { it.name == "generateMRcommonMain" })
-    }
-    tasks.matching { it.name == "metadataDarwinMainProcessResources" }.configureEach {
-        dependsOn(tasks.matching { it.name == "generateMRcommonMain" })
-    }
-    tasks.matching { it.name == "metadataCommonMainProcessResources" }.configureEach {
-        dependsOn(tasks.matching { it.name == "generateMRcommonMain" })
-    }
-    tasks.matching { it.name == "iosX64ProcessResources" }.configureEach {
-        dependsOn(tasks.matching { it.name == "generateMRiosX64Main" })
-    }
-    tasks.matching { it.name == "iosArm64ProcessResources" }.configureEach {
-        dependsOn(tasks.matching { it.name == "generateMRiosArm64Main" })
-    }
-    tasks.matching { it.name == "uikitSimulatorArm64ProcessResources" }.configureEach {
-        dependsOn(tasks.matching { it.name == "generateMRuikitSimulatorArm64Main" })
-    }
-    tasks.matching { it.name == "uikitX64ProcessResources" }.configureEach {
-        dependsOn(tasks.matching { it.name == "generateMRuikitX64Main" })
-    }
-    tasks.matching { it.name == "macosArm64ProcessResources" }.configureEach {
-        dependsOn(tasks.matching { it.name == "generateMRmacosArm64Main" })
-    }
-    tasks.matching { it.name == "macosX64ProcessResources" }.configureEach {
-        dependsOn(tasks.matching { it.name == "generateMRmacosX64Main" })
-    }
-    tasks.matching { it.name == "jsProcessResources" }.configureEach {
-        dependsOn(tasks.matching { it.name == "generateMRjsMain" })
-    }
-
 }
 
 nexusStaging {
