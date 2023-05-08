@@ -17,7 +17,7 @@ import kotlinx.cinterop.toCValues
 import platform.Foundation.NSStringFromClass
 import platform.UIKit.*
 
-fun main() {
+public fun main() {
     val args = emptyArray<String>()
     memScoped {
         val argc = args.size + 1
