@@ -12,8 +12,8 @@ import org.jetbrains.kotlin.konan.file.File as KonanFile
 plugins {
     multiplatform
     compose
-    mokoResources
     `android-application`
+    mokoResources
 }
 
 android {
