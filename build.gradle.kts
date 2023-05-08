@@ -143,6 +143,9 @@ allprojects {
     tasks.matching { it.name == "metadataIosMainProcessResources" }.configureEach {
         dependsOn(tasks.matching { it.name == "generateMRcommonMain" })
     }
+    tasks.matching { it.name == "metadataDarwinMainProcessResources" }.configureEach {
+        dependsOn(tasks.matching { it.name == "generateMRcommonMain" })
+    }
     tasks.matching { it.name == "metadataCommonMainProcessResources" }.configureEach {
         dependsOn(tasks.matching { it.name == "generateMRcommonMain" })
     }
