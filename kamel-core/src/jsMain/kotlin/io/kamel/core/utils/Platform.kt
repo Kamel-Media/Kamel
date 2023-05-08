@@ -4,7 +4,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
 
-internal actual val Dispatchers.kamel: CoroutineDispatcher get() = Default
+internal actual val Dispatchers.Kamel: CoroutineDispatcher get() = Default
 
 public actual class File(public val file: org.w3c.files.File) {
     override fun toString(): String {

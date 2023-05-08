@@ -1,7 +1,7 @@
 package io.kamel.core.config
 
 import androidx.compose.ui.unit.Density
-import io.kamel.core.utils.kamel
+import io.kamel.core.utils.Kamel
 import io.kamel.core.utils.supervisorJob
 import io.ktor.client.request.*
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +19,7 @@ public class ResourceConfigBuilder {
      * CoroutineContext used while loading the resource.
      * @see ResourceConfig.coroutineContext
      */
-    public var coroutineContext: CoroutineContext = supervisorJob.plus(Dispatchers.kamel)
+    public var coroutineContext: CoroutineContext = supervisorJob.plus(Dispatchers.Kamel)
 
     /**
      * Screen density.

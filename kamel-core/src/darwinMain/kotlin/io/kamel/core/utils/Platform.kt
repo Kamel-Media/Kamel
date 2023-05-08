@@ -11,7 +11,7 @@ import platform.Foundation.fileHandleForReadingAtPath
 import platform.posix.memcpy
 
 
-internal actual val Dispatchers.kamel: CoroutineDispatcher get() = Default
+internal actual val Dispatchers.Kamel: CoroutineDispatcher get() = Default
 
 public actual class File(public val path: String) {
 

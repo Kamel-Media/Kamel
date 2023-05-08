@@ -6,7 +6,7 @@ import kotlinx.coroutines.SupervisorJob
 
 internal val supervisorJob = SupervisorJob()
 
-internal expect val Dispatchers.kamel: CoroutineDispatcher
+internal expect val Dispatchers.Kamel: CoroutineDispatcher
 
 public expect class File
 
