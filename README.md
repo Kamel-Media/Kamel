@@ -6,7 +6,7 @@
 [![Kotlin](https://img.shields.io/badge/kotlin-v1.7.0-blue.svg?logo=kotlin)](http://kotlinlang.org)
 [![Compose](https://img.shields.io/badge/compose-v1.2.0-alpha2?logo=compose&color=blue)](http://kotlinlang.org)
 
-Kamel is an asynchronous media loading library for Compose. It provides a simple, customizable and
+Kamel is an asynchronous media loading library for [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform). It provides a simple, customizable and
 efficient way to load, cache, decode and display images in your application. By default, it uses
 Ktor client for loading resources.
 
@@ -90,8 +90,11 @@ lazyPainterResource(data = Url("https://www.example.com/image.jpg"))
 // URI
 lazyPainterResource(data = URI("https://www.example.com/image.png"))
 
-// File
+// File (JVM, Native)
 lazyPainterResource(data = File("/path/to/image.png"))
+
+// File (JS)
+lazyPainterResource(data = File(org.w3c.files.File(arrayOf(blob), "/path/to/image.png")))
 
 // URL
 lazyPainterResource(data = URL("https://www.example.com/image.jpg"))
