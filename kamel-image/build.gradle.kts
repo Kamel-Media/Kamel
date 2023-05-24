@@ -1,4 +1,3 @@
-import org.jetbrains.compose.compose
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 
 plugins {
@@ -14,35 +13,18 @@ android {
 
     defaultConfig {
         minSdk = 21
-        targetSdk = 33
         multiDexEnabled = true
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
         }
-    }
-
-    sourceSets {
-        named("main") {
-            manifest.srcFile("src/androidMain/AndroidManifest.xml")
-            res.srcDirs("src/androidMain/res", "src/commonMain/resources")
-        }
-    }
-
-    configurations {
-        create("androidTestApi")
-        create("androidTestDebugApi")
-        create("androidTestReleaseApi")
-        create("testApi")
-        create("testDebugApi")
-        create("testReleaseApi")
     }
 
 }
@@ -55,43 +37,100 @@ kotlin {
         publishAllLibraryVariants()
     }
     jvm("desktop")
+    js(IR) {
+        browser()
+    }
+    for (target in Targets.nativeTargets) {
+        targets.add(presets.getByName(target).createTarget(target))
+    }
 
     sourceSets {
 
         val commonMain by getting {
             dependencies {
                 api(project(":kamel-core"))
+                implementation(compose.ui)
+                implementation(compose.foundation)
+                implementation(compose.runtime)
             }
         }
 
         val commonTest by getting {
             dependencies {
                 implementation(project(":kamel-tests"))
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
+                implementation(kotlin("test"))
                 implementation(Dependencies.Testing.Ktor)
+                implementation(Dependencies.Coroutines.Test)
+            }
+        }
+
+        val jvmMain by creating {
+            dependsOn(commonMain)
+        }
+
+        val jvmTest by creating {
+            dependsOn(commonTest)
+            dependencies {
+                implementation(compose.material)
                 implementation(Dependencies.Testing.Compose)
             }
         }
 
-        val desktopMain by getting
+        val desktopMain by getting {
+            dependsOn(jvmMain)
+        }
 
         val desktopTest by getting {
+            dependsOn(jvmTest)
             dependencies {
                 implementation(Dependencies.Ktor.CIO)
                 implementation(compose.desktop.currentOs)
-                implementation(kotlin("test-junit"))
             }
         }
 
-        val androidMain by getting
+        val androidMain by getting {
+            dependsOn(jvmMain)
+        }
 
-        val androidTest by getting {
+        val androidUnitTest by getting {
+            dependsOn(jvmTest)
+        }
+
+        val nonJvmMain by creating {
+            dependsOn(commonMain)
             dependencies {
-                implementation(kotlin("test"))
-                implementation(kotlin("test-junit"))
-                implementation("androidx.test:core:1.4.0")
-                implementation("androidx.test.ext:junit:1.1.3")
+                implementation(Dependencies.XmlUtil.Serialization)
+            }
+        }
+
+        val nonJvmTest by creating {
+            dependsOn(commonTest)
+        }
+
+        val jsMain by getting {
+            dependsOn(nonJvmMain)
+            dependencies {
+                implementation(Dependencies.Ktor.Js)
+            }
+        }
+
+        val darwinMain by creating {
+            dependsOn(nonJvmMain)
+            dependencies {
+                implementation(Dependencies.Ktor.Darwin)
+            }
+        }
+
+        val darwinTest by creating {
+            dependsOn(nonJvmTest)
+        }
+
+        Targets.darwinTargets.forEach { target ->
+            getByName("${target}Main") {
+                dependsOn(darwinMain)
+            }
+            getByName("${target}Test") {
+                dependsOn(darwinTest)
             }
         }
 
@@ -101,13 +140,12 @@ kotlin {
             }
         }
 
-        targets.all {
-            compilations.all {
-                kotlinOptions {
-                    freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
-                }
-            }
-        }
-
     }
+}
+
+// https://youtrack.jetbrains.com/issue/KT-46466
+val dependsOnTasks = mutableListOf<String>()
+tasks.withType<AbstractPublishToMaven>().configureEach {
+    dependsOnTasks.add(this.name.replace("publish", "sign").replaceAfter("Publication", ""))
+    dependsOn(dependsOnTasks)
 }

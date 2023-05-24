@@ -15,10 +15,13 @@ import io.kamel.core.mapper.Mapper
 import io.kamel.core.mapper.StringMapper
 import io.kamel.core.mapper.URIMapper
 import io.kamel.core.mapper.URLMapper
+import io.kamel.core.utils.URI
+import io.kamel.core.utils.URL
 import io.ktor.client.*
 import io.ktor.client.engine.*
 import io.ktor.client.request.*
 import io.ktor.http.*
+import kotlin.reflect.KClass
 
 public class KamelConfigBuilder {
 
@@ -26,7 +29,7 @@ public class KamelConfigBuilder {
 
     internal val decoders: MutableList<Decoder<Any>> = mutableListOf()
 
-    internal val mappers: MutableList<Mapper<Any, Any>> = mutableListOf()
+    internal val mappers: MutableMap<KClass<*>, Mapper<Any, Any>> = mutableMapOf()
 
     public var imageBitmapCacheSize: Int = 0
 
@@ -43,7 +46,7 @@ public class KamelConfigBuilder {
     }
 
     public fun <I : Any, O : Any> mapper(mapper: Mapper<I, O>) {
-        mappers += mapper as Mapper<Any, Any>
+        mappers[mapper.inputKClass] = mapper as Mapper<Any, Any>
     }
 
     public fun build(): KamelConfig = object : KamelConfig {
@@ -52,7 +55,7 @@ public class KamelConfigBuilder {
 
         override val decoders: List<Decoder<Any>> = this@KamelConfigBuilder.decoders
 
-        override val mappers: List<Mapper<Any, Any>> = this@KamelConfigBuilder.mappers
+        override val mappers: Map<KClass<*>, Mapper<Any, Any>> = this@KamelConfigBuilder.mappers
 
         override val imageBitmapCache: Cache<Any, ImageBitmap> = LruCache(imageBitmapCacheSize)
 
@@ -120,7 +123,7 @@ public fun KamelConfigBuilder.takeFrom(config: KamelConfig): KamelConfigBuilder 
     svgCacheSize = config.svgCache.maxSize
     config.fetchers.forEach { fetcher(it) }
     config.decoders.forEach { decoder(it) }
-    config.mappers.forEach { mapper(it) }
+    config.mappers.values.forEach { mapper(it) }
 
     return this
 }

@@ -1,12 +1,12 @@
 # Kamel
 
-[![Version](https://img.shields.io/maven-central/v/com.alialbaali.kamel/kamel-core?label=version&color=blue)](https://search.maven.org/search?q=com.alialbaali.kamel)
-[![Snapshot](https://img.shields.io/nexus/s/com.alialbaali.kamel/kamel-core?label=snapshot&server=https%3A%2F%2Foss.sonatype.org)](https://oss.sonatype.org/content/repositories/snapshots/com/alialbaali/kamel/)
+[![Version](https://img.shields.io/maven-central/v/media.kamel/kamel-core?label=version&color=blue)](https://search.maven.org/search?q=media.kamel)
+[![Snapshot](https://img.shields.io/nexus/s/media.kamel/kamel-core?label=snapshot&server=https%3A%2F%2Fs01.oss.sonatype.org)](https://s01.oss.sonatype.org/content/repositories/snapshots/media/kamel/)
 [![License](https://img.shields.io/github/license/alialbaali/kamel)](http://www.apache.org/licenses/LICENSE-2.0)
-[![Kotlin](https://img.shields.io/badge/kotlin-v1.7.0-blue.svg?logo=kotlin)](http://kotlinlang.org)
-[![Compose](https://img.shields.io/badge/compose-v1.2.0-alpha2?logo=compose&color=blue)](http://kotlinlang.org)
+[![Kotlin](https://img.shields.io/badge/kotlin-v1.8.20-blue.svg?logo=kotlin)](http://kotlinlang.org)
+[![Compose Multiplatform](https://img.shields.io/badge/Compose%20Multiplatform-v1.4.0-blue)](https://github.com/JetBrains/compose-multiplatform)
 
-Kamel is an asynchronous media loading library for Compose. It provides a simple, customizable and
+Kamel is an asynchronous media loading library for [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform). It provides a simple, customizable and
 efficient way to load, cache, decode and display images in your application. By default, it uses
 Ktor client for loading resources.
 
@@ -49,7 +49,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation("com.alialbaali.kamel:kamel-image:0.4.0")
+                implementation("media.kamel:kamel-image:0.5.0")
                 // ...
             }
         }
@@ -63,7 +63,7 @@ Add the dependency to the dependencies block:
 
 ```kotlin
 dependencies {
-    implementation("com.alialbaali.kamel:kamel-image:0.4.0")
+    implementation("media.kamel:kamel-image:0.5.0")
     // ...
 }
 ```
@@ -90,8 +90,11 @@ lazyPainterResource(data = Url("https://www.example.com/image.jpg"))
 // URI
 lazyPainterResource(data = URI("https://www.example.com/image.png"))
 
-// File
+// File (JVM, Native)
 lazyPainterResource(data = File("/path/to/image.png"))
+
+// File (JS)
+lazyPainterResource(data = File(org.w3c.files.File(arrayOf(blob), "/path/to/image.png")))
 
 // URL
 lazyPainterResource(data = URL("https://www.example.com/image.jpg"))

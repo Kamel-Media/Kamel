@@ -9,6 +9,7 @@ import io.kamel.tests.HttpMockEngine
 import io.kamel.tests.TestStringUrl
 import io.ktor.http.*
 import io.ktor.utils.io.*
+import kotlin.reflect.KClass
 import kotlin.test.Test
 import kotlin.test.assertFails
 import kotlin.test.assertTrue
@@ -26,21 +27,21 @@ class KamelConfigUtilsTest {
 
     @Test
     fun testMapStringInput() {
-        val result = config.mapInput(TestStringUrl)
+        val result = config.mapInput(TestStringUrl, String::class)
 
         assertTrue(result is Url)
     }
 
     @Test
     fun testMapURLInput() {
-        val result = config.mapInput(createURL(TestStringUrl))
+        val result = config.mapInput(createURL(TestStringUrl), URL::class)
 
         assertTrue(result is Url)
     }
 
     @Test
     fun testMapURIInput() {
-        val result = config.mapInput(createURI(TestStringUrl))
+        val result = config.mapInput(createURI(TestStringUrl), URI::class)
 
         assertTrue(result is Url)
     }
@@ -79,6 +80,9 @@ class KamelConfigUtilsTest {
 fun KamelConfigBuilder.fakeImageBitmapDecoder() = decoder(FakeImageBitmapDecoder)
 
 private object FakeImageBitmapDecoder : Decoder<ImageBitmap> {
+
+    override val outputKClass: KClass<ImageBitmap> = ImageBitmap::class
+
     override suspend fun decode(channel: ByteReadChannel, resourceConfig: ResourceConfig): ImageBitmap {
         return ImageBitmap(1, 1)
     }

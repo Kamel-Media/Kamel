@@ -11,11 +11,14 @@ import io.ktor.http.*
 import io.ktor.utils.io.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
+import kotlin.reflect.KClass
 
 /**
  * Fetcher that fetches [ByteReadChannel] from network using [Url].
  */
 internal class HttpFetcher(private val client: HttpClient) : Fetcher<Url> {
+
+    override val inputDataKClass: KClass<Url> = Url::class
 
     override val source: DataSource = DataSource.Network
 

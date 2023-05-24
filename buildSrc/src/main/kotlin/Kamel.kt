@@ -1,4 +1,4 @@
 object Kamel {
-    const val Group = "com.alialbaali.kamel"
-    const val Version = "0.4.1"
+    const val Group = "media.kamel"
+    const val Version = "0.5.0-SNAPSHOT"
 }

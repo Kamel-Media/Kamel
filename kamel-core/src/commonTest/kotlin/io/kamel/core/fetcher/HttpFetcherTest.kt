@@ -48,7 +48,7 @@ class HttpFetcherTest {
     }
 
     @Test
-    fun testFetchingEmptyImageBytes(): Unit = runTest {
+    fun testFetchingEmptyImageBytes() = runTest {
         val url = Url("/emptyImage.jpg")
         val resource = fetcher.fetch(url, resourceConfig)
             .first { !it.isLoading }
@@ -59,7 +59,7 @@ class HttpFetcherTest {
     }
 
     @Test
-    fun testFetchingNonEmptyImageBytes(): Unit = runTest {
+    fun testFetchingNonEmptyImageBytes() = runTest {
         val url = Url("/image.svg")
         val resource = fetcher.fetch(url, resourceConfig)
             .first { !it.isLoading }

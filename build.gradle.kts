@@ -9,9 +9,8 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        gradlePluginPortal()
         maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
-        maven(url = "https://dl.bintray.com/kotlin/dokka")
-        maven(url = "https://kotlin.bintray.com/ktor")
     }
 
     dependencies {
@@ -57,8 +56,6 @@ allprojects {
         google()
         mavenCentral()
         maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
-        maven(url = "https://dl.bintray.com/kotlin/dokka")
-        maven(url = "https://kotlin.bintray.com/ktor")
     }
 
     val emptyJavadocJar by tasks.registering(Jar::class) {
@@ -107,14 +104,14 @@ allprojects {
 
                     name = "MavenCentral"
 
-                    val releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-                    val snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+                    val releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+                    val snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
 
                     url = if (version.toString().endsWith("SNAPSHOT")) uri(snapshotsRepoUrl) else uri(releasesRepoUrl)
 
                     credentials {
-                        username = rootProject.ext["ossrh.username"] as String
-                        password = rootProject.ext["ossrh.password"] as String
+                        username = rootProject.ext["ossrh.username"] as String? ?: ""
+                        password = rootProject.ext["ossrh.password"] as String? ?: ""
                     }
 
                 }
@@ -126,7 +123,8 @@ allprojects {
 
     tasks.withType<KotlinCompile> {
         kotlinOptions {
-            freeCompilerArgs = listOf("-Xallow-result-return-type", "-Xopt-in=kotlin.RequiresOptIn")
+            freeCompilerArgs = listOf("-Xallow-result-return-type")
+            jvmTarget = "11"
         }
     }
 
@@ -134,7 +132,7 @@ allprojects {
 
 nexusStaging {
     packageGroup = Kamel.Group
-    stagingProfileId = rootProject.ext["stagingProfileId"] as String
-    username = rootProject.ext["ossrh.username"] as String
-    password = rootProject.ext["ossrh.password"] as String
+    stagingProfileId = rootProject.ext["stagingProfileId"] as String? ?: ""
+    username = rootProject.ext["ossrh.username"] as String? ?: ""
+    password = rootProject.ext["ossrh.password"] as String? ?: ""
 }

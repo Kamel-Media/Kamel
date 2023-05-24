@@ -1,12 +1,17 @@
 package io.kamel.core.mapper
 
+import kotlin.reflect.KClass
+
 /**
  * Mapper used to map input [I] to output [O].
  * @see StringMapper
  * @see URLMapper
  * @see URIMapper
  */
-public fun interface Mapper<I : Any, O : Any> {
+public interface Mapper<I : Any, O : Any> {
+
+    public val inputKClass: KClass<I>
+    public val outputKClass: KClass<O>
 
     /**
      * Maps input [I] to output [O].

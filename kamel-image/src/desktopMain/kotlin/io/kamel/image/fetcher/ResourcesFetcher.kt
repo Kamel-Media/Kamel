@@ -9,8 +9,11 @@ import io.ktor.http.*
 import io.ktor.utils.io.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlin.reflect.KClass
 
 internal object ResourcesFetcher : Fetcher<Url> {
+
+    override val inputDataKClass: KClass<Url> = Url::class
 
     override val source: DataSource = DataSource.Disk
 
