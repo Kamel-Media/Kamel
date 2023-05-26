@@ -19,7 +19,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
-import io.kamel.image.lazyPainterResource
+import io.kamel.image.asyncPainterResource
 import kotlinx.coroutines.launch
 
 private const val ItemsCount: Int = 100
@@ -40,7 +40,7 @@ public fun Gallery() {
     Box(Modifier.fillMaxSize()) {
         LazyVerticalGrid(columns = GridCells.Fixed(cellsCount), modifier = Modifier.fillMaxSize()) {
             items(items) { imageUrl ->
-                val painterResource: Resource<Painter> = lazyPainterResource(
+                val painterResource: Resource<Painter> = asyncPainterResource(
                     imageUrl,
                     filterQuality = FilterQuality.High,
                 )

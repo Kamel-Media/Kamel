@@ -77,35 +77,35 @@ this [link](https://ktor.io/docs/http-client-engines.html).
 
 ### Loading an image resource
 
-To load an image asynchronously, you can use ```lazyPainterResource``` composable, it can load
+To load an image asynchronously, you can use ```asyncPainterResource``` composable, it can load
 images from different data sources:
 
 ```kotlin
 // String
-lazyPainterResource(data = "https://www.example.com/image.jpg")
+asyncPainterResource(data = "https://www.example.com/image.jpg")
 
 // Ktor Url
-lazyPainterResource(data = Url("https://www.example.com/image.jpg"))
+asyncPainterResource(data = Url("https://www.example.com/image.jpg"))
 
 // URI
-lazyPainterResource(data = URI("https://www.example.com/image.png"))
+asyncPainterResource(data = URI("https://www.example.com/image.png"))
 
 // File (JVM, Native)
-lazyPainterResource(data = File("/path/to/image.png"))
+asyncPainterResource(data = File("/path/to/image.png"))
 
 // File (JS)
-lazyPainterResource(data = File(org.w3c.files.File(arrayOf(blob), "/path/to/image.png")))
+asyncPainterResource(data = File(org.w3c.files.File(arrayOf(blob), "/path/to/image.png")))
 
 // URL
-lazyPainterResource(data = URL("https://www.example.com/image.jpg"))
+asyncPainterResource(data = URL("https://www.example.com/image.jpg"))
 
 // and more...
 ```
 
-`lazyPainterResource` can be used to load SVG, XML, JPEG, and PNG by default depending on the
+`asyncPainterResource` can be used to load SVG, XML, JPEG, and PNG by default depending on the
 platform implementation.
 
-`lazyPainterResource` returns a `Resource<Painter>` object which can be used to display the image
+`asyncPainterResource` returns a `Resource<Painter>` object which can be used to display the image
 using `KamelImage` composable.
 
 #### Platform specific implementations
@@ -155,16 +155,16 @@ Assuming there's an `image.png` file in the `/res/raw` directory in the project:
 
 ```kotlin
 CompositionLocalProvider(LocalKamelConfig provides androidConfig) {
-    lazyPainterResource(R.raw.image)
+    asyncPainterResource(R.raw.image)
 }
 ```
 
 ### Configuring an image resource
 
-```lazyPainterResource``` supports configuration using a trailing lambda:
+```asyncPainterResource``` supports configuration using a trailing lambda:
 
 ```kotlin
-val painterResource: Resource<Painter> = lazyPainterResource("https://www.example.com/image.jpg") {
+val painterResource: Resource<Painter> = asyncPainterResource("https://www.example.com/image.jpg") {
 
     // CoroutineContext to be used while loading the image.
     coroutineContext = Job() + Dispatcher.IO
@@ -220,7 +220,7 @@ Box {
 You can also provide your own custom implementation using a simple when expression:
 
 ```kotlin
-when (val resource = lazyPainterResource("https://www.example.com/image.jpg")) {
+when (val resource = asyncPainterResource("https://www.example.com/image.jpg")) {
     is Resource.Loading -> {
         Text("Loading...")
     }
@@ -318,7 +318,7 @@ You can use ```LocalKamelConfig``` to apply your custom configuration:
 
 ```kotlin
 CompositionLocalProvider(LocalKamelConfig provides customKamelConfig) {
-    lazyPainterResource("image.jpg")
+    asyncPainterResource("image.jpg")
 }
 ```
 

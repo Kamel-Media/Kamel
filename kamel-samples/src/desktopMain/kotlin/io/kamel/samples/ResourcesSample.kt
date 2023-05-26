@@ -10,7 +10,7 @@ import io.kamel.image.KamelImage
 import io.kamel.image.config.Default
 import io.kamel.image.config.LocalKamelConfig
 import io.kamel.image.config.resourcesFetcher
-import io.kamel.image.lazyPainterResource
+import io.kamel.image.asyncPainterResource
 
 public fun main(): Unit = singleWindowApplication {
     val kamelConfig = KamelConfig {
@@ -19,7 +19,7 @@ public fun main(): Unit = singleWindowApplication {
     }
 
     CompositionLocalProvider(LocalKamelConfig provides kamelConfig) {
-        val painterResource = lazyPainterResource("MR/files/Compose.png")
+        val painterResource = asyncPainterResource("MR/files/Compose.png")
 
         KamelImage(
             painterResource,

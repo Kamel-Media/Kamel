@@ -9,7 +9,7 @@ import io.kamel.core.config.KamelConfig
 import io.kamel.core.utils.File
 import io.kamel.image.KamelImage
 import io.kamel.image.config.LocalKamelConfig
-import io.kamel.image.lazyPainterResource
+import io.kamel.image.asyncPainterResource
 import kotlinx.coroutines.launch
 
 
@@ -27,7 +27,7 @@ internal fun FileSample(fileResource: FileResource, kamelConfig: KamelConfig, co
     CompositionLocalProvider(LocalKamelConfig provides kamelConfig) {
         Column {
             file?.let { file ->
-                val painterResource = lazyPainterResource(file)
+                val painterResource = asyncPainterResource(file)
                 KamelImage(painterResource,
                     contentDescription = "Compose",
                     modifier = Modifier.fillMaxSize(),
