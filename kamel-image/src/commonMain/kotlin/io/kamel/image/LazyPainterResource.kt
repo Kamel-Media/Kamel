@@ -29,7 +29,10 @@ import io.ktor.http.*
  */
 @ExperimentalKamelApi
 @Composable
-@Deprecated("Will be removed in the v1.0.0 release", replaceWith = ReplaceWith("asyncPainterResource"))
+@Deprecated(
+    "Will be removed in the v1.0.0 release",
+    replaceWith = ReplaceWith("asyncPainterResource(data, key, filterQuality, onLoadingPainter, onFailurePainter, block)")
+)
 public inline fun <I : Any> lazyPainterResource(
     data: I,
     key: Any? = data,
@@ -57,7 +60,10 @@ public inline fun <I : Any> lazyPainterResource(
  * @see LocalKamelConfig
  */
 @Composable
-@Deprecated("Will be removed in the v1.0.0 release", replaceWith = ReplaceWith("asyncPainterResource"))
+@Deprecated(
+    "Will be removed in the v1.0.0 release",
+    replaceWith = ReplaceWith("asyncPainterResource(data, key, filterQuality, block)")
+)
 public inline fun lazyPainterResource(
     data: Any,
     key: Any? = data,
