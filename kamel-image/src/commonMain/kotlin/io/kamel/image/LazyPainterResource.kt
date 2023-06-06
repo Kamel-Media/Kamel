@@ -52,13 +52,21 @@ public inline fun <I : Any> lazyPainterResource(
             .build()
     }
 
+    val cachedResource = remember(key) {
+        when (data.toString().substringAfterLast(".")) {
+            "svg" -> kamelConfig.loadCachedResourceOrNull(data, kamelConfig.svgCache)
+            "xml" -> kamelConfig.loadCachedResourceOrNull(data, kamelConfig.imageVectorCache)
+            else -> kamelConfig.loadCachedResourceOrNull(data, kamelConfig.imageBitmapCache)
+        }
+    }
+
     val painterResource by remember(key, resourceConfig) {
         when (data.toString().substringAfterLast(".")) {
             "svg" -> kamelConfig.loadSvgResource(data, resourceConfig)
             "xml" -> kamelConfig.loadImageVectorResource(data, resourceConfig)
             else -> kamelConfig.loadImageBitmapResource(data, resourceConfig)
         }
-    }.collectAsState(Resource.Loading(0F), resourceConfig.coroutineContext)
+    }.collectAsState(cachedResource ?: Resource.Loading(0F), resourceConfig.coroutineContext)
 
     val painterResourceWithFallbacks = when (painterResource) {
         is Resource.Loading -> {
