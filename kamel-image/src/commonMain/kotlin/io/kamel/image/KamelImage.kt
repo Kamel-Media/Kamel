@@ -18,7 +18,7 @@ import io.kamel.core.Resource
 
 /**
  * A composable that is used to display a [Painter] resource.
- * To load an image resource asynchronously, use [lazyPainterResource].
+ * To load an image resource asynchronously, use [asyncPainterResource].
  * @param resource The [Resource] that needs to be displayed.
  * @param modifier The modifier that is applied to the [Box].
  * @param onLoading Composable which is used while the image is in [Resource.Loading] state.
@@ -66,7 +66,7 @@ public fun KamelImage(
 
 /**
  * A composable that is used to display a [Painter] resource.
- * To load an image [Resource] asynchronously, use [lazyPainterResource].
+ * To load an image [Resource] asynchronously, use [asyncPainterResource].
  * @param resource The [Resource] that needs to be displayed.
  * @param modifier The modifier that is applied to the [Box].
  * @param contentAlignment The default alignment inside the Box.
