@@ -45,11 +45,11 @@ object Dependencies {
 object Versions {
 
     const val Kotlin = "1.8.20"
-    const val Ktor = "2.3.0"
+    const val Ktor = "2.3.1"
     const val Coroutines = "1.6.4"
     const val Compose = "1.4.0"
     const val AGP = "7.4.2"
-    const val MokoResources = "0.22.0"
+    const val MokoResources = "0.23.0"
     const val XmlUtil = "0.86.0"
 
 
