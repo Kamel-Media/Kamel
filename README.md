@@ -130,7 +130,7 @@ Assuming there's an `image.png` file in the `/resources` directory in the projec
 
 ```kotlin
 CompositionLocalProvider(LocalKamelConfig provides desktopConfig) {
-    lazyPainterResource("image.png")
+    asyncPainterResource("image.png")
 }
 ```
 
