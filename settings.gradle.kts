@@ -14,8 +14,8 @@ plugins {
 }
 
 
-refreshVersions { // Optional: configure the plugin
-    // ...
+refreshVersions {
+// Optional: configure the plugin
 }
 
 rootProject.name = "Kamel"

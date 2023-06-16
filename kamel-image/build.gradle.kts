@@ -52,6 +52,7 @@ kotlin {
                 implementation(compose.ui)
                 implementation(compose.foundation)
                 implementation(compose.runtime)
+                implementation(libs.ktor.client.core)
             }
         }
 
@@ -59,8 +60,8 @@ kotlin {
             dependencies {
                 implementation(project(":kamel-tests"))
                 implementation(kotlin("test"))
-                implementation(Dependencies.Testing.Ktor)
-                implementation(Dependencies.Coroutines.Test)
+                implementation(libs.ktor.client.mock)
+                implementation(libs.kotlinx.coroutines.test)
             }
         }
 
@@ -72,7 +73,7 @@ kotlin {
             dependsOn(commonTest)
             dependencies {
                 implementation(compose.material)
-                implementation(Dependencies.Testing.Compose)
+                implementation(libs.jetbrains.compose.ui.ui.test.junit4)
             }
         }
 
@@ -83,7 +84,7 @@ kotlin {
         val desktopTest by getting {
             dependsOn(jvmTest)
             dependencies {
-                implementation(Dependencies.Ktor.CIO)
+                implementation(libs.ktor.client.cio)
                 implementation(compose.desktop.currentOs)
             }
         }
@@ -99,7 +100,7 @@ kotlin {
         val nonJvmMain by creating {
             dependsOn(commonMain)
             dependencies {
-                implementation(Dependencies.XmlUtil.Serialization)
+                implementation(libs.pdvrieze.xmlutil.serialization)
             }
         }
 
@@ -110,14 +111,14 @@ kotlin {
         val jsMain by getting {
             dependsOn(nonJvmMain)
             dependencies {
-                implementation(Dependencies.Ktor.Js)
+                implementation(libs.ktor.client.js)
             }
         }
 
         val darwinMain by creating {
             dependsOn(nonJvmMain)
             dependencies {
-                implementation(Dependencies.Ktor.Darwin)
+                implementation(libs.ktor.client.darwin)
             }
         }
 

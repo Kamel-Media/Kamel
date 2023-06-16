@@ -59,8 +59,8 @@ kotlin {
                 implementation(compose.ui)
                 implementation(compose.foundation)
                 implementation(compose.runtime)
-                implementation(Dependencies.Coroutines.Core)
-                api(Dependencies.Ktor.Core)
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.ktor.client.core)
             }
         }
 
@@ -68,15 +68,15 @@ kotlin {
             dependencies {
                 implementation(project(":kamel-tests"))
                 implementation(kotlin("test"))
-                implementation(Dependencies.Testing.Ktor)
-                implementation(Dependencies.Coroutines.Test)
+                implementation(libs.ktor.client.mock)
+                implementation(libs.kotlinx.coroutines.test)
             }
         }
 
         val jvmMain by getting {
             dependsOn(commonMain)
             dependencies {
-                implementation(Dependencies.KotlinReflect)
+                implementation(libs.org.jetbrains.kotlin.reflect)
             }
         }
 

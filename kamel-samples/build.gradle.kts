@@ -96,10 +96,10 @@ kotlin {
         val androidMain by getting {
             dependsOn(commonMain)
             dependencies {
-                implementation(Dependencies.Android.Appcompat)
-                implementation(Dependencies.Android.ActivityCompose)
-                implementation(Dependencies.Android.Material)
-                implementation(Dependencies.Ktor.Android)
+                implementation(libs.androidx.appcompat)
+                implementation(libs.androidx.activity.compose)
+                implementation(libs.google.android.material)
+                implementation(libs.ktor.client.android)
             }
         }
 
@@ -107,7 +107,7 @@ kotlin {
             dependsOn(commonMain)
             dependencies {
                 implementation(compose.desktop.currentOs)
-                implementation(Dependencies.Ktor.CIO)
+                implementation(libs.ktor.client.cio)
             }
         }
 
