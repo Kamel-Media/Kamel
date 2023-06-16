@@ -10,10 +10,10 @@ import org.jetbrains.compose.experimental.dsl.IOSDevices as IOSDevices1
 import org.jetbrains.kotlin.konan.file.File as KonanFile
 
 plugins {
-    multiplatform
-    compose
-    `android-application`
-    mokoResources
+    alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
+    alias(libs.plugins.org.jetbrains.compose)
+    alias(libs.plugins.com.android.application)
+    alias(libs.plugins.dev.icerock.mobile.multiplatform.resources)
 }
 
 android {

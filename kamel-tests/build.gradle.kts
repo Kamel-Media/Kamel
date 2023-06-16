@@ -1,7 +1,7 @@
 plugins {
-    `android-library`
-    multiplatform
-    mokoResources
+    alias(libs.plugins.com.android.library)
+    alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
+    alias(libs.plugins.dev.icerock.mobile.multiplatform.resources)
 }
 
 kotlin {

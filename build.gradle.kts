@@ -2,22 +2,11 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.util.*
 
 plugins {
-    `nexus-staging`
-}
-
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-        gradlePluginPortal()
-        maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
-    }
-
-    dependencies {
-        classpath(Dependencies.ComposeGradlePlugin)
-        classpath(Dependencies.KotlinGradlePlugin)
-        classpath(Dependencies.Android.GradlePlugin)
-    }
+    alias(libs.plugins.org.jetbrains.kotlin.multiplatform) apply false
+    alias(libs.plugins.com.android.application) apply false
+    alias(libs.plugins.com.android.library) apply false
+    alias(libs.plugins.org.jetbrains.compose) apply false
+    alias(libs.plugins.com.vanniktech.maven.publish) apply false
 }
 
 val file = project.file("local.properties")
@@ -128,11 +117,4 @@ allprojects {
         }
     }
 
-}
-
-nexusStaging {
-    packageGroup = Kamel.Group
-    stagingProfileId = rootProject.ext["stagingProfileId"] as String? ?: ""
-    username = rootProject.ext["ossrh.username"] as String? ?: ""
-    password = rootProject.ext["ossrh.password"] as String? ?: ""
 }

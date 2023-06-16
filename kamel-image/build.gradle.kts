@@ -1,9 +1,9 @@
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 
 plugins {
-    multiplatform
-    compose
-    `android-library`
+    alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
+    alias(libs.plugins.org.jetbrains.compose)
+    alias(libs.plugins.com.android.library)
     `maven-publish`
     signing
 }

@@ -1,13 +1,10 @@
 object Dependencies {
 
-    const val ComposeGradlePlugin = "org.jetbrains.compose:compose-gradle-plugin:${Versions.Compose}"
-    const val KotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.Kotlin}"
     const val KotlinReflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.Kotlin}"
 
     object Android {
         const val ActivityCompose = "androidx.activity:activity-compose:${Versions.Android.ActivityCompose}"
         const val Appcompat = "androidx.appcompat:appcompat:${Versions.Android.Appcompat}"
-        const val GradlePlugin = "com.android.tools.build:gradle:${Versions.AGP}"
         const val Material = "com.google.android.material:material:${Versions.Android.Material}"
         const val Annotation = "androidx.annotation:annotation:${Versions.Android.Annotation}"
     }
@@ -48,7 +45,6 @@ object Versions {
     const val Ktor = "2.3.1"
     const val Coroutines = "1.6.4"
     const val Compose = "1.4.0"
-    const val AGP = "7.4.2"
     const val MokoResources = "0.23.0"
     const val XmlUtil = "0.86.0"
 

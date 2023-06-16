@@ -7,8 +7,8 @@ import org.jetbrains.kotlin.library.impl.KotlinLibraryLayoutImpl
 import java.io.FileFilter
 
 plugins {
-    multiplatform
-    compose
+    alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
+    alias(libs.plugins.org.jetbrains.compose)
     `maven-publish`
     signing
 }
