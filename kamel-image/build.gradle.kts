@@ -91,6 +91,9 @@ kotlin {
 
         val androidMain by getting {
             dependsOn(jvmMain)
+            dependencies {
+                implementation(libs.com.caverok.androidsvg)
+            }
         }
 
         val androidUnitTest by getting {

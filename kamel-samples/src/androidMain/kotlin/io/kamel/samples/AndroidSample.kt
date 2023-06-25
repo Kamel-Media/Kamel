@@ -9,6 +9,7 @@ import io.kamel.core.config.takeFrom
 import io.kamel.image.config.Default
 import io.kamel.image.config.imageBitmapDecoder
 import io.kamel.image.config.resourcesFetcher
+import io.kamel.image.config.svgDecoder
 
 public actual val cellsCount: Int = 2
 
@@ -22,7 +23,7 @@ class AndroidSample : AppCompatActivity() {
                     takeFrom(KamelConfig.Default)
                     resourcesFetcher(this@AndroidSample)
 //                    imageVectorDecoder()
-//                    svgDecsoder()
+                    svgDecoder()
                     imageBitmapDecoder()
                 }
             }
