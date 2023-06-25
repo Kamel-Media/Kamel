@@ -10,10 +10,10 @@ import org.jetbrains.compose.experimental.dsl.IOSDevices as IOSDevices1
 import org.jetbrains.kotlin.konan.file.File as KonanFile
 
 plugins {
-    multiplatform
-    compose
-    `android-application`
-    mokoResources
+    alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
+    alias(libs.plugins.org.jetbrains.compose)
+    alias(libs.plugins.com.android.application)
+    alias(libs.plugins.dev.icerock.mobile.multiplatform.resources)
 }
 
 android {
@@ -96,10 +96,10 @@ kotlin {
         val androidMain by getting {
             dependsOn(commonMain)
             dependencies {
-                implementation(Dependencies.Android.Appcompat)
-                implementation(Dependencies.Android.ActivityCompose)
-                implementation(Dependencies.Android.Material)
-                implementation(Dependencies.Ktor.Android)
+                implementation(libs.androidx.appcompat)
+                implementation(libs.androidx.activity.compose)
+                implementation(libs.google.android.material)
+                implementation(libs.ktor.client.android)
             }
         }
 
@@ -107,7 +107,7 @@ kotlin {
             dependsOn(commonMain)
             dependencies {
                 implementation(compose.desktop.currentOs)
-                implementation(Dependencies.Ktor.CIO)
+                implementation(libs.ktor.client.cio)
             }
         }
 

@@ -2,8 +2,20 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
         mavenCentral()
-        maven { url = uri("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
+        google()
     }
+    plugins {
+        id("de.fayard.refreshVersions") version "0.51.0"
+    }
+}
+
+plugins {
+    id("de.fayard.refreshVersions")
+}
+
+
+refreshVersions {
+// Optional: configure the plugin
 }
 
 rootProject.name = "Kamel"

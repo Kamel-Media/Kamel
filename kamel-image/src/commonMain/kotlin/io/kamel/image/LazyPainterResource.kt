@@ -9,7 +9,6 @@ import io.kamel.core.*
 import io.kamel.core.config.ResourceConfig
 import io.kamel.core.config.ResourceConfigBuilder
 import io.kamel.image.config.LocalKamelConfig
-import io.ktor.http.*
 
 
 /**

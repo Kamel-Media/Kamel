@@ -1,7 +1,7 @@
 plugins {
-    `android-library`
-    multiplatform
-    mokoResources
+    alias(libs.plugins.com.android.library)
+    alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
+    alias(libs.plugins.dev.icerock.mobile.multiplatform.resources)
 }
 
 kotlin {
@@ -17,15 +17,15 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(Dependencies.Testing.Ktor)
-                implementation(Dependencies.Coroutines.Core)
-                api(Dependencies.MokoResources.Core)
+                implementation(libs.ktor.client.mock)
+                implementation(libs.kotlinx.coroutines.core)
+                api(libs.dev.icerock.moko.resources)
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
-                api(Dependencies.MokoResources.Test)
+                implementation(libs.dev.icerock.moko.resources.test)
             }
         }
 
