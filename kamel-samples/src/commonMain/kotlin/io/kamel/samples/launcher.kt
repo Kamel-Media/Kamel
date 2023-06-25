@@ -4,11 +4,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import io.kamel.core.config.KamelConfig
+import io.kamel.image.config.LocalKamelConfig
 import io.kamel.tests.MR
 
 @androidx.compose.runtime.Composable
@@ -38,7 +36,10 @@ public fun launcher(kamelConfig: KamelConfig, context: Any? = null) {
             }
         }
         when (sampleIndex) {
-            0 -> Gallery()
+            0 -> CompositionLocalProvider(LocalKamelConfig provides kamelConfig) {
+                Gallery()
+            }
+
             1 -> FileSample(MR.files.Compose, kamelConfig, context)
             2 -> FileSample(MR.files.Kotlin, kamelConfig, context)
             3 -> FileSample(MR.files.ComposeXml, kamelConfig, context)
