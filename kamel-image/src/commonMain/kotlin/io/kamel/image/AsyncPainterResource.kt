@@ -13,6 +13,7 @@ import io.kamel.core.*
 import io.kamel.core.config.ResourceConfig
 import io.kamel.core.config.ResourceConfigBuilder
 import io.kamel.image.config.LocalKamelConfig
+import io.ktor.http.*
 
 public class PainterFailure : Error("Failed to return a Painter")
 
@@ -52,7 +53,7 @@ public inline fun <I : Any> asyncPainterResource(
     }
 
     val cachedResource = remember(key) {
-        when (data.toString().substringAfterLast(".")) {
+        when (getDataSourceEnding(data)) {
             "svg" -> kamelConfig.loadCachedResourceOrNull(data, kamelConfig.svgCache)
             "xml" -> kamelConfig.loadCachedResourceOrNull(data, kamelConfig.imageVectorCache)
             else -> kamelConfig.loadCachedResourceOrNull(data, kamelConfig.imageBitmapCache)
@@ -60,7 +61,7 @@ public inline fun <I : Any> asyncPainterResource(
     }
 
     val painterResource by remember(key, resourceConfig) {
-        when (data.toString().substringAfterLast(".")) {
+        when (getDataSourceEnding(data)) {
             "svg" -> kamelConfig.loadSvgResource(data, resourceConfig)
             "xml" -> kamelConfig.loadImageVectorResource(data, resourceConfig)
             else -> kamelConfig.loadImageBitmapResource(data, resourceConfig)
@@ -120,3 +121,19 @@ public inline fun asyncPainterResource(
     onFailurePainter = { Result.failure(PainterFailure()) },
     block
 )
+
+/**
+ * Finds the best ending [String] of the data object.
+ * @param data Can be anything such as [String], [Url] or a [File].
+ * @return [String] Which is the ending of the data (Url)
+ */
+public inline fun <I : Any> getDataSourceEnding(data: I): String {
+    val dataPath = when (data) {
+        is Url -> data
+        else -> runCatching {
+            Url(data.toString())
+        }.getOrNull()
+    }?.encodedPath
+
+    return (dataPath ?: data.toString()).substringAfterLast('.')
+}

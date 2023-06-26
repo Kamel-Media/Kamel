@@ -22,6 +22,7 @@ xmlutil = "0.86.0"
 activity-compose = "1.7.2"
 appcompat = "1.6.1"
 material = "1.9.0"
+androidsvg = "1.4"
 
 [libraries]
 
@@ -47,3 +48,4 @@ pdvrieze-xmlutil-serialization = { module = "io.github.pdvrieze.xmlutil:serializ
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 google-android-material = { module = "com.google.android.material:material", version.ref = "material" }
+com-caverok-androidsvg = { module = "com.caverock:androidsvg-aar", version.ref = "androidsvg" }
