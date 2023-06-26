@@ -44,9 +44,6 @@ internal class SkikoAppDelegate : UIResponder, UIApplicationDelegateProtocol {
         window = UIWindow(frame = UIScreen.mainScreen.bounds)
         val kamelConfig = KamelConfig {
             takeFrom(KamelConfig.Default)
-            imageVectorDecoder()
-            svgDecoder()
-            imageBitmapDecoder()
         }
         window!!.rootViewController = ComposeUIViewController {
             Column(Modifier.padding(top = 30.dp)) {

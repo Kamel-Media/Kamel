@@ -10,9 +10,6 @@ public fun main() {
     NSApplication.sharedApplication()
     val kamelConfig = KamelConfig {
         takeFrom(KamelConfig.Default)
-        imageVectorDecoder()
-        svgDecoder()
-        imageBitmapDecoder()
     }
     Window("Sample") {
         launcher(kamelConfig)

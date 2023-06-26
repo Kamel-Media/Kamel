@@ -17,7 +17,6 @@ public fun main(): Unit = singleWindowApplication {
     val kamelConfig = KamelConfig {
         takeFrom(KamelConfig.Default)
         resourcesFetcher()
-        imageVectorDecoder()
     }
 
     CompositionLocalProvider(LocalKamelConfig provides kamelConfig) {
