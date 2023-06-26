@@ -1,6 +1,5 @@
 package io.kamel.image.decoder
 
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.loadXmlImageVector
 import io.kamel.core.config.ResourceConfig
@@ -10,7 +9,7 @@ import io.ktor.utils.io.jvm.javaio.*
 import org.xml.sax.InputSource
 import kotlin.reflect.KClass
 
-internal object ImageVectorDecoder : Decoder<ImageVector> {
+internal actual object ImageVectorDecoder : Decoder<ImageVector> {
 
     override val outputKClass: KClass<ImageVector> = ImageVector::class
 

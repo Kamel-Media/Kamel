@@ -9,7 +9,7 @@ import io.ktor.utils.io.*
 import kotlin.reflect.KClass
 
 
-internal object SvgDecoder : Decoder<Painter> {
+internal actual object SvgDecoder : Decoder<Painter> {
 
     override val outputKClass: KClass<Painter> = Painter::class
 

@@ -16,9 +16,6 @@ public fun main(): Unit = singleWindowApplication {
         KamelConfig {
             takeFrom(KamelConfig.Default)
             resourcesFetcher()
-            imageVectorDecoder()
-            svgDecoder()
-            imageBitmapDecoder()
         }
     }
     launcher(kamelConfig)
@@ -31,9 +28,6 @@ public fun desktopSample() {
         KamelConfig {
             takeFrom(KamelConfig.Default)
             resourcesFetcher()
-            imageVectorDecoder()
-            svgDecoder()
-            imageBitmapDecoder()
         }
     }
     launcher(kamelConfig)

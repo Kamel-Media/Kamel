@@ -8,9 +8,6 @@ import org.jetbrains.skiko.wasm.onWasmReady
 public fun main() {
     val kamelConfig = KamelConfig {
         takeFrom(KamelConfig.Default)
-        imageVectorDecoder()
-        svgDecoder()
-        imageBitmapDecoder()
     }
     onWasmReady {
         Window("Sample") {
