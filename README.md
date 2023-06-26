@@ -266,6 +266,12 @@ val customKamelConfig = KamelConfig {
     // adds an ImageBitmapDecoder
     imageBitmapDecoder()
 
+    // adds an ImageVectorDecoder (XML)
+    imageVectorDecoder()
+
+    // adds an SvgDecoder (SVH)
+    svgDecoder()
+
     // adds a FileFetcher
     fileFetcher()
 
