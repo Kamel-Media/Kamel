@@ -5,6 +5,7 @@ import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.BitmapPainter
@@ -22,7 +23,8 @@ private const val Delay = 10L
 
 public fun main(): Unit = singleWindowApplication {
     val imageUrl = remember { generateRandomImageUrl(1) }
-    val resourceConfig = remember { ResourceConfigBuilder().build() }
+    val scope = rememberCoroutineScope()
+    val resourceConfig = remember { ResourceConfigBuilder(parentScope = scope.coroutineContext).build() }
     val kamelConfig = LocalKamelConfig.current
     val imageBitmapResource by remember(imageUrl) {
         kamelConfig.loadImageBitmapResource(
