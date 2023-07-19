@@ -7,9 +7,7 @@ import androidx.compose.runtime.remember
 import io.kamel.core.config.KamelConfig
 import io.kamel.core.config.takeFrom
 import io.kamel.image.config.Default
-import io.kamel.image.config.imageBitmapDecoder
 import io.kamel.image.config.resourcesFetcher
-import io.kamel.image.config.svgDecoder
 
 public actual val cellsCount: Int = 2
 
@@ -22,9 +20,6 @@ class AndroidSample : AppCompatActivity() {
                 KamelConfig {
                     takeFrom(KamelConfig.Default)
                     resourcesFetcher(this@AndroidSample)
-//                    imageVectorDecoder()
-                    svgDecoder()
-                    imageBitmapDecoder()
                 }
             }
             launcher(kamelConfig, applicationContext)

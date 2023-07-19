@@ -96,6 +96,7 @@ kotlin {
             dependsOn(jvmMain)
             dependencies {
                 implementation(libs.com.caverok.androidsvg)
+                implementation(libs.pdvrieze.xmlutil.serialization)
             }
         }
 

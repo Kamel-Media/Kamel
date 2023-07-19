@@ -49,7 +49,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation("media.kamel:kamel-image:0.5.1")
+                implementation("media.kamel:kamel-image:0.6.0")
                 // ...
             }
         }
@@ -63,7 +63,7 @@ Add the dependency to the dependencies block:
 
 ```kotlin
 dependencies {
-    implementation("media.kamel:kamel-image:0.5.1")
+    implementation("media.kamel:kamel-image:0.6.0")
     // ...
 }
 ```
@@ -265,6 +265,12 @@ val customKamelConfig = KamelConfig {
 
     // adds an ImageBitmapDecoder
     imageBitmapDecoder()
+
+    // adds an ImageVectorDecoder (XML)
+    imageVectorDecoder()
+
+    // adds an SvgDecoder (SVG)
+    svgDecoder()
 
     // adds a FileFetcher
     fileFetcher()

@@ -15,15 +15,14 @@ kotlin = "1.8.20"
 agp = "7.4.2"
 vanniktech-publish = "0.25.2"
 multiplatform-resources = "0.23.0"
-compose = "1.4.0"
+compose = "1.4.1"
 coroutines = "1.6.4"
-ktor = "2.3.1"
+ktor = "2.3.2"
 xmlutil = "0.86.0"
 activity-compose = "1.7.2"
 appcompat = "1.6.1"
 material = "1.9.0"
 androidsvg = "1.4"
-batik = "1.16"
 
 [libraries]
 
@@ -50,4 +49,3 @@ androidx-activity-compose = { module = "androidx.activity:activity-compose", ver
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 google-android-material = { module = "com.google.android.material:material", version.ref = "material" }
 com-caverok-androidsvg = { module = "com.caverock:androidsvg-aar", version.ref = "androidsvg" }
-apache-batik-transcoder = { module = "org.apache.xmlgraphics:batik-transcoder", version.ref = "batik" }

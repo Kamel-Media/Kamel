@@ -45,8 +45,9 @@ public inline fun <I : Any> asyncPainterResource(
 
     val kamelConfig = LocalKamelConfig.current
     val density = LocalDensity.current
+    val scope = rememberCoroutineScope()
     val resourceConfig = remember(key, density) {
-        ResourceConfigBuilder()
+        ResourceConfigBuilder(scope.coroutineContext)
             .apply { this.density = density }
             .apply(block)
             .build()

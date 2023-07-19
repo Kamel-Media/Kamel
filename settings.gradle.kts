@@ -1,3 +1,5 @@
+import de.fayard.refreshVersions.core.StabilityLevel
+
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -15,7 +17,9 @@ plugins {
 
 
 refreshVersions {
-// Optional: configure the plugin
+    rejectVersionIf {
+        candidate.stabilityLevel != StabilityLevel.Stable
+    }
 }
 
 rootProject.name = "Kamel"
