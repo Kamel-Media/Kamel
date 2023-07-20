@@ -2,7 +2,6 @@ package io.kamel.image.config
 
 import io.kamel.core.config.KamelConfigBuilder
 import io.kamel.image.decoder.BatikSvgDecoder
-import io.kamel.image.decoder.SvgDecoder
 import io.kamel.image.fetcher.ResourcesFetcher
 
 /**
