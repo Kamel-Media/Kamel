@@ -36,7 +36,7 @@ public fun KamelConfigBuilder.imageVectorDecoder(): Unit = decoder(ImageVectorDe
 /**
  * Adds Decoder for SVG Images to the [KamelConfigBuilder]
  */
-public fun KamelConfigBuilder.svgDecoder(): Unit = decoder(SvgDecoder())
+public fun KamelConfigBuilder.svgDecoder(): Unit = decoder(SvgDecoder)
 
 /**
  * Static CompositionLocal that provides the default configuration of [KamelConfig].

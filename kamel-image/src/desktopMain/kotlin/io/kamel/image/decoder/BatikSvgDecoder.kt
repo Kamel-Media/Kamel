@@ -2,7 +2,6 @@ package io.kamel.image.decoder
 
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.toPainter
-import androidx.compose.ui.res.loadSvgPainter
 import io.kamel.core.config.ResourceConfig
 import io.kamel.core.decoder.Decoder
 import io.ktor.utils.io.*
@@ -15,14 +14,24 @@ import java.io.ByteArrayOutputStream
 import javax.imageio.ImageIO
 import kotlin.reflect.KClass
 
-internal actual object SvgDecoder : Decoder<Painter> {
+internal object BatikSvgDecoder : Decoder<Painter> {
 
-    override val outputKClass: KClass<Painter> = Painter::class
+    override val outputKClass: KClass<Painter>
+        get() = Painter::class
 
     override suspend fun decode(channel: ByteReadChannel, resourceConfig: ResourceConfig): Painter {
-        return loadSvgPainter(
-            channel.toInputStream(),
-            resourceConfig.density
-        )
+        val t: Transcoder = PNGTranscoder()
+        val input = TranscoderInput(channel.toInputStream())
+
+        // Create the transcoder output.
+        val outputStream = ByteArrayOutputStream()
+        outputStream.use {
+            val output = TranscoderOutput(it)
+
+            // Save the image.
+            t.transcode(input, output)
+        }
+
+        return ImageIO.read(outputStream.toByteArray().inputStream()).toPainter()
     }
 }
