@@ -16,6 +16,7 @@ public fun main(): Unit = singleWindowApplication {
         KamelConfig {
             takeFrom(KamelConfig.Default)
             resourcesFetcher()
+            batikSvgDecoder()
         }
     }
     launcher(kamelConfig)
