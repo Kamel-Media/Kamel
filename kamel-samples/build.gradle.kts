@@ -137,12 +137,6 @@ kotlin {
             }
         }
 
-        all {
-            languageSettings.apply {
-                optIn("kotlin.Experimental")
-            }
-        }
-
     }
 }
 
