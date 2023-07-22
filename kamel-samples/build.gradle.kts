@@ -18,6 +18,7 @@ plugins {
 
 android {
     compileSdk = 33
+    namespace = "io.kamel.samples"
 
     defaultConfig {
         minSdk = 21
@@ -109,6 +110,10 @@ kotlin {
                 implementation(compose.desktop.currentOs)
                 implementation(libs.ktor.client.cio)
             }
+        }
+
+        val jsMain by getting {
+            dependsOn(commonMain)
         }
 
         val darwinMain by creating {

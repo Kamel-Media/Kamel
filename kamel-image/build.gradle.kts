@@ -16,6 +16,8 @@ android {
         multiDexEnabled = true
     }
 
+    namespace = "io.kamel.image"
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11

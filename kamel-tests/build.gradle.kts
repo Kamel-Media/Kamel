@@ -39,7 +39,6 @@ kotlin {
 
         val jsMain by getting {
             dependsOn(commonMain)
-            resources.srcDirs("build/generated/moko/jsMain/src")
         }
 
         val darwinMain by creating {
@@ -67,6 +66,8 @@ android {
     defaultConfig {
         minSdk = 16
     }
+
+    namespace = "io.kamel.kameltests"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
