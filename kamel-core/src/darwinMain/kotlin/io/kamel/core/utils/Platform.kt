@@ -5,6 +5,7 @@ import kotlinx.cinterop.addressOf
 import kotlinx.cinterop.usePinned
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import platform.Foundation.NSData
 import platform.Foundation.NSFileHandle
 import platform.Foundation.NSURL
@@ -12,7 +13,7 @@ import platform.Foundation.fileHandleForReadingAtPath
 import platform.posix.memcpy
 
 
-internal actual val Dispatchers.Kamel: CoroutineDispatcher get() = Default
+internal actual val Dispatchers.Kamel: CoroutineDispatcher get() = IO
 
 public actual class File(public val path: String) {
 
