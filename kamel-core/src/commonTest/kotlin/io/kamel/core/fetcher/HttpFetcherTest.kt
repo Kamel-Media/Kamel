@@ -17,11 +17,9 @@ import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class HttpFetcherTest {
 
     private val fetcher: HttpFetcher = HttpFetcher(HttpClient(HttpMockEngine))
-    private val resourceConfig: ResourceConfig = ResourceConfigBuilder().build()
 
     @Test
     fun testWebSocketUrlIsSupported() = runTest {
@@ -49,6 +47,7 @@ class HttpFetcherTest {
 
     @Test
     fun testFetchingEmptyImageBytes() = runTest {
+        val resourceConfig: ResourceConfig = ResourceConfigBuilder(coroutineContext).build()
         val url = Url("/emptyImage.jpg")
         val resource = fetcher.fetch(url, resourceConfig)
             .first { !it.isLoading }
@@ -60,6 +59,7 @@ class HttpFetcherTest {
 
     @Test
     fun testFetchingNonEmptyImageBytes() = runTest {
+        val resourceConfig: ResourceConfig = ResourceConfigBuilder(coroutineContext).build()
         val url = Url("/image.svg")
         val resource = fetcher.fetch(url, resourceConfig)
             .first { !it.isLoading }

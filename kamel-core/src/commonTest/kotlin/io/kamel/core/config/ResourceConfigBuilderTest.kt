@@ -5,8 +5,8 @@ import io.kamel.core.utils.cacheControl
 import io.ktor.client.request.*
 import io.ktor.client.utils.CacheControl
 import io.ktor.http.*
-import io.ktor.util.*
 import kotlinx.coroutines.Dispatchers
+import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.test.*
 
 class ResourceConfigBuilderTest {
@@ -15,7 +15,7 @@ class ResourceConfigBuilderTest {
 
     @BeforeTest
     fun setup() {
-        builder = ResourceConfigBuilder()
+        builder = ResourceConfigBuilder(EmptyCoroutineContext)
             .apply { density = Density(1F) }
     }
 

@@ -7,7 +7,6 @@ import io.kamel.core.isLoading
 import io.kamel.core.map
 import io.ktor.http.*
 import io.ktor.util.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
@@ -15,11 +14,9 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class ResourcesFetcherTest {
 
     private val fetcher = ResourcesFetcher
-    private val resourceConfig = ResourceConfigBuilder().build()
 
     @Test
     fun testUrlIsSupported() = runTest {
@@ -39,6 +36,7 @@ class ResourcesFetcherTest {
 
     @Test
     fun loadImageBitmapResource() = runTest {
+        val resourceConfig = ResourceConfigBuilder(coroutineContext).build()
         val imageUrl = Url("files/Compose.png")
         val resource = fetcher.fetch(imageUrl, resourceConfig)
             .first { !it.isLoading }
@@ -50,6 +48,7 @@ class ResourcesFetcherTest {
 
     @Test
     fun loadInvalidImageResource() = runTest {
+        val resourceConfig = ResourceConfigBuilder(coroutineContext).build()
         val imageUrl = Url("invalidImage.jpg")
 
         assertFailsWith<IllegalStateException> {
