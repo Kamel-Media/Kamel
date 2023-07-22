@@ -221,11 +221,6 @@ private fun Element.parseColorStop(defaultOffset: Float): Pair<Float, Color>? {
     return offset to Color(color)
 }
 
-/***
- * Accessing by namespace does not appear to be working with https://github.com/pdvrieze/xmlutil v0.86.0
- * note: on native ":" had to be prepended to name to load attributes 🤷‍, js works fine without prepending ":"
- * todo: figure out how to handle namespaces
- */
 internal fun Element.attributeOrNull(namespace: String, name: String): String? {
     val value = getAttributeNS(namespace, name)
     return value?.ifBlank { null }

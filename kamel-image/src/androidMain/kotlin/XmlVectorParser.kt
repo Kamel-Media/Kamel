@@ -18,7 +18,9 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.vector.*
 import androidx.compose.ui.unit.Density
-import nl.adaptivity.xmlutil.dom.*
+import nl.adaptivity.xmlutil.dom.Element
+import nl.adaptivity.xmlutil.dom.Node
+import nl.adaptivity.xmlutil.dom.iterator
 
 //  Parsing logic is the same as in Android implementation
 //  (compose/ui/ui/src/androidMain/kotlin/androidx/compose/ui/graphics/vector/compat/XmlVectorParser.kt)
@@ -66,9 +68,7 @@ internal fun Element.parseVectorRoot(density: Density): ImageVector {
 }
 
 private fun Element.parseVectorNodes(builder: ImageVector.Builder, context: BuildContext) {
-    childrenSequence
-        .filterIsElement()
-        .forEach {
+    childrenSequence.filterIsElement().forEach {
             it.parseVectorNode(builder, context)
         }
 }
@@ -84,20 +84,21 @@ private fun Element.parseVectorNode(builder: ImageVector.Builder, context: Build
 private fun Element.parsePath(builder: ImageVector.Builder) {
     builder.addPath(
         pathData = addPathNodes(attributeOrNull(ANDROID_NS, "pathData")),
-        pathFillType = attributeOrNull(ANDROID_NS, "fillType")
-            ?.let(::parseFillType) ?: PathFillType.NonZero,
+        pathFillType = attributeOrNull(ANDROID_NS, "fillType")?.let(::parseFillType) ?: PathFillType.NonZero,
         name = attributeOrNull(ANDROID_NS, "name") ?: "",
-        fill = attributeOrNull(ANDROID_NS, "fillColor")?.let(::parseStringBrush)
-            ?: apptAttr(ANDROID_NS, "fillColor")?.let(Element::parseElementBrush),
+        fill = attributeOrNull(ANDROID_NS, "fillColor")?.let(::parseStringBrush) ?: apptAttr(
+            ANDROID_NS,
+            "fillColor"
+        )?.let(Element::parseElementBrush),
         fillAlpha = attributeOrNull(ANDROID_NS, "fillAlpha")?.toFloat() ?: 1.0f,
-        stroke = attributeOrNull(ANDROID_NS, "strokeColor")?.let(::parseStringBrush)
-            ?: apptAttr(ANDROID_NS, "strokeColor")?.let(Element::parseElementBrush),
+        stroke = attributeOrNull(ANDROID_NS, "strokeColor")?.let(::parseStringBrush) ?: apptAttr(
+            ANDROID_NS,
+            "strokeColor"
+        )?.let(Element::parseElementBrush),
         strokeAlpha = attributeOrNull(ANDROID_NS, "strokeAlpha")?.toFloat() ?: 1.0f,
         strokeLineWidth = attributeOrNull(ANDROID_NS, "strokeWidth")?.toFloat() ?: 1.0f,
-        strokeLineCap = attributeOrNull(ANDROID_NS, "strokeLineCap")
-            ?.let(::parseStrokeCap) ?: StrokeCap.Butt,
-        strokeLineJoin = attributeOrNull(ANDROID_NS, "strokeLineJoin")
-            ?.let(::parseStrokeJoin) ?: StrokeJoin.Miter,
+        strokeLineCap = attributeOrNull(ANDROID_NS, "strokeLineCap")?.let(::parseStrokeCap) ?: StrokeCap.Butt,
+        strokeLineJoin = attributeOrNull(ANDROID_NS, "strokeLineJoin")?.let(::parseStrokeJoin) ?: StrokeJoin.Miter,
         strokeLineMiter = attributeOrNull(ANDROID_NS, "strokeMiterLimit")?.toFloat() ?: 1.0f,
         trimPathStart = attributeOrNull(ANDROID_NS, "trimPathStart")?.toFloat() ?: 0.0f,
         trimPathEnd = attributeOrNull(ANDROID_NS, "trimPathEnd")?.toFloat() ?: 1.0f,
@@ -138,10 +139,7 @@ private fun Element.parseGroup(builder: ImageVector.Builder, context: BuildConte
 private fun parseStringBrush(str: String) = SolidColor(Color(parseColorValue(str)))
 
 private fun Element.parseElementBrush(): Brush? =
-    childrenSequence
-        .filterIsElement()
-        .find { it.nodeName == "gradient" }
-        ?.parseGradient()
+    childrenSequence.filterIsElement().find { it.nodeName == "gradient" }?.parseGradient()
 
 private fun Element.parseGradient(): Brush? {
     return when (attributeOrNull(ANDROID_NS, "type")) {
@@ -154,24 +152,18 @@ private fun Element.parseGradient(): Brush? {
 
 @Suppress("CHANGING_ARGUMENTS_EXECUTION_ORDER_FOR_NAMED_VARARGS")
 private fun Element.parseLinearGradient() = Brush.linearGradient(
-    colorStops = parseColorStops(),
-    start = Offset(
-        attributeOrNull(ANDROID_NS, "startX")?.toFloat() ?: 0f,
-        attributeOrNull(ANDROID_NS, "startY")?.toFloat() ?: 0f
-    ),
-    end = Offset(
-        attributeOrNull(ANDROID_NS, "endX")?.toFloat() ?: 0f,
-        attributeOrNull(ANDROID_NS, "endY")?.toFloat() ?: 0f
-    ),
-    tileMode = attributeOrNull(ANDROID_NS, "tileMode")?.let(::parseTileMode) ?: TileMode.Clamp
+    colorStops = parseColorStops(), start = Offset(
+        attributeOrNull(ANDROID_NS, "startX")?.toFloat() ?: 0f, attributeOrNull(ANDROID_NS, "startY")?.toFloat() ?: 0f
+    ), end = Offset(
+        attributeOrNull(ANDROID_NS, "endX")?.toFloat() ?: 0f, attributeOrNull(ANDROID_NS, "endY")?.toFloat() ?: 0f
+    ), tileMode = attributeOrNull(ANDROID_NS, "tileMode")?.let(::parseTileMode) ?: TileMode.Clamp
 )
 
 @Suppress("CHANGING_ARGUMENTS_EXECUTION_ORDER_FOR_NAMED_VARARGS")
 private fun Element.parseRadialGradient() = Brush.radialGradient(
     colorStops = parseColorStops(),
     center = Offset(
-        attributeOrNull(ANDROID_NS, "centerX")?.toFloat() ?: 0f,
-        attributeOrNull(ANDROID_NS, "centerY")?.toFloat() ?: 0f
+        attributeOrNull(ANDROID_NS, "centerX")?.toFloat() ?: 0f, attributeOrNull(ANDROID_NS, "centerY")?.toFloat() ?: 0f
     ),
     radius = attributeOrNull(ANDROID_NS, "gradientRadius")?.toFloat() ?: 0f,
     tileMode = attributeOrNull(ANDROID_NS, "tileMode")?.let(::parseTileMode) ?: TileMode.Clamp
@@ -179,18 +171,14 @@ private fun Element.parseRadialGradient() = Brush.radialGradient(
 
 @Suppress("CHANGING_ARGUMENTS_EXECUTION_ORDER_FOR_NAMED_VARARGS")
 private fun Element.parseSweepGradient() = Brush.sweepGradient(
-    colorStops = parseColorStops(),
-    center = Offset(
+    colorStops = parseColorStops(), center = Offset(
         attributeOrNull(ANDROID_NS, "centerX")?.toFloat() ?: 0f,
         attributeOrNull(ANDROID_NS, "centerY")?.toFloat() ?: 0f,
     )
 )
 
 private fun Element.parseColorStops(): Array<Pair<Float, Color>> {
-    val items = childrenSequence
-        .filterIsElement()
-        .filter { it.nodeName == "item" }
-        .toList()
+    val items = childrenSequence.filterIsElement().filter { it.nodeName == "item" }.toList()
 
     val colorStops = items.mapIndexedNotNullTo(mutableListOf()) { index, item ->
         item.parseColorStop(defaultOffset = index.toFloat() / items.lastIndex.coerceAtLeast(1))
@@ -221,17 +209,10 @@ private fun Element.parseColorStop(defaultOffset: Float): Pair<Float, Color>? {
     return offset to Color(color)
 }
 
-/***
- * Accessing by namespace does not appear to be working with https://github.com/pdvrieze/xmlutil v0.86.0
- * note: on native ":" had to be prepended to name to load attributes 🤷‍
- * todo: figure out how to handle namespaces
- */
 internal fun Element.attributeOrNull(
-    @Suppress("UNUSED_PARAMETER") namespace: String,
-    name: String
+    namespace: String, name: String
 ): String? {
-//    val value = getAttributeNS(namespace,":$name")
-    val value = getAttribute(name)
+    val value = getAttributeNS(namespace, name)
     return value?.ifBlank { null }
 }
 
@@ -251,15 +232,11 @@ internal fun Element.attributeOrNull(
  *  <path android:fillColor="red" ... />
  */
 private fun Element.apptAttr(
-    namespace: String,
-    name: String
+    namespace: String, name: String
 ): Element? {
     val prefix = lookupPrefix(namespace) ?: return null
-    return childrenSequence
-        .filterIsElement()
-        .find {
-            it.namespaceURI == AAPT_NS && it.localName == "attr" &&
-                    it.getAttribute("name") == "$prefix:$name"
+    return childrenSequence.filterIsElement().find {
+            it.namespaceURI == AAPT_NS && it.localName == "attr" && it.getAttribute("name") == "$prefix:$name"
         }
 }
 
