@@ -17,9 +17,9 @@ plugins {
 
 
 refreshVersions {
-    rejectVersionIf {
-        candidate.stabilityLevel != StabilityLevel.Stable
-    }
+//    rejectVersionIf {
+//        candidate.stabilityLevel != StabilityLevel.Stable
+//    }
 }
 
 rootProject.name = "Kamel"

@@ -226,7 +226,10 @@ private fun Element.parseColorStop(defaultOffset: Float): Pair<Float, Color>? {
  * note: on native ":" had to be prepended to name to load attributes 🤷‍, js works fine without prepending ":"
  * todo: figure out how to handle namespaces
  */
-internal expect fun Element.attributeOrNull(@Suppress("UNUSED_PARAMETER") namespace: String, name: String): String?
+internal fun Element.attributeOrNull(namespace: String, name: String): String? {
+    val value = getAttributeNS(namespace, name)
+    return value?.ifBlank { null }
+}
 
 /**
  * Attribute of an element can be represented as a separate child:

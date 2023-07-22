@@ -6,7 +6,7 @@ plugins {
 
 kotlin {
     jvm()
-    android()
+    androidTarget()
     js(IR) {
         browser()
     }
@@ -27,6 +27,19 @@ kotlin {
                 implementation(kotlin("test"))
                 implementation(libs.dev.icerock.moko.resources.test)
             }
+        }
+
+        val jvmMain by getting {
+            dependsOn(commonMain)
+        }
+
+        val androidMain by getting {
+            dependsOn(commonMain)
+        }
+
+        val jsMain by getting {
+            dependsOn(commonMain)
+            resources.srcDirs("build/generated/moko/jsMain/src")
         }
 
         val darwinMain by creating {
@@ -64,8 +77,6 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    //https://github.com/icerockdev/moko-resources/issues/403
-    sourceSets["main"].res.srcDir(File(buildDir, "generated/moko/androidMain/res"))
 }
 
 

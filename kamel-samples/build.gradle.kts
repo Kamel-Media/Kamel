@@ -47,7 +47,7 @@ kotlin {
         languageVersion.set(JavaLanguageVersion.of("11"))
     }
 
-    android()
+    androidTarget()
     jvm("desktop")
     js(IR) {
         browser()
@@ -193,29 +193,23 @@ compose.desktop.nativeApplication {
     }
 }
 
-// TODO: remove when https://youtrack.jetbrains.com/issue/KT-50778 fixed
-project.tasks.withType(org.jetbrains.kotlin.gradle.dsl.KotlinJsCompile::class.java).configureEach {
-    kotlinOptions.freeCompilerArgs += listOf(
-        "-Xir-dce-runtime-diagnostic=log"
-    )
-}
 
-// todo: remove after https://github.com/icerockdev/moko-resources/issues/392 resolved
-// copy resources from kamel-tests into the proper directory for kamel-samples so they are packaged for
-// the web app
+//// todo: remove after https://github.com/icerockdev/moko-resources/issues/392 resolved
+//// copy resources from kamel-tests into the proper directory for kamel-samples so they are packaged for
+//// the web app
 tasks.register<Copy>("jsCopyResourcesFromKamelTests") {
     from("../kamel-tests/build/generated/moko/jsMain/iokameltests/res")
     into("build/generated/moko/jsMain/iokamelsamples/res")
     dependsOn(":kamel-tests:generateMRjsMain")
 }
 tasks.getByName("jsProcessResources").dependsOn("jsCopyResourcesFromKamelTests")
-
-tasks.register<Copy>("desktopCopyResourcesFromKamelTests") {
-    from("../kamel-tests/build/generated/moko/jvmMain/iokameltests/res")
-    into("build/generated/moko/desktopMain/iokamelsamples/res")
-    dependsOn(":kamel-tests:generateMRjvmMain")
-}
-tasks.getByName("desktopProcessResources").dependsOn("desktopCopyResourcesFromKamelTests")
+//
+//tasks.register<Copy>("desktopCopyResourcesFromKamelTests") {
+//    from("../kamel-tests/build/generated/moko/jvmMain/iokameltests/res")
+//    into("build/generated/moko/desktopMain/iokamelsamples/res")
+//    dependsOn(":kamel-tests:generateMRjvmMain")
+//}
+//tasks.getByName("desktopProcessResources").dependsOn("desktopCopyResourcesFromKamelTests")
 
 // todo: Remove when resolved: https://github.com/icerockdev/moko-resources/issues/372
 tasks.withType<KotlinNativeLink>()
