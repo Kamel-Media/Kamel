@@ -123,6 +123,9 @@ val desktopConfig = KamelConfig {
     takeFrom(KamelConfig.Default)
     // Available only on Desktop.
     resourcesFetcher()
+    // Available only on Desktop.
+    // An alternative svg decoder
+    batikSvgDecoder()
 }
 ```
 
