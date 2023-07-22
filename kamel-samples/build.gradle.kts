@@ -48,7 +48,7 @@ kotlin {
         languageVersion.set(JavaLanguageVersion.of("11"))
     }
 
-    androidTarget()
+    android()
     jvm("desktop")
     js(IR) {
         browser()

@@ -11,11 +11,11 @@ com-android-application = { id = "com.android.application", version.ref = "agp" 
 
 [versions]
 
-kotlin = "1.9.0"
+kotlin = "1.8.20"
 agp = "8.0.2"
 vanniktech-publish = "0.25.3"
 multiplatform-resources = "0.23.0"
-compose = "1.5.0-dev1114"
+compose = "1.4.1"
 coroutines = "1.7.2"
 ktor = "2.3.2"
 xmlutil = "0.86.1"

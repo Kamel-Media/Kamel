@@ -6,7 +6,7 @@ plugins {
 
 kotlin {
     jvm()
-    androidTarget()
+    android()
     js(IR) {
         browser()
     }
