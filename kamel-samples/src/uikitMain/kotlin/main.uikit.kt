@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalForeignApi::class)
-
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
@@ -8,11 +6,11 @@ import androidx.compose.ui.window.ComposeUIViewController
 import io.kamel.core.config.KamelConfig
 import io.kamel.core.config.takeFrom
 import io.kamel.image.config.Default
-import io.kamel.image.config.imageBitmapDecoder
-import io.kamel.image.config.imageVectorDecoder
-import io.kamel.image.config.svgDecoder
 import io.kamel.samples.launcher
-import kotlinx.cinterop.*
+import kotlinx.cinterop.autoreleasepool
+import kotlinx.cinterop.cstr
+import kotlinx.cinterop.memScoped
+import kotlinx.cinterop.toCValues
 import platform.Foundation.NSStringFromClass
 import platform.UIKit.*
 
