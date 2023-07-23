@@ -28,12 +28,13 @@ android {
         multiDexEnabled = true
     }
 
+    // https://kotlinlang.org/docs/gradle-configure-project.html#gradle-java-toolchains-support
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
-    packagingOptions {
+    packaging {
         resources {
             excludes += setOf("META-INF/AL2.0", "META-INF/LGPL2.1")
         }
@@ -43,10 +44,6 @@ android {
 kotlin {
 
     explicitApi = ExplicitApiMode.Warning
-
-    jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of("11"))
-    }
 
     android()
     jvm("desktop")

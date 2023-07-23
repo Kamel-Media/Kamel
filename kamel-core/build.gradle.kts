@@ -115,13 +115,6 @@ kotlin {
     }
 }
 
-// https://youtrack.jetbrains.com/issue/KT-46466
-val dependsOnTasks = mutableListOf<String>()
-tasks.withType<AbstractPublishToMaven>().configureEach {
-    dependsOnTasks.add(this.name.replace("publish", "sign").replaceAfter("Publication", ""))
-    dependsOn(dependsOnTasks)
-}
-
 
 // todo: Remove when resolved: https://github.com/icerockdev/moko-resources/issues/372
 tasks.withType<KotlinNativeLink>()

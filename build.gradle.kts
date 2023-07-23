@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.util.*
 
 plugins {
@@ -107,13 +106,6 @@ allprojects {
             }
 
             extensions.findByType<SigningExtension>()?.sign(publications)
-        }
-    }
-
-    tasks.withType<KotlinCompile> {
-        kotlinOptions {
-            freeCompilerArgs = listOf("-Xallow-result-return-type")
-            jvmTarget = "11"
         }
     }
 
