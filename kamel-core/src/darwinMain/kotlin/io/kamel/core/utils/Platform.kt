@@ -1,5 +1,6 @@
 package io.kamel.core.utils
 
+import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.addressOf
 import kotlinx.cinterop.usePinned
 import kotlinx.coroutines.CoroutineDispatcher
@@ -14,6 +15,7 @@ import platform.posix.memcpy
 
 internal actual val Dispatchers.Kamel: CoroutineDispatcher get() = IO
 
+@OptIn(ExperimentalForeignApi::class)
 public actual class File(public val path: String) {
 
     private val fileHandle: NSFileHandle? = NSFileHandle.fileHandleForReadingAtPath(path)

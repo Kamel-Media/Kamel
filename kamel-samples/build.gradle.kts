@@ -45,7 +45,7 @@ kotlin {
 
     explicitApi = ExplicitApiMode.Warning
 
-    android()
+    androidTarget()
     jvm("desktop")
     js(IR) {
         browser()
