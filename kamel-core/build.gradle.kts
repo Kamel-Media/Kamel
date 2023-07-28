@@ -167,4 +167,11 @@ tasks.register<Copy>("jsCopyResourcesFromKamelTests") {
 }
 tasks.getByName("jsProcessResources").dependsOn("jsCopyResourcesFromKamelTests")
 
+// https://youtrack.jetbrains.com/issue/KT-46466
+val dependsOnTasks = mutableListOf<String>()
+tasks.withType<AbstractPublishToMaven>().configureEach {
+    dependsOnTasks.add(this.name.replace("publish", "sign").replaceAfter("Publication", ""))
+    dependsOn(dependsOnTasks)
+}
+
 apply(from = "$rootDir/gradle/pack-core-tests-resources.gradle.kts")
