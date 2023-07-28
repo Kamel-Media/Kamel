@@ -49,7 +49,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation("media.kamel:kamel-image:0.7.0")
+                implementation("media.kamel:kamel-image:0.7.1")
                 // ...
             }
         }
@@ -63,7 +63,7 @@ Add the dependency to the dependencies block:
 
 ```kotlin
 dependencies {
-    implementation("media.kamel:kamel-image:0.7.0")
+    implementation("media.kamel:kamel-image:0.7.1")
     // ...
 }
 ```
