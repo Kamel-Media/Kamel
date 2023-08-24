@@ -36,7 +36,7 @@ kotlin {
 
     explicitApi = ExplicitApiMode.Warning
 
-    android {
+    androidTarget {
         publishAllLibraryVariants()
     }
     jvm("desktop")
