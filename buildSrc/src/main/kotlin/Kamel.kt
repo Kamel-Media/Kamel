@@ -1,4 +1,4 @@
 object Kamel {
     const val Group = "media.kamel"
-    const val Version = "0.7.2-SNAPSHOT"
+    const val Version = "0.7.2"
 }
