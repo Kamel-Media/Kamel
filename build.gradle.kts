@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.util.*
 
 plugins {
@@ -103,4 +105,7 @@ allprojects {
         }
     }
 
+    tasks.withType<KotlinCompile> {
+        compilerOptions.jvmTarget = JvmTarget.JVM_1_8
+    }
 }
