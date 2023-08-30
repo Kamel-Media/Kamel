@@ -7,7 +7,15 @@ pluginManagement {
         google()
     }
     plugins {
-        id("de.fayard.refreshVersions") version "0.60.0"
+        id("de.fayard.refreshVersions") version "0.60.2"
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
 

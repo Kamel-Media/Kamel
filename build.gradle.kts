@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.util.*
 
 plugins {
@@ -39,12 +41,6 @@ allprojects {
 
     group = Kamel.Group
     version = Kamel.Version
-
-    repositories {
-        google()
-        mavenCentral()
-        maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
-    }
 
     val emptyJavadocJar by tasks.registering(Jar::class) {
         archiveClassifier.set("javadoc")
@@ -109,4 +105,7 @@ allprojects {
         }
     }
 
+    tasks.withType<KotlinCompile> {
+        compilerOptions.jvmTarget = JvmTarget.JVM_1_8
+    }
 }
