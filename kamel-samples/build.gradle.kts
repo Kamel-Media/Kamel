@@ -14,6 +14,7 @@ plugins {
     alias(libs.plugins.org.jetbrains.compose)
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.dev.icerock.mobile.multiplatform.resources)
+    kotlin("native.cocoapods")
 }
 
 android {
@@ -65,7 +66,7 @@ kotlin {
     for (target in Targets.iosTargets) {
         targets.add(
             (presets.getByName(target)
-                .createTarget(target.replace("ios", "uikit"))
+                .createTarget(target)
                     as org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget).apply {
                 binaries.executable {
                     entryPoint = "main"
@@ -77,6 +78,18 @@ kotlin {
                 }
             }
         )
+    }
+
+    cocoapods {
+        summary = "Shared code for the sample"
+        homepage = "https://github.com/Kamel-Media/Kamel"
+        ios.deploymentTarget = "14.1"
+        podfile = project.file("../kamel-sample-ios/Podfile")
+        framework {
+            baseName = "shared"
+            isStatic = true
+        }
+        extraSpecAttributes["resources"] = "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
     }
 
     sourceSets {
@@ -126,15 +139,13 @@ kotlin {
             }
         }
 
-        val uikitMain by creating {
+        val iosMain by creating {
             dependsOn(darwinMain)
         }
 
-        Targets.iosTargets.map { target ->
-            target.replace("ios", "uikit")
-        }.forEach { target ->
+        Targets.iosTargets.forEach { target ->
             getByName("${target}Main") {
-                dependsOn(uikitMain)
+                dependsOn(iosMain)
             }
         }
 
@@ -157,25 +168,6 @@ compose {
 
 compose.experimental {
     web.application {}
-    uikit.application {
-        bundleIdPrefix = "io.kamel.samples"
-        projectName = "kamel samples"
-        deployConfigurations {
-            simulator("IPhone13") {
-                //Usage: ./gradlew iosDeployIPhone8Debug
-                device = IOSDevices1.IPHONE_13
-            }
-            simulator("IPad") {
-                //Usage: ./gradlew iosDeployIPadDebug
-                device = IOSDevices1.IPAD_PRO_11_INCH_3rd_Gen
-            }
-            connectedDevice("Device") {
-                //First need specify your teamId here, or in local.properties (compose.ios.teamId=***)
-                //teamId="***"
-                //Usage: ./gradlew iosDeployDeviceRelease
-            }
-        }
-    }
 }
 
 

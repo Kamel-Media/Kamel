@@ -1,0 +1,16 @@
+PODS:
+  - kamel_samples (0.7.3)
+
+DEPENDENCIES:
+  - kamel_samples (from `../kamel-samples`)
+
+EXTERNAL SOURCES:
+  kamel_samples:
+    :path: "../kamel-samples"
+
+SPEC CHECKSUMS:
+  kamel_samples: e15532421d0b85fb5a5d122db249816738df79bb
+
+PODFILE CHECKSUM: a278bceddd0e3759d316e6207cd9edefd5d4d855
+
+COCOAPODS: 1.12.1

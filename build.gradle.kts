@@ -56,7 +56,7 @@ allprojects {
 
                     name.set("Kamel")
                     description.set("Kotlin Asynchronous Media Loading Library that supports Compose")
-                    url.set("https://github.com/alialbaali/Kamel")
+                    url.set("https://github.com/Kamel-Media/Kamel")
 
                     licenses {
                         license {
@@ -71,12 +71,16 @@ allprojects {
                             id.set("alialbaali")
                             name.set("Ali Albaali")
                         }
+                        developer {
+                            id.set("luca992")
+                            name.set("Luca Spinazzola")
+                        }
                     }
 
                     scm {
-                        connection.set("scm:git:github.com/alialbaali/Kamel.git")
+                        connection.set("scm:git:github.com/Kamel-Media/Kamel.git")
                         developerConnection.set("scm:git:ssh://github.com/alialbaali/Kamel.git")
-                        url.set("https://github.com/alialbaali/Kamel/tree/main")
+                        url.set("https://github.com/Kamel-Media/Kamel/tree/main")
                     }
 
                 }
