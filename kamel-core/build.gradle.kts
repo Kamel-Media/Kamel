@@ -11,13 +11,17 @@ plugins {
     alias(libs.plugins.org.jetbrains.compose)
     `maven-publish`
     signing
+    alias(libs.plugins.com.android.library)
 }
 
 kotlin {
 
     explicitApi = ExplicitApiMode.Warning
 
-    jvm()
+    androidTarget()
+
+    jvm("desktop")
+
     js(IR) {
         browser()
     }
@@ -61,6 +65,7 @@ kotlin {
                 implementation(compose.runtime)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.ktor.client.core)
+                implementation(libs.okio)
             }
         }
 
@@ -70,17 +75,38 @@ kotlin {
                 implementation(kotlin("test"))
                 implementation(libs.ktor.client.mock)
                 implementation(libs.kotlinx.coroutines.test)
+                implementation(libs.okio.fakefilesystem)
             }
         }
 
-        val jvmMain by getting {
+        val commonJvmMain = create("commonJvmMain") {
             dependsOn(commonMain)
             dependencies {
                 implementation(libs.org.jetbrains.kotlin.reflect)
             }
         }
 
-        val jvmTest by getting {
+        val commonJvmTest = create("commonJvmTest") {
+            dependsOn(commonTest)
+        }
+
+        val desktopMain by getting {
+            dependsOn(commonJvmMain)
+        }
+
+        val desktopTest by getting {
+            dependsOn(commonJvmTest)
+        }
+
+        val androidMain by getting {
+            dependsOn(commonJvmMain)
+            dependencies {
+                implementation(libs.androidx.startup)
+            }
+        }
+
+        val androidUnitTest by getting {
+            dependsOn(commonJvmTest)
         }
 
         val nonJvmMain by creating {
@@ -172,6 +198,25 @@ val dependsOnTasks = mutableListOf<String>()
 tasks.withType<AbstractPublishToMaven>().configureEach {
     dependsOnTasks.add(this.name.replace("publish", "sign").replaceAfter("Publication", ""))
     dependsOn(dependsOnTasks)
+}
+
+android {
+    namespace = "io.kamel.core.cache"
+    compileSdk = 34
+
+    defaultConfig {
+        minSdk = 21
+    }
+
+    buildFeatures {
+        compose = true
+        buildConfig = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.3"
+    }
+
 }
 
 apply(from = "$rootDir/gradle/pack-core-tests-resources.gradle.kts")

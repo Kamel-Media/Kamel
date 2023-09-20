@@ -55,6 +55,7 @@ kotlin {
                 implementation(compose.foundation)
                 implementation(compose.runtime)
                 implementation(libs.ktor.client.core)
+                implementation(libs.okio)
             }
         }
 

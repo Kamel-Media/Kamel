@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import io.kamel.core.cache.Cache
 import io.kamel.core.cache.LruCache
+import io.kamel.core.cache.httpCacheStorage
 import io.kamel.core.decoder.Decoder
 import io.kamel.core.fetcher.Fetcher
 import io.kamel.core.fetcher.FileFetcher
@@ -19,6 +20,7 @@ import io.kamel.core.utils.URI
 import io.kamel.core.utils.URL
 import io.ktor.client.*
 import io.ktor.client.engine.*
+import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlin.reflect.KClass
@@ -64,6 +66,9 @@ public class KamelConfigBuilder {
         override val svgCache: Cache<Any, Painter> = LruCache(svgCacheSize)
     }
 
+    public fun HttpClientConfig<*>.httpCache(size: Long): Unit = install(HttpCache) {
+        publicStorage(httpCacheStorage(size))
+    }
 }
 
 /**
