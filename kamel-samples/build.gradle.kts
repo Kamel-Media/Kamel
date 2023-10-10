@@ -68,8 +68,7 @@ kotlin {
             (presets.getByName(target)
                 .createTarget(target)
                     as org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget).apply {
-                binaries.executable {
-                    entryPoint = "main"
+                binaries.framework {
                     freeCompilerArgs += listOf(
                         "-linker-option", "-framework", "-linker-option", "Metal",
                         "-linker-option", "-framework", "-linker-option", "CoreText",
@@ -142,10 +141,17 @@ kotlin {
         val iosMain by creating {
             dependsOn(darwinMain)
         }
-
+        val iosTest by creating {
+            dependsOn(darwinMain)
+        }
         Targets.iosTargets.forEach { target ->
             getByName("${target}Main") {
                 dependsOn(iosMain)
+            }
+        }
+        Targets.iosTargets.forEach { target ->
+            getByName("${target}Test") {
+                dependsOn(iosTest)
             }
         }
 
