@@ -12,17 +12,17 @@ com-android-application = { id = "com.android.application", version.ref = "agp" 
 [versions]
 
 kotlin = "1.9.10"
-agp = "8.1.1"
+agp = "8.1.2"
 
 vanniktech-publish = "0.25.3"
 multiplatform-resources = "0.23.0"
-compose = "1.5.1"
+compose = "1.5.3"
 coroutines = "1.7.3"
-ktor = "2.3.4"
+ktor = "2.3.5"
 xmlutil = "0.86.2"
-activity-compose = "1.7.2"
+activity-compose = "1.8.0"
 appcompat = "1.6.1"
-material = "1.9.0"
+material = "1.10.0"
 androidsvg = "1.4"
 batik = "1.17"
 
