@@ -208,11 +208,6 @@ android {
         minSdk = 21
     }
 
-    buildFeatures {
-        compose = true
-        buildConfig = true
-    }
-
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.3"
     }
