@@ -14,6 +14,8 @@ com-android-application = { id = "com.android.application", version.ref = "agp" 
 kotlin = "1.9.10"
 agp = "8.1.2"
 
+okio = "3.5.0"
+startup-runtime = "1.1.1"
 vanniktech-publish = "0.25.3"
 multiplatform-resources = "0.23.0"
 compose = "1.5.3"
@@ -28,6 +30,9 @@ batik = "1.17"
 
 [libraries]
 
+androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "startup-runtime" }
+okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
+okio-fakefilesystem = { module = "com.squareup.okio:okio-fakefilesystem", version.ref = "okio" }
 org-jetbrains-kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
