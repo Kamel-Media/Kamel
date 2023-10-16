@@ -10,7 +10,7 @@ import io.kamel.core.mapper.Mapper
 import kotlin.reflect.KClass
 
 public const val DefaultCacheSize: Int = 100
-public const val DefaultHttpCacheSize: Long = 10 * 1024 * 1024  //10 MB
+public const val DefaultHttpCacheSize: Long = 10 * 1024 * 1024  //10 MiB
 
 /**
  * Represents global configuration for this library.

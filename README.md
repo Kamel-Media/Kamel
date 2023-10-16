@@ -280,6 +280,11 @@ val customKamelConfig = KamelConfig {
 
     // Configures Ktor HttpClient
     httpFetcher {
+        // httpCache is defined in kamel-core and configures the ktor client 
+        // to install a HttpCache feature with the implementation provided by Kamel.
+        // The size of the cache can be defined in Bytes.
+        httpCache(10 * 1024 * 1024  /* 10 MiB */)
+
         defaultRequest {
             url("https://www.example.com/")
             cacheControl(CacheControl.MaxAge(maxAgeSeconds = 10000))
@@ -318,6 +323,21 @@ KamelConfig {
     imageVectorCacheSize = 300
     // 100 by default
     svgCacheSize = 200
+}
+```
+
+#### Disk Cache size (in MiB)
+
+Kamel can create a persistent disk cache for images by implementing ktor's `CacheStorage` feature.
+The default config `KamelConfig.Default` installs this feature with a 10 MiB disk cache size.
+The underlying disk cache is based on coil's multiplatform DiskLruCache implementation.
+
+```kotlin
+KamelConfig {
+    httpFetcher {
+        // The size of the cache can be defined in Bytes. Or DefaultHttpCacheSize (10 MiB) can be used. 
+        httpCache(DefaultHttpCacheSize)
+    }
 }
 ```
 
