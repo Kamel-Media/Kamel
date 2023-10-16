@@ -330,12 +330,12 @@ KamelConfig {
 
 Kamel can create a persistent disk cache for images by implementing ktor's `CacheStorage` feature.
 The default config `KamelConfig.Default` installs this feature with a 10 MiB disk cache size.
-The underlying disk cache is based on coil's multiplatform DiskLruCache implementation.
+The underlying disk cache is based on coil's multiplatform `DiskLruCache` implementation.
 
 ```kotlin
 KamelConfig {
     httpFetcher {
-        // The size of the cache can be defined in Bytes. Or DefaultHttpCacheSize (10 MiB) can be used. 
+        // The size of the cache can be defined in bytes. Or DefaultHttpCacheSize (10 MiB) can be used. 
         httpCache(DefaultHttpCacheSize)
     }
 }
