@@ -1,17 +1,17 @@
 package io.kamel.core.cache
 
 import io.kamel.core.cache.disk.DiskCacheStorage
-import io.ktor.client.plugins.cache.storage.CacheStorage
+import io.ktor.client.plugins.cache.storage.*
 import okio.FileSystem
 import okio.Path
 import okio.Path.Companion.toPath
 import platform.Foundation.NSCachesDirectory
-import platform.Foundation.NSLocalDomainMask
 import platform.Foundation.NSSearchPathForDirectoriesInDomains
+import platform.Foundation.NSUserDomainMask
 
 private val cacheDir: Path = NSSearchPathForDirectoriesInDomains(
     directory = NSCachesDirectory,
-    domainMask = NSLocalDomainMask,
+    domainMask = NSUserDomainMask,
     expandTilde = true
 ).first().toString().toPath()
 
