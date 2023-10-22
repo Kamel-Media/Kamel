@@ -18,10 +18,10 @@ kotlin {
 
     explicitApi = ExplicitApiMode.Warning
 
-    androidTarget()
-
+    androidTarget {
+        publishAllLibraryVariants()
+    }
     jvm("desktop")
-
     js(IR) {
         browser()
     }
@@ -53,8 +53,6 @@ kotlin {
             }
         )
     }
-
-
 
     sourceSets {
 
