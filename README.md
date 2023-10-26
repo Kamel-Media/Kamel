@@ -24,7 +24,8 @@ Ktor client for loading resources.
     - [Displaying an image resource](#displaying-an-image-resource)
         - [Crossfade animation](#crossfade-animation)
     - [Configuring Kamel](#configuring-kamel)
-        - [Cache size (number of entries)](#cache-size-number-of-entries)
+        - [Memory cache size (number of entries to cache)](#memory-cache-size-number-of-entries-to-cache)
+        - [Disk cache size (in bytes)](#disk-cache-size-in-bytes)
     - [Applying Kamel configuration](#applying-kamel-configuration)
 - [Contributions](#contributions)
 - [License](#license)
@@ -309,7 +310,7 @@ val customKamelConfig = KamelConfig {
 
 ```
 
-#### Cache size (number of entries to cache)
+#### Memory cache size (number of entries to cache)
 
 Kamel provides a generic `Cache<K,V>` interface, the default implementation uses LRU memory cache
 mechanism backed by `LinkedHashMap`. You can provide a number of entries to cache for each type like
@@ -326,7 +327,7 @@ KamelConfig {
 }
 ```
 
-#### Disk Cache size (in MiB)
+#### Disk cache size (in bytes)
 
 Kamel can create a persistent disk cache for images by implementing ktor's `CacheStorage` feature.
 The default config `KamelConfig.Default` installs this feature with a 10 MiB disk cache size.
