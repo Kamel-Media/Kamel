@@ -37,7 +37,7 @@ val workflowRefreshVersions: Workflow = workflow(
         Schedule(listOf(everyMondayAt7am)),
         WorkflowDispatch(),
     ),
-    sourceFile = Paths.get(".github/workflows/refreshversions.main.kts"),
+    sourceFile = Paths.get(".github/workflows/refreshVersions.main.kts"),
 ) {
     job(
         id = "Refresh-Versions",
