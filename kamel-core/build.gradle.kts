@@ -81,9 +81,6 @@ kotlin {
 
         val commonJvmMain = create("commonJvmMain") {
             dependsOn(commonMain)
-            dependencies {
-                implementation(libs.org.jetbrains.kotlin.reflect)
-            }
         }
 
         val commonJvmTest = create("commonJvmTest") {
