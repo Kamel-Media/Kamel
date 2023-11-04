@@ -10,9 +10,12 @@ kotlin {
     js(IR) {
         browser()
     }
-    for (target in Targets.nativeTargets) {
-        targets.add(presets.getByName(target).createTarget(target))
-    }
+    iosArm64()
+    iosSimulatorArm64()
+    iosX64()
+    macosX64()
+    macosArm64()
+    applyDefaultHierarchyTemplate()
 
     sourceSets {
         val commonMain by getting {
@@ -41,22 +44,6 @@ kotlin {
             dependsOn(commonMain)
         }
 
-        val darwinMain by creating {
-            dependsOn(commonMain)
-        }
-
-        val darwinTest by creating {
-            dependsOn(commonTest)
-        }
-
-        Targets.darwinTargets.forEach { target ->
-            getByName("${target}Main") {
-                dependsOn(darwinMain)
-            }
-            getByName("${target}Test") {
-                dependsOn(darwinTest)
-            }
-        }
     }
 }
 

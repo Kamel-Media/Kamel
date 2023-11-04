@@ -25,34 +25,36 @@ kotlin {
     js(IR) {
         browser()
     }
-    for (target in Targets.macosTargets) {
-        targets.add(
-            (presets.getByName(target).createTarget(target) as KotlinNativeTarget).apply {
-                binaries.forEach {
-                    it.apply {
-                        freeCompilerArgs += listOf(
-                            "-linker-option", "-framework", "-linker-option", "Metal"
-                        )
-                    }
-                }
-            }
-        )
+
+    fun iosTargets(config: KotlinNativeTarget.() -> Unit) {
+        iosArm64(config)
+        iosSimulatorArm64(config)
+        iosX64(config)
     }
-    for (target in Targets.iosTargets) {
-        targets.add(
-            (presets.getByName(target).createTarget(target) as KotlinNativeTarget).apply {
-                binaries.forEach {
-                    it.apply {
-                        freeCompilerArgs += listOf(
-                            "-linker-option", "-framework", "-linker-option", "Metal",
-                            "-linker-option", "-framework", "-linker-option", "CoreText",
-                            "-linker-option", "-framework", "-linker-option", "CoreGraphics"
-                        )
-                    }
-                }
+    iosTargets {
+        binaries.forEach {
+            it.apply {
+                freeCompilerArgs += listOf(
+                    "-linker-option", "-framework", "-linker-option", "Metal",
+                    "-linker-option", "-framework", "-linker-option", "CoreText",
+                    "-linker-option", "-framework", "-linker-option", "CoreGraphics"
+                )
             }
-        )
+        }
     }
+    fun macosTargets(config: KotlinNativeTarget.() -> Unit) {
+        macosX64(config)
+        macosArm64(config)
+    }
+    macosTargets {
+        binaries.executable {
+            freeCompilerArgs += listOf(
+                "-linker-option", "-framework", "-linker-option", "Metal"
+            )
+            linkerOpts.add("-lsqlite3")
+        }
+    }
+    applyDefaultHierarchyTemplate()
 
     sourceSets {
 
@@ -119,21 +121,12 @@ kotlin {
             dependsOn(nonJvmMain)
         }
 
-        val darwinMain by creating {
+        val appleMain by getting {
             dependsOn(nonJvmMain)
         }
 
-        val darwinTest by creating {
+        val appleTest by getting {
             dependsOn(nonJvmTest)
-        }
-
-        Targets.darwinTargets.forEach { target ->
-            getByName("${target}Main") {
-                dependsOn(darwinMain)
-            }
-            getByName("${target}Test") {
-                dependsOn(darwinTest)
-            }
         }
 
     }
@@ -141,44 +134,33 @@ kotlin {
 
 
 // todo: Remove when resolved: https://github.com/icerockdev/moko-resources/issues/372
-tasks.withType<KotlinNativeLink>()
-    .matching { linkTask ->
-        linkTask.binary is AbstractExecutable
-    }
-    .configureEach {
-        val task: KotlinNativeLink = this
+tasks.withType<KotlinNativeLink>().matching { linkTask ->
+    linkTask.binary is AbstractExecutable
+}.configureEach {
+    val task: KotlinNativeLink = this
 
-        this.doLast {
-            val binary: NativeBinary = task.binary
-            val outputDir: File = task.outputFile.get().parentFile
-            task.libraries
-                .filter { library -> library.extension == "klib" }
-                .filter(File::exists)
-                .forEach { inputFile ->
-                    val klibKonan = org.jetbrains.kotlin.konan.file.File(inputFile.path)
-                    val klib = KotlinLibraryLayoutImpl(
-                        klib = klibKonan,
-                        component = "default"
+    this.doLast {
+        val binary: NativeBinary = task.binary
+        val outputDir: File = task.outputFile.get().parentFile
+        task.libraries.filter { library -> library.extension == "klib" }.filter(File::exists).forEach { inputFile ->
+            val klibKonan = org.jetbrains.kotlin.konan.file.File(inputFile.path)
+            val klib = KotlinLibraryLayoutImpl(
+                klib = klibKonan, component = "default"
+            )
+            val layout = klib.extractingToTemp
+
+            // extracting bundles
+            layout.resourcesDir.absolutePath.let(::File).listFiles(FileFilter { it.extension == "bundle" })
+                // copying bundles to app
+                ?.forEach { bundleFile ->
+                    logger.info("${bundleFile.absolutePath} copying to $outputDir")
+                    bundleFile.copyRecursively(
+                        target = File(outputDir, bundleFile.name), overwrite = true
                     )
-                    val layout = klib.extractingToTemp
-
-                    // extracting bundles
-                    layout
-                        .resourcesDir
-                        .absolutePath
-                        .let(::File)
-                        .listFiles(FileFilter { it.extension == "bundle" })
-                        // copying bundles to app
-                        ?.forEach { bundleFile ->
-                            logger.info("${bundleFile.absolutePath} copying to $outputDir")
-                            bundleFile.copyRecursively(
-                                target = File(outputDir, bundleFile.name),
-                                overwrite = true
-                            )
-                        }
                 }
         }
     }
+}
 
 
 // todo: remove after https://github.com/icerockdev/moko-resources/issues/392 resolved

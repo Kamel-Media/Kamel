@@ -1,12 +1,12 @@
 import org.jetbrains.compose.desktop.application.tasks.AbstractNativeMacApplicationPackageAppDirTask
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 import org.jetbrains.kotlin.gradle.plugin.mpp.AbstractExecutable
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBinary
 import org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink
 import org.jetbrains.kotlin.library.impl.KotlinLibraryLayoutImpl
 import java.io.File
 import java.io.FileFilter
-import org.jetbrains.compose.experimental.dsl.IOSDevices as IOSDevices1
 import org.jetbrains.kotlin.konan.file.File as KonanFile
 
 plugins {
@@ -51,33 +51,35 @@ kotlin {
         browser()
         binaries.executable()
     }
-    for (target in Targets.macosTargets) {
-        targets.add(
-            (presets.getByName(target)
-                .createTarget(target) as org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget).apply {
-                binaries.executable {
-                    freeCompilerArgs += listOf(
-                        "-linker-option", "-framework", "-linker-option", "Metal"
-                    )
-                }
-            }
-        )
+    fun iosTargets(config: KotlinNativeTarget.() -> Unit) {
+        iosArm64(config)
+        iosSimulatorArm64(config)
+        iosX64(config)
     }
-    for (target in Targets.iosTargets) {
-        targets.add(
-            (presets.getByName(target)
-                .createTarget(target)
-                    as org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget).apply {
-                binaries.framework {
-                    freeCompilerArgs += listOf(
-                        "-linker-option", "-framework", "-linker-option", "Metal",
-                        "-linker-option", "-framework", "-linker-option", "CoreText",
-                        "-linker-option", "-framework", "-linker-option", "CoreGraphics"
-                    )
-                }
+    iosTargets {
+        binaries.forEach {
+            it.apply {
+                freeCompilerArgs += listOf(
+                    "-linker-option", "-framework", "-linker-option", "Metal",
+                    "-linker-option", "-framework", "-linker-option", "CoreText",
+                    "-linker-option", "-framework", "-linker-option", "CoreGraphics"
+                )
             }
-        )
+        }
     }
+    fun macosTargets(config: KotlinNativeTarget.() -> Unit) {
+        macosX64(config)
+        macosArm64(config)
+    }
+    macosTargets {
+        binaries.executable {
+            freeCompilerArgs += listOf(
+                "-linker-option", "-framework", "-linker-option", "Metal"
+            )
+            linkerOpts.add("-lsqlite3")
+        }
+    }
+    applyDefaultHierarchyTemplate()
 
     cocoapods {
         summary = "Shared code for the sample"
@@ -122,37 +124,6 @@ kotlin {
 
         val jsMain by getting {
             dependsOn(commonMain)
-        }
-
-        val darwinMain by creating {
-            dependsOn(commonMain)
-        }
-
-        val macosMain by creating {
-            dependsOn(darwinMain)
-        }
-
-        Targets.macosTargets.forEach { target ->
-            getByName("${target}Main") {
-                dependsOn(macosMain)
-            }
-        }
-
-        val iosMain by creating {
-            dependsOn(darwinMain)
-        }
-        val iosTest by creating {
-            dependsOn(darwinMain)
-        }
-        Targets.iosTargets.forEach { target ->
-            getByName("${target}Main") {
-                dependsOn(iosMain)
-            }
-        }
-        Targets.iosTargets.forEach { target ->
-            getByName("${target}Test") {
-                dependsOn(iosTest)
-            }
         }
 
     }

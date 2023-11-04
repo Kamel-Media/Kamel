@@ -42,9 +42,12 @@ kotlin {
     js(IR) {
         browser()
     }
-    for (target in Targets.nativeTargets) {
-        targets.add(presets.getByName(target).createTarget(target))
-    }
+    iosArm64()
+    iosSimulatorArm64()
+    iosX64()
+    macosX64()
+    macosArm64()
+    applyDefaultHierarchyTemplate()
 
     sourceSets {
 
@@ -124,24 +127,15 @@ kotlin {
             }
         }
 
-        val darwinMain by creating {
+        val appleMain by getting {
             dependsOn(nonJvmMain)
             dependencies {
                 implementation(libs.ktor.client.darwin)
             }
         }
 
-        val darwinTest by creating {
+        val appleTest by getting {
             dependsOn(nonJvmTest)
-        }
-
-        Targets.darwinTargets.forEach { target ->
-            getByName("${target}Main") {
-                dependsOn(darwinMain)
-            }
-            getByName("${target}Test") {
-                dependsOn(darwinTest)
-            }
         }
 
     }
