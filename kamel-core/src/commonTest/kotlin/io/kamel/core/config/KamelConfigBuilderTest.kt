@@ -46,7 +46,7 @@ class KamelConfigBuilderTest {
 
         assertTrue { builder.mappers.size == 1 }
         assertTrue { builder.mappers.keys.contains(String::class) }
-        assertTrue { builder.mappers.values.contains<Mapper<*, *>>(StringMapper) }
+        assertTrue { builder.mappers[String::class]?.contains<Mapper<*, *>>(StringMapper) == true }
     }
 
     @Test
@@ -55,7 +55,7 @@ class KamelConfigBuilderTest {
 
         assertTrue { builder.mappers.size == 1 }
         assertTrue { builder.mappers.keys.contains(URL::class) }
-        assertTrue { builder.mappers.values.contains<Mapper<*, *>>(URLMapper) }
+        assertTrue { builder.mappers[URL::class]?.contains<Mapper<*, *>>(URLMapper) == true }
     }
 
     @Test
@@ -64,7 +64,7 @@ class KamelConfigBuilderTest {
 
         assertTrue { builder.mappers.size == 1 }
         assertTrue { builder.mappers.keys.contains(URI::class) }
-        assertTrue { builder.mappers.values.contains<Mapper<*, *>>(URIMapper) }
+        assertTrue { builder.mappers[URI::class]?.contains<Mapper<*, *>>(URIMapper) == true }
     }
 
     @Test
@@ -89,9 +89,9 @@ class KamelConfigBuilderTest {
 
         assertTrue { builder.fetchers.contains<Fetcher<*>>(FileFetcher) }
         assertTrue { builder.mappers.keys.contains(URI::class) }
-        assertTrue { builder.mappers.values.contains<Mapper<*, *>>(URIMapper) }
+        assertTrue { builder.mappers[URI::class]?.contains<Mapper<*, *>>(URIMapper) == true }
         assertTrue { builder.mappers.keys.contains(String::class) }
-        assertTrue { builder.mappers.values.contains<Mapper<*, *>>(StringMapper) }
+        assertTrue { builder.mappers[String::class]?.contains<Mapper<*, *>>(StringMapper) == true }
         assertEquals(100, builder.build().imageBitmapCache.maxSize)
     }
 
@@ -107,9 +107,9 @@ class KamelConfigBuilderTest {
 
         assertTrue { builder.fetchers.contains<Fetcher<*>>(FileFetcher) }
         assertTrue { builder.mappers.keys.contains(URI::class) }
-        assertTrue { builder.mappers.values.contains<Mapper<*, *>>(URIMapper) }
+        assertTrue { builder.mappers[URI::class]?.contains<Mapper<*, *>>(URIMapper) == true }
         assertTrue { builder.mappers.keys.contains(String::class) }
-        assertTrue { builder.mappers.values.contains<Mapper<*, *>>(StringMapper) }
+        assertTrue { builder.mappers[String::class]?.contains<Mapper<*, *>>(StringMapper) == true }
         assertEquals(100, builder.build().imageBitmapCache.maxSize)
     }
 

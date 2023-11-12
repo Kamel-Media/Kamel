@@ -4,6 +4,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import io.kamel.core.decoder.Decoder
 import io.kamel.core.fetcher.HttpFetcher
+import io.kamel.core.mapper.Mapper
 import io.kamel.core.utils.*
 import io.kamel.tests.HttpMockEngine
 import io.kamel.tests.TestStringUrl
@@ -43,6 +44,22 @@ class KamelConfigUtilsTest {
     fun testMapURIInput() {
         val result = config.mapInput(createURI(TestStringUrl), URI::class)
 
+        assertTrue(result is Url)
+    }
+
+    @Test
+    fun testUsesSupportedMapper() {
+        val twoMappersConfig = KamelConfig {
+            mapper(object : Mapper<String, String> {
+                override val inputKClass: KClass<String> = String::class
+                override val outputKClass: KClass<String> = String::class
+
+                override fun map(input: String): String = "Fake"
+                override val String.isSupported: Boolean get() = false
+            })
+            stringMapper()
+        }
+        val result = twoMappersConfig.mapInput(TestStringUrl, String::class)
         assertTrue(result is Url)
     }
 

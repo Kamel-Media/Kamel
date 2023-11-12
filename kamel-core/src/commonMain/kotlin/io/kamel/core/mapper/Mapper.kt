@@ -17,4 +17,10 @@ public interface Mapper<I : Any, O : Any> {
      * Maps input [I] to output [O].
      */
     public fun map(input: I): O
+
+    /**
+     * Whether mapping [I] is supported or not.
+     */
+    public val I.isSupported: Boolean
+        get() = true
 }
