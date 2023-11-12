@@ -8,8 +8,8 @@ import io.kamel.core.mapper.Mapper
 import io.kamel.core.utils.*
 import io.kamel.tests.HttpMockEngine
 import io.kamel.tests.TestStringUrl
-import io.ktor.http.Url
-import io.ktor.utils.io.ByteReadChannel
+import io.ktor.http.*
+import io.ktor.utils.io.*
 import kotlin.reflect.KClass
 import kotlin.test.Test
 import kotlin.test.assertFails
