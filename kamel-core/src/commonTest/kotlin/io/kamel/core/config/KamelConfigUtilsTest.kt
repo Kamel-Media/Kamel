@@ -4,11 +4,18 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import io.kamel.core.decoder.Decoder
 import io.kamel.core.fetcher.HttpFetcher
-import io.kamel.core.utils.*
+import io.kamel.core.mapper.Mapper
+import io.kamel.core.utils.URI
+import io.kamel.core.utils.URL
+import io.kamel.core.utils.createURI
+import io.kamel.core.utils.createURL
+import io.kamel.core.utils.findDecoderFor
+import io.kamel.core.utils.findFetcherFor
+import io.kamel.core.utils.mapInput
 import io.kamel.tests.HttpMockEngine
 import io.kamel.tests.TestStringUrl
-import io.ktor.http.*
-import io.ktor.utils.io.*
+import io.ktor.http.Url
+import io.ktor.utils.io.ByteReadChannel
 import kotlin.reflect.KClass
 import kotlin.test.Test
 import kotlin.test.assertFails
@@ -43,6 +50,22 @@ class KamelConfigUtilsTest {
     fun testMapURIInput() {
         val result = config.mapInput(createURI(TestStringUrl), URI::class)
 
+        assertTrue(result is Url)
+    }
+
+    @Test
+    fun testUsesSupportedMapper() {
+        val twoMappersConfig = KamelConfig {
+            mapper(object : Mapper<String, String> {
+                override val inputKClass: KClass<String> = String::class
+                override val outputKClass: KClass<String> = String::class
+
+                override fun map(input: String): String = "Fake"
+                override val String.isSupported: Boolean get() = false
+            })
+            stringMapper()
+        }
+        val result = twoMappersConfig.mapInput(TestStringUrl, String::class)
         assertTrue(result is Url)
     }
 
@@ -83,7 +106,10 @@ private object FakeImageBitmapDecoder : Decoder<ImageBitmap> {
 
     override val outputKClass: KClass<ImageBitmap> = ImageBitmap::class
 
-    override suspend fun decode(channel: ByteReadChannel, resourceConfig: ResourceConfig): ImageBitmap {
+    override suspend fun decode(
+        channel: ByteReadChannel,
+        resourceConfig: ResourceConfig
+    ): ImageBitmap {
         return ImageBitmap(1, 1)
     }
 }

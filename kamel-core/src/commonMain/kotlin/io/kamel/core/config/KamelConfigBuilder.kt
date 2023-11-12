@@ -31,7 +31,7 @@ public class KamelConfigBuilder {
 
     internal val decoders: MutableList<Decoder<Any>> = mutableListOf()
 
-    internal val mappers: MutableMap<KClass<*>, Mapper<Any, Any>> = mutableMapOf()
+    internal val mappers: MutableMap<KClass<*>, List<Mapper<Any, Any>>> = mutableMapOf()
 
     public var imageBitmapCacheSize: Int = 0
 
@@ -48,7 +48,8 @@ public class KamelConfigBuilder {
     }
 
     public fun <I : Any, O : Any> mapper(mapper: Mapper<I, O>) {
-        mappers[mapper.inputKClass] = mapper as Mapper<Any, Any>
+        mappers[mapper.inputKClass] =
+            (mappers[mapper.inputKClass] ?: emptyList()) + (mapper as Mapper<Any, Any>)
     }
 
     public fun build(): KamelConfig = object : KamelConfig {
@@ -57,7 +58,8 @@ public class KamelConfigBuilder {
 
         override val decoders: List<Decoder<Any>> = this@KamelConfigBuilder.decoders
 
-        override val mappers: Map<KClass<*>, Mapper<Any, Any>> = this@KamelConfigBuilder.mappers
+        override val mappers: Map<KClass<*>, List<Mapper<Any, Any>>> =
+            this@KamelConfigBuilder.mappers
 
         override val imageBitmapCache: Cache<Any, ImageBitmap> = LruCache(imageBitmapCacheSize)
 
@@ -128,7 +130,7 @@ public fun KamelConfigBuilder.takeFrom(config: KamelConfig): KamelConfigBuilder 
     svgCacheSize = config.svgCache.maxSize
     config.fetchers.forEach { fetcher(it) }
     config.decoders.forEach { decoder(it) }
-    config.mappers.values.forEach { mapper(it) }
+    config.mappers.values.forEach { mappers -> mappers.forEach { mapper(it) } }
 
     return this
 }
