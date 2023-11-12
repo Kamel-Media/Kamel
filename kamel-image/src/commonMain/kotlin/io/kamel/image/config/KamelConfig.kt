@@ -23,7 +23,10 @@ public val KamelConfig.Companion.Default: KamelConfig
         httpFetcher {
             httpCache(DefaultHttpCacheSize)
         }
+        platformSpecificConfig()
     }
+
+internal expect fun KamelConfigBuilder.platformSpecificConfig()
 
 /**
  * Adds an [ImageBitmap] decoder to the [KamelConfigBuilder].
