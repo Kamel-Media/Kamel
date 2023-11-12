@@ -5,13 +5,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import io.kamel.core.decoder.Decoder
 import io.kamel.core.fetcher.HttpFetcher
 import io.kamel.core.mapper.Mapper
-import io.kamel.core.utils.URI
-import io.kamel.core.utils.URL
-import io.kamel.core.utils.createURI
-import io.kamel.core.utils.createURL
-import io.kamel.core.utils.findDecoderFor
-import io.kamel.core.utils.findFetcherFor
-import io.kamel.core.utils.mapInput
+import io.kamel.core.utils.*
 import io.kamel.tests.HttpMockEngine
 import io.kamel.tests.TestStringUrl
 import io.ktor.http.Url
@@ -106,10 +100,7 @@ private object FakeImageBitmapDecoder : Decoder<ImageBitmap> {
 
     override val outputKClass: KClass<ImageBitmap> = ImageBitmap::class
 
-    override suspend fun decode(
-        channel: ByteReadChannel,
-        resourceConfig: ResourceConfig
-    ): ImageBitmap {
+    override suspend fun decode(channel: ByteReadChannel, resourceConfig: ResourceConfig): ImageBitmap {
         return ImageBitmap(1, 1)
     }
 }
