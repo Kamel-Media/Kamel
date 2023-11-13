@@ -28,21 +28,21 @@ class KamelConfigUtilsTest {
 
     @Test
     fun testMapStringInput() {
-        val result = config.mapInput(TestStringUrl, String::class)
+        val result = config.mapInput(TestStringUrl, String::class.simpleName!!)
 
         assertTrue(result is Url)
     }
 
     @Test
     fun testMapURLInput() {
-        val result = config.mapInput(createURL(TestStringUrl), URL::class)
+        val result = config.mapInput(createURL(TestStringUrl), URL::class.simpleName!!)
 
         assertTrue(result is Url)
     }
 
     @Test
     fun testMapURIInput() {
-        val result = config.mapInput(createURI(TestStringUrl), URI::class)
+        val result = config.mapInput(createURI(TestStringUrl), URI::class.simpleName!!)
 
         assertTrue(result is Url)
     }
@@ -51,7 +51,8 @@ class KamelConfigUtilsTest {
     fun testUsesSupportedMapper() {
         val twoMappersConfig = KamelConfig {
             mapper(object : Mapper<String, String> {
-                override val inputKClass: KClass<String> = String::class
+                override val inputClassName: String = String::class.simpleName!!
+
                 override val outputKClass: KClass<String> = String::class
 
                 override fun map(input: String): String = "Fake"
@@ -59,7 +60,7 @@ class KamelConfigUtilsTest {
             })
             stringMapper()
         }
-        val result = twoMappersConfig.mapInput(TestStringUrl, String::class)
+        val result = twoMappersConfig.mapInput(TestStringUrl, String::class.simpleName!!)
         assertTrue(result is Url)
     }
 

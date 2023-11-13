@@ -25,7 +25,7 @@ import kotlin.reflect.KClass
 public fun <I : Any> KamelConfig.loadImageBitmapResource(
     data: I,
     resourceConfig: ResourceConfig,
-    dataKClass: KClass<*> = data::class,
+    dataKClass: String = data::class.simpleName!!,
 ): Flow<Resource<ImageBitmap>> = loadResource(data, dataKClass, resourceConfig, imageBitmapCache)
 
 /**
@@ -38,7 +38,7 @@ public fun <I : Any> KamelConfig.loadImageBitmapResource(
 public fun KamelConfig.loadImageVectorResource(
     data: Any,
     resourceConfig: ResourceConfig,
-    dataKClass: KClass<*> = data::class
+    dataKClass: String = data::class.simpleName!!,
 ): Flow<Resource<ImageVector>> = loadResource(data, dataKClass, resourceConfig, imageVectorCache)
 
 /**
@@ -51,16 +51,16 @@ public fun KamelConfig.loadImageVectorResource(
 public fun KamelConfig.loadSvgResource(
     data: Any,
     resourceConfig: ResourceConfig,
-    dataKClass: KClass<*> = data::class
+    dataKClass: String = data::class.simpleName!!,
 ): Flow<Resource<Painter>> = loadResource(data, dataKClass, resourceConfig, svgCache)
 
 private inline fun <reified T : Any> KamelConfig.loadResource(
     data: Any,
-    dataKClass: KClass<*>,
+    dataKClassName: String,
     resourceConfig: ResourceConfig,
     cache: Cache<Any, T>,
 ): Flow<Resource<T>> = flow {
-    val output = mapInput(data, dataKClass)
+    val output = mapInput(data, dataKClassName)
     val cachedData = cache[output]
     if (cachedData != null) {
         val resource = Resource.Success(cachedData, DataSource.Memory)
@@ -89,7 +89,7 @@ private inline fun <reified T : Any> KamelConfig.loadResource(
 public fun <T : Any> KamelConfig.loadCachedResourceOrNull(
     data: Any,
     cache: Cache<Any, T>,
-    dataKClass: KClass<*> = data::class,
+    dataKClass: String = data::class.simpleName!!,
 ): Resource<T>? {
     val output = mapInput(data, dataKClass)
     return cache[output]?.let { Resource.Success(it, DataSource.Memory) }

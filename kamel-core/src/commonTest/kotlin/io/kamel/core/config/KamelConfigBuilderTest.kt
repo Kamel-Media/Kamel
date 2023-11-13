@@ -45,8 +45,8 @@ class KamelConfigBuilderTest {
         builder.stringMapper()
 
         assertTrue { builder.mappers.size == 1 }
-        assertTrue { builder.mappers.keys.contains(String::class) }
-        assertTrue { builder.mappers[String::class]?.contains<Mapper<*, *>>(StringMapper) == true }
+        assertTrue { builder.mappers.keys.contains(String::class.simpleName!!) }
+        assertTrue { builder.mappers[String::class.simpleName!!]?.contains<Mapper<*, *>>(StringMapper) == true }
     }
 
     @Test
@@ -54,8 +54,8 @@ class KamelConfigBuilderTest {
         builder.urlMapper()
 
         assertTrue { builder.mappers.size == 1 }
-        assertTrue { builder.mappers.keys.contains(URL::class) }
-        assertTrue { builder.mappers[URL::class]?.contains<Mapper<*, *>>(URLMapper) == true }
+        assertTrue { builder.mappers.keys.contains(URL::class.simpleName!!) }
+        assertTrue { builder.mappers[URL::class.simpleName!!]?.contains<Mapper<*, *>>(URLMapper) == true }
     }
 
     @Test
@@ -63,8 +63,8 @@ class KamelConfigBuilderTest {
         builder.uriMapper()
 
         assertTrue { builder.mappers.size == 1 }
-        assertTrue { builder.mappers.keys.contains(URI::class) }
-        assertTrue { builder.mappers[URI::class]?.contains<Mapper<*, *>>(URIMapper) == true }
+        assertTrue { builder.mappers.keys.contains(URI::class.simpleName!!) }
+        assertTrue { builder.mappers[URI::class.simpleName!!]?.contains<Mapper<*, *>>(URIMapper) == true }
     }
 
     @Test
@@ -88,10 +88,10 @@ class KamelConfigBuilderTest {
         builder.takeFrom(configBuilder)
 
         assertTrue { builder.fetchers.contains<Fetcher<*>>(FileFetcher) }
-        assertTrue { builder.mappers.keys.contains(URI::class) }
-        assertTrue { builder.mappers[URI::class]?.contains<Mapper<*, *>>(URIMapper) == true }
-        assertTrue { builder.mappers.keys.contains(String::class) }
-        assertTrue { builder.mappers[String::class]?.contains<Mapper<*, *>>(StringMapper) == true }
+        assertTrue { builder.mappers.keys.contains(URI::class.simpleName!!) }
+        assertTrue { builder.mappers[URI::class.simpleName!!]?.contains<Mapper<*, *>>(URIMapper) == true }
+        assertTrue { builder.mappers.keys.contains(String::class.simpleName!!) }
+        assertTrue { builder.mappers[String::class.simpleName!!]?.contains<Mapper<*, *>>(StringMapper) == true }
         assertEquals(100, builder.build().imageBitmapCache.maxSize)
     }
 
@@ -106,10 +106,10 @@ class KamelConfigBuilderTest {
         builder.takeFrom(configBuilder.build())
 
         assertTrue { builder.fetchers.contains<Fetcher<*>>(FileFetcher) }
-        assertTrue { builder.mappers.keys.contains(URI::class) }
-        assertTrue { builder.mappers[URI::class]?.contains<Mapper<*, *>>(URIMapper) == true }
-        assertTrue { builder.mappers.keys.contains(String::class) }
-        assertTrue { builder.mappers[String::class]?.contains<Mapper<*, *>>(StringMapper) == true }
+        assertTrue { builder.mappers.keys.contains(URI::class.simpleName!!) }
+        assertTrue { builder.mappers[URI::class.simpleName!!]?.contains<Mapper<*, *>>(URIMapper) == true }
+        assertTrue { builder.mappers.keys.contains(String::class.simpleName!!) }
+        assertTrue { builder.mappers[String::class.simpleName!!]?.contains<Mapper<*, *>>(StringMapper) == true }
         assertEquals(100, builder.build().imageBitmapCache.maxSize)
     }
 

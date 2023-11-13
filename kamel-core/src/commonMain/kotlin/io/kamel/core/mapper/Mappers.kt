@@ -6,8 +6,8 @@ import io.ktor.http.*
 import kotlin.reflect.KClass
 
 internal val StringMapper: Mapper<String, Url> = object : Mapper<String, Url> {
-    override val inputKClass: KClass<String>
-        get() = String::class
+    override val inputClassName: String
+        get() = String::class.simpleName!!
     override val outputKClass: KClass<Url>
         get() = Url::class
 

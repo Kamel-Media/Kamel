@@ -22,7 +22,7 @@ public interface KamelConfig {
 
     public val decoders: List<Decoder<Any>>
 
-    public val mappers: Map<KClass<*>, List<Mapper<Any, Any>>>
+    public val mappers: Map<String, List<Mapper<Any, Any>>>
 
     /**
      * Number of entries to cache. Default is 100.

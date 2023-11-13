@@ -10,7 +10,7 @@ import kotlin.reflect.KClass
  */
 public interface Mapper<I : Any, O : Any> {
 
-    public val inputKClass: KClass<I>
+    public val inputClassName: String
     public val outputKClass: KClass<O>
 
     /**

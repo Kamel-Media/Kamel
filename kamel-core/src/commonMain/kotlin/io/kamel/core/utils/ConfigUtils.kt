@@ -7,9 +7,9 @@ import io.kamel.core.decoder.Decoder
 import io.kamel.core.fetcher.Fetcher
 import kotlin.reflect.KClass
 
-internal fun KamelConfig.mapInput(input: Any, inputKClass: KClass<*>): Any {
+internal fun KamelConfig.mapInput(input: Any, inputClassName: String): Any {
 
-    val output = mappers[inputKClass]
+    val output = mappers[inputClassName]
         ?.lastOrNull { mapper -> with(mapper) { input.isSupported } }
         ?.map(input)
 

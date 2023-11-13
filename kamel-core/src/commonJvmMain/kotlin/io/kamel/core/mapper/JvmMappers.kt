@@ -6,8 +6,8 @@ import io.ktor.http.*
 import kotlin.reflect.KClass
 
 internal actual val URLMapper: Mapper<URL, Url> = object : Mapper<URL, Url> {
-    override val inputKClass: KClass<URL>
-        get() = URL::class
+    override val inputClassName: String
+        get() = URL::class.simpleName!!
     override val outputKClass: KClass<Url>
         get() = Url::class
 
@@ -15,8 +15,8 @@ internal actual val URLMapper: Mapper<URL, Url> = object : Mapper<URL, Url> {
 }
 
 internal actual val URIMapper: Mapper<URI, Url> = object : Mapper<URI, Url> {
-    override val inputKClass: KClass<URI>
-        get() = URI::class
+    override val inputClassName: String
+        get() = URI::class.simpleName!!
     override val outputKClass: KClass<Url>
         get() = Url::class
 
