@@ -39,8 +39,8 @@ if (file.exists()) {
 
 allprojects {
 
-    group = Kamel.Group
-    version = Kamel.Version
+    group = project.property("GROUP") as String
+    version = project.property("VERSION_NAME") as String
 
     val emptyJavadocJar by tasks.registering(Jar::class) {
         archiveClassifier.set("javadoc")

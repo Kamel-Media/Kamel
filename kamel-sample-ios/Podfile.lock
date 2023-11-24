@@ -1,5 +1,5 @@
 PODS:
-  - kamel_samples (0.8.3)
+  - kamel_samples (0.8.4)
 
 DEPENDENCIES:
   - kamel_samples (from `../kamel-samples`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../kamel-samples"
 
 SPEC CHECKSUMS:
-  kamel_samples: a5180d5b9141a2618b01312850389dbd360e9004
+  kamel_samples: 3ced61d59dde66fb273061f4a77f1b00dc8fcf64
 
 PODFILE CHECKSUM: a278bceddd0e3759d316e6207cd9edefd5d4d855
 
