@@ -1,5 +1,6 @@
 package io.kamel.core.cache.disk
 
+import co.touchlab.stately.collections.ConcurrentMutableMap
 import io.ktor.utils.io.core.Closeable
 import io.ktor.utils.io.errors.IOException
 
@@ -22,6 +23,7 @@ import io.ktor.utils.io.errors.IOException
 
 import io.kamel.core.utils.createFile
 import io.kamel.core.utils.deleteContents
+import io.ktor.util.collections.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -146,7 +148,7 @@ internal class DiskLruCache(
     private val journalFile = directory / JOURNAL_FILE
     private val journalFileTmp = directory / JOURNAL_FILE_TMP
     private val journalFileBackup = directory / JOURNAL_FILE_BACKUP
-    private val lruEntries = LinkedHashMap<String, Entry>(0, 0.75f)
+    private val lruEntries = ConcurrentMutableMap<String, Entry>()
     private val cleanupScope = CoroutineScope(SupervisorJob() + cleanupDispatcher)
     private var size = 0L
     private var operationsSinceRewrite = 0
