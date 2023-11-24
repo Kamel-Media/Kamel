@@ -3,8 +3,8 @@
 [![Version](https://img.shields.io/maven-central/v/media.kamel/kamel-core?label=version&color=blue)](https://search.maven.org/search?q=media.kamel)
 [![Snapshot](https://img.shields.io/nexus/s/media.kamel/kamel-core?label=snapshot&server=https%3A%2F%2Fs01.oss.sonatype.org)](https://s01.oss.sonatype.org/content/repositories/snapshots/media/kamel/)
 [![License](https://img.shields.io/github/license/alialbaali/kamel)](http://www.apache.org/licenses/LICENSE-2.0)
-[![Kotlin](https://img.shields.io/badge/kotlin-v1.9.20-blue.svg?logo=kotlin)](http://kotlinlang.org)
-[![Compose Multiplatform](https://img.shields.io/badge/Compose%20Multiplatform-v1.5.10-blue)](https://github.com/JetBrains/compose-multiplatform)
+[![Kotlin](https://img.shields.io/badge/kotlin-v1.9.21-blue.svg?logo=kotlin)](http://kotlinlang.org)
+[![Compose Multiplatform](https://img.shields.io/badge/Compose%20Multiplatform-v1.5.11-blue)](https://github.com/JetBrains/compose-multiplatform)
 
 Kamel is an asynchronous media loading library for [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform). It provides a simple, customizable and
 efficient way to load, cache, decode and display images in your application. By default, it uses
@@ -50,7 +50,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation("media.kamel:kamel-image:0.8.3")
+                implementation("media.kamel:kamel-image:0.8.4")
                 // ...
             }
         }
@@ -64,7 +64,7 @@ Add the dependency to the dependencies block:
 
 ```kotlin
 dependencies {
-    implementation("media.kamel:kamel-image:0.8.3")
+    implementation("media.kamel:kamel-image:0.8.4")
     // ...
 }
 ```
