@@ -184,11 +184,6 @@ android {
     defaultConfig {
         minSdk = 21
     }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
-    }
-
 }
 
 apply(from = "$rootDir/gradle/pack-core-tests-resources.gradle.kts")
