@@ -67,6 +67,7 @@ kotlin {
                 implementation(libs.ktor.client.core)
                 implementation(libs.okio)
                 implementation(libs.cache4k)
+                implementation(libs.stately.concurrent.collections)
             }
         }
 

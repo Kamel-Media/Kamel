@@ -17,6 +17,7 @@ agp = "8.1.4"
 
 okio = "3.6.0"
 startup-runtime = "1.1.1"
+stately-concurrent-collections = "2.0.5"
 vanniktech-publish = "0.25.3"
 multiplatform-resources = "0.23.0"
 compose = "1.5.11"
@@ -34,6 +35,7 @@ batik = "1.17"
 cache4k = { module = "io.github.reactivecircus.cache4k:cache4k", version.ref = "cache4k" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 okio-fakefilesystem = { module = "com.squareup.okio:okio-fakefilesystem", version.ref = "okio" }
+stately-concurrent-collections = { module = "co.touchlab:stately-concurrent-collections", version.ref = "stately-concurrent-collections" }
 
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
