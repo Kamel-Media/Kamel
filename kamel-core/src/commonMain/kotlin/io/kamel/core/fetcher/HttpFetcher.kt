@@ -16,17 +16,17 @@ import kotlin.reflect.KClass
 /**
  * Fetcher that fetches [ByteReadChannel] from network using [Url].
  */
-internal class HttpFetcher(private val client: HttpClient) : Fetcher<Url> {
+internal class HttpFetcher(private val client: HttpClient) : Fetcher<URLBuilder> {
 
-    override val inputDataKClass: KClass<Url> = Url::class
+    override val inputDataKClass: KClass<URLBuilder> = URLBuilder::class
 
     override val source: DataSource = DataSource.Network
 
-    override val Url.isSupported: Boolean
+    override val URLBuilder.isSupported: Boolean
         get() = protocol.name == "https" || protocol.name == "http"
 
     override fun fetch(
-        data: Url,
+        data: URLBuilder,
         resourceConfig: ResourceConfig
     ): Flow<Resource<ByteReadChannel>> = channelFlow {
         val response = client.request {
@@ -36,7 +36,7 @@ internal class HttpFetcher(private val client: HttpClient) : Fetcher<Url> {
                 if (progress != null) send(Resource.Loading(progress, source))
             }
             takeFrom(resourceConfig.requestData)
-            url(data)
+            url.takeFrom(data)
         }
         val bytes = response.bodyAsChannel()
         send(Resource.Success(bytes, source))

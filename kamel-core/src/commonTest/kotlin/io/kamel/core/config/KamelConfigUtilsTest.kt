@@ -30,21 +30,21 @@ class KamelConfigUtilsTest {
     fun testMapStringInput() {
         val result = config.mapInput(TestStringUrl, String::class)
 
-        assertTrue(result is Url)
+        assertTrue(result is URLBuilder)
     }
 
     @Test
     fun testMapURLInput() {
         val result = config.mapInput(createURL(TestStringUrl), URL::class)
 
-        assertTrue(result is Url)
+        assertTrue(result is URLBuilder)
     }
 
     @Test
     fun testMapURIInput() {
         val result = config.mapInput(createURI(TestStringUrl), URI::class)
 
-        assertTrue(result is Url)
+        assertTrue(result is URLBuilder)
     }
 
     @Test
@@ -60,12 +60,12 @@ class KamelConfigUtilsTest {
             stringMapper()
         }
         val result = twoMappersConfig.mapInput(TestStringUrl, String::class)
-        assertTrue(result is Url)
+        assertTrue(result is URLBuilder)
     }
 
     @Test
     fun testFindHttpFetcher() {
-        val fetcher = config.findFetcherFor(Url(TestStringUrl))
+        val fetcher = config.findFetcherFor(URLBuilder(TestStringUrl))
 
         assertTrue { fetcher is HttpFetcher }
     }
