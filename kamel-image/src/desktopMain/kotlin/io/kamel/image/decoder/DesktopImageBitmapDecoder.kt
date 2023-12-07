@@ -19,6 +19,13 @@ internal actual object ImageBitmapDecoder : Decoder<ImageBitmap> {
     override suspend fun decode(
         channel: ByteReadChannel,
         resourceConfig: ResourceConfig
-    ): ImageBitmap = Image.makeFromEncoded(channel.toByteArray()).toComposeImageBitmap()
+    ): ImageBitmap {
+        val bytes = channel.toByteArray()
+        return try {
+            Image.makeFromEncoded(bytes).toComposeImageBitmap()
+        } catch (t: Throwable) {
+            throw throw IllegalArgumentException("Failed to decode ${bytes.size} bytes to a bitmap. Decoded bytes:\n${bytes.decodeToString()}\n")
+        }
+    }
 
 }

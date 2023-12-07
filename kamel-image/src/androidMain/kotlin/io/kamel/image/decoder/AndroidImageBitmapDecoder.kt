@@ -1,6 +1,5 @@
 package io.kamel.image.decoder
 
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
@@ -18,7 +17,8 @@ internal actual object ImageBitmapDecoder : Decoder<ImageBitmap> {
 
     override suspend fun decode(channel: ByteReadChannel, resourceConfig: ResourceConfig): ImageBitmap {
         val bytes = channel.toByteArray()
-        val bitmap = BitmapFactory.decodeByteArray(bytes, Offset, bytes.size) as Bitmap
+        val bitmap = BitmapFactory.decodeByteArray(bytes, Offset, bytes.size)
+            ?: throw IllegalArgumentException("Failed to decode ${bytes.size} bytes to a bitmap. Decoded bytes:\n${bytes.decodeToString()}\n")
         return bitmap.asImageBitmap()
     }
 
