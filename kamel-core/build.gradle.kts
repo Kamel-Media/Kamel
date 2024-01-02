@@ -57,6 +57,11 @@ kotlin {
     applyDefaultHierarchyTemplate()
 
     sourceSets {
+        all {
+            languageSettings.apply {
+                optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
+            }
+        }
 
         val commonMain by getting {
             dependencies {
@@ -72,11 +77,11 @@ kotlin {
 
         val commonTest by getting {
             dependencies {
-                implementation(project(":kamel-tests"))
                 implementation(kotlin("test"))
                 implementation(libs.ktor.client.mock)
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.okio.fakefilesystem)
+                implementation(libs.compose.components.resources)
             }
         }
 
@@ -130,47 +135,6 @@ kotlin {
     }
 }
 
-
-// todo: Remove when resolved: https://github.com/icerockdev/moko-resources/issues/372
-tasks.withType<KotlinNativeLink>().matching { linkTask ->
-    linkTask.binary is AbstractExecutable
-}.configureEach {
-    val task: KotlinNativeLink = this
-
-    this.doLast {
-        val binary: NativeBinary = task.binary
-        val outputDir: File = task.outputFile.get().parentFile
-        task.libraries.filter { library -> library.extension == "klib" }.filter(File::exists).forEach { inputFile ->
-            val klibKonan = org.jetbrains.kotlin.konan.file.File(inputFile.path)
-            val klib = KotlinLibraryLayoutImpl(
-                klib = klibKonan, component = "default"
-            )
-            val layout = klib.extractingToTemp
-
-            // extracting bundles
-            layout.resourcesDir.absolutePath.let(::File).listFiles(FileFilter { it.extension == "bundle" })
-                // copying bundles to app
-                ?.forEach { bundleFile ->
-                    logger.info("${bundleFile.absolutePath} copying to $outputDir")
-                    bundleFile.copyRecursively(
-                        target = File(outputDir, bundleFile.name), overwrite = true
-                    )
-                }
-        }
-    }
-}
-
-
-// todo: remove after https://github.com/icerockdev/moko-resources/issues/392 resolved
-// copy resources from kamel-tests into the proper directory for kamel-samples so they are packaged for
-// the web app
-tasks.register<Copy>("jsCopyResourcesFromKamelTests") {
-    from("../kamel-tests/build/generated/moko/jsMain/iokameltests/res")
-    into("build/generated/moko/jsMain/iokamelcore/res")
-    dependsOn(":kamel-tests:generateMRjsMain")
-}
-tasks.getByName("jsProcessResources").dependsOn("jsCopyResourcesFromKamelTests")
-
 // https://youtrack.jetbrains.com/issue/KT-46466
 val dependsOnTasks = mutableListOf<String>()
 tasks.withType<AbstractPublishToMaven>().configureEach {
@@ -186,5 +150,3 @@ android {
         minSdk = 21
     }
 }
-
-apply(from = "$rootDir/gradle/pack-core-tests-resources.gradle.kts")

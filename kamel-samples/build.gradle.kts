@@ -13,7 +13,6 @@ plugins {
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
     alias(libs.plugins.org.jetbrains.compose)
     alias(libs.plugins.com.android.application)
-    alias(libs.plugins.dev.icerock.mobile.multiplatform.resources)
     kotlin("native.cocoapods")
 }
 
@@ -39,6 +38,8 @@ android {
             excludes += setOf("META-INF/AL2.0", "META-INF/LGPL2.1")
         }
     }
+
+    sourceSets["main"].resources.srcDir("src/commonMain/resources")
 }
 
 kotlin {
@@ -90,17 +91,20 @@ kotlin {
             baseName = "shared"
             isStatic = true
         }
-        extraSpecAttributes["resources"] = "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
     }
 
     sourceSets {
-
+        all {
+            languageSettings.apply {
+                optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
+            }
+        }
         val commonMain by getting {
             dependencies {
                 implementation(project(":kamel-image"))
-                implementation(project(":kamel-tests"))
                 implementation(compose.foundation)
                 implementation(compose.material)
+                implementation(libs.compose.components.resources)
             }
         }
 
@@ -129,12 +133,6 @@ kotlin {
     }
 }
 
-
-multiplatformResources {
-    multiplatformResourcesPackage = "io.kamel.samples"
-}
-
-
 compose {
     desktop {
         application {
@@ -154,85 +152,5 @@ compose.desktop.nativeApplication {
         targetFormats(org.jetbrains.compose.desktop.application.dsl.TargetFormat.Dmg)
         packageName = "Native-Sample"
         packageVersion = "1.0.0"
-    }
-}
-
-
-//// todo: remove after https://github.com/icerockdev/moko-resources/issues/392 resolved
-//// copy resources from kamel-tests into the proper directory for kamel-samples so they are packaged for
-//// the web app
-tasks.register<Copy>("jsCopyResourcesFromKamelTests") {
-    from("../kamel-tests/build/generated/moko/jsMain/iokameltests/res")
-    into("build/generated/moko/jsMain/iokamelsamples/res")
-    dependsOn(":kamel-tests:generateMRjsMain")
-}
-tasks.getByName("jsProcessResources").dependsOn("jsCopyResourcesFromKamelTests")
-//
-//tasks.register<Copy>("desktopCopyResourcesFromKamelTests") {
-//    from("../kamel-tests/build/generated/moko/jvmMain/iokameltests/res")
-//    into("build/generated/moko/desktopMain/iokamelsamples/res")
-//    dependsOn(":kamel-tests:generateMRjvmMain")
-//}
-//tasks.getByName("desktopProcessResources").dependsOn("desktopCopyResourcesFromKamelTests")
-
-// todo: Remove when resolved: https://github.com/icerockdev/moko-resources/issues/372
-tasks.withType<KotlinNativeLink>()
-    .matching { linkTask -> linkTask.binary is AbstractExecutable }
-    .configureEach {
-        val task: KotlinNativeLink = this
-
-        doLast {
-            val binary: NativeBinary = task.binary
-            val outputDir: File = task.outputFile.get().parentFile
-            task.libraries
-                .filter { library -> library.extension == "klib" }
-                .filter(File::exists)
-                .forEach { inputFile ->
-                    val klibKonan = KonanFile(inputFile.path)
-                    val klib = KotlinLibraryLayoutImpl(
-                        klib = klibKonan,
-                        component = "default"
-                    )
-                    val layout = klib.extractingToTemp
-
-                    // extracting bundles
-                    layout
-                        .resourcesDir
-                        .absolutePath
-                        .let(::File)
-                        .listFiles(FileFilter { it.extension == "bundle" })
-                        // copying bundles to app
-                        ?.forEach { bundleFile ->
-                            logger.info("${bundleFile.absolutePath} copying to $outputDir")
-                            bundleFile.copyRecursively(
-                                target = File(outputDir, bundleFile.name),
-                                overwrite = true
-                            )
-                        }
-                }
-        }
-    }
-
-tasks.withType<AbstractNativeMacApplicationPackageAppDirTask> {
-    val task: AbstractNativeMacApplicationPackageAppDirTask = this
-
-    doLast {
-        val execFile: File = task.executable.get().asFile
-        val execDir: File = execFile.parentFile
-        val destDir: File = task.destinationDir.asFile.get()
-        val bundleID: String = task.bundleID.get()
-
-        val outputDir = File(destDir, "$bundleID.app/Contents/Resources")
-        outputDir.mkdirs()
-
-        execDir.listFiles().orEmpty()
-            .filter { it.extension == "bundle" }
-            .forEach { bundleFile ->
-                logger.info("${bundleFile.absolutePath} copying to $outputDir")
-                bundleFile.copyRecursively(
-                    target = File(outputDir, bundleFile.name),
-                    overwrite = true
-                )
-            }
     }
 }

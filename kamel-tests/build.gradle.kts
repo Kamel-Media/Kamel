@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
-    alias(libs.plugins.dev.icerock.mobile.multiplatform.resources)
 }
 
 kotlin {
@@ -18,17 +17,21 @@ kotlin {
     applyDefaultHierarchyTemplate()
 
     sourceSets {
+        all {
+            languageSettings.apply {
+                optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
+            }
+        }
         val commonMain by getting {
             dependencies {
                 implementation(libs.ktor.client.mock)
                 implementation(libs.kotlinx.coroutines.core)
-                api(libs.dev.icerock.moko.resources)
+                implementation(libs.compose.components.resources)
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
-                implementation(libs.dev.icerock.moko.resources.test)
             }
         }
 
@@ -65,9 +68,5 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-}
-
-
-multiplatformResources {
-    multiplatformResourcesPackage = "io.kamel.tests"
+    sourceSets["main"].resources.srcDir("src/commonMain/resources")
 }

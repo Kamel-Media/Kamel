@@ -20,7 +20,7 @@ public fun main(): Unit = singleWindowApplication {
     }
 
     CompositionLocalProvider(LocalKamelConfig provides kamelConfig) {
-        val painterResource = asyncPainterResource("MR/files/Kotlin.svg")
+        val painterResource = asyncPainterResource("Kotlin.svg")
 
         KamelImage(
             painterResource,

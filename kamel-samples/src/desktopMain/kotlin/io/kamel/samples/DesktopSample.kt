@@ -7,7 +7,6 @@ import androidx.compose.ui.window.singleWindowApplication
 import io.kamel.core.config.KamelConfig
 import io.kamel.core.config.takeFrom
 import io.kamel.image.config.*
-import io.kamel.tests.MR
 
 public actual val cellsCount: Int = 4
 

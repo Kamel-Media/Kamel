@@ -63,7 +63,6 @@ kotlin {
 
         val commonTest by getting {
             dependencies {
-                implementation(project(":kamel-tests"))
                 implementation(kotlin("test"))
                 implementation(libs.ktor.client.mock)
                 implementation(libs.kotlinx.coroutines.test)
@@ -86,6 +85,8 @@ kotlin {
             dependsOn(jvmMain)
             dependencies {
                 implementation(libs.apache.batik.transcoder)
+                //https://stackoverflow.com/a/45318410/1363742
+                implementation(libs.apache.batik.codec)
             }
         }
 

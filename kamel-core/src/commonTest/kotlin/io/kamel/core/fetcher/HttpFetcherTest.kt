@@ -6,11 +6,10 @@ import io.kamel.core.config.ResourceConfigBuilder
 import io.kamel.core.getOrNull
 import io.kamel.core.isLoading
 import io.kamel.core.map
-import io.kamel.tests.HttpMockEngine
+import io.kamel.core.tests.HttpMockEngine
 import io.ktor.client.*
 import io.ktor.http.*
 import io.ktor.util.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test

@@ -1,13 +1,12 @@
 package io.kamel.samples
 
-import dev.icerock.moko.resources.FileResource
 import io.kamel.core.utils.File
 import java.io.FileOutputStream
 
 
-public actual suspend fun getFile(fileResource: FileResource, context: Any?): File {
-    val file = java.io.File.createTempFile("temp", ".${fileResource.filePath.substringAfterLast(".")}")
-    val ins = Thread.currentThread().contextClassLoader.getResource(fileResource.filePath).openStream()
+public actual suspend fun getResourceFile(fileResourcePath: String, context: Any?): File {
+    val file = java.io.File.createTempFile("temp", ".${fileResourcePath.substringAfterLast(".")}")
+    val ins = Thread.currentThread().contextClassLoader.getResource(fileResourcePath).openStream()
     FileOutputStream(file).use { os ->
         val buffer = ByteArray(4096)
         var length: Int

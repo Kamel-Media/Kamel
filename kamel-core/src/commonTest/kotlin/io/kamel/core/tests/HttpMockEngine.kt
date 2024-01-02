@@ -1,8 +1,9 @@
-package io.kamel.tests
+package io.kamel.core.tests
 
 import io.ktor.client.engine.mock.*
 import io.ktor.http.*
 import io.ktor.utils.io.*
+import org.jetbrains.compose.resources.resource
 
 val HttpMockEngine = MockEngine { request ->
     when (request.url.encodedPath) {
@@ -15,5 +16,12 @@ val HttpMockEngine = MockEngine { request ->
 
 const val TestStringUrl = "https://www.example.com"
 
-expect suspend fun resourceImage(): ByteReadChannel
-expect suspend fun svgImage(): ByteReadChannel
+suspend fun resourceImage(): ByteReadChannel {
+    val bytes = resource("Compose.png").readBytes()
+    return ByteReadChannel(bytes)
+}
+
+suspend fun svgImage(): ByteReadChannel {
+    val bytes = resource("Kotlin.svg").readBytes()
+    return ByteReadChannel(bytes)
+}
