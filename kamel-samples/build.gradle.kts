@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 import org.jetbrains.kotlin.gradle.plugin.mpp.AbstractExecutable
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBinary
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink
 import org.jetbrains.kotlin.library.impl.KotlinLibraryLayoutImpl
 import java.io.File
@@ -51,6 +52,28 @@ kotlin {
     js(IR) {
         browser()
         binaries.executable()
+    }
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        browser()
+        binaries.executable()
+        applyBinaryen {
+            binaryenArgs = mutableListOf(
+                "--enable-nontrapping-float-to-int",
+                "--enable-gc",
+                "--enable-reference-types",
+                "--enable-exception-handling",
+                "--enable-bulk-memory",
+                "--inline-functions-with-loops",
+                "--traps-never-happen",
+                "--fast-math",
+                "--closed-world",
+                "--metrics",
+                "-O3", "--gufa", "--metrics",
+                "-O3", "--gufa", "--metrics",
+                "-O3", "--gufa", "--metrics",
+            )
+        }
     }
     fun iosTargets(config: KotlinNativeTarget.() -> Unit) {
         iosArm64(config)
@@ -104,7 +127,7 @@ kotlin {
                 implementation(project(":kamel-image"))
                 implementation(compose.foundation)
                 implementation(compose.material)
-                implementation(libs.compose.components.resources)
+//                implementation(libs.compose.components.resources)
             }
         }
 
@@ -153,4 +176,8 @@ compose.desktop.nativeApplication {
         packageName = "Native-Sample"
         packageVersion = "1.0.0"
     }
+}
+
+compose {
+    kotlinCompilerPlugin.set("1.5.7")
 }

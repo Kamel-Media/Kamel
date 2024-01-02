@@ -1,10 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
-import org.jetbrains.kotlin.gradle.plugin.mpp.AbstractExecutable
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBinary
-import org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink
-import org.jetbrains.kotlin.library.impl.KotlinLibraryLayoutImpl
-import java.io.FileFilter
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
 plugins {
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
@@ -25,7 +21,10 @@ kotlin {
     js(IR) {
         browser()
     }
-
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        browser()
+    }
     fun iosTargets(config: KotlinNativeTarget.() -> Unit) {
         iosArm64(config)
         iosSimulatorArm64(config)
@@ -81,7 +80,7 @@ kotlin {
                 implementation(libs.ktor.client.mock)
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.okio.fakefilesystem)
-                implementation(libs.compose.components.resources)
+//                implementation(libs.compose.components.resources)
             }
         }
 
@@ -121,6 +120,10 @@ kotlin {
         }
 
         val jsMain by getting {
+            dependsOn(nonJvmMain)
+        }
+
+        val wasmJsMain by getting {
             dependsOn(nonJvmMain)
         }
 

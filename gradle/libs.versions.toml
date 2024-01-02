@@ -10,16 +10,16 @@ com-android-application = { id = "com.android.application", version.ref = "agp" 
 
 [versions]
 
-cache4k = "0.12.0"
-kotlin = "1.9.21"
+cache4k = "0.13.0-SNAPSHOT"
+kotlin = "1.9.22"
 agp = "8.2.0"
 
 okio = "3.7.0"
 startup-runtime = "1.1.1"
 vanniktech-publish = "0.26.0"
-compose = "1.5.11"
-coroutines = "1.7.3"
-ktor = "2.3.7"
+compose = "1.6.0-dev1354"
+coroutines = "1.8.0-RC2"
+ktor = "3.0.0-wasm2"
 xmlutil = "0.86.3"
 activity-compose = "1.8.2"
 appcompat = "1.6.1"
@@ -41,6 +41,7 @@ ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
+ktor-client-js-wasm-js = { module = "io.ktor:ktor-client-js-wasm-js", version.ref = "ktor" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 

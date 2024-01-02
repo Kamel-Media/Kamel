@@ -15,7 +15,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        mavenLocal()
         maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        maven(url = "https://maven.pkg.jetbrains.space/kotlin/p/wasm/experimental")
     }
 }
 
@@ -25,10 +27,10 @@ plugins {
 
 
 refreshVersions {
-    rejectVersionIf {
-        @Suppress("UnstableApiUsage")
-        candidate.stabilityLevel != StabilityLevel.Stable
-    }
+//    rejectVersionIf {
+//        @Suppress("UnstableApiUsage")
+//        candidate.stabilityLevel != StabilityLevel.Stable
+//    }
 }
 
 rootProject.name = "Kamel"

@@ -15,7 +15,7 @@ import io.kamel.core.fetcher.HttpFetcher
 import io.kamel.core.mapper.Mapper
 import io.kamel.core.mapper.StringMapper
 import io.kamel.core.mapper.URIMapper
-import io.kamel.core.mapper.URLMapper
+//import io.kamel.core.mapper.URLMapper
 import io.kamel.core.utils.URI
 import io.kamel.core.utils.URL
 import io.ktor.client.*
@@ -112,7 +112,7 @@ public fun KamelConfigBuilder.uriMapper(): Unit = mapper(URIMapper)
 /**
  * Adds a [URL] to [Url] mapper to the [KamelConfigBuilder].
  */
-public fun KamelConfigBuilder.urlMapper(): Unit = mapper(URLMapper)
+//public fun KamelConfigBuilder.urlMapper(): Unit = mapper(URLMapper)
 
 /**
  * Copies all the data from [builder] and uses it as base for [this].

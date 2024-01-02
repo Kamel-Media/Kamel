@@ -31,7 +31,7 @@ internal class HttpFetcher(private val client: HttpClient) : Fetcher<Url> {
     ): Flow<Resource<ByteReadChannel>> = channelFlow {
         val response = client.request {
             onDownload { bytesSentTotal, contentLength ->
-                val progress = (bytesSentTotal.toFloat() / contentLength).coerceIn(0F..1F)
+                val progress = (bytesSentTotal.toFloat() / contentLength!!).coerceIn(0F..1F)
                     .takeUnless { it.isNaN() }
                 if (progress != null) send(Resource.Loading(progress, source))
             }
