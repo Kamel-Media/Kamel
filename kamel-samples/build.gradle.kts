@@ -115,6 +115,7 @@ kotlin {
                 implementation(libs.androidx.activity.compose)
                 implementation(libs.google.android.material)
                 implementation(libs.ktor.client.android)
+                implementation(libs.slf4j)
             }
         }
 
@@ -123,6 +124,7 @@ kotlin {
             dependencies {
                 implementation(compose.desktop.currentOs)
                 implementation(libs.ktor.client.cio)
+                implementation(libs.slf4j)
             }
         }
 

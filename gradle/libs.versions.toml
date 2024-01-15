@@ -26,6 +26,7 @@ appcompat = "1.6.1"
 material = "1.11.0"
 androidsvg = "1.4"
 batik = "1.17"
+slf4j = "2.0.9"
 
 [libraries]
 
@@ -55,3 +56,4 @@ google-android-material = { module = "com.google.android.material:material", ver
 com-caverok-androidsvg = { module = "com.caverock:androidsvg-aar", version.ref = "androidsvg" }
 apache-batik-transcoder = { module = "org.apache.xmlgraphics:batik-transcoder", version.ref = "batik" }
 apache-batik-codec = { module = "org.apache.xmlgraphics:batik-codec", version.ref = "batik" }
+slf4j = { module = "org.slf4j:slf4j-nop", version.ref = "slf4j" }
