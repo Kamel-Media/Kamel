@@ -19,7 +19,7 @@ internal fun FileSample(fileResourcePath: String, kamelConfig: KamelConfig, cont
     var file: File? by remember { mutableStateOf(null) }
 
     scope.launch {
-        file = getResourceFile(fileResourcePath, context)
+        file = getResourceFile(fileResourcePath)
     }
 
 

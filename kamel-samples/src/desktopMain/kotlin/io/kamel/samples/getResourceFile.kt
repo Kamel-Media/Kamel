@@ -4,7 +4,7 @@ import io.kamel.core.utils.File
 import java.io.FileOutputStream
 
 
-public actual suspend fun getResourceFile(fileResourcePath: String, context: Any?): File {
+public actual suspend fun getResourceFile(fileResourcePath: String): File {
     val file = java.io.File.createTempFile("temp", ".${fileResourcePath.substringAfterLast(".")}")
     val ins = Thread.currentThread().contextClassLoader.getResource(fileResourcePath).openStream()
     FileOutputStream(file).use { os ->
