@@ -7,11 +7,10 @@ import androidx.compose.ui.window.singleWindowApplication
 import io.kamel.core.config.KamelConfig
 import io.kamel.core.config.takeFrom
 import io.kamel.image.KamelImage
+import io.kamel.image.asyncPainterResource
 import io.kamel.image.config.Default
 import io.kamel.image.config.LocalKamelConfig
 import io.kamel.image.config.resourcesFetcher
-import io.kamel.image.config.svgDecoder
-import io.kamel.image.asyncPainterResource
 
 public fun main(): Unit = singleWindowApplication {
     val kamelConfig = KamelConfig {
@@ -20,10 +19,8 @@ public fun main(): Unit = singleWindowApplication {
     }
 
     CompositionLocalProvider(LocalKamelConfig provides kamelConfig) {
-        val painterResource = asyncPainterResource("Kotlin.svg")
-
         KamelImage(
-            painterResource,
+            { asyncPainterResource("Kotlin.svg") },
             contentDescription = "Compose",
             modifier = Modifier.fillMaxSize(),
             onFailure = { throw it }

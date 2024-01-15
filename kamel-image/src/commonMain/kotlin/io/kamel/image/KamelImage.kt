@@ -3,9 +3,7 @@ package io.kamel.image
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.FiniteAnimationSpec
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +28,7 @@ import io.kamel.core.Resource
 @OptIn(ExperimentalKamelApi::class)
 @Composable
 public fun KamelImage(
-    resource: Resource<Painter>,
+    getResource: @Composable (BoxWithConstraintsScope.() -> Resource<Painter>),
     contentDescription: String?,
     modifier: Modifier = Modifier,
     alignment: Alignment = Alignment.Center,
@@ -54,7 +52,7 @@ public fun KamelImage(
         )
     }
     KamelImageBox(
-        resource,
+        getResource,
         modifier,
         contentAlignment,
         animationSpec,
@@ -78,7 +76,7 @@ public fun KamelImage(
 @ExperimentalKamelApi
 @Composable
 public fun KamelImageBox(
-    resource: Resource<Painter>,
+    getResource: @Composable (BoxWithConstraintsScope.() -> Resource<Painter>),
     modifier: Modifier = Modifier,
     contentAlignment: Alignment = Alignment.Center,
     animationSpec: FiniteAnimationSpec<Float>? = null,
@@ -86,7 +84,8 @@ public fun KamelImageBox(
     onFailure: @Composable (BoxScope.(Throwable) -> Unit)? = null,
     onSuccess: @Composable BoxScope.(Painter) -> Unit,
 ) {
-    Box(modifier, contentAlignment) {
+    BoxWithConstraints(modifier, contentAlignment) {
+        val resource = getResource()
         if (animationSpec != null) {
             Crossfade(resource, animationSpec = animationSpec) { animatedResource ->
                 when (animatedResource) {

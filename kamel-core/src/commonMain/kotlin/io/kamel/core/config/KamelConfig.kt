@@ -3,6 +3,7 @@ package io.kamel.core.config
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.IntSize
 import io.kamel.core.cache.Cache
 import io.kamel.core.decoder.Decoder
 import io.kamel.core.fetcher.Fetcher
