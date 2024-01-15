@@ -5,7 +5,6 @@
 org-jetbrains-kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 org-jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 com-vanniktech-maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktech-publish" }
-dev-icerock-mobile-multiplatform-resources = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "multiplatform-resources" }
 com-android-library = { id = "com.android.library", version.ref = "agp" }
 com-android-application = { id = "com.android.application", version.ref = "agp" }
 
@@ -18,7 +17,6 @@ agp = "8.2.0"
 okio = "3.7.0"
 startup-runtime = "1.1.1"
 vanniktech-publish = "0.26.0"
-multiplatform-resources = "0.23.0"
 compose = "1.5.11"
 coroutines = "1.7.3"
 ktor = "2.3.7"
@@ -32,6 +30,7 @@ batik = "1.17"
 [libraries]
 
 cache4k = { module = "io.github.reactivecircus.cache4k:cache4k", version.ref = "cache4k" }
+compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "compose" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 okio-fakefilesystem = { module = "com.squareup.okio:okio-fakefilesystem", version.ref = "okio" }
 
@@ -47,9 +46,6 @@ ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 
 jetbrains-compose-ui-ui-test-junit4 = { module = "org.jetbrains.compose.ui:ui-test-junit4", version.ref = "compose" }
 
-dev-icerock-moko-resources = { module = "dev.icerock.moko:resources", version.ref = "multiplatform-resources" }
-dev-icerock-moko-resources-test = { module = "dev.icerock.moko:resources-test", version.ref = "multiplatform-resources" }
-
 pdvrieze-xmlutil-serialization = { module = "io.github.pdvrieze.xmlutil:serialization", version.ref = "xmlutil" }
 
 androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "startup-runtime" }
@@ -58,3 +54,4 @@ androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "a
 google-android-material = { module = "com.google.android.material:material", version.ref = "material" }
 com-caverok-androidsvg = { module = "com.caverock:androidsvg-aar", version.ref = "androidsvg" }
 apache-batik-transcoder = { module = "org.apache.xmlgraphics:batik-transcoder", version.ref = "batik" }
+apache-batik-codec = { module = "org.apache.xmlgraphics:batik-codec", version.ref = "batik" }

@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../kamel-samples"
 
 SPEC CHECKSUMS:
-  kamel_samples: b470fc5dd6d5cb70dc652503e3c5c5d21faff89f
+  kamel_samples: 5adee4059131fac15509354a4f7ed43de37be521
 
 PODFILE CHECKSUM: a278bceddd0e3759d316e6207cd9edefd5d4d855
 

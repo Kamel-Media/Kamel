@@ -9,8 +9,3 @@ local.properties
 
 # IntelliJ Code Styles
 !/.idea/codeStyles/
-
-# moko-resources-generated
-moko-resources-generated.js
-# generated
-pack-test-resources-generated.js

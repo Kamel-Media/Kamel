@@ -7,7 +7,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import io.kamel.core.config.KamelConfig
 import io.kamel.image.config.LocalKamelConfig
-import io.kamel.tests.MR
 
 @androidx.compose.runtime.Composable
 public fun launcher(kamelConfig: KamelConfig, context: Any? = null) {
@@ -40,9 +39,9 @@ public fun launcher(kamelConfig: KamelConfig, context: Any? = null) {
                 Gallery()
             }
 
-            1 -> FileSample(MR.files.Compose, kamelConfig, context)
-            2 -> FileSample(MR.files.Kotlin, kamelConfig, context)
-            3 -> FileSample(MR.files.ComposeXml, kamelConfig, context)
+            1 -> FileSample("Compose.png", kamelConfig, context)
+            2 -> FileSample("ComposeXml.xml", kamelConfig, context)
+            3 -> FileSample("Kotlin.svg", kamelConfig, context)
 
             else -> Text("Invalid Sample Index")
         }
