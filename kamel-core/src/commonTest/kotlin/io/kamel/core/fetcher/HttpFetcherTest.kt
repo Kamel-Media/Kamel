@@ -8,6 +8,7 @@ import io.kamel.core.isLoading
 import io.kamel.core.map
 import io.kamel.core.tests.HttpMockEngine
 import io.ktor.client.*
+import io.ktor.client.plugins.DefaultRequest
 import io.ktor.http.*
 import io.ktor.util.*
 import kotlinx.coroutines.flow.first
@@ -23,7 +24,7 @@ class HttpFetcherTest {
     @Test
     fun testWebSocketUrlIsSupported() = runTest {
         val urlBuilder = URLBuilder(protocol = URLProtocol.WS)
-        val isSupported = with(fetcher) { Url(urlBuilder).isSupported }
+        val isSupported = with(fetcher) { urlBuilder.isSupported }
 
         assertFalse { isSupported }
     }
@@ -31,7 +32,7 @@ class HttpFetcherTest {
     @Test
     fun testHttpUrlIsSupported() = runTest {
         val urlBuilder = URLBuilder(protocol = URLProtocol.HTTP)
-        val isSupported = with(fetcher) { Url(urlBuilder).isSupported }
+        val isSupported = with(fetcher) { urlBuilder.isSupported }
 
         assertTrue { isSupported }
     }
@@ -39,7 +40,7 @@ class HttpFetcherTest {
     @Test
     fun testHttpsUrlIsSupported() = runTest {
         val urlBuilder = URLBuilder(protocol = URLProtocol.HTTPS)
-        val isSupported = with(fetcher) { Url(urlBuilder).isSupported }
+        val isSupported = with(fetcher) { urlBuilder.isSupported }
 
         assertTrue { isSupported }
     }
@@ -47,7 +48,7 @@ class HttpFetcherTest {
     @Test
     fun testFetchingEmptyImageBytes() = runTest {
         val resourceConfig: ResourceConfig = ResourceConfigBuilder(coroutineContext).build()
-        val url = Url("/emptyImage.jpg")
+        val url = URLBuilder("/emptyImage.jpg")
         val resource = fetcher.fetch(url, resourceConfig)
             .first { !it.isLoading }
             .map { it.toByteArray() }
@@ -59,7 +60,7 @@ class HttpFetcherTest {
     @Test
     fun testFetchingNonEmptyImageBytes() = runTest {
         val resourceConfig: ResourceConfig = ResourceConfigBuilder(coroutineContext).build()
-        val url = Url("/image.svg")
+        val url = URLBuilder("/image.svg")
         val resource = fetcher.fetch(url, resourceConfig)
             .first { !it.isLoading }
             .map { it.toByteArray() }

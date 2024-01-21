@@ -10,29 +10,29 @@ import kotlin.test.assertEquals
 
 class MappersTest {
 
-    private val stringMapper: Mapper<String, Url> = StringMapper
-    private val urlMapper: Mapper<URL, Url> = URLMapper
-    private val uriMapper: Mapper<URI, Url> = URIMapper
+    private val stringMapper: Mapper<String, URLBuilder> = StringMapper
+    private val urlMapper: Mapper<URL, URLBuilder> = URLMapper
+    private val uriMapper: Mapper<URI, URLBuilder> = URIMapper
 
     @Test
     fun testStringMapper() {
-        val url = stringMapper.map("https://www.example.com")
+        val url = stringMapper.map("https://www.example.com").build()
 
-        assertEquals(Url("https://www.example.com"), url)
+        assertEquals(URLBuilder("https://www.example.com").build(), url)
     }
 
     @Test
     fun testURLMapper() {
-        val url = urlMapper.map(createURL("https://www.example.com:443"))
+        val url = urlMapper.map(createURL("https://www.example.com:443")).build()
 
-        assertEquals(Url("https://www.example.com:443"), url)
+        assertEquals(URLBuilder("https://www.example.com:443").build(), url)
     }
 
     @Test
     fun testURIMapper() {
-        val url = uriMapper.map(createURI("https://www.example.com:443"))
+        val url = uriMapper.map(createURI("https://www.example.com:443")).build()
 
-        assertEquals(Url("https://www.example.com:443"), url)
+        assertEquals(URLBuilder("https://www.example.com:443").build(), url)
     }
 
 }
