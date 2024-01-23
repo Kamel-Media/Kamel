@@ -44,4 +44,4 @@ public actual class URL(public val nsUrl: NSURL) {
     public fun absoluteString(): String? = nsUrl.absoluteString
 }
 
-public actual class URI(public val uri: String)
+public actual class URI actual constructor(public val str: String)
