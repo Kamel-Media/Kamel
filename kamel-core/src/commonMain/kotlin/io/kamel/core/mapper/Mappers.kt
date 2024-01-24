@@ -11,7 +11,13 @@ internal val StringMapper: Mapper<String, Url> = object : Mapper<String, Url> {
     override val outputKClass: KClass<Url>
         get() = Url::class
 
-    override fun map(input: String): Url = Url(input)
+    override fun map(input: String): Url {
+        return if (input.startsWith("/")) {
+            Url("file://${input}")
+        } else {
+            Url(input)
+        }
+    }
 
 }
 
