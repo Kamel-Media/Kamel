@@ -11,6 +11,7 @@ import io.kamel.core.cache.httpCacheStorage
 import io.kamel.core.decoder.Decoder
 import io.kamel.core.fetcher.Fetcher
 import io.kamel.core.fetcher.FileFetcher
+import io.kamel.core.fetcher.FileUrlFetcher
 import io.kamel.core.fetcher.HttpFetcher
 import io.kamel.core.mapper.Mapper
 import io.kamel.core.mapper.StringMapper
@@ -73,12 +74,12 @@ public class KamelConfigBuilder {
 }
 
 /**
- * Adds an Http fetcher to the [KamelConfigBuilder] using the specified [client].
+ * Adds a Http [Url] fetcher to the [KamelConfigBuilder] using the specified [client].
  */
 public fun KamelConfigBuilder.httpFetcher(client: HttpClient): Unit = fetcher(HttpFetcher(client))
 
 /**
- * Adds an Http fetcher to the [KamelConfigBuilder] using the specified [engine]
+ * Adds a Http [Url] fetcher to the [KamelConfigBuilder] using the specified [engine]
  * and an optional [block] for configuring this client.
  */
 public fun KamelConfigBuilder.httpFetcher(
@@ -87,12 +88,17 @@ public fun KamelConfigBuilder.httpFetcher(
 ): Unit = fetcher(HttpFetcher(HttpClient(engine, block)))
 
 /**
- * Adds an Http fetcher to the [KamelConfigBuilder] by loading an [HttpClientEngine] from [ServiceLoader]
+ * Adds a Http [Url] fetcher to the [KamelConfigBuilder] by loading an [HttpClientEngine] from [ServiceLoader]
  * and an optional [block] for configuring this client.
  */
 public fun KamelConfigBuilder.httpFetcher(
     block: HttpClientConfig<*>.() -> Unit = {}
 ): Unit = fetcher(HttpFetcher(HttpClient(block)))
+
+/**
+ * Adds a Localhost [Url] fetcher to the [KamelConfigBuilder].
+ */
+public fun KamelConfigBuilder.fileUrlFetcher(): Unit = fetcher(FileUrlFetcher)
 
 /**
  * Adds a [File] fetcher to the [KamelConfigBuilder].

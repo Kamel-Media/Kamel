@@ -23,6 +23,7 @@ public val KamelConfig.Companion.Default: KamelConfig
         httpFetcher {
             httpCache(DefaultHttpCacheSize)
         }
+        fileUrlFetcher()
         platformSpecificConfig()
     }
 
