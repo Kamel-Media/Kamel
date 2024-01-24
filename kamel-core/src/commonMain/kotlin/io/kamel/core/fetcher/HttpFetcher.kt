@@ -16,6 +16,7 @@ import kotlin.reflect.KClass
 /**
  * Fetcher that fetches [ByteReadChannel] from network using [Url].
  */
+// TODO: Rename to HttpUrlFetcher for consistency with FileUrlFetcher
 internal class HttpFetcher(private val client: HttpClient) : Fetcher<Url> {
 
     override val inputDataKClass: KClass<Url> = Url::class
