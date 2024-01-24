@@ -1,13 +1,5 @@
-import org.jetbrains.compose.desktop.application.tasks.AbstractNativeMacApplicationPackageAppDirTask
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
-import org.jetbrains.kotlin.gradle.plugin.mpp.AbstractExecutable
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBinary
-import org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink
-import org.jetbrains.kotlin.library.impl.KotlinLibraryLayoutImpl
-import java.io.File
-import java.io.FileFilter
-import org.jetbrains.kotlin.konan.file.File as KonanFile
 
 plugins {
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
@@ -105,6 +97,7 @@ kotlin {
                 implementation(compose.foundation)
                 implementation(compose.material)
                 implementation(libs.compose.components.resources)
+                implementation(libs.okio)
             }
         }
 
