@@ -15,6 +15,7 @@ internal val StringMapper: Mapper<String, Url> = object : Mapper<String, Url> {
         val regex = Regex("^file:/+(?!/)")
         return if (regex.containsMatchIn(input)) {
             // Replace 'file:/' with 'file:///' using regex
+            // https://youtrack.jetbrains.com/issue/KTOR-6709
             Url(input.replaceFirst(regex, "file:///"))
         } else {
             // If input does not match regex and does not start with '/', use it as is
