@@ -1,10 +1,4 @@
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
-import org.jetbrains.kotlin.gradle.plugin.mpp.AbstractExecutable
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBinary
-import org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink
-import org.jetbrains.kotlin.library.impl.KotlinLibraryLayoutImpl
-import java.io.FileFilter
 
 plugins {
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
@@ -25,35 +19,12 @@ kotlin {
     js(IR) {
         browser()
     }
+    iosArm64()
+    iosSimulatorArm64()
+    iosX64()
+    macosX64()
+    macosArm64()
 
-    fun iosTargets(config: KotlinNativeTarget.() -> Unit) {
-        iosArm64(config)
-        iosSimulatorArm64(config)
-        iosX64(config)
-    }
-    iosTargets {
-        binaries.forEach {
-            it.apply {
-                freeCompilerArgs += listOf(
-                    "-linker-option", "-framework", "-linker-option", "Metal",
-                    "-linker-option", "-framework", "-linker-option", "CoreText",
-                    "-linker-option", "-framework", "-linker-option", "CoreGraphics"
-                )
-            }
-        }
-    }
-    fun macosTargets(config: KotlinNativeTarget.() -> Unit) {
-        macosX64(config)
-        macosArm64(config)
-    }
-    macosTargets {
-        binaries.executable {
-            freeCompilerArgs += listOf(
-                "-linker-option", "-framework", "-linker-option", "Metal"
-            )
-            linkerOpts.add("-lsqlite3")
-        }
-    }
     applyDefaultHierarchyTemplate()
 
     sourceSets {
