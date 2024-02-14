@@ -12,7 +12,7 @@ import io.kamel.image.config.LocalKamelConfig
 public fun launcher(kamelConfig: KamelConfig) {
     CompositionLocalProvider(LocalKamelConfig provides kamelConfig) {
         var tabIndex by remember { mutableStateOf(0) }
-        val tabs = listOf("Gallery", "Bitmap", "Xl Bitmap", "Svg", "Xml")
+        val tabs = listOf("Gallery", "Bitmap", "Xl Bitmap", "Xml", "Svg")
         Column {
             ScrollableTabRow(selectedTabIndex = tabIndex) {
                 tabs.forEachIndexed { index, title ->
