@@ -15,6 +15,6 @@ internal val StringMapper: Mapper<String, Url> = object : Mapper<String, Url> {
 
 }
 
-//internal expect val URLMapper: Mapper<URL, Url>
+internal expect val URLMapper: Mapper<URL, Url>
 
 internal expect val URIMapper: Mapper<URI, Url>

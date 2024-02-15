@@ -17,7 +17,7 @@ public val KamelConfig.Companion.Default: KamelConfig
         imageVectorDecoder()
         svgDecoder()
         stringMapper()
-//        urlMapper()
+        urlMapper()
         uriMapper()
         fileFetcher()
         httpFetcher {
