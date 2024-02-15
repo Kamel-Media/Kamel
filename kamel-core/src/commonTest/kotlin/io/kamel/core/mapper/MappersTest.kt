@@ -10,16 +10,8 @@ import kotlin.test.assertEquals
 
 class MappersTest {
 
-    private val stringMapper: Mapper<String, Url> = StringMapper
     private val urlMapper: Mapper<URL, Url> = URLMapper
     private val uriMapper: Mapper<URI, Url> = URIMapper
-
-    @Test
-    fun testStringMapper() {
-        val url = stringMapper.map("https://www.example.com")
-
-        assertEquals(Url("https://www.example.com"), url)
-    }
 
     @Test
     fun testURLMapper() {

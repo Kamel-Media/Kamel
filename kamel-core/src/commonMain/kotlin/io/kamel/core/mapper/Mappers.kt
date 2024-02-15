@@ -11,7 +11,17 @@ internal val StringMapper: Mapper<String, Url> = object : Mapper<String, Url> {
     override val outputKClass: KClass<Url>
         get() = Url::class
 
-    override fun map(input: String): Url = Url(input)
+    override fun map(input: String): Url {
+        val regex = Regex("^file:/+(?!/)")
+        return if (regex.containsMatchIn(input)) {
+            // Replace 'file:/' or `file:///` with 'file:///' using regex
+            // https://youtrack.jetbrains.com/issue/KTOR-6709
+            Url(input.replaceFirst(regex, "file:///"))
+        } else {
+            // If input does not match regex and does not start with '/', use it as is
+            Url(input)
+        }
+    }
 
 }
 
