@@ -3,9 +3,8 @@ import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 plugins {
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
     alias(libs.plugins.org.jetbrains.compose)
-    `maven-publish`
-    signing
     alias(libs.plugins.com.android.library)
+    alias(libs.plugins.com.vanniktech.maven.publish)
 }
 
 kotlin {
@@ -104,13 +103,6 @@ kotlin {
         }
 
     }
-}
-
-// https://youtrack.jetbrains.com/issue/KT-46466
-val dependsOnTasks = mutableListOf<String>()
-tasks.withType<AbstractPublishToMaven>().configureEach {
-    dependsOnTasks.add(this.name.replace("publish", "sign").replaceAfter("Publication", ""))
-    dependsOn(dependsOnTasks)
 }
 
 android {

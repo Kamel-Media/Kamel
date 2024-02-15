@@ -4,8 +4,7 @@ plugins {
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
     alias(libs.plugins.org.jetbrains.compose)
     alias(libs.plugins.com.android.library)
-    `maven-publish`
-    signing
+    alias(libs.plugins.com.vanniktech.maven.publish)
 }
 
 android {
@@ -141,11 +140,3 @@ kotlin {
 
     }
 }
-
-// https://youtrack.jetbrains.com/issue/KT-46466
-val dependsOnTasks = mutableListOf<String>()
-tasks.withType<AbstractPublishToMaven>().configureEach {
-    dependsOnTasks.add(this.name.replace("publish", "sign").replaceAfter("Publication", ""))
-    dependsOn(dependsOnTasks)
-}
-
