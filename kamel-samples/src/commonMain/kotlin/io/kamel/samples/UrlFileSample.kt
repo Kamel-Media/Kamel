@@ -14,7 +14,7 @@ internal fun UrlFileSample(resourceFileName: String) {
     val absolutePath = fileSystem.canonicalize("./src/commonMain/resources/$resourceFileName".toPath()).toString()
 
     Column {
-        val painterResource = asyncPainterResource(absolutePath)
+        val painterResource = asyncPainterResource("file://$absolutePath")
         KamelImage(painterResource,
             contentDescription = resourceFileName,
             modifier = Modifier.fillMaxSize(),

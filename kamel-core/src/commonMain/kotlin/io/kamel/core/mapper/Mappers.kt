@@ -14,7 +14,7 @@ internal val StringMapper: Mapper<String, Url> = object : Mapper<String, Url> {
     override fun map(input: String): Url {
         val regex = Regex("^file:/+(?!/)")
         return if (regex.containsMatchIn(input)) {
-            // Replace 'file:/' with 'file:///' using regex
+            // Replace 'file:/' or `file:///` with 'file:///' using regex
             // https://youtrack.jetbrains.com/issue/KTOR-6709
             Url(input.replaceFirst(regex, "file:///"))
         } else {
