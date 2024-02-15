@@ -21,5 +21,5 @@ internal actual val URIMapper: Mapper<URI, Url> = object : Mapper<URI, Url> {
     override val outputKClass: KClass<Url>
         get() = Url::class
 
-    override fun map(input: URI): Url = StringMapper.map(input.uri)
+    override fun map(input: URI): Url = StringMapper.map(input.str)
 }

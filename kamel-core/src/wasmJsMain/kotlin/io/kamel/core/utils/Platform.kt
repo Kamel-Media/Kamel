@@ -15,4 +15,4 @@ public actual class File(public val file: org.w3c.files.File) {
 
 public actual typealias URL = org.w3c.dom.url.URL
 
-public actual class URI(public val uri: String)
+public actual class URI actual constructor(public val str: String)
