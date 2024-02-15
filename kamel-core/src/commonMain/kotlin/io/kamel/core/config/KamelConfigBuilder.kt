@@ -9,10 +9,7 @@ import io.kamel.core.cache.Cache
 import io.kamel.core.cache.LruCache
 import io.kamel.core.cache.httpCacheStorage
 import io.kamel.core.decoder.Decoder
-import io.kamel.core.fetcher.Fetcher
-import io.kamel.core.fetcher.FileFetcher
-import io.kamel.core.fetcher.FileUrlFetcher
-import io.kamel.core.fetcher.HttpFetcher
+import io.kamel.core.fetcher.*
 import io.kamel.core.mapper.Mapper
 import io.kamel.core.mapper.StringMapper
 import io.kamel.core.mapper.URIMapper
@@ -21,7 +18,7 @@ import io.kamel.core.utils.URI
 import io.kamel.core.utils.URL
 import io.ktor.client.*
 import io.ktor.client.engine.*
-import io.ktor.client.plugins.cache.HttpCache
+import io.ktor.client.plugins.cache.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlin.reflect.KClass
@@ -76,24 +73,47 @@ public class KamelConfigBuilder {
 /**
  * Adds a Http [Url] fetcher to the [KamelConfigBuilder] using the specified [client].
  */
-public fun KamelConfigBuilder.httpFetcher(client: HttpClient): Unit = fetcher(HttpFetcher(client))
+public fun KamelConfigBuilder.httpUrlFetcher(client: HttpClient): Unit = fetcher(HttpUrlFetcher(client))
+
+@Deprecated(
+    "Use httpUrlFetcher instead",
+    ReplaceWith("httpUrlFetcher(client)")
+)
+public fun KamelConfigBuilder.httpFetcher(client: HttpClient): Unit = fetcher(HttpUrlFetcher(client))
 
 /**
  * Adds a Http [Url] fetcher to the [KamelConfigBuilder] using the specified [engine]
  * and an optional [block] for configuring this client.
  */
+public fun KamelConfigBuilder.httpUrlFetcher(
+    engine: HttpClientEngine,
+    block: HttpClientConfig<*>.() -> Unit = {}
+): Unit = fetcher(HttpUrlFetcher(HttpClient(engine, block)))
+
+@Deprecated(
+    "Use httpUrlFetcher instead",
+    ReplaceWith("httpUrlFetcher(engine, block)")
+)
 public fun KamelConfigBuilder.httpFetcher(
     engine: HttpClientEngine,
     block: HttpClientConfig<*>.() -> Unit = {}
-): Unit = fetcher(HttpFetcher(HttpClient(engine, block)))
+): Unit = fetcher(HttpUrlFetcher(HttpClient(engine, block)))
 
 /**
  * Adds a Http [Url] fetcher to the [KamelConfigBuilder] by loading an [HttpClientEngine] from [ServiceLoader]
  * and an optional [block] for configuring this client.
  */
+public fun KamelConfigBuilder.httpUrlFetcher(
+    block: HttpClientConfig<*>.() -> Unit = {}
+): Unit = fetcher(HttpUrlFetcher(HttpClient(block)))
+
+@Deprecated(
+    "Use httpUrlFetcher instead",
+    ReplaceWith("httpUrlFetcher(block)")
+)
 public fun KamelConfigBuilder.httpFetcher(
     block: HttpClientConfig<*>.() -> Unit = {}
-): Unit = fetcher(HttpFetcher(HttpClient(block)))
+): Unit = fetcher(HttpUrlFetcher(HttpClient(block)))
 
 /**
  * Adds a Localhost [Url] fetcher to the [KamelConfigBuilder].

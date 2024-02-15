@@ -3,7 +3,7 @@ package io.kamel.core.config
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import io.kamel.core.decoder.Decoder
-import io.kamel.core.fetcher.HttpFetcher
+import io.kamel.core.fetcher.HttpUrlFetcher
 import io.kamel.core.mapper.Mapper
 import io.kamel.core.tests.HttpMockEngine
 import io.kamel.core.tests.TestStringUrl
@@ -23,7 +23,7 @@ class KamelConfigUtilsTest {
         uriMapper()
         fileFetcher()
         fakeImageBitmapDecoder()
-        httpFetcher(HttpMockEngine)
+        httpUrlFetcher(HttpMockEngine )
     }
 
     @Test
@@ -64,10 +64,10 @@ class KamelConfigUtilsTest {
     }
 
     @Test
-    fun testFindHttpFetcher() {
+    fun testFindHttpUrlFetcher() {
         val fetcher = config.findFetcherFor(Url(TestStringUrl))
 
-        assertTrue { fetcher is HttpFetcher }
+        assertTrue { fetcher is HttpUrlFetcher }
     }
 
     @Test

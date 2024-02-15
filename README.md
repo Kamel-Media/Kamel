@@ -280,7 +280,7 @@ val customKamelConfig = KamelConfig {
     fileFetcher()
 
     // Configures Ktor HttpClient
-    httpFetcher {
+    httpUrlFetcher {
         // httpCache is defined in kamel-core and configures the ktor client 
         // to install a HttpCache feature with the implementation provided by Kamel.
         // The size of the cache can be defined in Bytes.
@@ -297,7 +297,7 @@ val customKamelConfig = KamelConfig {
                 !httpResponse.status.isSuccess()
             }
         }
-        
+
         // Requires adding "io.ktor:ktor-client-logging:$ktor_version"
         Logging {
             level = LogLevel.INFO
