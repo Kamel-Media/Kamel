@@ -84,6 +84,7 @@ images from different data sources:
 ```kotlin
 // String
 asyncPainterResource(data = "https://www.example.com/image.jpg")
+asyncPainterResource(data = "file:///path/to/image.png")
 
 // Ktor Url
 asyncPainterResource(data = Url("https://www.example.com/image.jpg"))
@@ -279,6 +280,7 @@ val customKamelConfig = KamelConfig {
     // adds a FileFetcher
     fileFetcher()
 
+    
     // Configures Ktor HttpClient
     httpUrlFetcher {
         // httpCache is defined in kamel-core and configures the ktor client 
