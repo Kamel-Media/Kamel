@@ -5,7 +5,7 @@ import org.jetbrains.compose.resources.resource
 import java.io.FileOutputStream
 
 
-public actual suspend fun getResourceFile(fileResourcePath: String, context: Any?): File {
+public actual suspend fun getResourceFile(fileResourcePath: String): File {
     val file = java.io.File.createTempFile("temp", ".${fileResourcePath.substringAfterLast(".")}")
     FileOutputStream(file).use { os ->
         val buffer = resource(fileResourcePath).readBytes()

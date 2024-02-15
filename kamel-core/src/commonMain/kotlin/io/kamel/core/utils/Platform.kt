@@ -9,4 +9,8 @@ public expect class File
 
 public expect class URL
 
-public expect class URI
+
+/**
+ * @param str The string to parse as a URI
+ */
+public expect class URI public constructor(str: String)

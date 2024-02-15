@@ -1,49 +1,36 @@
 package io.kamel.samples
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.material.Button
+import androidx.compose.material.ScrollableTabRow
+import androidx.compose.material.Tab
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import io.kamel.core.config.KamelConfig
 import io.kamel.image.config.LocalKamelConfig
 
-@androidx.compose.runtime.Composable
-public fun launcher(kamelConfig: KamelConfig, context: Any? = null) {
-    var sampleIndex by remember { mutableStateOf(0) }
-    Column {
-        Row {
-            Button({
-                sampleIndex = 0
-            }) {
-                Text("Gallery")
+@Composable
+public fun launcher(kamelConfig: KamelConfig) {
+    CompositionLocalProvider(LocalKamelConfig provides kamelConfig) {
+        var tabIndex by remember { mutableStateOf(0) }
+        val tabs = listOf("Gallery", "Bitmap", "Xl Bitmap", "Xml", "Svg")
+        Column {
+            ScrollableTabRow(selectedTabIndex = tabIndex) {
+                tabs.forEachIndexed { index, title ->
+                    Tab(text = { Text(title) },
+                        selected = tabIndex == index,
+                        onClick = { tabIndex = index }
+                    )
+                }
             }
-            Button({
-                sampleIndex = 1
-            }) {
-                Text("Bitmap")
-            }
-            Button({
-                sampleIndex = 2
-            }) {
-                Text("Svg")
-            }
-            Button({
-                sampleIndex = 3
-            }) {
-                Text("Xml")
-            }
-        }
-        when (sampleIndex) {
-            0 -> CompositionLocalProvider(LocalKamelConfig provides kamelConfig) {
-                Gallery()
-            }
+            when (tabIndex) {
+                0 -> Gallery()
+                1 -> FileSample("Compose.png")
+                2 -> FileSample("XlImage.png")
+                3 -> FileSample("ComposeXml.xml")
+                4 -> FileSample("Kotlin.svg")
 
-            1 -> FileSample("Compose.png", kamelConfig, context)
-            2 -> FileSample("ComposeXml.xml", kamelConfig, context)
-            3 -> FileSample("Kotlin.svg", kamelConfig, context)
-
-            else -> Text("Invalid Sample Index")
+                else -> Text("Invalid Sample Index")
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.isSpecified
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ImageBitmapConfig
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
@@ -30,7 +31,7 @@ import kotlin.math.ceil
  * @return the decoded SVG image associated with the resource
  */
 // Note: copied from here:
-// https://github.com/JetBrains/compose-multiplatform-core/blob/5c26b7b9f5619ee4f319c6caf43192851b8ee15e/compose/ui/ui/src/desktopMain/kotlin/androidx/compose/ui/res/DesktopSvgResources.desktop.kt#L51
+// https://github.com/JetBrains/compose-multiplatform-core/blob/fcaca4dc0666ca101a4d5c8200d9851e3f6cb88d/compose/ui/ui/src/desktopMain/kotlin/androidx/compose/ui/res/DesktopSvgResources.desktop.kt
 // todo: remove when available in common androidx
 internal fun loadSvgPainter(
     bytes: ByteArray,
@@ -62,14 +63,13 @@ private class SVGPainter(
         }
     }
 
-    override val intrinsicSize: Size
-        get() {
-            return if (defaultSizePx.isSpecified) {
-                defaultSizePx * density.density
-            } else {
-                Size.Unspecified
-            }
+    override val intrinsicSize: Size get() {
+        return if (defaultSizePx.isSpecified) {
+            defaultSizePx * density.density
+        } else {
+            Size.Unspecified
         }
+    }
 
     private var previousDrawSize: Size = Size.Unspecified
     private var alpha: Float = 1.0f
@@ -91,6 +91,7 @@ private class SVGPainter(
     override fun DrawScope.onDraw() {
         if (previousDrawSize != size) {
             drawCache.drawCachedImage(
+                ImageBitmapConfig.Argb8888,
                 IntSize(ceil(size.width).toInt(), ceil(size.height).toInt()),
                 density = this,
                 layoutDirection,

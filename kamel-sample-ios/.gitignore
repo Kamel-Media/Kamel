@@ -158,3 +158,5 @@ xcuserdata
 #           - AS PER https://guides.cocoapods.org/using/using-cocoapods.html NEVER IGNORE THE LOCK FILE
 Pods/
 
+!/iosApp.xcodeproj/
+

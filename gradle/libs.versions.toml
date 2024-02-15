@@ -10,22 +10,23 @@ com-android-application = { id = "com.android.application", version.ref = "agp" 
 
 [versions]
 
-cache4k = "0.13.0-SNAPSHOT"
+agp = "8.2.2"
 kotlin = "1.9.22"
-agp = "8.2.0"
+cache4k = "0.13.0-SNAPSHOT"
 
-okio = "3.7.0"
+okio = "3.8.0"
 startup-runtime = "1.1.1"
-vanniktech-publish = "0.26.0"
-compose = "1.6.0-dev1354"
-coroutines = "1.8.0-RC2"
 ktor = "3.0.0-wasm2"
+coroutines = "1.8.0-RC2"
+compose = "1.6.0-rc01"
+vanniktech-publish = "0.27.0"
 xmlutil = "0.86.3"
 activity-compose = "1.8.2"
 appcompat = "1.6.1"
 material = "1.11.0"
 androidsvg = "1.4"
 batik = "1.17"
+slf4j = "2.0.12"
 
 [libraries]
 
@@ -56,3 +57,4 @@ google-android-material = { module = "com.google.android.material:material", ver
 com-caverok-androidsvg = { module = "com.caverock:androidsvg-aar", version.ref = "androidsvg" }
 apache-batik-transcoder = { module = "org.apache.xmlgraphics:batik-transcoder", version.ref = "batik" }
 apache-batik-codec = { module = "org.apache.xmlgraphics:batik-codec", version.ref = "batik" }
+slf4j = { module = "org.slf4j:slf4j-nop", version.ref = "slf4j" }
