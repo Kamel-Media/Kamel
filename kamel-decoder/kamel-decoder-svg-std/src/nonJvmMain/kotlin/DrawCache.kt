@@ -1,3 +1,5 @@
+package androidx.compose.ui.res
+
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.CanvasDrawScope
 import androidx.compose.ui.graphics.drawscope.DrawScope

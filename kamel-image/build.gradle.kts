@@ -31,7 +31,6 @@ android {
 }
 
 kotlin {
-
     explicitApi = ExplicitApiMode.Warning
 
     androidTarget {
@@ -53,6 +52,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(project(":kamel-core"))
+                api(project(":kamel-decoder:kamel-decoder-svg-std"))
                 implementation(compose.ui)
                 implementation(compose.foundation)
                 implementation(compose.runtime)
@@ -95,7 +95,6 @@ kotlin {
         val androidMain by getting {
             dependsOn(jvmMain)
             dependencies {
-                implementation(libs.com.caverok.androidsvg)
                 implementation(libs.pdvrieze.xmlutil.serialization)
             }
         }

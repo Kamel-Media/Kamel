@@ -6,7 +6,6 @@ import androidx.compose.ui.graphics.ImageBitmap
 import io.kamel.core.config.*
 import io.kamel.image.decoder.ImageBitmapDecoder
 import io.kamel.image.decoder.ImageVectorDecoder
-import io.kamel.image.decoder.SvgDecoder
 
 public val KamelConfig.Companion.Default: KamelConfig
     get() = KamelConfig {
@@ -37,11 +36,6 @@ public fun KamelConfigBuilder.imageBitmapDecoder(): Unit = decoder(ImageBitmapDe
  * Adds Decoder for XML Images to the [KamelConfigBuilder]
  */
 public fun KamelConfigBuilder.imageVectorDecoder(): Unit = decoder(ImageVectorDecoder)
-
-/**
- * Adds Decoder for SVG Images to the [KamelConfigBuilder]
- */
-public fun KamelConfigBuilder.svgDecoder(): Unit = decoder(SvgDecoder)
 
 /**
  * Static CompositionLocal that provides the default configuration of [KamelConfig].

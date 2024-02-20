@@ -1,6 +1,5 @@
 package androidx.compose.ui.res
 
-import DrawCache
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.isSpecified
@@ -63,13 +62,14 @@ private class SVGPainter(
         }
     }
 
-    override val intrinsicSize: Size get() {
-        return if (defaultSizePx.isSpecified) {
-            defaultSizePx * density.density
-        } else {
-            Size.Unspecified
+    override val intrinsicSize: Size
+        get() {
+            return if (defaultSizePx.isSpecified) {
+                defaultSizePx * density.density
+            } else {
+                Size.Unspecified
+            }
         }
-    }
 
     private var previousDrawSize: Size = Size.Unspecified
     private var alpha: Float = 1.0f
