@@ -32,10 +32,12 @@ refreshVersions {
 
 rootProject.name = "Kamel"
 
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(
     "kamel-samples",
     "kamel-core",
     "kamel-image",
+    "kamel-decoder:kamel-decoder-image-bitmap",
     "kamel-decoder:kamel-decoder-svg-batik",
     "kamel-decoder:kamel-decoder-svg-std",
     "kamel-fetcher:kamel-fetcher-resources-jvm",

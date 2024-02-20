@@ -51,8 +51,9 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
-                api(project(":kamel-core"))
-                api(project(":kamel-decoder:kamel-decoder-svg-std"))
+                api(projects.kamelCore)
+                api(projects.kamelDecoder.kamelDecoderSvgStd)
+                api(projects.kamelDecoder.kamelDecoderImageBitmap)
                 implementation(compose.ui)
                 implementation(compose.foundation)
                 implementation(compose.runtime)

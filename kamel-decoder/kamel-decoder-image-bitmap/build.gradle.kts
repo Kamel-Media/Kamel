@@ -63,16 +63,20 @@ kotlin {
             }
         }
 
-        val nonJvmMain by creating {
+        val nonAndroidMain by creating {
             dependsOn(commonMain.get())
         }
 
+        jvmMain {
+            dependsOn(nonAndroidMain)
+        }
+
         jsMain {
-            dependsOn(nonJvmMain)
+            dependsOn(nonAndroidMain)
         }
 
         appleMain {
-            dependsOn(nonJvmMain)
+            dependsOn(nonAndroidMain)
         }
     }
 }

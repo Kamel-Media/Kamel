@@ -13,7 +13,7 @@ kotlin {
         val jvmMain by getting {
             dependsOn(commonMain.get())
             dependencies {
-                implementation(project(":kamel-core"))
+                implementation(projects.kamelCore)
                 // todo: remove ktor dependency related to https://github.com/Kamel-Media/Kamel/issues/35
                 implementation(libs.ktor.client.core)
             }
