@@ -33,4 +33,4 @@ refreshVersions {
 
 rootProject.name = "Kamel"
 
-include("kamel-samples", "kamel-core", "kamel-image")
+include("kamel-samples", "kamel-core", "kamel-image", "kamel-image-decoder:svg-batik")

@@ -82,11 +82,6 @@ kotlin {
 
         val desktopMain by getting {
             dependsOn(jvmMain)
-            dependencies {
-                implementation(libs.apache.batik.transcoder)
-                //https://stackoverflow.com/a/45318410/1363742
-                implementation(libs.apache.batik.codec)
-            }
         }
 
         val desktopTest by getting {
