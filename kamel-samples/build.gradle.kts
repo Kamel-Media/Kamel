@@ -103,6 +103,7 @@ kotlin {
         val androidMain by getting {
             dependsOn(commonMain)
             dependencies {
+                implementation(projects.kamelFetcher.kamelFetcherResourcesAndroid)
                 implementation(libs.androidx.appcompat)
                 implementation(libs.androidx.activity.compose)
                 implementation(libs.google.android.material)
@@ -114,8 +115,8 @@ kotlin {
         val desktopMain by getting {
             dependsOn(commonMain)
             dependencies {
-                implementation(project(":kamel-decoder:kamel-decoder-svg-batik"))
-                implementation(project(":kamel-fetcher:kamel-fetcher-resources-jvm"))
+                implementation(projects.kamelDecoder.kamelDecoderSvgBatik)
+                implementation(projects.kamelFetcher.kamelFetcherResourcesJvm)
                 implementation(compose.desktop.currentOs)
                 implementation(libs.ktor.client.cio)
                 implementation(libs.slf4j)
