@@ -20,8 +20,6 @@ public class AndroidSample : AppCompatActivity() {
             val kamelConfig = remember {
                 KamelConfig {
                     takeFrom(KamelConfig.Default)
-                    resourcesIdMapper(this@AndroidSample)
-                    resourcesFetcher(this@AndroidSample)
                 }
             }
             launcher(kamelConfig)

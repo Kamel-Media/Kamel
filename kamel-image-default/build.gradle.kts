@@ -36,7 +36,7 @@ kotlin {
     androidTarget {
         publishAllLibraryVariants()
     }
-    jvm("desktop")
+    jvm()
     js(IR) {
         browser()
     }
@@ -51,31 +51,38 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
-                api(projects.kamelCore)
+                api(projects.kamelImage)
+                api(projects.kamelDecoder.kamelDecoderSvgStd)
+                api(projects.kamelDecoder.kamelDecoderImageBitmap)
+                api(projects.kamelDecoder.kamelDecoderImageVector)
                 implementation(compose.foundation)
-                implementation(libs.ktor.client.core)
             }
         }
 
-        val commonTest by getting {
+        jvmMain {
             dependencies {
-                implementation(kotlin("test"))
-                implementation(libs.ktor.client.mock)
-                implementation(libs.kotlinx.coroutines.test)
+                api(projects.kamelFetcher.kamelFetcherResourcesJvm)
+                implementation(libs.ktor.client.cio)
             }
         }
 
-        val jvmTest by creating {
-            dependsOn(commonTest)
+        androidMain {
             dependencies {
-                implementation(libs.jetbrains.compose.ui.ui.test.junit4)
+                api(projects.kamelFetcher.kamelFetcherResourcesAndroid)
+                api(projects.kamelMapper.kamelMapperResourcesIdAndroid)
+                implementation(libs.ktor.client.android)
             }
         }
 
-        val desktopTest by getting {
-            dependsOn(jvmTest)
+        jsMain {
             dependencies {
-                implementation(compose.desktop.currentOs)
+                implementation(libs.ktor.client.js)
+            }
+        }
+
+        appleMain {
+            dependencies {
+                implementation(libs.ktor.client.darwin)
             }
         }
 

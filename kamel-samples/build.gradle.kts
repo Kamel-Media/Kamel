@@ -94,6 +94,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.kamelImage)
+                implementation(projects.kamelImageDefault)
                 implementation(compose.foundation)
                 implementation(compose.material)
                 implementation(libs.compose.components.resources)
@@ -108,7 +109,6 @@ kotlin {
                 implementation(libs.androidx.appcompat)
                 implementation(libs.androidx.activity.compose)
                 implementation(libs.google.android.material)
-                implementation(libs.ktor.client.android)
                 implementation(libs.slf4j)
             }
         }
@@ -119,7 +119,6 @@ kotlin {
                 implementation(projects.kamelDecoder.kamelDecoderSvgBatik)
                 implementation(projects.kamelFetcher.kamelFetcherResourcesJvm)
                 implementation(compose.desktop.currentOs)
-                implementation(libs.ktor.client.cio)
                 implementation(libs.slf4j)
             }
         }

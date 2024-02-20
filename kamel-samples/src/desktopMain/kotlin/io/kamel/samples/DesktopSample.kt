@@ -14,7 +14,6 @@ public fun main(): Unit = singleWindowApplication {
     val kamelConfig = remember {
         KamelConfig {
             takeFrom(KamelConfig.Default)
-            resourcesFetcher()
             batikSvgDecoder()
         }
     }
@@ -27,7 +26,6 @@ public fun desktopSample() {
     val kamelConfig = remember {
         KamelConfig {
             takeFrom(KamelConfig.Default)
-            resourcesFetcher()
         }
     }
     launcher(kamelConfig)

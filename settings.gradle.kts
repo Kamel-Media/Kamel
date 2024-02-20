@@ -37,6 +37,7 @@ include(
     "kamel-samples",
     "kamel-core",
     "kamel-image",
+    "kamel-image-default",
     "kamel-decoder:kamel-decoder-image-bitmap",
     "kamel-decoder:kamel-decoder-image-vector",
     "kamel-decoder:kamel-decoder-svg-batik",

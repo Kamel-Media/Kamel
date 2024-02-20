@@ -5,7 +5,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.ComposeUIViewController
 import io.kamel.core.config.KamelConfig
 import io.kamel.core.config.takeFrom
-import io.kamel.image.config.Default
 import io.kamel.samples.launcher
 import platform.UIKit.UIViewController
 
