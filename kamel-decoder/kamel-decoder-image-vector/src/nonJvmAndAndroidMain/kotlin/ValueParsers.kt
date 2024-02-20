@@ -41,29 +41,33 @@ internal fun parseColorValue(color: String): Int {
     return when (color.length) {
         7 -> {
             // #RRGGBB
-            color.substring(1).toUInt( 16).toInt() or ALPHA_MASK
+            color.substring(1).toUInt(16).toInt() or ALPHA_MASK
         }
+
         9 -> {
             // #AARRGGBB
-            color.substring(1).toUInt( 16).toInt()
+            color.substring(1).toUInt(16).toInt()
         }
+
         4 -> {
             // #RGB
-            val v = color.substring(1).toUInt( 16).toInt()
+            val v = color.substring(1).toUInt(16).toInt()
             var k = (v shr 8 and 0xF) * 0x110000
             k = k or (v shr 4 and 0xF) * 0x1100
             k = k or (v and 0xF) * 0x11
             k or ALPHA_MASK
         }
+
         5 -> {
             // #ARGB
-            val v = color.substring(1).toUInt( 16).toInt()
+            val v = color.substring(1).toUInt(16).toInt()
             var k = (v shr 12 and 0xF) * 0x11000000
             k = k or (v shr 8 and 0xF) * 0x110000
             k = k or (v shr 4 and 0xF) * 0x1100
             k = k or (v and 0xF) * 0x11
             k or ALPHA_MASK
         }
+
         else -> ALPHA_MASK
     }
 }

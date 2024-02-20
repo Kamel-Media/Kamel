@@ -36,7 +36,7 @@ kotlin {
     androidTarget {
         publishAllLibraryVariants()
     }
-    jvm("desktop")
+    jvm()
     js(IR) {
         browser()
     }
@@ -49,55 +49,32 @@ kotlin {
 
     sourceSets {
 
-        val commonMain by getting {
+        commonMain {
             dependencies {
                 api(projects.kamelCore)
-                api(projects.kamelDecoder.kamelDecoderSvgStd)
-                api(projects.kamelDecoder.kamelDecoderImageBitmap)
-                api(projects.kamelDecoder.kamelDecoderImageVector)
-                implementation(compose.foundation)
+                implementation(compose.ui)
+                // todo: remove ktor dependency related to https://github.com/Kamel-Media/Kamel/issues/35
                 implementation(libs.ktor.client.core)
             }
         }
 
-        val commonTest by getting {
+        val nonJvmAndAndroidMain by creating {
+            dependsOn(commonMain.get())
             dependencies {
-                implementation(kotlin("test"))
-                implementation(libs.ktor.client.mock)
-                implementation(libs.kotlinx.coroutines.test)
+                implementation(libs.pdvrieze.xmlutil.serialization)
             }
         }
 
-        val jvmTest by creating {
-            dependsOn(commonTest)
-            dependencies {
-                implementation(compose.material)
-                implementation(libs.jetbrains.compose.ui.ui.test.junit4)
-            }
-        }
-
-        val desktopTest by getting {
-            dependsOn(jvmTest)
-            dependencies {
-                implementation(libs.ktor.client.cio)
-                implementation(compose.desktop.currentOs)
-            }
-        }
-
-        val androidUnitTest by getting {
-            dependsOn(jvmTest)
+        androidMain {
+            dependsOn(nonJvmAndAndroidMain)
         }
 
         jsMain {
-            dependencies {
-                implementation(libs.ktor.client.js)
-            }
+            dependsOn(nonJvmAndAndroidMain)
         }
 
         appleMain {
-            dependencies {
-                implementation(libs.ktor.client.darwin)
-            }
+            dependsOn(nonJvmAndAndroidMain)
         }
 
     }

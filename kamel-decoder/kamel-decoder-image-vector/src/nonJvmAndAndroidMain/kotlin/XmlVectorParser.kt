@@ -18,9 +18,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.vector.*
 import androidx.compose.ui.unit.Density
-import nl.adaptivity.xmlutil.dom.Element
-import nl.adaptivity.xmlutil.dom.Node
-import nl.adaptivity.xmlutil.dom.iterator
+import nl.adaptivity.xmlutil.dom.*
 
 //  Parsing logic is the same as in Android implementation
 //  (compose/ui/ui/src/androidMain/kotlin/androidx/compose/ui/graphics/vector/compat/XmlVectorParser.kt)
@@ -69,8 +67,8 @@ internal fun Element.parseVectorRoot(density: Density): ImageVector {
 
 private fun Element.parseVectorNodes(builder: ImageVector.Builder, context: BuildContext) {
     childrenSequence.filterIsElement().forEach {
-            it.parseVectorNode(builder, context)
-        }
+        it.parseVectorNode(builder, context)
+    }
 }
 
 private fun Element.parseVectorNode(builder: ImageVector.Builder, context: BuildContext) {
@@ -87,13 +85,11 @@ private fun Element.parsePath(builder: ImageVector.Builder) {
         pathFillType = attributeOrNull(ANDROID_NS, "fillType")?.let(::parseFillType) ?: PathFillType.NonZero,
         name = attributeOrNull(ANDROID_NS, "name") ?: "",
         fill = attributeOrNull(ANDROID_NS, "fillColor")?.let(::parseStringBrush) ?: apptAttr(
-            ANDROID_NS,
-            "fillColor"
+            ANDROID_NS, "fillColor"
         )?.let(Element::parseElementBrush),
         fillAlpha = attributeOrNull(ANDROID_NS, "fillAlpha")?.toFloat() ?: 1.0f,
         stroke = attributeOrNull(ANDROID_NS, "strokeColor")?.let(::parseStringBrush) ?: apptAttr(
-            ANDROID_NS,
-            "strokeColor"
+            ANDROID_NS, "strokeColor"
         )?.let(Element::parseElementBrush),
         strokeAlpha = attributeOrNull(ANDROID_NS, "strokeAlpha")?.toFloat() ?: 1.0f,
         strokeLineWidth = attributeOrNull(ANDROID_NS, "strokeWidth")?.toFloat() ?: 1.0f,
@@ -209,9 +205,7 @@ private fun Element.parseColorStop(defaultOffset: Float): Pair<Float, Color>? {
     return offset to Color(color)
 }
 
-internal fun Element.attributeOrNull(
-    namespace: String, name: String
-): String? {
+internal fun Element.attributeOrNull(namespace: String, name: String): String? {
     val value = getAttributeNS(namespace, name)
     return value?.ifBlank { null }
 }
@@ -236,8 +230,8 @@ private fun Element.apptAttr(
 ): Element? {
     val prefix = lookupPrefix(namespace) ?: return null
     return childrenSequence.filterIsElement().find {
-            it.namespaceURI == AAPT_NS && it.localName == "attr" && it.getAttribute("name") == "$prefix:$name"
-        }
+        it.namespaceURI == AAPT_NS && it.localName == "attr" && it.getAttribute("name") == "$prefix:$name"
+    }
 }
 
 private val Element.childrenSequence

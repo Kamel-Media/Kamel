@@ -35,9 +35,7 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
-                implementation(compose.ui)
                 implementation(compose.foundation)
-                implementation(compose.runtime)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.ktor.client.core)
                 implementation(libs.okio)

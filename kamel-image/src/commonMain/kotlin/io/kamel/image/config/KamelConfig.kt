@@ -3,7 +3,6 @@ package io.kamel.image.config
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.staticCompositionLocalOf
 import io.kamel.core.config.*
-import io.kamel.image.decoder.ImageVectorDecoder
 
 public val KamelConfig.Companion.Default: KamelConfig
     get() = KamelConfig {
@@ -24,11 +23,6 @@ public val KamelConfig.Companion.Default: KamelConfig
     }
 
 internal expect fun KamelConfigBuilder.platformSpecificConfig()
-
-/**
- * Adds Decoder for XML Images to the [KamelConfigBuilder]
- */
-public fun KamelConfigBuilder.imageVectorDecoder(): Unit = decoder(ImageVectorDecoder)
 
 /**
  * Static CompositionLocal that provides the default configuration of [KamelConfig].
