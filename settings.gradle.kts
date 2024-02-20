@@ -32,4 +32,11 @@ refreshVersions {
 
 rootProject.name = "Kamel"
 
-include("kamel-samples", "kamel-core", "kamel-image", "kamel-decoder:svg-batik")
+include(
+    "kamel-samples",
+    "kamel-core",
+    "kamel-image",
+    "kamel-decoder:svg-batik",
+    "kamel-fetcher:kamel-fetcher-resources-jvm",
+    "kamel-fetcher:kamel-fetcher-resources-android"
+)

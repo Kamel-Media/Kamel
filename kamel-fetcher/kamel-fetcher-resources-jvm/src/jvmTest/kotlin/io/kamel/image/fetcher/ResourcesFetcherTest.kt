@@ -19,7 +19,7 @@ class ResourcesFetcherTest {
     private val fetcher = ResourcesFetcher
 
     @Test
-    fun testUrlIsSupported() = runTest {
+    fun testUrlIsSupported() {
         val imageUrl = Url("Compose.png")
         val isSupported = with(fetcher) { imageUrl.isSupported }
 
@@ -27,7 +27,7 @@ class ResourcesFetcherTest {
     }
 
     @Test
-    fun testUrlIsNotSupported() = runTest {
+    fun testUrlIsNotSupported() {
         val imageUrl = Url("invalidImage.jpg")
         val isSupported = with(fetcher) { imageUrl.isSupported }
 
@@ -38,9 +38,7 @@ class ResourcesFetcherTest {
     fun loadImageBitmapResource() = runTest {
         val resourceConfig = ResourceConfigBuilder(coroutineContext).build()
         val imageUrl = Url("Compose.png")
-        val resource = fetcher.fetch(imageUrl, resourceConfig)
-            .first { !it.isLoading }
-            .map { it.toByteArray() }
+        val resource = fetcher.fetch(imageUrl, resourceConfig).first { !it.isLoading }.map { it.toByteArray() }
 
         assertTrue { resource.getOrNull()!!.isNotEmpty() }
         assertTrue { resource.source == DataSource.Disk }
@@ -52,8 +50,7 @@ class ResourcesFetcherTest {
         val imageUrl = Url("invalidImage.jpg")
 
         assertFailsWith<IllegalStateException> {
-            fetcher.fetch(imageUrl, resourceConfig)
-                .first { !it.isLoading }
+            fetcher.fetch(imageUrl, resourceConfig).first { !it.isLoading }
         }
     }
 
