@@ -42,5 +42,6 @@ include(
     "kamel-decoder:kamel-decoder-svg-batik",
     "kamel-decoder:kamel-decoder-svg-std",
     "kamel-fetcher:kamel-fetcher-resources-jvm",
-    "kamel-fetcher:kamel-fetcher-resources-android"
+    "kamel-fetcher:kamel-fetcher-resources-android",
+    "kamel-mapper:kamel-mapper-resources-id-android"
 )

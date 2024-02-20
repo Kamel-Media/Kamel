@@ -7,7 +7,6 @@ import io.kamel.core.mapper.Mapper
 import io.ktor.http.*
 import kotlin.reflect.KClass
 
-
 internal class ResourcesIdMapper(private val context: Context) : Mapper<@receiver:DrawableRes Int, Url> {
 
     override val inputKClass: KClass<Int>
@@ -20,7 +19,6 @@ internal class ResourcesIdMapper(private val context: Context) : Mapper<@receive
         val packageName = context.packageName
         val protocol = URLProtocol(name = ContentResolver.SCHEME_ANDROID_RESOURCE, defaultPort = -1)
 
-        return URLBuilder(protocol = protocol, host = packageName, pathSegments = listOf(input.toString()))
-            .build()
+        return URLBuilder(protocol = protocol, host = packageName, pathSegments = listOf(input.toString())).build()
     }
 }

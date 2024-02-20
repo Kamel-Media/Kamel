@@ -104,6 +104,7 @@ kotlin {
             dependsOn(commonMain)
             dependencies {
                 implementation(projects.kamelFetcher.kamelFetcherResourcesAndroid)
+                implementation(projects.kamelMapper.kamelMapperResourcesIdAndroid)
                 implementation(libs.androidx.appcompat)
                 implementation(libs.androidx.activity.compose)
                 implementation(libs.google.android.material)
