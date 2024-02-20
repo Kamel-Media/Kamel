@@ -24,7 +24,7 @@ internal fun FileSample(fileResourcePath: String) {
         file?.let { file ->
             val painterResource = asyncPainterResource(file)
             KamelImage(painterResource,
-                contentDescription = "Compose",
+                contentDescription = fileResourcePath,
                 modifier = Modifier.fillMaxSize(),
                 onFailure = { throw it })
         }

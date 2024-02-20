@@ -2,7 +2,7 @@ package io.kamel.core.config
 
 import io.kamel.core.fetcher.Fetcher
 import io.kamel.core.fetcher.FileFetcher
-import io.kamel.core.fetcher.HttpFetcher
+import io.kamel.core.fetcher.HttpUrlFetcher
 import io.kamel.core.mapper.Mapper
 import io.kamel.core.mapper.StringMapper
 import io.kamel.core.mapper.URIMapper
@@ -33,11 +33,11 @@ class KamelConfigBuilderTest {
     }
 
     @Test
-    fun testAddHttpFetcher() {
-        builder.httpFetcher(HttpMockEngine)
+    fun testAddHttpUrlFetcher() {
+        builder.httpUrlFetcher(HttpMockEngine)
 
         assertTrue { builder.fetchers.size == 1 }
-        assertTrue { builder.fetchers.any { it as? HttpFetcher != null } }
+        assertTrue { builder.fetchers.any { it as? HttpUrlFetcher != null } }
     }
 
     @Test

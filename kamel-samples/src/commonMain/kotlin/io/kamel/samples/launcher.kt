@@ -12,7 +12,7 @@ import io.kamel.image.config.LocalKamelConfig
 public fun launcher(kamelConfig: KamelConfig) {
     CompositionLocalProvider(LocalKamelConfig provides kamelConfig) {
         var tabIndex by remember { mutableStateOf(0) }
-        val tabs = listOf("Gallery", "Bitmap", "Xl Bitmap", "Xml", "Svg")
+        val tabs = listOf("Gallery", "Bitmap", "Bitmap-localhost", "Xl Bitmap", "Xml", "Svg")
         Column {
             ScrollableTabRow(selectedTabIndex = tabIndex) {
                 tabs.forEachIndexed { index, title ->
@@ -25,9 +25,10 @@ public fun launcher(kamelConfig: KamelConfig) {
             when (tabIndex) {
                 0 -> Gallery()
                 1 -> FileSample("Compose.png")
-                2 -> FileSample("XlImage.png")
-                3 -> FileSample("ComposeXml.xml")
-                4 -> FileSample("Kotlin.svg")
+                2 -> UrlFileSample("Compose.png")
+                3 -> FileSample("XlImage.png")
+                4 -> FileSample("ComposeXml.xml")
+                5 -> FileSample("Kotlin.svg")
 
                 else -> Text("Invalid Sample Index")
             }
