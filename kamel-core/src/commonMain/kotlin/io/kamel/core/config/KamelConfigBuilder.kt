@@ -90,28 +90,11 @@ public fun KamelConfigBuilder.httpUrlFetcher(
     block: HttpClientConfig<*>.() -> Unit = {}
 ): Unit = fetcher(HttpUrlFetcher(HttpClient(engine, block)))
 
-@Deprecated(
-    "Use httpUrlFetcher instead",
-    ReplaceWith("httpUrlFetcher(engine, block)")
-)
-public fun KamelConfigBuilder.httpFetcher(
-    engine: HttpClientEngine,
-    block: HttpClientConfig<*>.() -> Unit = {}
-): Unit = fetcher(HttpUrlFetcher(HttpClient(engine, block)))
-
 /**
  * Adds a Http [Url] fetcher to the [KamelConfigBuilder] by loading an [HttpClientEngine] from [ServiceLoader]
  * and an optional [block] for configuring this client.
  */
 public fun KamelConfigBuilder.httpUrlFetcher(
-    block: HttpClientConfig<*>.() -> Unit = {}
-): Unit = fetcher(HttpUrlFetcher(HttpClient(block)))
-
-@Deprecated(
-    "Use httpUrlFetcher instead",
-    ReplaceWith("httpUrlFetcher(block)")
-)
-public fun KamelConfigBuilder.httpFetcher(
     block: HttpClientConfig<*>.() -> Unit = {}
 ): Unit = fetcher(HttpUrlFetcher(HttpClient(block)))
 

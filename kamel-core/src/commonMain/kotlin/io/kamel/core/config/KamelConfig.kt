@@ -51,7 +51,8 @@ public val KamelConfig.Companion.Core: KamelConfig
         urlMapper()
         uriMapper()
         fileFetcher()
-        httpFetcher {
+        fileUrlFetcher()
+        httpUrlFetcher {
             httpCache(DefaultHttpCacheSize)
         }
     }
