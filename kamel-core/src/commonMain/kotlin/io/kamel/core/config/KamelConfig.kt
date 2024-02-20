@@ -41,3 +41,17 @@ public interface KamelConfig {
  */
 public inline fun KamelConfig(block: KamelConfigBuilder.() -> Unit): KamelConfig =
     KamelConfigBuilder().apply(block).build()
+
+public val KamelConfig.Companion.Core: KamelConfig
+    get() = KamelConfig {
+        imageBitmapCacheSize = DefaultCacheSize
+        imageVectorCacheSize = DefaultCacheSize
+        svgCacheSize = DefaultCacheSize
+        stringMapper()
+        urlMapper()
+        uriMapper()
+        fileFetcher()
+        httpFetcher {
+            httpCache(DefaultHttpCacheSize)
+        }
+    }

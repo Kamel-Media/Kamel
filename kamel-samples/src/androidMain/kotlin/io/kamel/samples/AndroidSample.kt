@@ -8,10 +8,11 @@ import io.kamel.core.config.KamelConfig
 import io.kamel.core.config.takeFrom
 import io.kamel.image.config.Default
 import io.kamel.image.config.resourcesFetcher
+import io.kamel.image.config.resourcesIdMapper
 
 public actual val cellsCount: Int = 2
 
-class AndroidSample : AppCompatActivity() {
+public class AndroidSample : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,7 +20,6 @@ class AndroidSample : AppCompatActivity() {
             val kamelConfig = remember {
                 KamelConfig {
                     takeFrom(KamelConfig.Default)
-                    resourcesFetcher(this@AndroidSample)
                 }
             }
             launcher(kamelConfig)

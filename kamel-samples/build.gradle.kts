@@ -1,13 +1,5 @@
-import org.jetbrains.compose.desktop.application.tasks.AbstractNativeMacApplicationPackageAppDirTask
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
-import org.jetbrains.kotlin.gradle.plugin.mpp.AbstractExecutable
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBinary
-import org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink
-import org.jetbrains.kotlin.library.impl.KotlinLibraryLayoutImpl
-import java.io.File
-import java.io.FileFilter
-import org.jetbrains.kotlin.konan.file.File as KonanFile
 
 plugins {
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
@@ -101,7 +93,8 @@ kotlin {
         }
         val commonMain by getting {
             dependencies {
-                implementation(project(":kamel-image"))
+                implementation(projects.kamelImage)
+                implementation(projects.kamelImageDefault)
                 implementation(compose.foundation)
                 implementation(compose.material)
                 implementation(libs.compose.components.resources)
@@ -111,10 +104,11 @@ kotlin {
         val androidMain by getting {
             dependsOn(commonMain)
             dependencies {
+                implementation(projects.kamelFetcher.kamelFetcherResourcesAndroid)
+                implementation(projects.kamelMapper.kamelMapperResourcesIdAndroid)
                 implementation(libs.androidx.appcompat)
                 implementation(libs.androidx.activity.compose)
                 implementation(libs.google.android.material)
-                implementation(libs.ktor.client.android)
                 implementation(libs.slf4j)
             }
         }
@@ -122,8 +116,9 @@ kotlin {
         val desktopMain by getting {
             dependsOn(commonMain)
             dependencies {
+                implementation(projects.kamelDecoder.kamelDecoderSvgBatik)
+                implementation(projects.kamelFetcher.kamelFetcherResourcesJvm)
                 implementation(compose.desktop.currentOs)
-                implementation(libs.ktor.client.cio)
                 implementation(libs.slf4j)
             }
         }

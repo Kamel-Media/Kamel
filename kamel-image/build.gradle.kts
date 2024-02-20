@@ -31,7 +31,6 @@ android {
 }
 
 kotlin {
-
     explicitApi = ExplicitApiMode.Warning
 
     androidTarget {
@@ -52,10 +51,8 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
-                api(project(":kamel-core"))
-                implementation(compose.ui)
+                api(projects.kamelCore)
                 implementation(compose.foundation)
-                implementation(compose.runtime)
                 implementation(libs.ktor.client.core)
             }
         }
@@ -68,74 +65,18 @@ kotlin {
             }
         }
 
-        val jvmMain by creating {
-            dependsOn(commonMain)
-        }
-
         val jvmTest by creating {
             dependsOn(commonTest)
             dependencies {
-                implementation(compose.material)
                 implementation(libs.jetbrains.compose.ui.ui.test.junit4)
-            }
-        }
-
-        val desktopMain by getting {
-            dependsOn(jvmMain)
-            dependencies {
-                implementation(libs.apache.batik.transcoder)
-                //https://stackoverflow.com/a/45318410/1363742
-                implementation(libs.apache.batik.codec)
             }
         }
 
         val desktopTest by getting {
             dependsOn(jvmTest)
             dependencies {
-                implementation(libs.ktor.client.cio)
                 implementation(compose.desktop.currentOs)
             }
-        }
-
-        val androidMain by getting {
-            dependsOn(jvmMain)
-            dependencies {
-                implementation(libs.com.caverok.androidsvg)
-                implementation(libs.pdvrieze.xmlutil.serialization)
-            }
-        }
-
-        val androidUnitTest by getting {
-            dependsOn(jvmTest)
-        }
-
-        val nonJvmMain by creating {
-            dependsOn(commonMain)
-            dependencies {
-                implementation(libs.pdvrieze.xmlutil.serialization)
-            }
-        }
-
-        val nonJvmTest by creating {
-            dependsOn(commonTest)
-        }
-
-        val jsMain by getting {
-            dependsOn(nonJvmMain)
-            dependencies {
-                implementation(libs.ktor.client.js)
-            }
-        }
-
-        val appleMain by getting {
-            dependsOn(nonJvmMain)
-            dependencies {
-                implementation(libs.ktor.client.darwin)
-            }
-        }
-
-        val appleTest by getting {
-            dependsOn(nonJvmTest)
         }
 
     }
