@@ -122,7 +122,7 @@ kotlin {
         val desktopMain by getting {
             dependsOn(commonMain)
             dependencies {
-                implementation(project(":kamel-decoder:svg-batik"))
+                implementation(project(":kamel-decoder:kamel-decoder-svg-batik"))
                 implementation(project(":kamel-fetcher:kamel-fetcher-resources-jvm"))
                 implementation(compose.desktop.currentOs)
                 implementation(libs.ktor.client.cio)

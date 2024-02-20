@@ -36,7 +36,7 @@ include(
     "kamel-samples",
     "kamel-core",
     "kamel-image",
-    "kamel-decoder:svg-batik",
+    "kamel-decoder:kamel-decoder-svg-batik",
     "kamel-fetcher:kamel-fetcher-resources-jvm",
     "kamel-fetcher:kamel-fetcher-resources-android"
 )
