@@ -26,11 +26,10 @@ plugins {
 
 refreshVersions {
     rejectVersionIf {
-        @Suppress("UnstableApiUsage")
-        candidate.stabilityLevel != StabilityLevel.Stable
+        @Suppress("UnstableApiUsage") candidate.stabilityLevel != StabilityLevel.Stable
     }
 }
 
 rootProject.name = "Kamel"
 
-include("kamel-samples", "kamel-core", "kamel-image", "kamel-image-decoder:svg-batik")
+include("kamel-samples", "kamel-core", "kamel-image", "kamel-decoder:svg-batik")
