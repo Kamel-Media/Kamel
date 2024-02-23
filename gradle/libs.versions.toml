@@ -10,7 +10,6 @@ com-android-application = { id = "com.android.application", version.ref = "agp" 
 
 [versions]
 
-cache4k = "0.12.0"
 kotlin = "1.9.22"
 agp = "8.2.2"
 
@@ -18,8 +17,9 @@ okio = "3.8.0"
 startup-runtime = "1.1.1"
 vanniktech-publish = "0.27.0"
 compose = "1.5.12"
-coroutines = "1.7.3"
+coroutines = "1.8.0"
 ktor = "2.3.8"
+cache4k = "0.13.0"
 xmlutil = "0.86.3"
 activity-compose = "1.8.2"
 appcompat = "1.6.1"
@@ -30,10 +30,10 @@ slf4j = "2.0.12"
 
 [libraries]
 
-cache4k = { module = "io.github.reactivecircus.cache4k:cache4k", version.ref = "cache4k" }
-compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "compose" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 okio-fakefilesystem = { module = "com.squareup.okio:okio-fakefilesystem", version.ref = "okio" }
+
+cache4k = { module = "io.github.reactivecircus.cache4k:cache4k", version.ref = "cache4k" }
 
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
@@ -45,6 +45,7 @@ ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 
+compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "compose" }
 jetbrains-compose-ui-ui-test-junit4 = { module = "org.jetbrains.compose.ui:ui-test-junit4", version.ref = "compose" }
 
 pdvrieze-xmlutil-serialization = { module = "io.github.pdvrieze.xmlutil:serialization", version.ref = "xmlutil" }
