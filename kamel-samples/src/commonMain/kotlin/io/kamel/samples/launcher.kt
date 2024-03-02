@@ -24,11 +24,11 @@ public fun launcher(kamelConfig: KamelConfig) {
             }
             when (tabIndex) {
                 0 -> Gallery()
-                1 -> FileSample("Compose.png")
-                2 -> UrlFileSample("Compose.png")
-                3 -> FileSample("XlImage.png")
-                4 -> FileSample("ComposeXml.xml")
-                5 -> FileSample("Kotlin.svg")
+                1 -> FileSample("files/Compose.png")
+                2 -> UrlFileSample("files/Compose.png")
+                3 -> FileSample("files/XlImage.png")
+                4 -> FileSample("files/ComposeXml.xml")
+                5 -> FileSample("files/Kotlin.svg")
 
                 else -> Text("Invalid Sample Index")
             }

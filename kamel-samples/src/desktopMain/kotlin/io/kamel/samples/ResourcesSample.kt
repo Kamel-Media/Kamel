@@ -19,7 +19,7 @@ public fun main(): Unit = singleWindowApplication {
     }
 
     CompositionLocalProvider(LocalKamelConfig provides kamelConfig) {
-        val painterResource = asyncPainterResource("Compose.png")
+        val painterResource = asyncPainterResource("files/Compose.png")
 
         KamelImage(
             painterResource,
