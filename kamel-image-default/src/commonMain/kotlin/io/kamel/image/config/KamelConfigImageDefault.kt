@@ -16,9 +16,9 @@ public val KamelConfig.Companion.Default: KamelConfig
 
 internal expect fun KamelConfigBuilder.platformSpecificConfig()
 
-public val initializer: ConfigInitializer = ConfigInitializer
+internal expect val initializer: ConfigInitializer
 
-public object ConfigInitializer {
+internal object ConfigInitializer {
     init {
         configOverride = KamelConfig.Default
     }
