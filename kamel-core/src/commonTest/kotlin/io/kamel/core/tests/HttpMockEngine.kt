@@ -3,7 +3,7 @@ package io.kamel.core.tests
 import io.ktor.client.engine.mock.*
 import io.ktor.http.*
 import io.ktor.utils.io.*
-import org.jetbrains.compose.resources.resource
+import media.kamel.`kamel-core`.generated.resources.Res
 
 val HttpMockEngine = MockEngine { request ->
     when (request.url.encodedPath) {
@@ -17,11 +17,11 @@ val HttpMockEngine = MockEngine { request ->
 const val TestStringUrl = "https://www.example.com"
 
 suspend fun resourceImage(): ByteReadChannel {
-    val bytes = resource("Compose.png").readBytes()
+    val bytes = Res.readBytes("files/Compose.png")
     return ByteReadChannel(bytes)
 }
 
 suspend fun svgImage(): ByteReadChannel {
-    val bytes = resource("Kotlin.svg").readBytes()
+    val bytes = Res.readBytes("files/Kotlin.svg")
     return ByteReadChannel(bytes)
 }
