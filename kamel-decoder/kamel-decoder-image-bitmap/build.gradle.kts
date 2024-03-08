@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
 plugins {
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
@@ -40,6 +41,10 @@ kotlin {
     js(IR) {
         browser()
     }
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        browser()
+    }
     iosArm64()
     iosSimulatorArm64()
     iosX64()
@@ -72,6 +77,10 @@ kotlin {
         }
 
         jsMain {
+            dependsOn(nonAndroidMain)
+        }
+
+        val wasmJsMain by getting {
             dependsOn(nonAndroidMain)
         }
 
