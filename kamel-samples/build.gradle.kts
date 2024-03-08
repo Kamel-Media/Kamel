@@ -44,6 +44,28 @@ kotlin {
         browser()
         binaries.executable()
     }
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        browser()
+        binaries.executable()
+        applyBinaryen {
+            binaryenArgs = mutableListOf(
+                "--enable-nontrapping-float-to-int",
+                "--enable-gc",
+                "--enable-reference-types",
+                "--enable-exception-handling",
+                "--enable-bulk-memory",
+                "--inline-functions-with-loops",
+                "--traps-never-happen",
+                "--fast-math",
+                "--closed-world",
+                "--metrics",
+                "-O3", "--gufa", "--metrics",
+                "-O3", "--gufa", "--metrics",
+                "-O3", "--gufa", "--metrics",
+            )
+        }
+    }
     fun iosTargets(config: KotlinNativeTarget.() -> Unit) {
         iosArm64(config)
         iosSimulatorArm64(config)
@@ -151,4 +173,8 @@ compose.desktop.nativeApplication {
         packageName = "Native-Sample"
         packageVersion = "1.0.0"
     }
+}
+
+compose {
+    kotlinCompilerPlugin.set("1.5.7")
 }
