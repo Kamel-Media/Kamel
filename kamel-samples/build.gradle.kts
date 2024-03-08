@@ -127,7 +127,7 @@ kotlin {
                 implementation(project(":kamel-image"))
                 implementation(compose.foundation)
                 implementation(compose.material)
-//                implementation(libs.compose.components.resources)
+                implementation(compose.components.resources)
             }
         }
 

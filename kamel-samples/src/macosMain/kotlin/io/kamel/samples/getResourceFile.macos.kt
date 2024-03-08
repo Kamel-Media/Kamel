@@ -5,5 +5,5 @@ import platform.Foundation.NSFileManager
 
 public actual suspend fun getResourceFile(fileResourcePath: String): File {
     val currentDirectoryPath = NSFileManager.defaultManager().currentDirectoryPath
-    return File("$currentDirectoryPath/src/commonMain/resources/$fileResourcePath")
+    return File("$currentDirectoryPath/src/commonMain/composeResources/$fileResourcePath")
 }
