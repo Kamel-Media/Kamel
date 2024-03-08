@@ -49,7 +49,6 @@ kotlin {
                 implementation(libs.ktor.client.mock)
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.okio.fakefilesystem)
-                implementation(libs.compose.components.resources)
             }
         }
 

@@ -97,8 +97,8 @@ kotlin {
                 implementation(projects.kamelImageDefault)
                 implementation(compose.foundation)
                 implementation(compose.material)
-                implementation(libs.compose.components.resources)
                 implementation(libs.okio)
+                implementation(compose.components.resources)
             }
         }
 

@@ -18,7 +18,7 @@ startup-runtime = "1.1.1"
 vanniktech-publish = "0.27.0"
 compose = "1.6.0"
 coroutines = "1.8.0"
-ktor = "2.3.8"
+ktor = "2.3.9"
 cache4k = "0.13.0"
 xmlutil = "0.86.3"
 activity-compose = "1.8.2"
@@ -46,7 +46,6 @@ ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 
-compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "compose" }
 jetbrains-compose-ui-ui-test-junit4 = { module = "org.jetbrains.compose.ui:ui-test-junit4", version.ref = "compose" }
 
 pdvrieze-xmlutil-serialization = { module = "io.github.pdvrieze.xmlutil:serialization", version.ref = "xmlutil" }
