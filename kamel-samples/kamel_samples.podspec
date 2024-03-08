@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'kamel_samples'
-    spec.version                  = '0.9.3-wasm'
+    spec.version                  = '0.9.4-wasm'
     spec.homepage                 = 'https://github.com/Kamel-Media/Kamel'
     spec.source                   = { :http=> ''}
     spec.authors                  = ''
