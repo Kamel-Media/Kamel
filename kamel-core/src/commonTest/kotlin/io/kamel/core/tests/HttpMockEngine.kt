@@ -3,7 +3,7 @@ package io.kamel.core.tests
 import io.ktor.client.engine.mock.*
 import io.ktor.http.*
 import io.ktor.utils.io.*
-import media.kamel.`kamel-core`.generated.resources.Res
+import media.kamel.kamel_core.generated.resources.Res
 
 val HttpMockEngine = MockEngine { request ->
     when (request.url.encodedPath) {

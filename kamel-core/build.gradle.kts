@@ -45,6 +45,8 @@ kotlin {
                 implementation(libs.ktor.client.core)
                 implementation(libs.okio)
                 implementation(libs.cache4k)
+//                https://github.com/JetBrains/compose-multiplatform/issues/4442
+                implementation(compose.components.resources)
             }
         }
 
@@ -54,7 +56,8 @@ kotlin {
                 implementation(libs.ktor.client.mock)
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.okio.fakefilesystem)
-//                implementation(libs.compose.components.resources)
+//                https://github.com/JetBrains/compose-multiplatform/issues/4442
+//                implementation(compose.components.resources) c
             }
         }
 
