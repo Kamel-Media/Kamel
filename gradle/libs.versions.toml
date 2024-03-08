@@ -12,7 +12,6 @@ com-android-application = { id = "com.android.application", version.ref = "agp" 
 
 kotlin = "1.9.22"
 agp = "8.2.2"
-##⬆= "8.3.0"
 
 okio = "3.8.0"
 startup-runtime = "1.1.1"
