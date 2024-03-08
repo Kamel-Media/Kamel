@@ -11,7 +11,7 @@ import okio.Path.Companion.toPath
 
 @Composable
 internal fun UrlFileSample(resourceFileName: String) {
-    val absolutePath = fileSystem.canonicalize("./src/commonMain/resources/$resourceFileName".toPath()).toString()
+    val absolutePath = fileSystem.canonicalize("./src/commonMain/composeResources/$resourceFileName".toPath()).toString()
 
     Column {
         val painterResource = asyncPainterResource("file://$absolutePath")
