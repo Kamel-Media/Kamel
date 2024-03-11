@@ -1,11 +1,11 @@
 package io.kamel.samples
 
 import io.kamel.core.utils.File
-import media.kamel.kamel_samples.generated.resources.Res
-import org.w3c.files.Blob
+import kotlinx.browser.window
+import kotlinx.coroutines.await
 
 public actual suspend fun getResourceFile(fileResourcePath: String): File {
-    val blob = Blob(Res.readBytes(fileResourcePath).toTypedArray())
+    val blob = window.fetch(fileResourcePath).await().blob().await()
     return File(
         org.w3c.files.File(
             arrayOf(blob), fileResourcePath
