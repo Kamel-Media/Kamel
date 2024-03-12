@@ -37,12 +37,11 @@ kotlin {
     androidTarget {
         publishAllLibraryVariants()
     }
-    jvm("desktop")
+    jvm("desktopJvm")
     js(IR) {
         browser()
     }
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
+    @OptIn(ExperimentalWasmDsl::class) wasmJs {
         browser()
     }
     iosArm64()
@@ -70,19 +69,40 @@ kotlin {
             }
         }
 
-        val jvmTest by creating {
+        val commonJvmMain by creating {
+            dependsOn(commonMain)
+        }
+
+        val commonJvmTest by creating {
             dependsOn(commonTest)
             dependencies {
                 implementation(libs.jetbrains.compose.ui.ui.test.junit4)
             }
         }
 
-        val desktopTest by getting {
-            dependsOn(jvmTest)
+        val desktopJvmTest by getting {
+            dependsOn(commonJvmTest)
             dependencies {
                 implementation(compose.desktop.currentOs)
             }
         }
 
+        val desktopJvmMain by getting {
+            dependsOn(commonJvmMain)
+            dependencies {
+                implementation(compose.desktop.currentOs)
+            }
+        }
+        androidMain.get().dependsOn(commonJvmMain)
+
+        val nonJvmMain by creating {
+            dependsOn(commonMain)
+        }
+
+        val wasmJsMain by getting {
+            dependsOn(nonJvmMain)
+        }
+        jsMain.get().dependsOn(nonJvmMain)
+        nativeMain.get().dependsOn(nonJvmMain)
     }
 }

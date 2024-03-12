@@ -41,8 +41,7 @@ kotlin {
     js(IR) {
         browser()
     }
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
+    @OptIn(ExperimentalWasmDsl::class) wasmJs {
         browser()
     }
     iosArm64()
@@ -64,7 +63,12 @@ kotlin {
             }
         }
 
+        val commonJvmMain by creating {
+            dependsOn(commonMain)
+        }
+
         jvmMain {
+            dependsOn(commonJvmMain)
             dependencies {
                 api(projects.kamelFetcher.kamelFetcherResourcesJvm)
                 implementation(libs.ktor.client.cio)
@@ -72,6 +76,7 @@ kotlin {
         }
 
         androidMain {
+            dependsOn(commonJvmMain)
             dependencies {
                 api(projects.kamelFetcher.kamelFetcherResourcesAndroid)
                 api(projects.kamelMapper.kamelMapperResourcesIdAndroid)
@@ -79,10 +84,26 @@ kotlin {
             }
         }
 
+        val nonJvmMain by creating {
+            dependsOn(commonMain)
+        }
+
         jsMain {
+            dependsOn(nonJvmMain)
             dependencies {
                 implementation(libs.ktor.client.js)
             }
+        }
+
+        val wasmJsMain by getting {
+            dependsOn(nonJvmMain)
+            dependencies {
+                implementation(libs.ktor.client.js)
+            }
+        }
+
+        nativeMain {
+            dependsOn(nonJvmMain)
         }
 
         appleMain {

@@ -2,5 +2,5 @@ package io.kamel.samples
 
 import okio.FileSystem
 
-actual val fileSystem: FileSystem
+public actual val fileSystem: FileSystem
     get() = TODO("Not yet implemented")

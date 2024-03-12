@@ -1,5 +1,6 @@
 package io.kamel.image.config
 
+@Suppress("DEPRECATION")
 @OptIn(ExperimentalStdlibApi::class)
 @EagerInitialization
-internal actual val initializer: ConfigInitializer = ConfigInitializer
+private val initializer: ConfigInitializer = ConfigInitializer
