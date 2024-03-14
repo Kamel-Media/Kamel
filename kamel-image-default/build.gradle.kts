@@ -77,6 +77,7 @@ kotlin {
         }
 
         androidMain {
+            resources.srcDirs("src/commonJvmMain/resources")
             dependsOn(commonJvmMain)
             dependencies {
                 api(projects.kamelFetcher.kamelFetcherResourcesAndroid)
