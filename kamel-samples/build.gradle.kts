@@ -116,7 +116,6 @@ kotlin {
         }
         val commonMain by getting {
             dependencies {
-                implementation(projects.kamelImage)
                 implementation(projects.kamelImageDefault)
                 implementation(compose.foundation)
                 implementation(compose.material)

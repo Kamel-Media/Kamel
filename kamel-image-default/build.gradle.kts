@@ -59,6 +59,7 @@ kotlin {
                 api(projects.kamelDecoder.kamelDecoderSvgStd)
                 api(projects.kamelDecoder.kamelDecoderImageBitmap)
                 api(projects.kamelDecoder.kamelDecoderImageVector)
+                api(projects.kamelDecoder.kamelDecoderAnimatedImage)
                 implementation(compose.foundation)
             }
         }
@@ -76,6 +77,7 @@ kotlin {
         }
 
         androidMain {
+            resources.srcDirs("src/commonJvmMain/resources")
             dependsOn(commonJvmMain)
             dependencies {
                 api(projects.kamelFetcher.kamelFetcherResourcesAndroid)

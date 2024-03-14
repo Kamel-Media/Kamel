@@ -1,5 +1,3 @@
-import de.fayard.refreshVersions.core.StabilityLevel
-
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -43,6 +41,7 @@ include(
     "kamel-image-default",
     "kamel-decoder:kamel-decoder-image-bitmap",
     "kamel-decoder:kamel-decoder-image-vector",
+    "kamel-decoder:kamel-decoder-animated-image",
     "kamel-decoder:kamel-decoder-svg-batik",
     "kamel-decoder:kamel-decoder-svg-std",
     "kamel-fetcher:kamel-fetcher-resources-jvm",
