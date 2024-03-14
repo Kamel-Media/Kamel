@@ -57,7 +57,7 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.okio.fakefilesystem)
 //                https://github.com/JetBrains/compose-multiplatform/issues/4442
-//                implementation(compose.components.resources) c
+//                implementation(compose.components.resources)
             }
         }
 
