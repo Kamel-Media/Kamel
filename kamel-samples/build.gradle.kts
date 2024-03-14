@@ -156,3 +156,7 @@ compose.desktop.nativeApplication {
         packageVersion = "1.0.0"
     }
 }
+
+compose {
+    kotlinCompilerPlugin.set("1.5.10")
+}
