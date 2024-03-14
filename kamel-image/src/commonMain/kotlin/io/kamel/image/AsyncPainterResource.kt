@@ -47,16 +47,14 @@ public inline fun <I : Any> asyncPainterResource(
     val density = LocalDensity.current
     val scope = rememberCoroutineScope()
     val resourceConfig = remember(key, density) {
-        ResourceConfigBuilder(scope.coroutineContext)
-            .apply { this.density = density }
-            .apply(block)
-            .build()
+        ResourceConfigBuilder(scope.coroutineContext).apply { this.density = density }.apply(block).build()
     }
 
     val cachedResource = remember(key) {
         when (getDataSourceEnding(data)) {
             "svg" -> kamelConfig.loadCachedResourceOrNull(data, kamelConfig.svgCache)
             "xml" -> kamelConfig.loadCachedResourceOrNull(data, kamelConfig.imageVectorCache)
+            "gif" -> kamelConfig.loadCachedResourceOrNull(data, kamelConfig.animatedImageCache)
             else -> kamelConfig.loadCachedResourceOrNull(data, kamelConfig.imageBitmapCache)
         }
     }
@@ -65,6 +63,7 @@ public inline fun <I : Any> asyncPainterResource(
         when (getDataSourceEnding(data)) {
             "svg" -> kamelConfig.loadSvgResource(data, resourceConfig)
             "xml" -> kamelConfig.loadImageVectorResource(data, resourceConfig)
+            "gif" -> kamelConfig.loadAnimatedImageResource(data, resourceConfig)
             else -> kamelConfig.loadImageBitmapResource(data, resourceConfig)
         }
     }.collectAsState(cachedResource ?: Resource.Loading(0F), resourceConfig.coroutineContext)
@@ -72,16 +71,14 @@ public inline fun <I : Any> asyncPainterResource(
     val painterResourceWithFallbacks = when (painterResource) {
         is Resource.Loading -> {
             val resource = painterResource as Resource.Loading
-            onLoadingPainter(resource.progress)
-                .mapCatching { painter -> Resource.Success(painter) }
+            onLoadingPainter(resource.progress).mapCatching { painter -> Resource.Success(painter) }
                 .getOrDefault(painterResource)
         }
 
         is Resource.Success -> painterResource
         is Resource.Failure -> {
             val resource = painterResource as Resource.Failure
-            onFailurePainter(resource.exception)
-                .mapCatching { painter -> Resource.Success(painter) }
+            onFailurePainter(resource.exception).mapCatching { painter -> Resource.Success(painter) }
                 .getOrDefault(painterResource)
         }
     }
@@ -92,6 +89,16 @@ public inline fun <I : Any> asyncPainterResource(
             is ImageBitmap -> remember(value) {
                 BitmapPainter(value, filterQuality = filterQuality)
             }
+
+            is AnimatedImage -> {
+                val animatedImage = value.animate()
+//                remember(value) {
+                BitmapPainter(
+                    animatedImage, filterQuality = filterQuality
+                )
+//                }
+            }
+
             else -> remember(value) { value as Painter }
         }
     }

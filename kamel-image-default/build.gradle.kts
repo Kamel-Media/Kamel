@@ -59,6 +59,7 @@ kotlin {
                 api(projects.kamelDecoder.kamelDecoderSvgStd)
                 api(projects.kamelDecoder.kamelDecoderImageBitmap)
                 api(projects.kamelDecoder.kamelDecoderImageVector)
+                api(projects.kamelDecoder.kamelDecoderAnimatedImage)
                 implementation(compose.foundation)
             }
         }

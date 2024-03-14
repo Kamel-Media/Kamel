@@ -11,6 +11,7 @@ public val KamelConfig.Companion.Default: KamelConfig
         imageBitmapDecoder()
         imageVectorDecoder()
         svgDecoder()
+        animatedImageDecoder()
         platformSpecificConfig()
     }
 
