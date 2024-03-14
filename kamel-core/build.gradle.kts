@@ -38,13 +38,12 @@ kotlin {
                 implementation(compose.ui)
                 implementation(compose.foundation)
                 implementation(compose.runtime)
-//                // move resources to commonTest if possible eventually
-//                // https://github.com/JetBrains/compose-multiplatform/issues/4442
-//                implementation(compose.components.resources)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.ktor.client.core)
                 implementation(libs.okio)
                 implementation(libs.cache4k)
+//              https://github.com/JetBrains/compose-multiplatform/issues/4442
+                implementation(compose.components.resources)
             }
         }
 
@@ -54,6 +53,8 @@ kotlin {
                 implementation(libs.ktor.client.mock)
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.okio.fakefilesystem)
+//                https://github.com/JetBrains/compose-multiplatform/issues/4442
+//                implementation(compose.components.resources)
             }
         }
 
