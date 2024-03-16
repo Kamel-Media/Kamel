@@ -3,7 +3,7 @@ package io.kamel.core.config
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.unit.IntSize
+import io.kamel.core.AnimatedImage
 import io.kamel.core.cache.Cache
 import io.kamel.core.decoder.Decoder
 import io.kamel.core.fetcher.Fetcher
@@ -34,6 +34,8 @@ public interface KamelConfig {
 
     public val svgCache: Cache<Any, Painter>
 
+    public val animatedImageCache: Cache<Any, AnimatedImage>
+
     public companion object
 }
 
@@ -42,3 +44,19 @@ public interface KamelConfig {
  */
 public inline fun KamelConfig(block: KamelConfigBuilder.() -> Unit): KamelConfig =
     KamelConfigBuilder().apply(block).build()
+
+public val KamelConfig.Companion.Core: KamelConfig
+    get() = KamelConfig {
+        imageBitmapCacheSize = DefaultCacheSize
+        imageVectorCacheSize = DefaultCacheSize
+        svgCacheSize = DefaultCacheSize
+        animatedImageCacheSize = DefaultCacheSize
+        stringMapper()
+        urlMapper()
+        uriMapper()
+        fileFetcher()
+        fileUrlFetcher()
+        httpUrlFetcher {
+            httpCache(DefaultHttpCacheSize)
+        }
+    }

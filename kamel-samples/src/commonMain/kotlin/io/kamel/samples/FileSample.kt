@@ -22,9 +22,9 @@ internal fun FileSample(fileResourcePath: String) {
 
     Column {
         file?.let { file ->
-            KamelImage(
-                { asyncPainterResource(file) },
-                contentDescription = "Compose",
+            val painterResource = asyncPainterResource(file)
+            KamelImage({ painterResource },
+                contentDescription = fileResourcePath,
                 modifier = Modifier.fillMaxSize(),
                 onFailure = { throw it })
         }

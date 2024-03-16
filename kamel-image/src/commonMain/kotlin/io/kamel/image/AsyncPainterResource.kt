@@ -60,6 +60,7 @@ public inline fun <I : Any> asyncPainterResource(
         when (getDataSourceEnding(data)) {
             "svg" -> kamelConfig.loadCachedResourceOrNull(data, kamelConfig.svgCache)
             "xml" -> kamelConfig.loadCachedResourceOrNull(data, kamelConfig.imageVectorCache)
+            "gif" -> kamelConfig.loadCachedResourceOrNull(data, kamelConfig.animatedImageCache)
             else -> kamelConfig.loadCachedResourceOrNull(data, kamelConfig.imageBitmapCache)
         }
     }
@@ -68,6 +69,7 @@ public inline fun <I : Any> asyncPainterResource(
         when (getDataSourceEnding(data)) {
             "svg" -> kamelConfig.loadSvgResource(data, resourceConfig)
             "xml" -> kamelConfig.loadImageVectorResource(data, resourceConfig)
+            "gif" -> kamelConfig.loadAnimatedImageResource(data, resourceConfig)
             else -> kamelConfig.loadImageBitmapResource(data, resourceConfig)
         }
     }.collectAsState(cachedResource ?: Resource.Loading(0F), resourceConfig.coroutineContext)
@@ -92,6 +94,15 @@ public inline fun <I : Any> asyncPainterResource(
             is ImageVector -> rememberVectorPainter(value)
             is ImageBitmap -> remember(value) {
                 BitmapPainter(value, filterQuality = filterQuality)
+            }
+
+            is AnimatedImage -> {
+                val animatedImage = value.animate()
+//                remember(value) {
+                BitmapPainter(
+                    animatedImage, filterQuality = filterQuality
+                )
+//                }
             }
 
             else -> remember(value) { value as Painter }

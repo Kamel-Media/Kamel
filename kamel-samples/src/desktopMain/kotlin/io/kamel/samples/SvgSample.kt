@@ -19,11 +19,11 @@ public fun main(): Unit = singleWindowApplication {
     }
 
     CompositionLocalProvider(LocalKamelConfig provides kamelConfig) {
-        KamelImage(
-            { asyncPainterResource("Kotlin.svg") },
+        val painterResource = asyncPainterResource("files/Kotlin.svg")
+
+        KamelImage({ painterResource },
             contentDescription = "Compose",
             modifier = Modifier.fillMaxSize(),
-            onFailure = { throw it }
-        )
+            onFailure = { throw it })
     }
 }

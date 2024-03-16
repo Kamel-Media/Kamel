@@ -1,5 +1,3 @@
-import de.fayard.refreshVersions.core.StabilityLevel
-
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -7,7 +5,7 @@ pluginManagement {
         google()
     }
     plugins {
-        id("de.fayard.refreshVersions") version "0.60.3"
+        id("de.fayard.refreshVersions") version "0.60.5"
     }
 }
 
@@ -16,6 +14,8 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        maven(url = "https://s01.oss.sonatype.org/content/repositories/snapshots")
+        maven(url = "https://maven.pkg.jetbrains.space/kotlin/p/wasm/experimental")
     }
 }
 
@@ -25,12 +25,26 @@ plugins {
 
 
 refreshVersions {
-    rejectVersionIf {
-        @Suppress("UnstableApiUsage")
-        candidate.stabilityLevel != StabilityLevel.Stable
-    }
+//    rejectVersionIf {
+//        @Suppress("UnstableApiUsage")
+//        candidate.stabilityLevel != StabilityLevel.Stable
+//    }
 }
 
 rootProject.name = "Kamel"
 
-include("kamel-samples", "kamel-core", "kamel-image")
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+include(
+    "kamel-samples",
+    "kamel-core",
+    "kamel-image",
+    "kamel-image-default",
+    "kamel-decoder:kamel-decoder-image-bitmap",
+    "kamel-decoder:kamel-decoder-image-vector",
+    "kamel-decoder:kamel-decoder-animated-image",
+    "kamel-decoder:kamel-decoder-svg-batik",
+    "kamel-decoder:kamel-decoder-svg-std",
+    "kamel-fetcher:kamel-fetcher-resources-jvm",
+    "kamel-fetcher:kamel-fetcher-resources-android",
+    "kamel-mapper:kamel-mapper-resources-id-android"
+)

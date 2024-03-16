@@ -1,11 +1,11 @@
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
 plugins {
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
     alias(libs.plugins.org.jetbrains.compose)
-    `maven-publish`
-    signing
     alias(libs.plugins.com.android.library)
+    alias(libs.plugins.com.vanniktech.maven.publish)
 }
 
 kotlin {
@@ -17,6 +17,10 @@ kotlin {
     }
     jvm("desktop")
     js(IR) {
+        browser()
+    }
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
         browser()
     }
     iosArm64()
@@ -36,13 +40,13 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
-                implementation(compose.ui)
                 implementation(compose.foundation)
-                implementation(compose.runtime)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.ktor.client.core)
                 implementation(libs.okio)
                 implementation(libs.cache4k)
+//                https://github.com/JetBrains/compose-multiplatform/issues/4442
+                implementation(compose.components.resources)
             }
         }
 
@@ -52,7 +56,8 @@ kotlin {
                 implementation(libs.ktor.client.mock)
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.okio.fakefilesystem)
-                implementation(libs.compose.components.resources)
+//                https://github.com/JetBrains/compose-multiplatform/issues/4442
+//                implementation(compose.components.resources)
             }
         }
 
@@ -95,6 +100,10 @@ kotlin {
             dependsOn(nonJvmMain)
         }
 
+        val wasmJsMain by getting {
+            dependsOn(nonJvmMain)
+        }
+
         val appleMain by getting {
             dependsOn(nonJvmMain)
         }
@@ -104,13 +113,6 @@ kotlin {
         }
 
     }
-}
-
-// https://youtrack.jetbrains.com/issue/KT-46466
-val dependsOnTasks = mutableListOf<String>()
-tasks.withType<AbstractPublishToMaven>().configureEach {
-    dependsOnTasks.add(this.name.replace("publish", "sign").replaceAfter("Publication", ""))
-    dependsOn(dependsOnTasks)
 }
 
 android {

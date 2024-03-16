@@ -1,13 +1,6 @@
-import org.jetbrains.compose.desktop.application.tasks.AbstractNativeMacApplicationPackageAppDirTask
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
-import org.jetbrains.kotlin.gradle.plugin.mpp.AbstractExecutable
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBinary
-import org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink
-import org.jetbrains.kotlin.library.impl.KotlinLibraryLayoutImpl
-import java.io.File
-import java.io.FileFilter
-import org.jetbrains.kotlin.konan.file.File as KonanFile
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
 plugins {
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
@@ -51,6 +44,28 @@ kotlin {
     js(IR) {
         browser()
         binaries.executable()
+    }
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        browser()
+        binaries.executable()
+        applyBinaryen {
+            binaryenArgs = mutableListOf(
+                "--enable-nontrapping-float-to-int",
+                "--enable-gc",
+                "--enable-reference-types",
+                "--enable-exception-handling",
+                "--enable-bulk-memory",
+                "--inline-functions-with-loops",
+                "--traps-never-happen",
+                "--fast-math",
+                "--closed-world",
+                "--metrics",
+                "-O3", "--gufa", "--metrics",
+                "-O3", "--gufa", "--metrics",
+                "-O3", "--gufa", "--metrics",
+            )
+        }
     }
     fun iosTargets(config: KotlinNativeTarget.() -> Unit) {
         iosArm64(config)
@@ -101,20 +116,22 @@ kotlin {
         }
         val commonMain by getting {
             dependencies {
-                implementation(project(":kamel-image"))
+                implementation(projects.kamelImageDefault)
                 implementation(compose.foundation)
                 implementation(compose.material)
-                implementation(libs.compose.components.resources)
+                implementation(libs.okio)
+                implementation(compose.components.resources)
             }
         }
 
         val androidMain by getting {
             dependsOn(commonMain)
             dependencies {
+                implementation(projects.kamelFetcher.kamelFetcherResourcesAndroid)
+                implementation(projects.kamelMapper.kamelMapperResourcesIdAndroid)
                 implementation(libs.androidx.appcompat)
                 implementation(libs.androidx.activity.compose)
                 implementation(libs.google.android.material)
-                implementation(libs.ktor.client.android)
                 implementation(libs.slf4j)
             }
         }
@@ -122,8 +139,9 @@ kotlin {
         val desktopMain by getting {
             dependsOn(commonMain)
             dependencies {
+                implementation(projects.kamelDecoder.kamelDecoderSvgBatik)
+                implementation(projects.kamelFetcher.kamelFetcherResourcesJvm)
                 implementation(compose.desktop.currentOs)
-                implementation(libs.ktor.client.cio)
                 implementation(libs.slf4j)
             }
         }
@@ -155,4 +173,8 @@ compose.desktop.nativeApplication {
         packageName = "Native-Sample"
         packageVersion = "1.0.0"
     }
+}
+
+compose {
+    kotlinCompilerPlugin.set("1.5.10")
 }

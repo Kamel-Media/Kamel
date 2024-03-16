@@ -1,11 +1,11 @@
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
 plugins {
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
     alias(libs.plugins.org.jetbrains.compose)
     alias(libs.plugins.com.android.library)
-    `maven-publish`
-    signing
+    alias(libs.plugins.com.vanniktech.maven.publish)
 }
 
 android {
@@ -32,14 +32,16 @@ android {
 }
 
 kotlin {
-
     explicitApi = ExplicitApiMode.Warning
 
     androidTarget {
         publishAllLibraryVariants()
     }
-    jvm("desktop")
+    jvm("desktopJvm")
     js(IR) {
+        browser()
+    }
+    @OptIn(ExperimentalWasmDsl::class) wasmJs {
         browser()
     }
     iosArm64()
@@ -53,10 +55,8 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
-                api(project(":kamel-core"))
-                implementation(compose.ui)
+                api(projects.kamelCore)
                 implementation(compose.foundation)
-                implementation(compose.runtime)
                 implementation(libs.ktor.client.core)
             }
         }
@@ -69,83 +69,40 @@ kotlin {
             }
         }
 
-        val jvmMain by creating {
+        val commonJvmMain by creating {
             dependsOn(commonMain)
         }
 
-        val jvmTest by creating {
+        val commonJvmTest by creating {
             dependsOn(commonTest)
             dependencies {
-                implementation(compose.material)
                 implementation(libs.jetbrains.compose.ui.ui.test.junit4)
             }
         }
 
-        val desktopMain by getting {
-            dependsOn(jvmMain)
+        val desktopJvmTest by getting {
+            dependsOn(commonJvmTest)
             dependencies {
-                implementation(libs.apache.batik.transcoder)
-                //https://stackoverflow.com/a/45318410/1363742
-                implementation(libs.apache.batik.codec)
-            }
-        }
-
-        val desktopTest by getting {
-            dependsOn(jvmTest)
-            dependencies {
-                implementation(libs.ktor.client.cio)
                 implementation(compose.desktop.currentOs)
             }
         }
 
-        val androidMain by getting {
-            dependsOn(jvmMain)
+        val desktopJvmMain by getting {
+            dependsOn(commonJvmMain)
             dependencies {
-                implementation(libs.com.caverok.androidsvg)
-                implementation(libs.pdvrieze.xmlutil.serialization)
+                implementation(compose.desktop.currentOs)
             }
         }
-
-        val androidUnitTest by getting {
-            dependsOn(jvmTest)
-        }
+        androidMain.get().dependsOn(commonJvmMain)
 
         val nonJvmMain by creating {
             dependsOn(commonMain)
-            dependencies {
-                implementation(libs.pdvrieze.xmlutil.serialization)
-            }
         }
 
-        val nonJvmTest by creating {
-            dependsOn(commonTest)
-        }
-
-        val jsMain by getting {
+        val wasmJsMain by getting {
             dependsOn(nonJvmMain)
-            dependencies {
-                implementation(libs.ktor.client.js)
-            }
         }
-
-        val appleMain by getting {
-            dependsOn(nonJvmMain)
-            dependencies {
-                implementation(libs.ktor.client.darwin)
-            }
-        }
-
-        val appleTest by getting {
-            dependsOn(nonJvmTest)
-        }
-
+        jsMain.get().dependsOn(nonJvmMain)
+        nativeMain.get().dependsOn(nonJvmMain)
     }
 }
-
-// https://youtrack.jetbrains.com/issue/KT-46466
-val dependsOnTasks = mutableListOf<String>()
-tasks.withType<AbstractPublishToMaven>().configureEach {
-    dependsOnTasks.add(this.name.replace("publish", "sign").replaceAfter("Publication", ""))
-    dependsOn(dependsOnTasks)
-}
-

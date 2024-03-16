@@ -3,8 +3,8 @@
 [![Version](https://img.shields.io/maven-central/v/media.kamel/kamel-core?label=version&color=blue)](https://search.maven.org/search?q=media.kamel)
 [![Snapshot](https://img.shields.io/nexus/s/media.kamel/kamel-core?label=snapshot&server=https%3A%2F%2Fs01.oss.sonatype.org)](https://s01.oss.sonatype.org/content/repositories/snapshots/media/kamel/)
 [![License](https://img.shields.io/github/license/alialbaali/kamel)](http://www.apache.org/licenses/LICENSE-2.0)
-[![Kotlin](https://img.shields.io/badge/kotlin-v1.9.21-blue.svg?logo=kotlin)](http://kotlinlang.org)
-[![Compose Multiplatform](https://img.shields.io/badge/Compose%20Multiplatform-v1.5.11-blue)](https://github.com/JetBrains/compose-multiplatform)
+[![Kotlin](https://img.shields.io/badge/kotlin-v1.9.22-blue.svg?logo=kotlin)](http://kotlinlang.org)
+[![Compose Multiplatform](https://img.shields.io/badge/Compose%20Multiplatform-v1.5.12-blue)](https://github.com/JetBrains/compose-multiplatform)
 
 Kamel is an asynchronous media loading library for [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform). It provides a simple, customizable and
 efficient way to load, cache, decode and display images in your application. By default, it uses
@@ -50,7 +50,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation("media.kamel:kamel-image:0.9.1")
+                implementation("media.kamel:kamel-image-default:1.0.0-beta.3")
                 // ...
             }
         }
@@ -64,7 +64,7 @@ Add the dependency to the dependencies block:
 
 ```kotlin
 dependencies {
-    implementation("media.kamel:kamel-image:0.9.1")
+    implementation("media.kamel:kamel-image-default:1.0.0-beta.3")
     // ...
 }
 ```
@@ -84,6 +84,7 @@ images from different data sources:
 ```kotlin
 // String
 asyncPainterResource(data = "https://www.example.com/image.jpg")
+asyncPainterResource(data = "file:///path/to/image.png")
 
 // Ktor Url
 asyncPainterResource(data = Url("https://www.example.com/image.jpg"))
@@ -279,8 +280,9 @@ val customKamelConfig = KamelConfig {
     // adds a FileFetcher
     fileFetcher()
 
+    
     // Configures Ktor HttpClient
-    httpFetcher {
+    httpUrlFetcher {
         // httpCache is defined in kamel-core and configures the ktor client 
         // to install a HttpCache feature with the implementation provided by Kamel.
         // The size of the cache can be defined in Bytes.
@@ -297,7 +299,7 @@ val customKamelConfig = KamelConfig {
                 !httpResponse.status.isSuccess()
             }
         }
-        
+
         // Requires adding "io.ktor:ktor-client-logging:$ktor_version"
         Logging {
             level = LogLevel.INFO
