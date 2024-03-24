@@ -11,8 +11,7 @@ internal actual val URLMapper: Mapper<URL, Url> = object : Mapper<URL, Url> {
     override val outputKClass: KClass<Url>
         get() = Url::class
 
-    // TODO: https://youtrack.jetbrains.com/issue/KT-64638/java.util.NoSuchElementException-Key-CLASS-CLASS-nameURL-modalityOPEN-visibilitypublic-external-superTypeskotlin.js.JsAny-is
-    override fun map(input: URL): Url = input//StringMapper.map(input.toString().removeSuffix("/"))
+    override fun map(input: URL): Url = StringMapper.map(input.toString().removeSuffix("/"))
 }
 
 

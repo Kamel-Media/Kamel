@@ -10,7 +10,7 @@ com-android-application = { id = "com.android.application", version.ref = "agp" 
 
 [versions]
 
-kotlin = "1.9.23"
+kotlin = "2.0.0-Beta5"
 agp = "8.3.0"
 
 okio = "3.9.0"

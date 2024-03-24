@@ -6,6 +6,8 @@ local.properties
 *.iml
 *.gpg
 *.DS_STORE
+.kotlin/
 
 # IntelliJ Code Styles
 !/.idea/codeStyles/
+
