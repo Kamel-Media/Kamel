@@ -15,7 +15,7 @@ dependencyResolutionManagement {
         mavenCentral()
         maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
         maven(url = "https://s01.oss.sonatype.org/content/repositories/snapshots")
-        maven(url = "https://maven.pkg.jetbrains.space/kotlin/p/wasm/experimental")
+        maven("https://maven.pkg.jetbrains.space/public/p/ktor/eap")
     }
 }
 
