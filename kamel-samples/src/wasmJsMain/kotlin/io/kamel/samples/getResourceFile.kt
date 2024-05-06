@@ -7,7 +7,8 @@ import org.w3c.fetch.Response
 import org.w3c.files.Blob
 
 public actual suspend fun getResourceFile(fileResourcePath: String): File {
-    val blob: Blob = window.fetch(fileResourcePath).await<Response>().blob().await()
+    val blob: Blob = window.fetch("composeResources/media.kamel.kamel_samples.generated.resources/$fileResourcePath")
+        .await<Response>().blob().await()
     val array = JsArray<JsAny?>()
     array.set(0, blob.unsafeCast())
     return File(
