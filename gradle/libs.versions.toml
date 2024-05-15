@@ -4,19 +4,20 @@
 
 org-jetbrains-kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 org-jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "compose" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 com-vanniktech-maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktech-publish" }
 com-android-library = { id = "com.android.library", version.ref = "agp" }
 com-android-application = { id = "com.android.application", version.ref = "agp" }
 
 [versions]
 
-kotlin = "1.9.23"
+kotlin = "2.0.0-RC3"
 agp = "8.2.2"
 
 okio = "3.9.0"
 startup-runtime = "1.1.1"
 vanniktech-publish = "0.28.0"
-compose = "1.6.2"
+compose = "1.6.10-rc02"
 coroutines = "1.8.1"
 ktor = "2.3.11"
 cache4k = "0.13.0"

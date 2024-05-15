@@ -27,7 +27,7 @@ plugins {
 refreshVersions {
     rejectVersionIf {
         @Suppress("UnstableApiUsage")
-        candidate.stabilityLevel != StabilityLevel.Stable
+        candidate.stabilityLevel != StabilityLevel.ReleaseCandidate
     }
 }
 

@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 plugins {
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
     alias(libs.plugins.org.jetbrains.compose)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.com.vanniktech.maven.publish)
 }
