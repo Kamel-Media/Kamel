@@ -16,6 +16,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        maven(url = "https://maven.pkg.jetbrains.space/public/p/ktor/eap")
     }
 }
 
@@ -27,7 +28,7 @@ plugins {
 refreshVersions {
     rejectVersionIf {
         @Suppress("UnstableApiUsage")
-        candidate.stabilityLevel != StabilityLevel.Stable
+        candidate.stabilityLevel >= StabilityLevel.Beta
     }
 }
 

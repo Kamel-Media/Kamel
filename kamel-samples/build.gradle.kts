@@ -1,17 +1,10 @@
-import org.jetbrains.compose.desktop.application.tasks.AbstractNativeMacApplicationPackageAppDirTask
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
-import org.jetbrains.kotlin.gradle.plugin.mpp.AbstractExecutable
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBinary
-import org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink
-import org.jetbrains.kotlin.library.impl.KotlinLibraryLayoutImpl
-import java.io.File
-import java.io.FileFilter
-import org.jetbrains.kotlin.konan.file.File as KonanFile
 
 plugins {
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
     alias(libs.plugins.org.jetbrains.compose)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.com.android.application)
     kotlin("native.cocoapods")
 }
@@ -61,9 +54,18 @@ kotlin {
         binaries.forEach {
             it.apply {
                 freeCompilerArgs += listOf(
-                    "-linker-option", "-framework", "-linker-option", "Metal",
-                    "-linker-option", "-framework", "-linker-option", "CoreText",
-                    "-linker-option", "-framework", "-linker-option", "CoreGraphics"
+                    "-linker-option",
+                    "-framework",
+                    "-linker-option",
+                    "Metal",
+                    "-linker-option",
+                    "-framework",
+                    "-linker-option",
+                    "CoreText",
+                    "-linker-option",
+                    "-framework",
+                    "-linker-option",
+                    "CoreGraphics"
                 )
             }
         }
@@ -99,7 +101,7 @@ kotlin {
                 optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
             }
         }
-        val commonMain by getting {
+        commonMain {
             dependencies {
                 implementation(project(":kamel-image"))
                 implementation(compose.foundation)
@@ -108,8 +110,7 @@ kotlin {
             }
         }
 
-        val androidMain by getting {
-            dependsOn(commonMain)
+        androidMain {
             dependencies {
                 implementation(libs.androidx.appcompat)
                 implementation(libs.androidx.activity.compose)
@@ -120,16 +121,11 @@ kotlin {
         }
 
         val desktopMain by getting {
-            dependsOn(commonMain)
             dependencies {
                 implementation(compose.desktop.currentOs)
                 implementation(libs.ktor.client.cio)
                 implementation(libs.slf4j)
             }
-        }
-
-        val jsMain by getting {
-            dependsOn(commonMain)
         }
 
     }
@@ -143,11 +139,6 @@ compose {
     }
 }
 
-compose.experimental {
-    web.application {}
-}
-
-
 compose.desktop.nativeApplication {
     targets(kotlin.targets.getByName("macosArm64"))
     distributions {
@@ -155,8 +146,4 @@ compose.desktop.nativeApplication {
         packageName = "Native-Sample"
         packageVersion = "1.0.0"
     }
-}
-
-compose {
-    kotlinCompilerPlugin.set("1.5.10")
 }
