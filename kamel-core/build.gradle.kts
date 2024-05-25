@@ -126,7 +126,3 @@ android {
         minSdk = 21
     }
 }
-
-compose {
-    kotlinCompilerPlugin.set("1.5.11-kt-2.0.0-Beta5")
-}
