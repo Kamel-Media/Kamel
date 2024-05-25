@@ -57,6 +57,9 @@ class HttpFetcherTest {
     }
 
     @Test
+    // fails due to https://github.com/JetBrains/compose-multiplatform/issues/4442
+    // it will pass if you copy the test resources to the main resources folder,
+    // but I do not want to check this in.
     fun testFetchingNonEmptyImageBytes() = runTest {
         val resourceConfig: ResourceConfig = ResourceConfigBuilder(coroutineContext).build()
         val url = Url("/image.svg")
