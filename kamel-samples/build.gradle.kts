@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
 plugins {
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
@@ -49,23 +50,6 @@ kotlin {
     wasmJs {
         browser()
         binaries.executable()
-        applyBinaryen {
-            binaryenArgs = mutableListOf(
-                "--enable-nontrapping-float-to-int",
-                "--enable-gc",
-                "--enable-reference-types",
-                "--enable-exception-handling",
-                "--enable-bulk-memory",
-                "--inline-functions-with-loops",
-                "--traps-never-happen",
-                "--fast-math",
-                "--closed-world",
-                "--metrics",
-                "-O3", "--gufa", "--metrics",
-                "-O3", "--gufa", "--metrics",
-                "-O3", "--gufa", "--metrics",
-            )
-        }
     }
     fun iosTargets(config: KotlinNativeTarget.() -> Unit) {
         iosArm64(config)
