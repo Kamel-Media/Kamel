@@ -9,7 +9,7 @@ import io.ktor.utils.io.jvm.javaio.*
 import org.xml.sax.InputSource
 import kotlin.reflect.KClass
 
-internal actual object ImageVectorDecoder : Decoder<ImageVector> {
+internal actual val ImageVectorDecoder = object : Decoder<ImageVector> {
 
     override val outputKClass: KClass<ImageVector> = ImageVector::class
 
