@@ -1,7 +1,7 @@
 package io.kamel.samples
 
 import io.kamel.core.utils.File
-import media.kamel.`kamel-samples`.generated.resources.Res
+import media.kamel.kamel_samples.generated.resources.Res
 import java.io.FileOutputStream
 
 

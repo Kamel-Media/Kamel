@@ -12,7 +12,7 @@ import kotlin.reflect.KClass
 /**
  * Decodes and transfers [ByteReadChannel] to [ImageBitmap] using Skia [Image].
  */
-internal actual object ImageBitmapDecoder : Decoder<ImageBitmap> {
+internal actual val ImageBitmapDecoder = object : Decoder<ImageBitmap> {
 
     override val outputKClass: KClass<ImageBitmap> = ImageBitmap::class
 
