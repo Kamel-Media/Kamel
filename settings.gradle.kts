@@ -41,6 +41,7 @@ include(
     "kamel-image",
     "kamel-image-default",
     "kamel-decoder:kamel-decoder-image-bitmap",
+    "kamel-decoder:kamel-decoder-image-bitmap-resizing",
     "kamel-decoder:kamel-decoder-image-vector",
     "kamel-decoder:kamel-decoder-animated-image",
     "kamel-decoder:kamel-decoder-svg-batik",
