@@ -1,5 +1,6 @@
 package io.kamel.image
 
+import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.ImageBitmap
@@ -9,6 +10,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.IntSize
 import io.kamel.core.*
 import io.kamel.core.config.ResourceConfig
 import io.kamel.core.config.ResourceConfigBuilder
@@ -36,7 +38,8 @@ public class PainterFailure : Error("Failed to return a Painter")
 @Composable
 public inline fun <I : Any> asyncPainterResource(
     data: I,
-    key: Any? = data,
+    maxBitmapDecodeSize: IntSize = IntSize(Int.MAX_VALUE, Int.MAX_VALUE),
+    key: Any = data to maxBitmapDecodeSize,
     filterQuality: FilterQuality = DrawScope.DefaultFilterQuality,
     noinline onLoadingPainter: @Composable (Float) -> Result<Painter> = { Result.failure(PainterFailure()) },
     noinline onFailurePainter: @Composable (Throwable) -> Result<Painter> = { Result.failure(PainterFailure()) },
@@ -47,7 +50,10 @@ public inline fun <I : Any> asyncPainterResource(
     val density = LocalDensity.current
     val scope = rememberCoroutineScope()
     val resourceConfig = remember(key, density) {
-        ResourceConfigBuilder(scope.coroutineContext).apply { this.density = density }.apply(block).build()
+        ResourceConfigBuilder(scope.coroutineContext).apply {
+            this.density = density
+            this.maxBitmapDecodeSize = maxBitmapDecodeSize
+        }.apply(block).build()
     }
 
     val cachedResource = remember(key) {
@@ -118,17 +124,37 @@ public inline fun <I : Any> asyncPainterResource(
 @Composable
 public inline fun asyncPainterResource(
     data: Any,
-    key: Any? = data,
+    maxBitmapDecodeSize: IntSize = IntSize(Int.MAX_VALUE, Int.MAX_VALUE),
+    key: Any = data,
     filterQuality: FilterQuality = DrawScope.DefaultFilterQuality,
     crossinline block: ResourceConfigBuilder.() -> Unit = {},
-): Resource<Painter> = asyncPainterResource(
-    data,
+): Resource<Painter> = asyncPainterResource(data,
+    maxBitmapDecodeSize,
     key,
     filterQuality,
     onLoadingPainter = { Result.failure(PainterFailure()) },
     onFailurePainter = { Result.failure(PainterFailure()) },
     block
 )
+
+@OptIn(ExperimentalKamelApi::class)
+@Composable
+public inline fun BoxWithConstraintsScope.asyncPainterResource(
+    data: Any,
+    key: Any = data,
+    filterQuality: FilterQuality = DrawScope.DefaultFilterQuality,
+    crossinline block: ResourceConfigBuilder.() -> Unit = {},
+): Resource<Painter> {
+    return asyncPainterResource(
+        data,
+        IntSize(constraints.maxWidth, constraints.maxHeight),
+        key,
+        filterQuality,
+        onLoadingPainter = { Result.failure(PainterFailure()) },
+        onFailurePainter = { Result.failure(PainterFailure()) },
+        block
+    )
+}
 
 /**
  * Finds the best ending [String] of the data object.

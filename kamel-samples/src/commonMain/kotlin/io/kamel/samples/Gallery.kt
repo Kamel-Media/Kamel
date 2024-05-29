@@ -40,13 +40,15 @@ public fun Gallery() {
     Box(Modifier.fillMaxSize()) {
         LazyVerticalGrid(columns = GridCells.Fixed(cellsCount), modifier = Modifier.fillMaxSize()) {
             items(items) { imageUrl ->
-                val painterResource: Resource<Painter> = asyncPainterResource(
-                    imageUrl,
-                    filterQuality = FilterQuality.High,
-                )
+                val getPainterResource: @Composable (BoxWithConstraintsScope.() -> Resource<Painter>) = {
+                    asyncPainterResource(
+                        imageUrl,
+                        filterQuality = FilterQuality.High,
+                    )
+                }
 
                 KamelImage(
-                    resource = painterResource,
+                    getResource = getPainterResource,
                     contentDescription = null,
                     modifier = Modifier
                         .aspectRatio(1F)

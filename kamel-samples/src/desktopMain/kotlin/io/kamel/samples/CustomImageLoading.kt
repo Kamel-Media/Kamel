@@ -1,14 +1,13 @@
 package io.kamel.samples
 
+import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.window.singleWindowApplication
 import io.kamel.core.Resource
 import io.kamel.core.config.ResourceConfigBuilder
@@ -36,8 +35,10 @@ public fun main(): Unit = singleWindowApplication {
         }
     }.collectAsState(Resource.Loading(0F), resourceConfig.coroutineContext)
 
-    val painterResource = imageBitmapResource.map {
-        remember(it) { BitmapPainter(it) }
+    val painterResource: @Composable (BoxWithConstraintsScope.() -> Resource<Painter>) = {
+        imageBitmapResource.map {
+            remember(it) { BitmapPainter(it) }
+        }
     }
 
     KamelImage(
