@@ -18,7 +18,7 @@ import kotlin.reflect.KClass
 /**
  * Fetcher that fetches [ByteReadChannel] from the localhost using [Url].
  */
-internal actual object FileUrlFetcher : Fetcher<Url> {
+internal actual val FileUrlFetcher = object : Fetcher<Url> {
     override val inputDataKClass: KClass<Url> = Url::class
 
     override val source: DataSource = DataSource.Disk
@@ -41,7 +41,7 @@ internal actual object FileUrlFetcher : Fetcher<Url> {
     }
 }
 
-internal fun<T: JsAny> jsArrayOf(vararg elements: T?): JsArray<T?> {
+internal fun <T : JsAny> jsArrayOf(vararg elements: T?): JsArray<T?> {
     val array = JsArray<T?>()
     for (i in elements.indices) {
         array[i] = elements[i]

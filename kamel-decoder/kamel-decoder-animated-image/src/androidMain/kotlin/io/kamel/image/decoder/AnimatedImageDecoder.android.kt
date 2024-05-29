@@ -18,11 +18,11 @@ import kotlin.reflect.KClass
 /**
  * Decodes and transfers [ByteReadChannel] to [AnimatedImage] using Skia [Image].
  */
-internal actual object AnimatedImageDecoder : Decoder<AnimatedImage> {
+internal actual val AnimatedImageDecoder = object : Decoder<AnimatedImage> {
 
-    actual override val outputKClass: KClass<AnimatedImage> = AnimatedImage::class
+    override val outputKClass: KClass<AnimatedImage> = AnimatedImage::class
 
-    actual override suspend fun decode(
+    override suspend fun decode(
         channel: ByteReadChannel, resourceConfig: ResourceConfig
     ): AnimatedImage {
         val inStream = channel.toInputStream()
