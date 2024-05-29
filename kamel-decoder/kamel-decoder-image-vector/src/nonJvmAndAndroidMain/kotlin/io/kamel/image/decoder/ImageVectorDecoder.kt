@@ -9,7 +9,7 @@ import io.ktor.utils.io.*
 import loadXmlImageVector
 import kotlin.reflect.KClass
 
-internal actual object ImageVectorDecoder : Decoder<ImageVector> {
+internal actual val ImageVectorDecoder = object : Decoder<ImageVector> {
 
     override val outputKClass: KClass<ImageVector> = ImageVector::class
 

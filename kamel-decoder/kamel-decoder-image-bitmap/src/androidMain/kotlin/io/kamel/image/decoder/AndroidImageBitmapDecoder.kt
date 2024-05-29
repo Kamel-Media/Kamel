@@ -11,7 +11,7 @@ import kotlin.reflect.KClass
 
 private const val Offset = 0
 
-internal actual object ImageBitmapDecoder : Decoder<ImageBitmap> {
+internal actual val ImageBitmapDecoder = object : Decoder<ImageBitmap> {
 
     override val outputKClass: KClass<ImageBitmap> = ImageBitmap::class
 

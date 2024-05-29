@@ -77,9 +77,18 @@ kotlin {
         binaries.forEach {
             it.apply {
                 freeCompilerArgs += listOf(
-                    "-linker-option", "-framework", "-linker-option", "Metal",
-                    "-linker-option", "-framework", "-linker-option", "CoreText",
-                    "-linker-option", "-framework", "-linker-option", "CoreGraphics"
+                    "-linker-option",
+                    "-framework",
+                    "-linker-option",
+                    "Metal",
+                    "-linker-option",
+                    "-framework",
+                    "-linker-option",
+                    "CoreText",
+                    "-linker-option",
+                    "-framework",
+                    "-linker-option",
+                    "CoreGraphics"
                 )
             }
         }
@@ -115,7 +124,7 @@ kotlin {
                 optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
             }
         }
-        val commonMain by getting {
+        commonMain {
             dependencies {
                 implementation(projects.kamelImageDefault)
                 implementation(compose.foundation)
@@ -125,8 +134,7 @@ kotlin {
             }
         }
 
-        val androidMain by getting {
-            dependsOn(commonMain)
+        androidMain {
             dependencies {
                 implementation(projects.kamelFetcher.kamelFetcherResourcesAndroid)
                 implementation(projects.kamelMapper.kamelMapperResourcesIdAndroid)
@@ -138,17 +146,12 @@ kotlin {
         }
 
         val desktopMain by getting {
-            dependsOn(commonMain)
             dependencies {
                 implementation(projects.kamelDecoder.kamelDecoderSvgBatik)
                 implementation(projects.kamelFetcher.kamelFetcherResourcesJvm)
                 implementation(compose.desktop.currentOs)
                 implementation(libs.slf4j)
             }
-        }
-
-        val jsMain by getting {
-            dependsOn(commonMain)
         }
 
     }
@@ -162,11 +165,6 @@ compose {
     }
 }
 
-compose.experimental {
-    web.application {}
-}
-
-
 compose.desktop.nativeApplication {
     targets(kotlin.targets.getByName("macosArm64"))
     distributions {
@@ -174,8 +172,4 @@ compose.desktop.nativeApplication {
         packageName = "Native-Sample"
         packageVersion = "1.0.0"
     }
-}
-
-compose {
-    kotlinCompilerPlugin.set("1.5.10")
 }

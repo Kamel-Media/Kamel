@@ -7,7 +7,7 @@ import io.kamel.core.mapper.Mapper
 import io.ktor.http.*
 import kotlin.reflect.KClass
 
-internal class ResourcesIdMapper(private val context: Context) : Mapper<@receiver:DrawableRes Int, Url> {
+internal class ResourcesIdMapper(private val context: Context) : Mapper<Int, Url> {
 
     override val inputKClass: KClass<Int>
         get() = Int::class

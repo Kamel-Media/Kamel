@@ -10,3 +10,4 @@ local.properties
 
 # IntelliJ Code Styles
 !/.idea/codeStyles/
+.kotlin/

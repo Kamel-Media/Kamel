@@ -12,12 +12,13 @@ import kotlin.reflect.KClass
 /**
  * Decodes and transfers [ByteReadChannel] to [ImageBitmap] using Skia [Image].
  */
-internal actual object ImageBitmapDecoder : Decoder<ImageBitmap> {
+internal actual val ImageBitmapDecoder = object : Decoder<ImageBitmap> {
 
     override val outputKClass: KClass<ImageBitmap> = ImageBitmap::class
 
     override suspend fun decode(
-        channel: ByteReadChannel, resourceConfig: ResourceConfig
+        channel: ByteReadChannel,
+        resourceConfig: ResourceConfig
     ): ImageBitmap {
         val bytes = channel.toByteArray()
         return try {

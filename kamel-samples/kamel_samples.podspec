@@ -50,5 +50,5 @@ Pod::Spec.new do |spec|
             SCRIPT
         }
     ]
-    spec.resources = ['build/compose/ios/kamel_samples/compose-resources']
+    spec.resources = ['build/compose/cocoapods/compose-resources']
 end
