@@ -11,7 +11,6 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.DefaultAlpha
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
-import io.kamel.core.ExperimentalKamelApi
 import io.kamel.core.Resource
 
 /**
@@ -25,7 +24,6 @@ import io.kamel.core.Resource
  * @param animationSpec a [FiniteAnimationSpec] to be used in [Crossfade] animation, or null to be disabled.
  * The rest is the default [Image] parameters.
  */
-@OptIn(ExperimentalKamelApi::class)
 @Composable
 public fun KamelImage(
     getResource: @Composable (BoxWithConstraintsScope.() -> Resource<Painter>),
@@ -73,7 +71,6 @@ public fun KamelImage(
  * @param onFailure Composable which is used while the image is in [Resource.Failure] state.
  * @param onSuccess Composable which is used while the image is in [Resource.Success] state.
  */
-@ExperimentalKamelApi
 @Composable
 public fun KamelImageBox(
     getResource: @Composable (BoxWithConstraintsScope.() -> Resource<Painter>),

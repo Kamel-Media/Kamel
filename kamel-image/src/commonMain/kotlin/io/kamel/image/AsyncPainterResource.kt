@@ -34,7 +34,6 @@ public class PainterFailure : Error("Failed to return a Painter")
  * @return [Resource] Which contains a [Painter] that can be used to display an image using [KamelImage] or [KamelImageBox].
  * @see LocalKamelConfig
  */
-@ExperimentalKamelApi
 @Composable
 public inline fun <I : Any> asyncPainterResource(
     data: I,
@@ -120,7 +119,6 @@ public inline fun <I : Any> asyncPainterResource(
  * @return [Resource] Which contains a [Painter] that can be used to display an image using [KamelImage] or [KamelImageBox].
  * @see LocalKamelConfig
  */
-@OptIn(ExperimentalKamelApi::class)
 @Composable
 public inline fun asyncPainterResource(
     data: Any,
@@ -128,7 +126,8 @@ public inline fun asyncPainterResource(
     key: Any = data,
     filterQuality: FilterQuality = DrawScope.DefaultFilterQuality,
     crossinline block: ResourceConfigBuilder.() -> Unit = {},
-): Resource<Painter> = asyncPainterResource(data,
+): Resource<Painter> = asyncPainterResource(
+    data,
     maxBitmapDecodeSize,
     key,
     filterQuality,
@@ -137,7 +136,6 @@ public inline fun asyncPainterResource(
     block
 )
 
-@OptIn(ExperimentalKamelApi::class)
 @Composable
 public inline fun BoxWithConstraintsScope.asyncPainterResource(
     data: Any,
