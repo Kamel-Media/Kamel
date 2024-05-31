@@ -20,7 +20,7 @@ import kotlin.reflect.KClass
 /**
  * Fetcher that fetchers [ByteReadChannel] from a file.
  */
-internal actual object FileFetcher : Fetcher<File> {
+internal actual val FileFetcher = object : Fetcher<File> {
 
     override val inputDataKClass: KClass<File> = File::class
 
