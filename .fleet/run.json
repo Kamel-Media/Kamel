@@ -1,0 +1,12 @@
+{
+    "configurations": [
+        {
+            "name": "kamel-samples:run",
+            "type": "gradle",
+            "workingDir": "$PROJECT_DIR$",
+            "tasks": [
+                "kamel-samples:run"
+            ],
+        }
+    ]
+}

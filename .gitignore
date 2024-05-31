@@ -11,3 +11,5 @@ local.properties
 
 # IntelliJ Code Styles
 .kotlin/
+
+!.fleet/run.json
