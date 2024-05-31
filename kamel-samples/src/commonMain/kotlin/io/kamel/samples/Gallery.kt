@@ -21,6 +21,7 @@ import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 private const val ItemsCount: Int = 100
 public expect val cellsCount: Int
@@ -85,4 +86,10 @@ public fun Gallery() {
             }
         }
     }
+}
+
+@Preview
+@Composable
+public fun GalleryPreview() {
+    Gallery()
 }

@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 public fun launcher() {
@@ -39,4 +40,11 @@ public fun launcher() {
             else -> Text("Invalid Sample Index")
         }
     }
+}
+
+
+@Preview
+@Composable
+public fun LauncherPreview() {
+    launcher()
 }

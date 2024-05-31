@@ -114,6 +114,7 @@ kotlin {
                 implementation(compose.material)
                 implementation(libs.okio)
                 implementation(compose.components.resources)
+                implementation(compose.components.uiToolingPreview)
             }
         }
 
