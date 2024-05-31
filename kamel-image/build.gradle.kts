@@ -1,3 +1,4 @@
+import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
@@ -62,9 +63,12 @@ kotlin {
             }
         }
 
-        val commonTest by getting {
+         val commonTest by getting {
             dependencies {
+                implementation(compose.material3)
                 implementation(kotlin("test"))
+                @OptIn(ExperimentalComposeLibrary::class)
+                implementation(compose.uiTest)
                 implementation(libs.ktor.client.mock)
                 implementation(libs.kotlinx.coroutines.test)
             }
@@ -74,15 +78,8 @@ kotlin {
             dependsOn(commonMain)
         }
 
-        val commonJvmTest by creating {
-            dependsOn(commonTest)
-            dependencies {
-                implementation(libs.jetbrains.compose.ui.ui.test.junit4)
-            }
-        }
-
         val desktopJvmTest by getting {
-            dependsOn(commonJvmTest)
+            dependsOn(commonTest)
             dependencies {
                 implementation(compose.desktop.currentOs)
             }
