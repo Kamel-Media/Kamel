@@ -22,7 +22,7 @@ public fun launcher() {
         }
         when (tabIndex) {
             0 -> Gallery()
-            1 -> KamelImage(asyncPainterResource("https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDl2OTFjYWVhMmR2aHZuMXcwczh3eXpxeHNlb2xzZXNqZnUzNHU3aSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/da17TWjELQ27RpHXds/giphy.gif"),
+            1 -> KamelImage({ asyncPainterResource("https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDl2OTFjYWVhMmR2aHZuMXcwczh3eXpxeHNlb2xzZXNqZnUzNHU3aSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/da17TWjELQ27RpHXds/giphy.gif") },
                 contentDescription = "Compose",
                 modifier = Modifier.fillMaxSize(),
                 onFailure = { throw it },

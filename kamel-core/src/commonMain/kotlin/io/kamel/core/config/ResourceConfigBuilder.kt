@@ -1,6 +1,7 @@
 package io.kamel.core.config
 
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.IntSize
 import io.kamel.core.utils.Kamel
 import io.ktor.client.request.*
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +28,12 @@ public class ResourceConfigBuilder(parentScope: CoroutineContext) {
     public var density: Density = Density(1F, 1F)
 
     /**
+     * Maximum size of the bitmap to decode.
+     * If the bitmap is larger than this size, it will be downsampled.
+     */
+    public var maxBitmapDecodeSize: IntSize = IntSize(Int.MAX_VALUE, Int.MAX_VALUE)
+
+    /**
      * Executes a [block] that configures the [HttpRequestBuilder] associated with this request.
      */
     public fun requestBuilder(block: HttpRequestBuilder.() -> Unit): HttpRequestBuilder =
@@ -43,6 +50,8 @@ public class ResourceConfigBuilder(parentScope: CoroutineContext) {
             this@ResourceConfigBuilder.coroutineContext
 
         override val density: Density = this@ResourceConfigBuilder.density
+
+        override val maxBitmapDecodeSize: IntSize = this@ResourceConfigBuilder.maxBitmapDecodeSize
 
     }
 

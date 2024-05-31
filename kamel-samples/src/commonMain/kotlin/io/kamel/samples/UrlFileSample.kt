@@ -15,7 +15,7 @@ internal fun UrlFileSample(resourceFileName: String) {
 
     Column {
         val painterResource = asyncPainterResource("file://$absolutePath")
-        KamelImage(painterResource,
+        KamelImage({ painterResource },
             contentDescription = resourceFileName,
             modifier = Modifier.fillMaxSize(),
             onFailure = { throw it })

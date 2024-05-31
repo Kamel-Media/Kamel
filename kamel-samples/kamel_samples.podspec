@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'kamel_samples'
-    spec.version                  = '1.0.0-beta.5'
+    spec.version                  = '1.0.0-beta.6-SNAPSHOT'
     spec.homepage                 = 'https://github.com/Kamel-Media/Kamel'
     spec.source                   = { :http=> ''}
     spec.authors                  = ''
@@ -43,7 +43,7 @@ Pod::Spec.new do |spec|
                 fi
                 set -ev
                 REPO_ROOT="$PODS_TARGET_SRCROOT"
-                "$REPO_ROOT/../gradlew" -p "$REPO_ROOT" $KOTLIN_PROJECT_PATH:syncFramework \
+                "$REPO_ROOT/../../../../../private/var/folders/q4/bk4942ys3g5_gsbchw20c6k00000gn/T/wraploc/gradlew" -p "$REPO_ROOT" $KOTLIN_PROJECT_PATH:syncFramework \
                     -Pkotlin.native.cocoapods.platform=$PLATFORM_NAME \
                     -Pkotlin.native.cocoapods.archs="$ARCHS" \
                     -Pkotlin.native.cocoapods.configuration="$CONFIGURATION"

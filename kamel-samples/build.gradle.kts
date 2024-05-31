@@ -50,23 +50,6 @@ kotlin {
     wasmJs {
         browser()
         binaries.executable()
-        applyBinaryen {
-            binaryenArgs = mutableListOf(
-                "--enable-nontrapping-float-to-int",
-                "--enable-gc",
-                "--enable-reference-types",
-                "--enable-exception-handling",
-                "--enable-bulk-memory",
-                "--inline-functions-with-loops",
-                "--traps-never-happen",
-                "--fast-math",
-                "--closed-world",
-                "--metrics",
-                "-O3", "--gufa", "--metrics",
-                "-O3", "--gufa", "--metrics",
-                "-O3", "--gufa", "--metrics",
-            )
-        }
     }
     fun iosTargets(config: KotlinNativeTarget.() -> Unit) {
         iosArm64(config)
@@ -138,6 +121,7 @@ kotlin {
             dependencies {
                 implementation(projects.kamelFetcher.kamelFetcherResourcesAndroid)
                 implementation(projects.kamelMapper.kamelMapperResourcesIdAndroid)
+                implementation(projects.kamelDecoder.kamelDecoderImageBitmapResizing)
                 implementation(libs.androidx.appcompat)
                 implementation(libs.androidx.activity.compose)
                 implementation(libs.google.android.material)

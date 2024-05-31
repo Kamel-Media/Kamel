@@ -37,7 +37,7 @@ class KamelImageTest {
 
         composeTestRule.setContent {
             KamelImage(
-                resource = painterResource,
+                resource = { painterResource },
                 contentDescription = ImageContentDescription,
                 modifier = Modifier
                     .size(256.dp)
@@ -60,7 +60,7 @@ class KamelImageTest {
                 }
 
             KamelImage(
-                resource = painterResource,
+                resource = { painterResource },
                 contentDescription = ImageContentDescription,
                 onLoading = {},
             )
@@ -78,7 +78,7 @@ class KamelImageTest {
 
         composeTestRule.setContent {
             KamelImage(
-                resource = painterResource,
+                resource = { painterResource },
                 contentDescription = ImageContentDescription,
                 onFailure = {
                 }
