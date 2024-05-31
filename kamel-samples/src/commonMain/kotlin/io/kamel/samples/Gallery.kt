@@ -48,7 +48,7 @@ public fun Gallery() {
                 }
 
                 KamelImage(
-                    getResource = getPainterResource,
+                    resource = getPainterResource,
                     contentDescription = null,
                     modifier = Modifier
                         .aspectRatio(1F)
