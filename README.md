@@ -50,7 +50,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation("media.kamel:kamel-image-default:1.0.0-beta.3")
+                implementation("media.kamel:kamel-image-default:1.0.0-beta.6")
                 // ...
             }
         }
@@ -64,7 +64,7 @@ Add the dependency to the dependencies block:
 
 ```kotlin
 dependencies {
-    implementation("media.kamel:kamel-image-default:1.0.0-beta.3")
+    implementation("media.kamel:kamel-image-default:1.0.0-beta.6")
     // ...
 }
 ```
