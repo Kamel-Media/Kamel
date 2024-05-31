@@ -26,7 +26,7 @@ import io.kamel.core.Resource
  */
 @Composable
 public fun KamelImage(
-    getResource: @Composable (BoxWithConstraintsScope.() -> Resource<Painter>),
+    resource: @Composable (BoxWithConstraintsScope.() -> Resource<Painter>),
     contentDescription: String?,
     modifier: Modifier = Modifier,
     alignment: Alignment = Alignment.Center,
@@ -50,7 +50,7 @@ public fun KamelImage(
         )
     }
     KamelImageBox(
-        getResource,
+        resource,
         modifier,
         contentAlignment,
         animationSpec,
@@ -73,7 +73,7 @@ public fun KamelImage(
  */
 @Composable
 public fun KamelImageBox(
-    getResource: @Composable (BoxWithConstraintsScope.() -> Resource<Painter>),
+    resource: @Composable (BoxWithConstraintsScope.() -> Resource<Painter>),
     modifier: Modifier = Modifier,
     contentAlignment: Alignment = Alignment.Center,
     animationSpec: FiniteAnimationSpec<Float>? = null,
@@ -82,20 +82,21 @@ public fun KamelImageBox(
     onSuccess: @Composable BoxScope.(Painter) -> Unit,
 ) {
     BoxWithConstraints(modifier, contentAlignment) {
-        val resource = getResource()
-        if (animationSpec != null) {
-            Crossfade(resource, animationSpec = animationSpec) { animatedResource ->
-                when (animatedResource) {
-                    is Resource.Loading -> if (onLoading != null) onLoading(animatedResource.progress)
-                    is Resource.Success -> onSuccess(animatedResource.value)
-                    is Resource.Failure -> if (onFailure != null) onFailure(animatedResource.exception)
+        resource().let { resource ->
+            if (animationSpec != null) {
+                Crossfade(resource, animationSpec = animationSpec) { animatedResource ->
+                    when (animatedResource) {
+                        is Resource.Loading -> if (onLoading != null) onLoading(animatedResource.progress)
+                        is Resource.Success -> onSuccess(animatedResource.value)
+                        is Resource.Failure -> if (onFailure != null) onFailure(animatedResource.exception)
+                    }
                 }
-            }
-        } else {
-            when (resource) {
-                is Resource.Loading -> if (onLoading != null) onLoading(resource.progress)
-                is Resource.Success -> onSuccess(resource.value)
-                is Resource.Failure -> if (onFailure != null) onFailure(resource.exception)
+            } else {
+                when (resource) {
+                    is Resource.Loading -> if (onLoading != null) onLoading(resource.progress)
+                    is Resource.Success -> onSuccess(resource.value)
+                    is Resource.Failure -> if (onFailure != null) onFailure(resource.exception)
+                }
             }
         }
     }
