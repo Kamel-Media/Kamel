@@ -1,7 +1,7 @@
 package io.kamel.core.config
 
-import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.IntSize
 import io.ktor.client.request.*
 import kotlin.coroutines.CoroutineContext
 
@@ -29,4 +29,9 @@ public interface ResourceConfig {
      */
     public val density: Density
 
+    /**
+     * Maximum size of the bitmap to decode.
+     * If the bitmap is larger than this size, it will be downsampled.
+     */
+    val maxBitmapDecodeSize: IntSize
 }

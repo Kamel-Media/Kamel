@@ -16,18 +16,20 @@ agp = "8.2.2"
 
 okio = "3.9.0"
 startup-runtime = "1.1.1"
-vanniktech-publish = "0.28.0"
-compose = "1.6.10"
+vanniktech-publish = "0.29.0"
+compose = "1.6.11"
 coroutines = "1.8.1"
-ktor = "2.3.11"
+ktor = "3.0.0-beta-2-eap-949"
 cache4k = "0.13.0"
-xmlutil = "0.86.3"
+xmlutil = "0.90.1"
 activity-compose = "1.9.0"
-appcompat = "1.6.1"
+appcompat = "1.7.0"
 material = "1.12.0"
 androidsvg = "1.4"
 batik = "1.17"
 slf4j = "2.0.13"
+annotation = "1.8.0"
+core-ctx = "1.13.1"
 
 [libraries]
 
@@ -46,13 +48,14 @@ ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 
-jetbrains-compose-ui-ui-test-junit4 = { module = "org.jetbrains.compose.ui:ui-test-junit4", version.ref = "compose" }
-
 pdvrieze-xmlutil-serialization = { module = "io.github.pdvrieze.xmlutil:serialization", version.ref = "xmlutil" }
 
 androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "startup-runtime" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ctx" }
+
 google-android-material = { module = "com.google.android.material:material", version.ref = "material" }
 com-caverok-androidsvg = { module = "com.caverock:androidsvg-aar", version.ref = "androidsvg" }
 apache-batik-transcoder = { module = "org.apache.xmlgraphics:batik-transcoder", version.ref = "batik" }

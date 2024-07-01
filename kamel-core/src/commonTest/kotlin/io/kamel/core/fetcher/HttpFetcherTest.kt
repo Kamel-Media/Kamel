@@ -17,9 +17,9 @@ import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class HttpFetcherTest {
+class HttpUrlFetcherTest {
 
-    private val fetcher: HttpFetcher = HttpFetcher(HttpClient(HttpMockEngine))
+    private val fetcher: HttpUrlFetcher = HttpUrlFetcher(HttpClient(HttpMockEngine))
 
     @Test
     fun testWebSocketUrlIsSupported() = runTest {

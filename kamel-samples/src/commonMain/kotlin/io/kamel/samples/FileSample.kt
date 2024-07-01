@@ -1,5 +1,6 @@
 package io.kamel.samples
 
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
@@ -22,9 +23,8 @@ internal fun FileSample(fileResourcePath: String) {
 
     Column {
         file?.let { file ->
-            val painterResource = asyncPainterResource(file)
-            KamelImage(painterResource,
-                contentDescription = "Compose",
+            KamelImage({ asyncPainterResource(file) },
+                contentDescription = fileResourcePath,
                 modifier = Modifier.fillMaxSize(),
                 onFailure = { throw it })
         }

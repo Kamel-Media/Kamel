@@ -5,13 +5,12 @@ package io.kamel.core.config
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import io.kamel.core.AnimatedImage
 import io.kamel.core.cache.Cache
 import io.kamel.core.cache.LruCache
 import io.kamel.core.cache.httpCacheStorage
 import io.kamel.core.decoder.Decoder
-import io.kamel.core.fetcher.Fetcher
-import io.kamel.core.fetcher.FileFetcher
-import io.kamel.core.fetcher.HttpFetcher
+import io.kamel.core.fetcher.*
 import io.kamel.core.mapper.Mapper
 import io.kamel.core.mapper.StringMapper
 import io.kamel.core.mapper.URIMapper
@@ -20,7 +19,7 @@ import io.kamel.core.utils.URI
 import io.kamel.core.utils.URL
 import io.ktor.client.*
 import io.ktor.client.engine.*
-import io.ktor.client.plugins.cache.HttpCache
+import io.ktor.client.plugins.cache.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlin.reflect.KClass
@@ -38,6 +37,8 @@ public class KamelConfigBuilder {
     public var imageVectorCacheSize: Int = 0
 
     public var svgCacheSize: Int = 0
+
+    public var animatedImageCacheSize: Int = 0
 
     public fun <T : Any> fetcher(fetcher: Fetcher<T>) {
         fetchers += fetcher as Fetcher<Any>
@@ -65,6 +66,8 @@ public class KamelConfigBuilder {
         override val imageVectorCache: Cache<Any, ImageVector> = LruCache(imageVectorCacheSize)
 
         override val svgCache: Cache<Any, Painter> = LruCache(svgCacheSize)
+
+        override val animatedImageCache: Cache<Any, AnimatedImage> = LruCache(animatedImageCacheSize)
     }
 
     public fun HttpClientConfig<*>.httpCache(size: Long): Unit = install(HttpCache) {
@@ -73,26 +76,37 @@ public class KamelConfigBuilder {
 }
 
 /**
- * Adds an Http fetcher to the [KamelConfigBuilder] using the specified [client].
+ * Adds a Http [Url] fetcher to the [KamelConfigBuilder] using the specified [client].
  */
-public fun KamelConfigBuilder.httpFetcher(client: HttpClient): Unit = fetcher(HttpFetcher(client))
+public fun KamelConfigBuilder.httpUrlFetcher(client: HttpClient): Unit = fetcher(HttpUrlFetcher(client))
+
+@Deprecated(
+    "Use httpUrlFetcher instead",
+    ReplaceWith("httpUrlFetcher(client)")
+)
+public fun KamelConfigBuilder.httpFetcher(client: HttpClient): Unit = fetcher(HttpUrlFetcher(client))
 
 /**
- * Adds an Http fetcher to the [KamelConfigBuilder] using the specified [engine]
+ * Adds a Http [Url] fetcher to the [KamelConfigBuilder] using the specified [engine]
  * and an optional [block] for configuring this client.
  */
-public fun KamelConfigBuilder.httpFetcher(
+public fun KamelConfigBuilder.httpUrlFetcher(
     engine: HttpClientEngine,
     block: HttpClientConfig<*>.() -> Unit = {}
-): Unit = fetcher(HttpFetcher(HttpClient(engine, block)))
+): Unit = fetcher(HttpUrlFetcher(HttpClient(engine, block)))
 
 /**
- * Adds an Http fetcher to the [KamelConfigBuilder] by loading an [HttpClientEngine] from [ServiceLoader]
+ * Adds a Http [Url] fetcher to the [KamelConfigBuilder] by loading an [HttpClientEngine] from [ServiceLoader]
  * and an optional [block] for configuring this client.
  */
-public fun KamelConfigBuilder.httpFetcher(
+public fun KamelConfigBuilder.httpUrlFetcher(
     block: HttpClientConfig<*>.() -> Unit = {}
-): Unit = fetcher(HttpFetcher(HttpClient(block)))
+): Unit = fetcher(HttpUrlFetcher(HttpClient(block)))
+
+/**
+ * Adds a Localhost [Url] fetcher to the [KamelConfigBuilder].
+ */
+public fun KamelConfigBuilder.fileUrlFetcher(): Unit = fetcher(FileUrlFetcher)
 
 /**
  * Adds a [File] fetcher to the [KamelConfigBuilder].
@@ -127,6 +141,7 @@ public fun KamelConfigBuilder.takeFrom(config: KamelConfig): KamelConfigBuilder 
     imageBitmapCacheSize = config.imageBitmapCache.maxSize
     imageVectorCacheSize = config.imageVectorCache.maxSize
     svgCacheSize = config.svgCache.maxSize
+    animatedImageCacheSize = config.animatedImageCache.maxSize
     config.fetchers.forEach { fetcher(it) }
     config.decoders.forEach { decoder(it) }
     config.mappers.values.flatten().forEach { mapper(it) }
