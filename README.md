@@ -337,7 +337,7 @@ The underlying disk cache is based on coil's multiplatform `DiskLruCache` implem
 
 ```kotlin
 KamelConfig {
-    httpFetcher {
+    httpUrlFetcher {
         // The size of the cache can be defined in bytes. Or DefaultHttpCacheSize (10 MiB) can be used. 
         httpCache(DefaultHttpCacheSize)
     }

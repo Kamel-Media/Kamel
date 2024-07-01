@@ -3,22 +3,16 @@ package io.kamel.core.config
 import io.kamel.core.DataSource
 import io.kamel.core.Resource
 import io.kamel.core.fetcher.Fetcher
-import io.kamel.core.fetcher.HttpFetcher
+import io.kamel.core.fetcher.HttpUrlFetcher
 import io.kamel.core.loadImageBitmapResource
 import io.kamel.core.mapper.Mapper
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.mock.MockEngine
-import io.ktor.client.engine.mock.respondError
-import io.ktor.client.plugins.defaultRequest
-import io.ktor.client.plugins.onDownload
-import io.ktor.client.request.request
-import io.ktor.client.request.takeFrom
-import io.ktor.client.request.url
-import io.ktor.client.statement.bodyAsChannel
-import io.ktor.http.HttpStatusCode
-import io.ktor.http.URLBuilder
-import io.ktor.http.Url
-import io.ktor.utils.io.ByteReadChannel
+import io.ktor.client.*
+import io.ktor.client.engine.mock.*
+import io.ktor.client.plugins.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
+import io.ktor.utils.io.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.toList
@@ -36,17 +30,18 @@ class DefaultRequestConfigTest {
         KamelConfig {
             stringMapper()
             fakeImageBitmapDecoder()
-            fetcher(HttpFetcher(
-                HttpClient(
-                    MockEngine { request ->
-                        url = request.url.toString()
-                        respondError(HttpStatusCode.NotFound)
-                    }
-                ) {
-                    defaultRequest {
-                        url("https://kamel.media")
-                    }
-                })
+            fetcher(
+                HttpUrlFetcher(
+                    HttpClient(
+                        MockEngine { request ->
+                            url = request.url.toString()
+                            respondError(HttpStatusCode.NotFound)
+                        }
+                    ) {
+                        defaultRequest {
+                            url("https://kamel.media")
+                        }
+                    })
             )
         }.loadImageBitmapResource(
             data = URLBuilder("image.jpg"),
@@ -61,7 +56,7 @@ class DefaultRequestConfigTest {
         KamelConfig {
             mapper(stringMapperOld)
             fakeImageBitmapDecoder()
-            fetcher(HttpFetcherOld(
+            fetcher(HttpUrlFetcherOld(
                 HttpClient(
                     MockEngine { request ->
                         url = request.url.toString()
@@ -95,7 +90,7 @@ class DefaultRequestConfigTest {
     }
 
     // previous implementation of fetcher
-    private class HttpFetcherOld(private val client: HttpClient) : Fetcher<Url> {
+    private class HttpUrlFetcherOld(private val client: HttpClient) : Fetcher<Url> {
 
         override val inputDataKClass: KClass<Url> = Url::class
 
@@ -110,8 +105,9 @@ class DefaultRequestConfigTest {
         ): Flow<Resource<ByteReadChannel>> = channelFlow {
             val response = client.request {
                 onDownload { bytesSentTotal, contentLength ->
-                    val progress = (bytesSentTotal.toFloat() / contentLength).coerceIn(0F..1F)
-                        .takeUnless { it.isNaN() }
+                    val progress = contentLength?.let {
+                        (bytesSentTotal.toFloat() / contentLength).coerceIn(0F..1F).takeUnless { it.isNaN() }
+                    }
                     if (progress != null) send(Resource.Loading(progress, source))
                 }
                 takeFrom(resourceConfig.requestData)
