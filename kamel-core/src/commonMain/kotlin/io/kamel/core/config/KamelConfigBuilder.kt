@@ -76,7 +76,7 @@ public class KamelConfigBuilder {
 }
 
 /**
- * Adds a Http [Url] fetcher to the [KamelConfigBuilder] using the specified [client].
+ * Adds a Http [URLBuilder] fetcher to the [KamelConfigBuilder] using the specified [client].
  */
 public fun KamelConfigBuilder.httpUrlFetcher(client: HttpClient): Unit = fetcher(HttpUrlFetcher(client))
 
@@ -87,7 +87,7 @@ public fun KamelConfigBuilder.httpUrlFetcher(client: HttpClient): Unit = fetcher
 public fun KamelConfigBuilder.httpFetcher(client: HttpClient): Unit = fetcher(HttpUrlFetcher(client))
 
 /**
- * Adds a Http [Url] fetcher to the [KamelConfigBuilder] using the specified [engine]
+ * Adds a Http [URLBuilder] fetcher to the [KamelConfigBuilder] using the specified [engine]
  * and an optional [block] for configuring this client.
  */
 public fun KamelConfigBuilder.httpUrlFetcher(
@@ -96,7 +96,7 @@ public fun KamelConfigBuilder.httpUrlFetcher(
 ): Unit = fetcher(HttpUrlFetcher(HttpClient(engine, block)))
 
 /**
- * Adds a Http [Url] fetcher to the [KamelConfigBuilder] by loading an [HttpClientEngine] from [ServiceLoader]
+ * Adds a Http [URLBuilder] fetcher to the [KamelConfigBuilder] by loading an [HttpClientEngine] from [ServiceLoader]
  * and an optional [block] for configuring this client.
  */
 public fun KamelConfigBuilder.httpUrlFetcher(
@@ -104,7 +104,7 @@ public fun KamelConfigBuilder.httpUrlFetcher(
 ): Unit = fetcher(HttpUrlFetcher(HttpClient(block)))
 
 /**
- * Adds a Localhost [Url] fetcher to the [KamelConfigBuilder].
+ * Adds a Localhost [URLBuilder] fetcher to the [KamelConfigBuilder].
  */
 public fun KamelConfigBuilder.fileUrlFetcher(): Unit = fetcher(FileUrlFetcher)
 
@@ -114,17 +114,17 @@ public fun KamelConfigBuilder.fileUrlFetcher(): Unit = fetcher(FileUrlFetcher)
 public fun KamelConfigBuilder.fileFetcher(): Unit = fetcher(FileFetcher)
 
 /**
- * Adds a [String] to [Url] mapper to the [KamelConfigBuilder].
+ * Adds a [String] to [URLBuilder] mapper to the [KamelConfigBuilder].
  */
 public fun KamelConfigBuilder.stringMapper(): Unit = mapper(StringMapper)
 
 /**
- * Adds a [URI] to [Url] mapper to the [KamelConfigBuilder].
+ * Adds a [URI] to [URLBuilder] mapper to the [KamelConfigBuilder].
  */
 public fun KamelConfigBuilder.uriMapper(): Unit = mapper(URIMapper)
 
 /**
- * Adds a [URL] to [Url] mapper to the [KamelConfigBuilder].
+ * Adds a [URL] to [URLBuilder] mapper to the [KamelConfigBuilder].
  */
 public fun KamelConfigBuilder.urlMapper(): Unit = mapper(URLMapper)
 

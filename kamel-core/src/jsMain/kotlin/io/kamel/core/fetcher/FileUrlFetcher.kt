@@ -14,18 +14,18 @@ import kotlinx.coroutines.flow.flow
 import kotlin.reflect.KClass
 
 /**
- * Fetcher that fetches [ByteReadChannel] from the localhost using [Url].
+ * Fetcher that fetches [ByteReadChannel] from the localhost using [URLBuilder].
  */
-internal actual val FileUrlFetcher = object : Fetcher<Url> {
-    override val inputDataKClass: KClass<Url> = Url::class
+internal actual val FileUrlFetcher = object : Fetcher<URLBuilder> {
+    override val inputDataKClass: KClass<URLBuilder> = URLBuilder::class
 
     override val source: DataSource = DataSource.Disk
 
-    override val Url.isSupported: Boolean
+    override val URLBuilder.isSupported: Boolean
         get() = protocol.name == "file"
 
     override fun fetch(
-        data: Url, resourceConfig: ResourceConfig
+        data: URLBuilder, resourceConfig: ResourceConfig
     ): Flow<Resource<ByteReadChannel>> = flow {
         val filePath = data.encodedPath
         val blob = window.fetch(data.encodedPath).await().blob().await()

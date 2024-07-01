@@ -5,20 +5,20 @@ import io.kamel.core.utils.URL
 import io.ktor.http.*
 import kotlin.reflect.KClass
 
-internal actual val URLMapper: Mapper<URL, Url> = object : Mapper<URL, Url> {
+internal actual val URLMapper: Mapper<URL, URLBuilder> = object : Mapper<URL, URLBuilder> {
     override val inputKClass: KClass<URL>
         get() = URL::class
-    override val outputKClass: KClass<Url>
-        get() = Url::class
+    override val outputKClass: KClass<URLBuilder>
+        get() = URLBuilder::class
 
-    override fun map(input: URL): Url = Url(input.toURI())
+    override fun map(input: URL): URLBuilder = URLBuilder().takeFrom(input)
 }
 
-internal actual val URIMapper: Mapper<URI, Url> = object : Mapper<URI, Url> {
+internal actual val URIMapper: Mapper<URI, URLBuilder> = object : Mapper<URI, URLBuilder> {
     override val inputKClass: KClass<URI>
         get() = URI::class
-    override val outputKClass: KClass<Url>
-        get() = Url::class
+    override val outputKClass: KClass<URLBuilder>
+        get() = URLBuilder::class
 
-    override fun map(input: URI): Url = Url(input)
+    override fun map(input: URI): URLBuilder = URLBuilder().takeFrom(input)
 }
