@@ -4,6 +4,6 @@ import io.ktor.http.*
 import io.ktor.utils.io.*
 
 /**
- * Fetcher that fetches [ByteReadChannel] from the localhost using [Url].
+ * Fetcher that fetches [ByteReadChannel] from the localhost using [URLBuilder].
  */
-internal expect val FileUrlFetcher: Fetcher<Url>
+internal expect val FileUrlFetcher: Fetcher<URLBuilder>

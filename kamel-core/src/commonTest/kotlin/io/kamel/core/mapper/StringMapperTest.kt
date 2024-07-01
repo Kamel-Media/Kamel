@@ -6,13 +6,13 @@ import kotlin.test.assertEquals
 
 class StringMapperTest {
 
-    private val stringMapper: Mapper<String, Url> = StringMapper
+    private val stringMapper: Mapper<String, URLBuilder> = StringMapper
 
     @Test
     fun testHttpsUrl() {
         val url = stringMapper.map("https://www.example.com")
 
-        assertEquals(Url("https://www.example.com"), url)
+        assertEquals(Url("https://www.example.com"), url.build())
         assertEquals(URLProtocol.HTTPS.name, url.protocol.name)
     }
 
@@ -20,7 +20,7 @@ class StringMapperTest {
     fun testHttpUrl() {
         val url = stringMapper.map("http://www.example.com")
 
-        assertEquals(Url("http://www.example.com"), url)
+        assertEquals(Url("http://www.example.com"), url.build())
         assertEquals(URLProtocol.HTTP.name, url.protocol.name)
     }
 
