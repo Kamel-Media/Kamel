@@ -7,9 +7,9 @@ import io.kamel.core.mapper.Mapper
 import io.kamel.core.mapper.StringMapper
 import io.kamel.core.mapper.URIMapper
 import io.kamel.core.mapper.URLMapper
+import io.kamel.core.tests.HttpMockEngine
 import io.kamel.core.utils.URI
 import io.kamel.core.utils.URL
-import io.kamel.tests.HttpMockEngine
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals

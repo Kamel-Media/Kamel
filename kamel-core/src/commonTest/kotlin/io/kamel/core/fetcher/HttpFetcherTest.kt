@@ -6,12 +6,11 @@ import io.kamel.core.config.ResourceConfigBuilder
 import io.kamel.core.getOrNull
 import io.kamel.core.isLoading
 import io.kamel.core.map
-import io.kamel.tests.HttpMockEngine
+import io.kamel.core.tests.HttpMockEngine
 import io.ktor.client.*
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.http.*
 import io.ktor.util.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
@@ -59,6 +58,9 @@ class HttpFetcherTest {
     }
 
     @Test
+    // fails due to https://github.com/JetBrains/compose-multiplatform/issues/4442
+    // it will pass if you copy the test resources to the main resources folder,
+    // but I do not want to check this in.
     fun testFetchingNonEmptyImageBytes() = runTest {
         val resourceConfig: ResourceConfig = ResourceConfigBuilder(coroutineContext).build()
         val url = URLBuilder("/image.svg")

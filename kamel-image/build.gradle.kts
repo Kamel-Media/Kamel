@@ -3,9 +3,9 @@ import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 plugins {
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
     alias(libs.plugins.org.jetbrains.compose)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.com.android.library)
-    `maven-publish`
-    signing
+    alias(libs.plugins.com.vanniktech.maven.publish)
 }
 
 android {
@@ -63,7 +63,6 @@ kotlin {
 
         val commonTest by getting {
             dependencies {
-                implementation(project(":kamel-tests"))
                 implementation(kotlin("test"))
                 implementation(libs.ktor.client.mock)
                 implementation(libs.kotlinx.coroutines.test)
@@ -86,6 +85,8 @@ kotlin {
             dependsOn(jvmMain)
             dependencies {
                 implementation(libs.apache.batik.transcoder)
+                //https://stackoverflow.com/a/45318410/1363742
+                implementation(libs.apache.batik.codec)
             }
         }
 
@@ -140,11 +141,3 @@ kotlin {
 
     }
 }
-
-// https://youtrack.jetbrains.com/issue/KT-46466
-val dependsOnTasks = mutableListOf<String>()
-tasks.withType<AbstractPublishToMaven>().configureEach {
-    dependsOnTasks.add(this.name.replace("publish", "sign").replaceAfter("Publication", ""))
-    dependsOn(dependsOnTasks)
-}
-

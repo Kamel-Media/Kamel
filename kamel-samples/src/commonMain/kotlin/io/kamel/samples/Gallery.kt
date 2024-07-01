@@ -57,6 +57,7 @@ public fun Gallery() {
                     contentScale = ContentScale.Crop,
                     onLoading = { CircularProgressIndicator(it) },
                     onFailure = { exception: Throwable ->
+                        exception.printStackTrace()
                         scope.launch {
                             snackbarHostState.showSnackbar(
                                 message = exception.message.toString(),

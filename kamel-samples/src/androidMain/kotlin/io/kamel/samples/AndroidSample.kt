@@ -22,7 +22,7 @@ class AndroidSample : AppCompatActivity() {
                     resourcesFetcher(this@AndroidSample)
                 }
             }
-            launcher(kamelConfig, applicationContext)
+            launcher(kamelConfig)
         }
     }
 

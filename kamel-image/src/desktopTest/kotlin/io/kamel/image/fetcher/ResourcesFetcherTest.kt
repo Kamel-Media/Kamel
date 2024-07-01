@@ -20,7 +20,7 @@ class ResourcesFetcherTest {
 
     @Test
     fun testUrlIsSupported() = runTest {
-        val imageUrl = Url("files/Compose.png")
+        val imageUrl = Url("Compose.png")
         val isSupported = with(fetcher) { imageUrl.isSupported }
 
         assertTrue { isSupported }
@@ -37,7 +37,7 @@ class ResourcesFetcherTest {
     @Test
     fun loadImageBitmapResource() = runTest {
         val resourceConfig = ResourceConfigBuilder(coroutineContext).build()
-        val imageUrl = Url("files/Compose.png")
+        val imageUrl = Url("Compose.png")
         val resource = fetcher.fetch(imageUrl, resourceConfig)
             .first { !it.isLoading }
             .map { it.toByteArray() }

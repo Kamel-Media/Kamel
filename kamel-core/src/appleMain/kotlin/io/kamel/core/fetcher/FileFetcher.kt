@@ -12,7 +12,7 @@ import kotlin.reflect.KClass
 /**
  * Fetcher that fetchers [ByteReadChannel] from a file.
  */
-internal actual object FileFetcher : Fetcher<File> {
+internal actual val FileFetcher = object : Fetcher<File> {
 
     override val inputDataKClass: KClass<File> = File::class
 
@@ -22,11 +22,9 @@ internal actual object FileFetcher : Fetcher<File> {
         get() = true
 
     override fun fetch(
-        data: File,
-        resourceConfig: ResourceConfig
+        data: File, resourceConfig: ResourceConfig
     ): Flow<Resource<ByteReadChannel>> = flow {
         val byteReadChannel = ByteReadChannel(data.availableData)
         emit(Resource.Success(byteReadChannel, source))
     }
-
 }

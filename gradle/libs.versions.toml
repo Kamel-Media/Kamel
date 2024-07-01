@@ -4,38 +4,37 @@
 
 org-jetbrains-kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 org-jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "compose" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 com-vanniktech-maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktech-publish" }
-dev-icerock-mobile-multiplatform-resources = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "multiplatform-resources" }
 com-android-library = { id = "com.android.library", version.ref = "agp" }
 com-android-application = { id = "com.android.application", version.ref = "agp" }
 
 [versions]
 
-cache4k = "0.12.0"
-kotlin = "1.9.21"
-agp = "8.1.4"
+kotlin = "2.0.0"
+agp = "8.2.2"
 
-okio = "3.6.0"
+okio = "3.9.0"
 startup-runtime = "1.1.1"
-stately-concurrent-collections = "2.0.5"
-vanniktech-publish = "0.25.3"
-multiplatform-resources = "0.23.0"
-compose = "1.5.11"
-coroutines = "1.7.3"
-ktor = "2.3.6"
-xmlutil = "0.86.2"
-activity-compose = "1.8.1"
+vanniktech-publish = "0.28.0"
+compose = "1.6.10"
+coroutines = "1.8.1"
+ktor = "2.3.11"
+cache4k = "0.13.0"
+xmlutil = "0.86.3"
+activity-compose = "1.9.0"
 appcompat = "1.6.1"
-material = "1.10.0"
+material = "1.12.0"
 androidsvg = "1.4"
 batik = "1.17"
+slf4j = "2.0.13"
 
 [libraries]
 
-cache4k = { module = "io.github.reactivecircus.cache4k:cache4k", version.ref = "cache4k" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 okio-fakefilesystem = { module = "com.squareup.okio:okio-fakefilesystem", version.ref = "okio" }
-stately-concurrent-collections = { module = "co.touchlab:stately-concurrent-collections", version.ref = "stately-concurrent-collections" }
+
+cache4k = { module = "io.github.reactivecircus.cache4k:cache4k", version.ref = "cache4k" }
 
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
@@ -49,9 +48,6 @@ ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 
 jetbrains-compose-ui-ui-test-junit4 = { module = "org.jetbrains.compose.ui:ui-test-junit4", version.ref = "compose" }
 
-dev-icerock-moko-resources = { module = "dev.icerock.moko:resources", version.ref = "multiplatform-resources" }
-dev-icerock-moko-resources-test = { module = "dev.icerock.moko:resources-test", version.ref = "multiplatform-resources" }
-
 pdvrieze-xmlutil-serialization = { module = "io.github.pdvrieze.xmlutil:serialization", version.ref = "xmlutil" }
 
 androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "startup-runtime" }
@@ -60,3 +56,5 @@ androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "a
 google-android-material = { module = "com.google.android.material:material", version.ref = "material" }
 com-caverok-androidsvg = { module = "com.caverock:androidsvg-aar", version.ref = "androidsvg" }
 apache-batik-transcoder = { module = "org.apache.xmlgraphics:batik-transcoder", version.ref = "batik" }
+apache-batik-codec = { module = "org.apache.xmlgraphics:batik-codec", version.ref = "batik" }
+slf4j = { module = "org.slf4j:slf4j-nop", version.ref = "slf4j" }

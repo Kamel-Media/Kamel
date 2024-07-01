@@ -7,7 +7,7 @@ pluginManagement {
         google()
     }
     plugins {
-        id("de.fayard.refreshVersions") version "0.60.3"
+        id("de.fayard.refreshVersions") version "0.60.5"
     }
 }
 
@@ -16,6 +16,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        maven(url = "https://maven.pkg.jetbrains.space/public/p/ktor/eap")
     }
 }
 
@@ -27,10 +28,10 @@ plugins {
 refreshVersions {
     rejectVersionIf {
         @Suppress("UnstableApiUsage")
-        candidate.stabilityLevel != StabilityLevel.Stable
+        candidate.stabilityLevel >= StabilityLevel.Beta
     }
 }
 
 rootProject.name = "Kamel"
 
-include("kamel-samples", "kamel-core", "kamel-image", "kamel-tests")
+include("kamel-samples", "kamel-core", "kamel-image")
