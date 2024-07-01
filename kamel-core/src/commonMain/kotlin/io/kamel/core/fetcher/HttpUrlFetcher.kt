@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.channelFlow
 import kotlin.reflect.KClass
 
 /**
- * Fetcher that fetches [ByteReadChannel] from network using [Url].
+ * Fetcher that fetches [ByteReadChannel] from network using [URLBuilder].
  */
 internal class HttpUrlFetcher(private val client: HttpClient) : Fetcher<URLBuilder> {
 

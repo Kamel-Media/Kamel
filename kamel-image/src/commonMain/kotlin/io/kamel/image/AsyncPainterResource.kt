@@ -21,7 +21,7 @@ public class PainterFailure : Error("Failed to return a Painter")
 
 /**
  * Loads a [Painter] resource asynchronously.
- * @param data Can be anything such as [String], [Url] or a [File].
+ * @param data Can be anything such as [String], [Url], [URLBuilder], or a [File].
  * @param key That is used in [remember] during composition, usually it's just [data].
  * @param filterQuality That is used by [BitmapPainter].
  * @param block Configuration for [ResourceConfig].
@@ -112,7 +112,7 @@ public inline fun <I : Any> asyncPainterResource(
 
 /**
  * Loads a [Painter] resource asynchronously.
- * @param data Can be anything such as [String], [Url] or a [File].
+ * @param data Can be anything such as [String], [Url], [URLBuilder], or a [File].
  * @param key That is used in [remember] during composition, usually it's just [data].
  * @param filterQuality That is used by [BitmapPainter].
  * @param block Configuration for [ResourceConfig].
@@ -156,7 +156,7 @@ public inline fun BoxWithConstraintsScope.asyncPainterResource(
 
 /**
  * Finds the best ending [String] of the data object.
- * @param data Can be anything such as [String], [Url] or a [File].
+ * @param data Can be anything such as [String], [Url], [URLBuilder], or a [File].
  * @return [String] Which is the ending of the data (Url)
  */
 public inline fun <I : Any> getDataSourceEnding(data: I): String {
