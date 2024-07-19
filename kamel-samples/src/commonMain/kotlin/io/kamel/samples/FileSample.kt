@@ -17,7 +17,7 @@ internal fun FileSample(fileResourcePath: String) {
     val scope = rememberCoroutineScope()
     var file: File? by remember { mutableStateOf(null) }
 
-    scope.launch {
+    LaunchedEffect(Unit) {
         file = getResourceFile(fileResourcePath)
     }
 
