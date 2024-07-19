@@ -18,7 +18,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.vector.*
 import androidx.compose.ui.unit.Density
-import nl.adaptivity.xmlutil.dom.*
+import nl.adaptivity.xmlutil.dom2.*
 
 //  Parsing logic is the same as in Android implementation
 //  (compose/ui/ui/src/androidMain/kotlin/androidx/compose/ui/graphics/vector/compat/XmlVectorParser.kt)
