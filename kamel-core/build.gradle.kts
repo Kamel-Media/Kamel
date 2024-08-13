@@ -16,6 +16,9 @@ kotlin {
         publishAllLibraryVariants()
     }
     jvm("desktop")
+    wasmJs {
+        browser()
+    }
     js(IR) {
         browser()
     }
@@ -94,8 +97,28 @@ kotlin {
             dependsOn(commonTest)
         }
 
-        val jsMain by getting {
+        val webMain by creating {
             dependsOn(nonJvmMain)
+        }
+
+        val webTest by creating {
+            dependsOn(commonTest)
+        }
+
+        val jsMain by getting {
+            dependsOn(webMain)
+        }
+
+        val jsTest by getting {
+            dependsOn(webTest)
+        }
+
+        val wasmJsMain by getting {
+            dependsOn(webMain)
+        }
+
+        val wasmJsTest by getting {
+            dependsOn(webTest)
         }
 
         val appleMain by getting {

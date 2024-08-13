@@ -39,6 +39,9 @@ kotlin {
         publishAllLibraryVariants()
     }
     jvm("desktop")
+    wasmJs {
+        browser()
+    }
     js(IR) {
         browser()
     }
@@ -121,11 +124,19 @@ kotlin {
             dependsOn(commonTest)
         }
 
-        val jsMain by getting {
+        val webMain by creating {
             dependsOn(nonJvmMain)
             dependencies {
                 implementation(libs.ktor.client.js)
             }
+        }
+
+        val jsMain by getting {
+            dependsOn(webMain)
+        }
+
+        val wasmJsMain by getting {
+            dependsOn(webMain)
         }
 
         val appleMain by getting {

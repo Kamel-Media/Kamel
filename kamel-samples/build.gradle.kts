@@ -41,6 +41,10 @@ kotlin {
 
     androidTarget()
     jvm("desktop")
+    wasmJs {
+        browser()
+        binaries.executable()
+    }
     js(IR) {
         browser()
         binaries.executable()

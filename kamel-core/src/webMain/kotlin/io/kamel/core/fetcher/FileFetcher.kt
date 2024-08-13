@@ -15,6 +15,7 @@ import org.w3c.dom.ErrorEvent
 import org.w3c.files.FileReader
 import kotlin.coroutines.resumeWithException
 import kotlin.reflect.KClass
+import io.kamel.core.utils.toByteArray
 
 /**
  * Fetcher that fetchers [ByteReadChannel] from a file.
@@ -42,12 +43,11 @@ internal actual val FileFetcher = object : Fetcher<File> {
         reader.readAsArrayBuffer(file)
         reader.onload = {
             val arrayBuffer = reader.result as ArrayBuffer
-            val bytes = Int8Array(arrayBuffer).unsafeCast<ByteArray>()
+            val bytes = Int8Array(arrayBuffer).toByteArray()
             continuation.resume(bytes, null)
         }
         reader.onerror = { error ->
             continuation.resumeWithException(Error((error as ErrorEvent).message))
         }
     }
-
 }

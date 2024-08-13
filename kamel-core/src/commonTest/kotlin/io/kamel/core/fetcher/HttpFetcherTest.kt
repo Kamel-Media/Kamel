@@ -9,7 +9,7 @@ import io.kamel.core.map
 import io.kamel.core.tests.HttpMockEngine
 import io.ktor.client.*
 import io.ktor.http.*
-import io.ktor.util.*
+import io.ktor.utils.io.*
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
