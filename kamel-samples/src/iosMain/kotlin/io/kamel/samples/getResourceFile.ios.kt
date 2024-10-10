@@ -1,8 +1,9 @@
 package io.kamel.samples
 
 import io.kamel.core.utils.File
-import platform.Foundation.NSBundle
+import media.kamel.kamel_samples.generated.resources.Res
 
 public actual suspend fun getResourceFile(fileResourcePath: String): File {
-    return File(NSBundle.mainBundle.resourcePath + "/compose-resources/" + fileResourcePath)
+    println("getResourceFile: $fileResourcePath")
+    return File(Res.getUri(fileResourcePath).substringAfter("file://"))
 }

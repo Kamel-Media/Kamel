@@ -54,6 +54,19 @@ public fun KamelConfig.loadSvgResource(
     dataKClass: KClass<*> = data::class
 ): Flow<Resource<Painter>> = loadResource(data, dataKClass, resourceConfig, svgCache)
 
+/**
+ * Loads a gif [AnimatedImage]. This includes mapping, fetching, decoding and caching the image resource.
+ * @see Fetcher
+ * @see Decoder
+ * @see Mapper
+ * @see Cache
+ */
+public fun KamelConfig.loadAnimatedImageResource(
+    data: Any,
+    resourceConfig: ResourceConfig,
+    dataKClass: KClass<*> = data::class
+): Flow<Resource<AnimatedImage>> = loadResource(data, dataKClass, resourceConfig, animatedImageCache)
+
 private inline fun <reified T : Any> KamelConfig.loadResource(
     data: Any,
     dataKClass: KClass<*>,

@@ -50,7 +50,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation("media.kamel:kamel-image:0.9.5")
+                implementation("media.kamel:kamel-image-default:1.0.0")
                 // ...
             }
         }
@@ -64,7 +64,7 @@ Add the dependency to the dependencies block:
 
 ```kotlin
 dependencies {
-    implementation("media.kamel:kamel-image:0.9.5")
+    implementation("media.kamel:kamel-image-default:1.0.0")
     // ...
 }
 ```
@@ -84,6 +84,7 @@ images from different data sources:
 ```kotlin
 // String
 asyncPainterResource(data = "https://www.example.com/image.jpg")
+asyncPainterResource(data = "file:///path/to/image.png")
 
 // Ktor Url
 asyncPainterResource(data = Url("https://www.example.com/image.jpg"))
@@ -279,8 +280,9 @@ val customKamelConfig = KamelConfig {
     // adds a FileFetcher
     fileFetcher()
 
+    
     // Configures Ktor HttpClient
-    httpFetcher {
+    httpUrlFetcher {
         // httpCache is defined in kamel-core and configures the ktor client 
         // to install a HttpCache feature with the implementation provided by Kamel.
         // The size of the cache can be defined in Bytes.
@@ -297,7 +299,7 @@ val customKamelConfig = KamelConfig {
                 !httpResponse.status.isSuccess()
             }
         }
-        
+
         // Requires adding "io.ktor:ktor-client-logging:$ktor_version"
         Logging {
             level = LogLevel.INFO

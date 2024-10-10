@@ -21,6 +21,7 @@ import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 private const val ItemsCount: Int = 100
 public expect val cellsCount: Int
@@ -40,13 +41,15 @@ public fun Gallery() {
     Box(Modifier.fillMaxSize()) {
         LazyVerticalGrid(columns = GridCells.Fixed(cellsCount), modifier = Modifier.fillMaxSize()) {
             items(items) { imageUrl ->
-                val painterResource: Resource<Painter> = asyncPainterResource(
-                    imageUrl,
-                    filterQuality = FilterQuality.High,
-                )
+                val getPainterResource: @Composable (BoxWithConstraintsScope.() -> Resource<Painter>) = {
+                    asyncPainterResource(
+                        imageUrl,
+                        filterQuality = FilterQuality.High,
+                    )
+                }
 
                 KamelImage(
-                    resource = painterResource,
+                    resource = getPainterResource,
                     contentDescription = null,
                     modifier = Modifier
                         .aspectRatio(1F)
@@ -83,4 +86,10 @@ public fun Gallery() {
             }
         }
     }
+}
+
+@Preview
+@Composable
+public fun GalleryPreview() {
+    Gallery()
 }

@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
@@ -14,7 +15,7 @@ android {
     namespace = "io.kamel.samples"
 
     defaultConfig {
-        minSdk = 21
+        minSdk = 28
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -42,6 +43,11 @@ kotlin {
     androidTarget()
     jvm("desktop")
     js(IR) {
+        browser()
+        binaries.executable()
+    }
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
         browser()
         binaries.executable()
     }
@@ -103,27 +109,32 @@ kotlin {
         }
         commonMain {
             dependencies {
-                implementation(project(":kamel-image"))
+                implementation(projects.kamelImageDefault)
                 implementation(compose.foundation)
                 implementation(compose.material)
+                implementation(libs.okio)
                 implementation(compose.components.resources)
+                implementation(compose.components.uiToolingPreview)
             }
         }
 
         androidMain {
             dependencies {
+                implementation(projects.kamelFetcher.kamelFetcherResourcesAndroid)
+                implementation(projects.kamelMapper.kamelMapperResourcesIdAndroid)
+                implementation(projects.kamelDecoder.kamelDecoderImageBitmapResizing)
                 implementation(libs.androidx.appcompat)
                 implementation(libs.androidx.activity.compose)
                 implementation(libs.google.android.material)
-                implementation(libs.ktor.client.android)
                 implementation(libs.slf4j)
             }
         }
 
         val desktopMain by getting {
             dependencies {
+                implementation(projects.kamelDecoder.kamelDecoderSvgBatik)
+                implementation(projects.kamelFetcher.kamelFetcherResourcesJvm)
                 implementation(compose.desktop.currentOs)
-                implementation(libs.ktor.client.cio)
                 implementation(libs.slf4j)
             }
         }

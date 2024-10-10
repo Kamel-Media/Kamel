@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
@@ -19,6 +20,10 @@ kotlin {
     js(IR) {
         browser()
     }
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        browser()
+    }
     iosArm64()
     iosSimulatorArm64()
     iosX64()
@@ -36,14 +41,12 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
-                implementation(compose.ui)
                 implementation(compose.foundation)
-                implementation(compose.runtime)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.ktor.client.core)
                 implementation(libs.okio)
                 implementation(libs.cache4k)
-//              https://github.com/JetBrains/compose-multiplatform/issues/4442
+//                https://github.com/JetBrains/compose-multiplatform/issues/4442
                 implementation(compose.components.resources)
             }
         }
@@ -95,6 +98,10 @@ kotlin {
         }
 
         val jsMain by getting {
+            dependsOn(nonJvmMain)
+        }
+
+        val wasmJsMain by getting {
             dependsOn(nonJvmMain)
         }
 
