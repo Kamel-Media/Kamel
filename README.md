@@ -41,9 +41,9 @@ repositories {
 }
 ```
 
-#### Multi-platform
+#### Default Setup
 
-Add the dependency to the common source-set:
+Add the dependency to the common source-set or to any platform source-set:
 
 ```kotlin
 kotlin {
@@ -51,6 +51,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation("media.kamel:kamel-image-default:1.0.0")
+                // no need to specify ktor engines, one is included for each target
                 // ...
             }
         }
@@ -58,21 +59,60 @@ kotlin {
 }
 ```
 
-#### Single-platform
+#### Granular Setup
 
-Add the dependency to the dependencies block:
+For a more granular setup, you can choose which modules to include in your project:
 
 ```kotlin
-dependencies {
-    implementation("media.kamel:kamel-image-default:1.0.0")
-    // ...
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                // core module (required)
+                implementation("media.kamel:kamel-image:1.0.0")
+                
+                // Note: When using `kamel-image` a ktor engine is not included.
+                // To fetch remote images you also must ensure you add your own 
+                // ktor engine for each target.
+                
+                // optional modules (choose what you need and add them to your kamel config)
+                implementation("media.kamel:kamel-decoder-image-bitmap:1.0.0")
+                implementation("media.kamel:kamel-decoder-image-bitmap-resizing:1.0.0") // android only right now
+                implementation("media.kamel:kamel-decoder-image-vector:1.0.0")
+                implementation("media.kamel:kamel-decoder-svg-batik:1.0.0")
+                implementation("media.kamel:kamel-decoder-svg-std:1.0.0")
+                implementation("media.kamel:kamel-decoder-animated-image:1.0.0")
+
+                implementation("media.kamel:kamel-fetcher-resources-jvm:1.0.0")
+                implementation("media.kamel:kamel-fetcher-resources-android:1.0.0")
+                // ...
+            }
+        }
+
+        jvmMain {
+            dependencies {
+                // optional modules (choose what you need and add them to your kamel config)
+                implementation("media.kamel:kamel-fetcher-resources-jvm:1.0.0")
+                // ...
+            }
+        }
+
+        androidMain {
+            dependencies {
+                // optional modules (choose what you need and add them to your kamel config)
+                implementation("media.kamel:kamel-fetcher-resources-android:1.0.0")
+                // ...
+            }
+        }
+    }
 }
 ```
 
-#### Ktor HttpClient Engine
+##### Granular Setup: Ktor HttpClient Engine 
 
-Make sure to add a dependency for Ktor `HttpClient` engine for your platforms using
-this [link](https://ktor.io/docs/http-client-engines.html).
+When using `kamel-image` ktor engines are not included per target.
+In order to fetch remote images you also must ensure you add your own ktor engine for each target.
+You can find the available engines [here](https://ktor.io/docs/http-client-engines.html).
 
 ## Usage
 
