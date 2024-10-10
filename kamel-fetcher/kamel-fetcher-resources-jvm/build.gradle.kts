@@ -11,7 +11,6 @@ kotlin {
     applyDefaultHierarchyTemplate()
     sourceSets {
         val jvmMain by getting {
-            dependsOn(commonMain.get())
             dependencies {
                 implementation(projects.kamelCore)
                 // todo: remove ktor dependency related to https://github.com/Kamel-Media/Kamel/issues/35
