@@ -159,7 +159,7 @@ public inline fun BoxWithConstraintsScope.asyncPainterResource(
  * @param data Can be anything such as [String], [Url] or a [File].
  * @return [String] Which is the ending of the data (Url)
  */
-public inline fun <I : Any> getDataSourceEnding(data: I): String {
+public fun <I : Any> getDataSourceEnding(data: I): String {
     val dataPath = when (data) {
         is Url -> data
         else -> runCatching {
