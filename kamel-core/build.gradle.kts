@@ -46,6 +46,8 @@ kotlin {
                 implementation(libs.ktor.client.core)
                 implementation(libs.okio)
                 implementation(libs.cache4k)
+                // todo: remove this https://youtrack.jetbrains.com/issue/CMP-4442
+                implementation(compose.components.resources)
             }
         }
 
@@ -111,12 +113,6 @@ kotlin {
         }
 
     }
-}
-
-compose.resources {
-    // for testing purposes
-    // https://youtrack.jetbrains.com/issue/CMP-4442
-    generateResClass = always
 }
 
 android {
