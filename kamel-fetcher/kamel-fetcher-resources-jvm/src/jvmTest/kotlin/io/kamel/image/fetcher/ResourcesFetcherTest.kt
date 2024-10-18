@@ -6,7 +6,7 @@ import io.kamel.core.getOrNull
 import io.kamel.core.isLoading
 import io.kamel.core.map
 import io.ktor.http.*
-import io.ktor.util.*
+import io.ktor.utils.io.toByteArray
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
