@@ -1,7 +1,6 @@
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Density
 import nl.adaptivity.xmlutil.dom2.Element
-import nl.adaptivity.xmlutil.serialization.ElementSerializer
 import nl.adaptivity.xmlutil.serialization.XML
 
 /**
