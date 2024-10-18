@@ -1,5 +1,5 @@
-import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 
 plugins {
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
@@ -46,8 +46,6 @@ kotlin {
                 implementation(libs.ktor.client.core)
                 implementation(libs.okio)
                 implementation(libs.cache4k)
-//                https://github.com/JetBrains/compose-multiplatform/issues/4442
-                implementation(compose.components.resources)
             }
         }
 
@@ -57,8 +55,7 @@ kotlin {
                 implementation(libs.ktor.client.mock)
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.okio.fakefilesystem)
-//                https://github.com/JetBrains/compose-multiplatform/issues/4442
-//                implementation(compose.components.resources)
+                implementation(compose.components.resources)
             }
         }
 
@@ -114,6 +111,12 @@ kotlin {
         }
 
     }
+}
+
+compose.resources {
+    // for testing purposes
+    // https://youtrack.jetbrains.com/issue/CMP-4442
+    generateResClass = always
 }
 
 android {
