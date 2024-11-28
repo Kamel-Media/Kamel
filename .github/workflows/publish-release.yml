@@ -1,19 +1,21 @@
-name: Publish
+name: Publish Snapshot to Maven Central
 on:
   push:
     branches:
-      - dev
+      - release
 jobs:
   publish:
     runs-on: ubuntu-latest
     name: Build and publish snapshot
     steps:
-      - name: Check
+      - name: Checkout Repository
         uses: actions/checkout@v4
       - name: Setup JDK
         uses: actions/setup-java@v4
         with:
-          java-version: 11
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'gradle'
 
         # Base64 decodes and pipes the GPG key content into the secret file
       - name: Prepare environment
@@ -21,11 +23,10 @@ jobs:
           GPG_KEY_CONTENTS: ${{ secrets.GPG_KEY_CONTENTS }}
           SIGNING_SECRET_KEY_RING_FILE: ${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}
         run: |
-          git fetch --unshallow
           sudo bash -c "echo '$GPG_KEY_CONTENTS' | base64 -d > '$SIGNING_SECRET_KEY_RING_FILE'"
 
       - name: Publish snapshot
-        run: ./gradlew publish
+        run: ./gradlew publishAndReleaseToMavenCentral
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
