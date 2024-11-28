@@ -1,6 +1,6 @@
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
@@ -11,12 +11,12 @@ plugins {
 }
 
 android {
-    compileSdk = 34
+    compileSdk = 35
     namespace = "io.kamel.samples"
 
     defaultConfig {
         minSdk = 28
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
         multiDexEnabled = true
@@ -81,12 +81,7 @@ kotlin {
         macosArm64(config)
     }
     macosTargets {
-        binaries.executable {
-            freeCompilerArgs += listOf(
-                "-linker-option", "-framework", "-linker-option", "Metal"
-            )
-            linkerOpts.add("-lsqlite3")
-        }
+        binaries.executable()
     }
     applyDefaultHierarchyTemplate()
 

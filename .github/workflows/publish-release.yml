@@ -6,7 +6,7 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    name: Build and publish snapshot
+    name: Build and Publish Release
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
