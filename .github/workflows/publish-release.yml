@@ -1,4 +1,4 @@
-name: Publish Snapshot to Maven Central
+name: Publish Release to Maven Central
 on:
   push:
     branches:
@@ -25,7 +25,7 @@ jobs:
         run: |
           sudo bash -c "echo '$GPG_KEY_CONTENTS' | base64 -d > '$SIGNING_SECRET_KEY_RING_FILE'"
 
-      - name: Publish snapshot
+      - name: Publish Release
         run: ./gradlew publishAndReleaseToMavenCentral
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.OSSRH_USERNAME }}
