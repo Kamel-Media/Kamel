@@ -56,6 +56,10 @@ kotlin {
         iosX64(config)
     }
     iosTargets {
+        binaries.framework {
+            baseName = "shared"
+            isStatic = true
+        }
         binaries.forEach {
             it.apply {
                 freeCompilerArgs += listOf(
