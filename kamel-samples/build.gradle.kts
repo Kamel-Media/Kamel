@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.org.jetbrains.compose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.com.android.application)
-    kotlin("native.cocoapods")
 }
 
 android {
@@ -84,17 +83,6 @@ kotlin {
         binaries.executable()
     }
     applyDefaultHierarchyTemplate()
-
-    cocoapods {
-        summary = "Shared code for the sample"
-        homepage = "https://github.com/Kamel-Media/Kamel"
-        ios.deploymentTarget = "14.1"
-        podfile = project.file("../kamel-sample-ios/Podfile")
-        framework {
-            baseName = "shared"
-            isStatic = true
-        }
-    }
 
     sourceSets {
         all {
