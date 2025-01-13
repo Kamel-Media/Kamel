@@ -50,7 +50,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation("media.kamel:kamel-image-default:1.0.0")
+                implementation("media.kamel:kamel-image-default:$kamel_version")
                 // no need to specify ktor engines, one is included for each target
                 // ...
             }
@@ -69,22 +69,19 @@ kotlin {
         commonMain {
             dependencies {
                 // core module (required)
-                implementation("media.kamel:kamel-image:1.0.0")
+                implementation("media.kamel:kamel-image:$kamel_version")
                 
                 // Note: When using `kamel-image` a ktor engine is not included.
                 // To fetch remote images you also must ensure you add your own 
                 // ktor engine for each target.
                 
                 // optional modules (choose what you need and add them to your kamel config)
-                implementation("media.kamel:kamel-decoder-image-bitmap:1.0.0")
-                implementation("media.kamel:kamel-decoder-image-bitmap-resizing:1.0.0") // android only right now
-                implementation("media.kamel:kamel-decoder-image-vector:1.0.0")
-                implementation("media.kamel:kamel-decoder-svg-batik:1.0.0")
-                implementation("media.kamel:kamel-decoder-svg-std:1.0.0")
-                implementation("media.kamel:kamel-decoder-animated-image:1.0.0")
-
-                implementation("media.kamel:kamel-fetcher-resources-jvm:1.0.0")
-                implementation("media.kamel:kamel-fetcher-resources-android:1.0.0")
+                implementation("media.kamel:kamel-decoder-image-bitmap:$kamel_version")
+                implementation("media.kamel:kamel-decoder-image-bitmap-resizing:$kamel_version") // android only right now
+                implementation("media.kamel:kamel-decoder-image-vector:$kamel_version")
+                implementation("media.kamel:kamel-decoder-svg-batik:$kamel_version")
+                implementation("media.kamel:kamel-decoder-svg-std:$kamel_version")
+                implementation("media.kamel:kamel-decoder-animated-image:$kamel_version")
                 // ...
             }
         }
@@ -92,7 +89,7 @@ kotlin {
         jvmMain {
             dependencies {
                 // optional modules (choose what you need and add them to your kamel config)
-                implementation("media.kamel:kamel-fetcher-resources-jvm:1.0.0")
+                implementation("media.kamel:kamel-fetcher-resources-jvm:$kamel_version")
                 // ...
             }
         }
@@ -100,7 +97,7 @@ kotlin {
         androidMain {
             dependencies {
                 // optional modules (choose what you need and add them to your kamel config)
-                implementation("media.kamel:kamel-fetcher-resources-android:1.0.0")
+                implementation("media.kamel:kamel-fetcher-resources-android:$kamel_version")
                 // ...
             }
         }
@@ -162,7 +159,7 @@ the `KamelConfig`:
 
 ```kotlin
 val desktopConfig = KamelConfig {
-    takeFrom(KamelConfig.Default)
+    takeFrom(KamelConfig.Core)
     // Available only on Desktop.
     resourcesFetcher()
     // Available only on Desktop.
@@ -188,7 +185,7 @@ and `resourcesIdMapper` to the `KamelConfig`:
 val context: Context = LocalContext.current
 
 val androidConfig = KamelConfig {
-    takeFrom(KamelConfig.Default)
+    takeFrom(KamelConfig.Core)
     // Available only on Android.
     resourcesFetcher(context)
     // Available only on Android.
@@ -297,13 +294,13 @@ KamelImage(
 
 ### Configuring Kamel
 
-The default implementation is ```KamelConfig.Default```. If you wish to configure it, you can do it
+The default implementation is ```KamelConfig.Core```. If you wish to configure it, you can do it
 the following way:
 
 ```kotlin
 val customKamelConfig = KamelConfig {
     // Copies the default implementation if needed
-    takeFrom(KamelConfig.Default)
+    takeFrom(KamelConfig.Core)
 
     // Sets the number of images to cache
     imageBitmapCacheSize = DefaultCacheSize
@@ -372,7 +369,7 @@ KamelConfig {
 #### Disk cache size (in bytes)
 
 Kamel can create a persistent disk cache for images by implementing ktor's `CacheStorage` feature.
-The default config `KamelConfig.Default` installs this feature with a 10 MiB disk cache size.
+The default config `KamelConfig.Core` installs this feature with a 10 MiB disk cache size.
 The underlying disk cache is based on coil's multiplatform `DiskLruCache` implementation.
 
 ```kotlin
