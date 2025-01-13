@@ -159,7 +159,7 @@ the `KamelConfig`:
 
 ```kotlin
 val desktopConfig = KamelConfig {
-    takeFrom(KamelConfig.Default)
+    takeFrom(KamelConfig.Core)
     // Available only on Desktop.
     resourcesFetcher()
     // Available only on Desktop.
@@ -185,7 +185,7 @@ and `resourcesIdMapper` to the `KamelConfig`:
 val context: Context = LocalContext.current
 
 val androidConfig = KamelConfig {
-    takeFrom(KamelConfig.Default)
+    takeFrom(KamelConfig.Core)
     // Available only on Android.
     resourcesFetcher(context)
     // Available only on Android.
@@ -294,13 +294,13 @@ KamelImage(
 
 ### Configuring Kamel
 
-The default implementation is ```KamelConfig.Default```. If you wish to configure it, you can do it
+The default implementation is ```KamelConfig.Core```. If you wish to configure it, you can do it
 the following way:
 
 ```kotlin
 val customKamelConfig = KamelConfig {
     // Copies the default implementation if needed
-    takeFrom(KamelConfig.Default)
+    takeFrom(KamelConfig.Core)
 
     // Sets the number of images to cache
     imageBitmapCacheSize = DefaultCacheSize
@@ -369,7 +369,7 @@ KamelConfig {
 #### Disk cache size (in bytes)
 
 Kamel can create a persistent disk cache for images by implementing ktor's `CacheStorage` feature.
-The default config `KamelConfig.Default` installs this feature with a 10 MiB disk cache size.
+The default config `KamelConfig.Core` installs this feature with a 10 MiB disk cache size.
 The underlying disk cache is based on coil's multiplatform `DiskLruCache` implementation.
 
 ```kotlin
