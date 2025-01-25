@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.startup.Initializer
 
 
-public lateinit var applicationContext: Context
+public var applicationContext: Context? = null
 
 internal class ApplicationContextInitializer : Initializer<Context> {
     override fun create(context: Context): Context = context.also {

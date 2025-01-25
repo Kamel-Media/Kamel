@@ -7,8 +7,12 @@ import androidx.compose.material.Tab
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import io.kamel.core.config.Core
+import io.kamel.core.config.KamelConfig
+import io.kamel.core.config.takeFrom
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
+import io.kamel.image.config.*
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
