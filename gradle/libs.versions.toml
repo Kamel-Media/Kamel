@@ -11,7 +11,7 @@ com-android-application = { id = "com.android.application", version.ref = "agp" 
 
 [versions]
 
-kotlin = "2.1.0"
+kotlin = "2.1.10"
 agp = "8.7.3"
 
 okio = "3.10.2"
