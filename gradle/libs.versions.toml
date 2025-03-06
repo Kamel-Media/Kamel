@@ -16,7 +16,7 @@ agp = "8.7.3"
 
 okio = "3.10.2"
 startup-runtime = "1.2.0"
-vanniktech-publish = "0.30.0"
+vanniktech-publish = "0.31.0"
 compose = "1.7.3"
 coroutines = "1.10.1"
 ktor = "3.1.0"
