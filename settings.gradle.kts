@@ -23,12 +23,12 @@ plugins {
 }
 
 
-refreshVersions {
-    rejectVersionIf {
-        @Suppress("UnstableApiUsage")
-        candidate.stabilityLevel >= StabilityLevel.Beta
-    }
-}
+//refreshVersions {
+//    rejectVersionIf {
+//        @Suppress("UnstableApiUsage")
+//        candidate.stabilityLevel >= StabilityLevel.Beta
+//    }
+//}
 
 rootProject.name = "Kamel"
 
