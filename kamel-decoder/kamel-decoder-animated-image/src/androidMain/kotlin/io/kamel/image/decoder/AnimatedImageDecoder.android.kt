@@ -22,15 +22,24 @@ internal actual val AnimatedImageDecoder = object : Decoder<AnimatedImage> {
 
     override val outputKClass: KClass<AnimatedImage> = AnimatedImage::class
 
-    @RequiresApi(Build.VERSION_CODES.P)
     override suspend fun decode(
         channel: ByteReadChannel, resourceConfig: ResourceConfig
     ): AnimatedImage {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+            throw UnsupportedOperationException("Animated images are supported only on Android P (API 28) and above.")
+        }
+        return decodeAnimatedImage(channel)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.P)
+    private suspend fun decodeAnimatedImage(channel: ByteReadChannel): AnimatedImage {
         val inStream = channel.toInputStream()
         val animatedImage = AnimatedImageDrawable.createFromStream(inStream, null)
         if (animatedImage == null) {
             val bytes = channel.toByteArray()
-            throw IllegalArgumentException("Failed to decode ${bytes.size} bytes to a bitmap. Decoded bytes:\n${bytes.decodeToString()}\n")
+            throw IllegalArgumentException(
+                "Failed to decode ${bytes.size} bytes to an animated drawable. Decoded bytes:\n${bytes.decodeToString()}\n"
+            )
         }
         return AndroidAnimatedImage(animatedImage as AnimatedImageDrawable)
     }
