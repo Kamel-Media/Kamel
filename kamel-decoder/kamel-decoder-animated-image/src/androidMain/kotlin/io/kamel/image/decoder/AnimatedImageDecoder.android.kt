@@ -1,6 +1,8 @@
 package io.kamel.image.decoder
 
 import android.graphics.drawable.AnimatedImageDrawable
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
@@ -8,9 +10,7 @@ import androidx.core.graphics.drawable.toBitmap
 import io.kamel.core.AnimatedImage
 import io.kamel.core.config.ResourceConfig
 import io.kamel.core.decoder.Decoder
-import io.ktor.util.*
 import io.ktor.utils.io.*
-import io.ktor.utils.io.core.*
 import io.ktor.utils.io.jvm.javaio.*
 import kotlinx.coroutines.delay
 import kotlin.reflect.KClass
@@ -22,6 +22,7 @@ internal actual val AnimatedImageDecoder = object : Decoder<AnimatedImage> {
 
     override val outputKClass: KClass<AnimatedImage> = AnimatedImage::class
 
+    @RequiresApi(Build.VERSION_CODES.P)
     override suspend fun decode(
         channel: ByteReadChannel, resourceConfig: ResourceConfig
     ): AnimatedImage {
@@ -37,6 +38,7 @@ internal actual val AnimatedImageDecoder = object : Decoder<AnimatedImage> {
 
 public class AndroidAnimatedImage(public val drawable: AnimatedImageDrawable) : AnimatedImage {
 
+    @RequiresApi(Build.VERSION_CODES.P)
     @Composable
     override fun animate(): ImageBitmap {
         var bitmapState by remember { mutableStateOf(drawable.toBitmap().asImageBitmap()) }
