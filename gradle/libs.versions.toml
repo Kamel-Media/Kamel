@@ -30,7 +30,7 @@ batik = "1.18"
 slf4j = "2.0.17"
 annotation = "1.9.1"
 core-ctx = "1.16.0"
-ui-tooling = "1.7.8"
+ui-tooling = "1.8.1"
 
 [libraries]
 
