@@ -50,7 +50,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation("media.kamel:kamel-image-default:1.0.3")
+                implementation("media.kamel:kamel-image-default:1.0.5")
                 // no need to specify ktor engines, one is included for each target
                 // ...
             }
@@ -69,22 +69,22 @@ kotlin {
         commonMain {
             dependencies {
                 // core module (required)
-                implementation("media.kamel:kamel-image:1.0.3")
+                implementation("media.kamel:kamel-image:1.0.5")
                 
                 // Note: When using `kamel-image` a ktor engine is not included.
                 // To fetch remote images you also must ensure you add your own 
                 // ktor engine for each target.
                 
                 // optional modules (choose what you need and add them to your kamel config)
-                implementation("media.kamel:kamel-decoder-image-bitmap:1.0.3")
-                implementation("media.kamel:kamel-decoder-image-bitmap-resizing:1.0.3") // android only right now
-                implementation("media.kamel:kamel-decoder-image-vector:1.0.3")
-                implementation("media.kamel:kamel-decoder-svg-batik:1.0.3")
-                implementation("media.kamel:kamel-decoder-svg-std:1.0.3")
-                implementation("media.kamel:kamel-decoder-animated-image:1.0.3")
+                implementation("media.kamel:kamel-decoder-image-bitmap:1.0.5")
+                implementation("media.kamel:kamel-decoder-image-bitmap-resizing:1.0.5") // android only right now
+                implementation("media.kamel:kamel-decoder-image-vector:1.0.5")
+                implementation("media.kamel:kamel-decoder-svg-batik:1.0.5")
+                implementation("media.kamel:kamel-decoder-svg-std:1.0.5")
+                implementation("media.kamel:kamel-decoder-animated-image:1.0.5")
 
-                implementation("media.kamel:kamel-fetcher-resources-jvm:1.0.3")
-                implementation("media.kamel:kamel-fetcher-resources-android:1.0.3")
+                implementation("media.kamel:kamel-fetcher-resources-jvm:1.0.5")
+                implementation("media.kamel:kamel-fetcher-resources-android:1.0.5")
                 // ...
             }
         }
@@ -92,7 +92,7 @@ kotlin {
         jvmMain {
             dependencies {
                 // optional modules (choose what you need and add them to your kamel config)
-                implementation("media.kamel:kamel-fetcher-resources-jvm:1.0.3")
+                implementation("media.kamel:kamel-fetcher-resources-jvm:1.0.5")
                 // ...
             }
         }
@@ -100,7 +100,7 @@ kotlin {
         androidMain {
             dependencies {
                 // optional modules (choose what you need and add them to your kamel config)
-                implementation("media.kamel:kamel-fetcher-resources-android:1.0.3")
+                implementation("media.kamel:kamel-fetcher-resources-android:1.0.5")
                 // ...
             }
         }
