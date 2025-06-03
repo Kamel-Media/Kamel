@@ -81,7 +81,7 @@ kotlin {
                 implementation("media.kamel:kamel-decoder-image-vector:1.0.5")
                 implementation("media.kamel:kamel-decoder-svg-batik:1.0.5")
                 implementation("media.kamel:kamel-decoder-svg-std:1.0.5")
-                implementation("media.kamel:kamel-decoder-animated-image:1.0.5")
+                implementation("media.kamel:kamel-decoder-animated-image:1.0.5") // .gif support
 
                 implementation("media.kamel:kamel-fetcher-resources-jvm:1.0.5")
                 implementation("media.kamel:kamel-fetcher-resources-android:1.0.5")
