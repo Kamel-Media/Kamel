@@ -6,7 +6,6 @@ import io.ktor.client.plugins.cache.storage.*
 import io.ktor.http.*
 import io.ktor.util.*
 import io.ktor.util.date.*
-import io.ktor.utils.io.core.use
 import kotlinx.coroutines.*
 import okio.BufferedSink
 import okio.BufferedSource
@@ -67,6 +66,14 @@ internal class DiskCacheStorage(
 
     override suspend fun findAll(url: Url): Set<CachedResponseData> {
         return find(url, emptyMap())?.let(::setOf) ?: emptySet()
+    }
+
+    override suspend fun remove(url: Url, varyKeys: Map<String, String>) {
+        diskLruCache.remove(url.hash())
+    }
+
+    override suspend fun removeAll(url: Url) {
+        diskLruCache.remove(url.hash())
     }
 
     private fun readCache(source: BufferedSource): CachedResponseData {
