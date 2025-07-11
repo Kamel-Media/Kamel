@@ -37,7 +37,7 @@ kotlin {
     explicitApi = ExplicitApiMode.Warning
 
     androidTarget {
-        publishAllLibraryVariants()
+        publishLibraryVariants("release", "debug")
     }
     jvm("desktopJvm")
     js(IR) {
