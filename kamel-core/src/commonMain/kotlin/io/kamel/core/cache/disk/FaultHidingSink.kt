@@ -1,13 +1,12 @@
 package io.kamel.core.cache.disk
 
+import kotlinx.io.IOException
 import okio.Buffer
-import okio.IOException
 import okio.Sink
 
 /** A sink that never throws [IOException]s, even if the underlying sink does. */
 internal class FaultHidingSink(
-   private val delegate: Sink,
-    private val onException: (IOException) -> Unit
+    private val delegate: Sink, private val onException: (IOException) -> Unit
 ) : Sink by delegate {
 
     private var hasErrors = false

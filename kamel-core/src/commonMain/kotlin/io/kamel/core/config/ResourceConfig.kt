@@ -33,5 +33,5 @@ public interface ResourceConfig {
      * Maximum size of the bitmap to decode.
      * If the bitmap is larger than this size, it will be downsampled.
      */
-    val maxBitmapDecodeSize: IntSize
+    public val maxBitmapDecodeSize: IntSize
 }
