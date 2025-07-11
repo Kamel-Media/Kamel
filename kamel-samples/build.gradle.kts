@@ -42,11 +42,13 @@ kotlin {
     androidTarget()
     jvm("desktop")
     js(IR) {
+        useEsModules()
         browser()
         binaries.executable()
     }
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
+        useEsModules()
         browser()
         binaries.executable()
     }
