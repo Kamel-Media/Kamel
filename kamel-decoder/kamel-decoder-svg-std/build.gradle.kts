@@ -17,7 +17,7 @@ android {
         multiDexEnabled = true
     }
 
-    namespace = "io.kamel.image"
+    namespace = "io.kamel.decoder.svg.std"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8

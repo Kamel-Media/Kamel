@@ -14,7 +14,7 @@ android {
         multiDexEnabled = true
     }
 
-    namespace = "io.kamel.image"
+    namespace = "io.kamel.mapper.resources.id.android"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
