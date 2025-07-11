@@ -1,8 +1,5 @@
 package io.kamel.core.cache.disk
 
-import io.ktor.utils.io.core.Closeable
-import io.ktor.utils.io.errors.IOException
-
 /*
  * Copyright (C) 2011 The Android Open Source Project
  *
@@ -23,6 +20,7 @@ import io.ktor.utils.io.errors.IOException
 import io.kamel.core.utils.createFile
 import io.kamel.core.utils.deleteContents
 import io.ktor.util.collections.ConcurrentMap
+import io.ktor.utils.io.core.Closeable
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -32,6 +30,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.internal.SynchronizedObject
 import kotlinx.coroutines.internal.synchronized
 import kotlinx.coroutines.launch
+import kotlinx.io.IOException
 import okio.BufferedSink
 import okio.EOFException
 import okio.FileSystem
