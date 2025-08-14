@@ -29,7 +29,7 @@ androidsvg = "1.4"
 batik = "1.19"
 slf4j = "2.0.17"
 annotation = "1.9.1"
-core-ctx = "1.16.0"
+core-ctx = "1.17.0"
 ui-tooling = "1.8.3"
 
 [libraries]
