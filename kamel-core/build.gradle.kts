@@ -18,10 +18,12 @@ kotlin {
     }
     jvm("desktop")
     js(IR) {
+        useEsModules()
         browser()
     }
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
+        useEsModules()
         browser()
     }
     iosArm64()

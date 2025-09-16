@@ -11,26 +11,26 @@ com-android-application = { id = "com.android.application", version.ref = "agp" 
 
 [versions]
 
-kotlin = "2.2.0"
-agp = "8.10.1"
+kotlin = "2.2.20"
+agp ="8.11.1"
 
-okio = "3.15.0"
+okio = "3.16.0"
 startup-runtime = "1.2.0"
-vanniktech-publish = "0.33.0"
-compose = "1.8.2"
+vanniktech-publish = "0.34.0"
+compose = "1.9.0"
 coroutines = "1.10.2"
-ktor = "3.2.1"
+ktor = "3.3.0"
 cache4k = "0.14.0"
-xmlutil = "0.91.1"
-activity-compose = "1.10.1"
+xmlutil = "0.91.2"
+activity-compose = "1.11.0"
 appcompat = "1.7.1"
-material = "1.12.0"
+material = "1.13.0"
 androidsvg = "1.4"
 batik = "1.19"
 slf4j = "2.0.17"
 annotation = "1.9.1"
-core-ctx = "1.16.0"
-ui-tooling = "1.8.3"
+core-ctx = "1.17.0"
+ui-tooling = "1.9.1"
 
 [libraries]
 
