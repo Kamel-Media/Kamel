@@ -1,5 +1,5 @@
-import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 
 plugins {
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
@@ -71,24 +71,16 @@ kotlin {
             }
         }
 
-        val nonAndroidMain by creating {
-            dependsOn(commonMain.get())
-        }
-
         jvmMain {
-            dependsOn(nonAndroidMain)
+            dependencies {
+                implementation("io.github.qdsfdhvh:avif:0.0.1")
+            }
         }
 
-        jsMain {
-            dependsOn(nonAndroidMain)
-        }
-
-        val wasmJsMain by getting {
-            dependsOn(nonAndroidMain)
-        }
-
-        appleMain {
-            dependsOn(nonAndroidMain)
+        iosMain {
+            dependencies {
+                implementation("io.github.qdsfdhvh:avif:0.0.1")
+            }
         }
     }
 }
