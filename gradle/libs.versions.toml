@@ -14,7 +14,7 @@ com-android-application = { id = "com.android.application", version.ref = "agp" 
 kotlin = "2.2.21"
 agp ="8.13.1"
 
-okio = "3.16.2"
+okio = "3.16.4"
 startup-runtime = "1.2.0"
 vanniktech-publish = "0.35.0"
 compose = "1.9.3"
