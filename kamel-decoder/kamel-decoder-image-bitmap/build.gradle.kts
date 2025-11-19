@@ -73,13 +73,13 @@ kotlin {
 
         jvmMain {
             dependencies {
-                implementation("io.github.qdsfdhvh:avif:0.0.1")
+                implementation(libs.avif)
             }
         }
 
         iosMain {
             dependencies {
-                implementation("io.github.qdsfdhvh:avif:0.0.1")
+                implementation(libs.avif)
             }
         }
     }

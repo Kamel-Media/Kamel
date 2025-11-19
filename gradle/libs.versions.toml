@@ -11,12 +11,13 @@ com-android-application = { id = "com.android.application", version.ref = "agp" 
 
 [versions]
 
+avif = "0.0.1"
 kotlin = "2.2.21"
 agp ="8.12.3"
 
-okio = "3.16.2"
+okio = "3.16.4"
 startup-runtime = "1.2.0"
-vanniktech-publish = "0.34.0"
+vanniktech-publish = "0.35.0"
 compose = "1.9.3"
 coroutines = "1.10.2"
 ktor = "3.3.2"
@@ -34,6 +35,7 @@ ui-tooling = "1.9.4"
 
 [libraries]
 
+avif = { module = "media.kamel:avif", version.ref = "avif" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 okio-fakefilesystem = { module = "com.squareup.okio:okio-fakefilesystem", version.ref = "okio" }
 
