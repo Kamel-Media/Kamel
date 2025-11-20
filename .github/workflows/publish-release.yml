@@ -9,7 +9,7 @@ jobs:
     name: Build and Publish Release
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Setup JDK
         uses: actions/setup-java@v5
         with:
