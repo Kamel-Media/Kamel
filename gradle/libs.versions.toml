@@ -12,18 +12,18 @@ com-android-application = { id = "com.android.application", version.ref = "agp" 
 [versions]
 
 avif = "0.0.1"
-kotlin = "2.2.21"
+kotlin = "2.3.0"
 agp ="8.12.3"
 
 okio = "3.16.4"
 startup-runtime = "1.2.0"
 vanniktech-publish = "0.35.0"
-compose = "1.9.3"
+compose = "1.10.0"
 coroutines = "1.10.2"
-ktor = "3.3.2"
+ktor = "3.3.3"
 cache4k = "0.14.0"
 xmlutil = "0.91.3"
-activity-compose = "1.11.0"
+activity-compose = "1.12.2"
 appcompat = "1.7.1"
 material = "1.13.0"
 androidsvg = "1.4"
@@ -31,7 +31,7 @@ batik = "1.19"
 slf4j = "2.0.17"
 annotation = "1.9.1"
 core-ctx = "1.17.0"
-ui-tooling = "1.9.4"
+ui-tooling = "1.10.1"
 
 [libraries]
 
