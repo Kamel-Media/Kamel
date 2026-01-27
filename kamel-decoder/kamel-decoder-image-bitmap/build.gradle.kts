@@ -68,6 +68,7 @@ kotlin {
         androidMain {
             dependencies {
                 implementation(libs.com.caverok.androidsvg)
+                implementation(libs.avif)
             }
         }
 
