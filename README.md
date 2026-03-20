@@ -13,8 +13,8 @@ Ktor client for loading resources.
 ## Table of contents
 
 - [Setup](#setup)
-    - [Multi-platform](#multi-platform)
-    - [Single-platform](#single-platform)
+    - [Default (Easy)](#default-setup)
+    - [Granular Dependencies (Advanced)](#granular-setup)
 - [Usage](#usage)
     - [Loading an image resource](#loading-an-image-resource)
         - [Platform specific implementations](#platform-specific-implementations)
@@ -61,7 +61,7 @@ kotlin {
 
 #### Granular Setup
 
-For a more granular setup, you can choose which modules to include in your project:
+For a more granular setup, you can choose which modules to include in your project to limit transitive dependencies:
 
 ```kotlin
 kotlin {
@@ -82,9 +82,6 @@ kotlin {
                 implementation("media.kamel:kamel-decoder-svg-batik:1.0.9")
                 implementation("media.kamel:kamel-decoder-svg-std:1.0.9")
                 implementation("media.kamel:kamel-decoder-animated-image:1.0.9") // .gif support
-
-                implementation("media.kamel:kamel-fetcher-resources-jvm:1.0.9")
-                implementation("media.kamel:kamel-fetcher-resources-android:1.0.9")
                 // ...
             }
         }
