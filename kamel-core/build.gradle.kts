@@ -5,7 +5,7 @@ plugins {
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
     alias(libs.plugins.org.jetbrains.compose)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.com.android.library)
+    alias(libs.plugins.com.android.kotlin.multiplatform.library)
     alias(libs.plugins.com.vanniktech.maven.publish)
 }
 
@@ -13,8 +13,11 @@ kotlin {
     compilerOptions.freeCompilerArgs.add("-Xexpect-actual-classes")
     explicitApi = ExplicitApiMode.Warning
 
-    androidTarget {
-        publishLibraryVariants("release", "debug")
+    android {
+        namespace = "io.kamel.core.cache"
+        compileSdk = 36
+        minSdk = 21
+        withHostTestBuilder {}
     }
     jvm("desktop")
     js(IR) {
@@ -29,7 +32,6 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
     iosX64()
-    macosX64()
     macosArm64()
 
     applyDefaultHierarchyTemplate()
@@ -43,13 +45,13 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
-                implementation(compose.foundation)
+                implementation(libs.compose.foundation)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.ktor.client.core)
                 implementation(libs.okio)
                 implementation(libs.cache4k)
                 // todo: remove this https://youtrack.jetbrains.com/issue/CMP-4442
-                implementation(compose.components.resources)
+                implementation(libs.compose.components.resources)
             }
         }
 
@@ -59,7 +61,7 @@ kotlin {
                 implementation(libs.ktor.client.mock)
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.okio.fakefilesystem)
-                implementation(compose.components.resources)
+                implementation(libs.compose.components.resources)
             }
         }
 
@@ -86,7 +88,7 @@ kotlin {
             }
         }
 
-        val androidUnitTest by getting {
+        val androidHostTest by getting {
             dependsOn(commonJvmTest)
         }
 
@@ -114,14 +116,5 @@ kotlin {
             dependsOn(nonJvmTest)
         }
 
-    }
-}
-
-android {
-    namespace = "io.kamel.core.cache"
-    compileSdk = 36
-
-    defaultConfig {
-        minSdk = 21
     }
 }

@@ -1,43 +1,21 @@
-import org.jetbrains.compose.ExperimentalComposeLibrary
-import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 
 plugins {
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
     alias(libs.plugins.org.jetbrains.compose)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.com.android.library)
+    alias(libs.plugins.com.android.kotlin.multiplatform.library)
     alias(libs.plugins.com.vanniktech.maven.publish)
-}
-
-android {
-    compileSdk = 36
-
-    defaultConfig {
-        minSdk = 21
-        multiDexEnabled = true
-    }
-
-    namespace = "io.kamel.image"
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    testOptions {
-        unitTests {
-            isIncludeAndroidResources = true
-        }
-    }
-
 }
 
 kotlin {
     explicitApi = ExplicitApiMode.Warning
 
-    androidTarget {
-        publishLibraryVariants("release", "debug")
+    android {
+        namespace = "io.kamel.image"
+        compileSdk = 36
+        minSdk = 21
     }
     jvm("desktopJvm")
     js(IR) {
@@ -51,7 +29,6 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
     iosX64()
-    macosX64()
     macosArm64()
     applyDefaultHierarchyTemplate()
 
@@ -60,17 +37,16 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(projects.kamelCore)
-                implementation(compose.foundation)
+                implementation(libs.compose.foundation)
                 implementation(libs.ktor.client.core)
             }
         }
 
-         val commonTest by getting {
+        val commonTest by getting {
             dependencies {
-                implementation(compose.material3)
+                implementation(libs.compose.material3)
                 implementation(kotlin("test"))
-                @OptIn(ExperimentalComposeLibrary::class)
-                implementation(compose.uiTest)
+                implementation(libs.compose.ui.test)
                 implementation(libs.ktor.client.mock)
                 implementation(libs.kotlinx.coroutines.test)
             }

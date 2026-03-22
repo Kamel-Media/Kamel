@@ -82,7 +82,6 @@ kotlin {
         }
     }
     fun macosTargets(config: KotlinNativeTarget.() -> Unit) {
-        macosX64(config)
         macosArm64(config)
     }
     macosTargets {
@@ -99,11 +98,11 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(projects.kamelImageDefault)
-                implementation(compose.foundation)
-                implementation(compose.material)
+                implementation(libs.compose.foundation)
+                implementation(libs.compose.material)
                 implementation(libs.okio)
-                implementation(compose.components.resources)
-                implementation(compose.components.uiToolingPreview)
+                implementation(libs.compose.components.resources)
+                implementation(libs.compose.ui.tooling.preview)
             }
         }
 

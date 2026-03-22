@@ -7,13 +7,9 @@ import androidx.compose.material.Tab
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import io.kamel.core.config.Core
-import io.kamel.core.config.KamelConfig
-import io.kamel.core.config.takeFrom
+import androidx.compose.ui.tooling.preview.Preview
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import io.kamel.image.config.*
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 public fun launcher() {
@@ -27,7 +23,8 @@ public fun launcher() {
         }
         when (tabIndex) {
             0 -> Gallery()
-            1 -> KamelImage({ asyncPainterResource("https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDl2OTFjYWVhMmR2aHZuMXcwczh3eXpxeHNlb2xzZXNqZnUzNHU3aSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/da17TWjELQ27RpHXds/giphy.gif") },
+            1 -> KamelImage(
+                { asyncPainterResource("https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDl2OTFjYWVhMmR2aHZuMXcwczh3eXpxeHNlb2xzZXNqZnUzNHU3aSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/da17TWjELQ27RpHXds/giphy.gif") },
                 contentDescription = "Compose",
                 modifier = Modifier.fillMaxSize(),
                 onFailure = { throw it },
