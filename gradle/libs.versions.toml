@@ -12,7 +12,7 @@ com-android-application = { id = "com.android.application", version.ref = "agp" 
 [versions]
 
 kotlin = "2.3.21"
-agp ="8.13.2"
+agp ="9.2.0"
 
 okio = "3.17.0"
 startup-runtime = "1.2.0"
