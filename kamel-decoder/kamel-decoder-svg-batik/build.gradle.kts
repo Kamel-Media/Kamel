@@ -17,7 +17,7 @@ kotlin {
                 implementation(projects.kamelCore)
                 // todo: remove ktor dependency related to https://github.com/Kamel-Media/Kamel/issues/35
                 implementation(libs.ktor.client.core)
-                implementation(compose.ui)
+                implementation(libs.compose.ui)
                 implementation(libs.apache.batik.transcoder)
                 // https://stackoverflow.com/a/45318410/1363742
                 implementation(libs.apache.batik.codec)

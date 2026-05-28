@@ -6,42 +6,54 @@ org-jetbrains-kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform"
 org-jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 com-vanniktech-maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktech-publish" }
-com-android-library = { id = "com.android.library", version.ref = "agp" }
+com-android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 com-android-application = { id = "com.android.application", version.ref = "agp" }
 
 [versions]
 
 avif = "0.0.1"
-kotlin = "2.3.0"
-agp ="8.12.3"
+kotlin = "2.3.21"
+agp = "9.2.1"
 
-okio = "3.16.4"
+okio = "3.17.0"
 startup-runtime = "1.2.0"
-vanniktech-publish = "0.35.0"
-compose = "1.10.0"
-coroutines = "1.10.2"
-ktor = "3.3.3"
+vanniktech-publish = "0.36.0"
+compose = "1.11.0"
+coroutines = "1.11.0"
+ktor = "3.5.0"
 cache4k = "0.14.0"
 xmlutil = "0.91.3"
-activity-compose = "1.12.2"
+activity-compose = "1.13.0"
 appcompat = "1.7.1"
-material = "1.13.0"
+material = "1.14.0"
+material3 = "1.9.0"
 androidsvg = "1.4"
 batik = "1.19"
-slf4j = "2.0.17"
-annotation = "1.9.1"
-core-ctx = "1.17.0"
-ui-tooling = "1.10.1"
+slf4j = "2.0.18"
+annotation = "1.10.0"
+core-ctx = "1.18.0"
+ui-tooling = "1.11.2"
 
 [libraries]
 
 avif = { module = "media.kamel:avif", version.ref = "avif" }
+
+compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose" }
+compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "compose" }
+compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "compose" }
+compose-material = { module = "org.jetbrains.compose.material:material", version.ref = "compose" }
+compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose" }
+compose-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "compose" }
+compose-ui-test = { module = "org.jetbrains.compose.ui:ui-test", version.ref = "compose" }
+
+compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "material3" }
+google-android-material = { module = "com.google.android.material:material", version.ref = "material" }
+
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 okio-fakefilesystem = { module = "com.squareup.okio:okio-fakefilesystem", version.ref = "okio" }
 
 cache4k = { module = "io.github.reactivecircus.cache4k:cache4k", version.ref = "cache4k" }
 
-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
@@ -59,7 +71,6 @@ androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "a
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ctx" }
 
-google-android-material = { module = "com.google.android.material:material", version.ref = "material" }
 com-caverok-androidsvg = { module = "com.caverock:androidsvg-aar", version.ref = "androidsvg" }
 apache-batik-transcoder = { module = "org.apache.xmlgraphics:batik-transcoder", version.ref = "batik" }
 apache-batik-codec = { module = "org.apache.xmlgraphics:batik-codec", version.ref = "batik" }
