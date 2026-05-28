@@ -118,6 +118,7 @@ kotlin {
         }
 
         val desktopMain by getting {
+            resources.srcDir("src/commonMain/composeResources")
             dependencies {
                 implementation(projects.kamelDecoder.kamelDecoderSvgBatik)
                 implementation(projects.kamelFetcher.kamelFetcherResourcesJvm)
