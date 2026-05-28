@@ -8,6 +8,7 @@ import io.ktor.http.*
 import io.ktor.utils.io.*
 import kotlinx.browser.window
 import kotlinx.coroutines.await
+import org.w3c.fetch.RequestInit
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
@@ -28,7 +29,7 @@ internal actual val FileUrlFetcher = object : Fetcher<Url> {
         data: Url, resourceConfig: ResourceConfig
     ): Flow<Resource<ByteReadChannel>> = flow {
         val filePath = data.encodedPath
-        val blob = window.fetch(data.encodedPath).await().blob().await()
+        val blob = window.fetch(data.encodedPath, RequestInit()).await().blob().await()
         val file = File(
             org.w3c.files.File(
                 arrayOf(blob), filePath

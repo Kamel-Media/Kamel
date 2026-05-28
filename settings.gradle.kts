@@ -34,7 +34,8 @@ rootProject.name = "Kamel"
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(
-    "kamel-samples",
+    "kamel-samples:shared",
+    "kamel-samples:android-app",
     "kamel-core",
     "kamel-image",
     "kamel-image-default",
