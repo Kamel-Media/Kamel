@@ -45,7 +45,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(libs.compose.foundation)
-                implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.ktor.client.core)
                 implementation(libs.okio)
                 implementation(libs.cache4k)
