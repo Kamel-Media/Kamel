@@ -55,7 +55,6 @@ kotlin {
     fun iosTargets(config: KotlinNativeTarget.() -> Unit) {
         iosArm64(config)
         iosSimulatorArm64(config)
-        iosX64(config)
     }
     iosTargets {
         binaries.framework {
