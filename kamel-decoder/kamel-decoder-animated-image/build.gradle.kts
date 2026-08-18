@@ -18,7 +18,7 @@ kotlin {
         minSdk = 21
     }
     jvm()
-    js(IR) {
+    js {
         useEsModules()
         browser()
     }
@@ -48,15 +48,15 @@ kotlin {
                 implementation(libs.androidx.core.ktx)
             }
         }
-        val nonAndroidCommonMain by creating {
+        create("nonAndroidCommonMain") {
             dependsOn(commonMain.get())
         }
 
-        nativeMain.get().dependsOn(nonAndroidCommonMain)
-        jvmMain.get().dependsOn(nonAndroidCommonMain)
-        jsMain.get().dependsOn(nonAndroidCommonMain)
-        val wasmJsMain by getting {
-            dependsOn(nonAndroidCommonMain)
+        nativeMain.get().dependsOn(get("nonAndroidCommonMain"))
+        jvmMain.get().dependsOn(get("nonAndroidCommonMain"))
+        jsMain.get().dependsOn(get("nonAndroidCommonMain"))
+        wasmJsMain {
+            dependsOn(get("nonAndroidCommonMain"))
         }
     }
 }

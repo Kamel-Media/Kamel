@@ -16,9 +16,10 @@ kotlin {
         namespace = "io.kamel.image.defaults"
         compileSdk = 36
         minSdk = 21
+        withHostTest {}
     }
     jvm()
-    js(IR) {
+    js {
         useEsModules()
         browser()
     }
@@ -33,7 +34,7 @@ kotlin {
 
     sourceSets {
 
-        val commonMain by getting {
+        commonMain {
             dependencies {
                 api(projects.kamelImage)
                 api(projects.kamelDecoder.kamelDecoderSvgStd)
@@ -44,12 +45,12 @@ kotlin {
             }
         }
 
-        val commonJvmMain by creating {
-            dependsOn(commonMain)
+        create("commonJvmMain") {
+            dependsOn(commonMain.get())
         }
 
         jvmMain {
-            dependsOn(commonJvmMain)
+            dependsOn(get("commonJvmMain"))
             dependencies {
                 api(projects.kamelFetcher.kamelFetcherResourcesJvm)
                 implementation(libs.ktor.client.cio)
@@ -58,7 +59,7 @@ kotlin {
 
         androidMain {
             resources.srcDirs("src/commonJvmMain/resources")
-            dependsOn(commonJvmMain)
+            dependsOn(get("commonJvmMain"))
             dependencies {
                 api(projects.kamelFetcher.kamelFetcherResourcesAndroid)
                 api(projects.kamelMapper.kamelMapperResourcesIdAndroid)
@@ -66,26 +67,26 @@ kotlin {
             }
         }
 
-        val nonJvmMain by creating {
-            dependsOn(commonMain)
+        create("nonJvmMain") {
+            dependsOn(commonMain.get())
         }
 
         jsMain {
-            dependsOn(nonJvmMain)
+            dependsOn(get("nonJvmMain"))
             dependencies {
                 implementation(libs.ktor.client.js)
             }
         }
 
-        val wasmJsMain by getting {
-            dependsOn(nonJvmMain)
+        wasmJsMain {
+            dependsOn(get("nonJvmMain"))
             dependencies {
                 implementation(libs.ktor.client.js)
             }
         }
 
         nativeMain {
-            dependsOn(nonJvmMain)
+            dependsOn(get("nonJvmMain"))
         }
 
         appleMain {

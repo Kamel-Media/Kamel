@@ -165,7 +165,7 @@ internal class DiskLruCache(
         }
     }
 
-    private fun initialize() = synchronized(this) {
+    private fun initialize(): Unit = synchronized(this) {
 
         if (initialized) return
 
@@ -449,7 +449,7 @@ internal class DiskLruCache(
         return size
     }
 
-    private fun completeEdit(editor: Editor, success: Boolean) = synchronized(this) {
+    private fun completeEdit(editor: Editor, success: Boolean): Unit = synchronized(this) {
         val entry = editor.entry
         check(entry.currentEditor == editor)
 

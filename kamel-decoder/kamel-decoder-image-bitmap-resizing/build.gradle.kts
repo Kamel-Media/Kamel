@@ -15,6 +15,7 @@ kotlin {
         namespace = "io.kamel.decoder.image.bitmap.resizing"
         compileSdk = 36
         minSdk = 21
+        withHostTest {}
     }
     applyDefaultHierarchyTemplate()
     sourceSets {

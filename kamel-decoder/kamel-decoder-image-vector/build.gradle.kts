@@ -18,7 +18,7 @@ kotlin {
         minSdk = 21
     }
     jvm()
-    js(IR) {
+    js {
         useEsModules()
         browser()
     }
@@ -58,7 +58,7 @@ kotlin {
             dependsOn(nonJvmAndAndroidMain)
         }
 
-        val wasmJsMain by getting {
+        wasmJsMain {
             dependsOn(nonJvmAndAndroidMain)
         }
 

@@ -17,10 +17,10 @@ kotlin {
         namespace = "io.kamel.core.cache"
         compileSdk = 36
         minSdk = 21
-        withHostTestBuilder {}
+        withHostTest {}
     }
     jvm("desktop")
-    js(IR) {
+    js {
         useEsModules()
         browser()
     }
@@ -42,7 +42,7 @@ kotlin {
             }
         }
 
-        val commonMain by getting {
+        commonMain {
             dependencies {
                 implementation(libs.compose.foundation)
                 implementation(libs.ktor.client.core)
@@ -53,7 +53,7 @@ kotlin {
             }
         }
 
-        val commonTest by getting {
+        commonTest {
             dependencies {
                 implementation(kotlin("test"))
                 implementation(libs.ktor.client.mock)
@@ -64,54 +64,46 @@ kotlin {
         }
 
         val commonJvmMain = create("commonJvmMain") {
-            dependsOn(commonMain)
+            dependsOn(commonMain.get())
         }
 
         val commonJvmTest = create("commonJvmTest") {
-            dependsOn(commonTest)
+            dependsOn(getByName("commonTest"))
         }
 
-        val desktopMain by getting {
+        getByName("desktopMain") {
             dependsOn(commonJvmMain)
         }
 
-        val desktopTest by getting {
+        getByName("desktopTest") {
             dependsOn(commonJvmTest)
         }
 
-        val androidMain by getting {
+        androidMain {
             dependsOn(commonJvmMain)
             dependencies {
                 implementation(libs.androidx.startup)
             }
         }
 
-        val androidHostTest by getting {
+        getByName("androidHostTest") {
             dependsOn(commonJvmTest)
         }
 
-        val nonJvmMain by creating {
-            dependsOn(commonMain)
+        create("nonJvmMain") {
+            dependsOn(commonMain.get())
         }
 
-        val nonJvmTest by creating {
-            dependsOn(commonTest)
+        jsMain {
+            dependsOn(get("nonJvmMain"))
         }
 
-        val jsMain by getting {
-            dependsOn(nonJvmMain)
+        wasmJsMain {
+            dependsOn(get("nonJvmMain"))
         }
 
-        val wasmJsMain by getting {
-            dependsOn(nonJvmMain)
-        }
-
-        val appleMain by getting {
-            dependsOn(nonJvmMain)
-        }
-
-        val appleTest by getting {
-            dependsOn(nonJvmTest)
+        appleMain {
+            dependsOn(get("nonJvmMain"))
         }
 
     }

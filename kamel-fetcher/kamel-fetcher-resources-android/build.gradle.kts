@@ -12,10 +12,11 @@ kotlin {
         namespace = "io.kamel.fetcher.resources.android"
         compileSdk = 36
         minSdk = 21
+        withHostTest {}
     }
     applyDefaultHierarchyTemplate()
     sourceSets {
-        val androidMain by getting {
+        androidMain {
             dependencies {
                 implementation(projects.kamelCore)
                 // todo: remove ktor dependency related to https://github.com/Kamel-Media/Kamel/issues/35

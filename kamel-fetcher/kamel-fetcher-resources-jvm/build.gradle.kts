@@ -17,7 +17,7 @@ kotlin {
                 implementation(libs.ktor.client.core)
             }
         }
-        val commonTest by getting {
+        commonTest {
             dependencies {
                 implementation(kotlin("test"))
                 implementation(libs.kotlinx.coroutines.test)

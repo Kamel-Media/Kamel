@@ -24,7 +24,7 @@ kotlin {
         }
     }
     jvm("desktop")
-    js(IR) {
+    js {
         useEsModules()
         browser()
         binaries.executable()
@@ -103,7 +103,7 @@ kotlin {
             }
         }
 
-        val desktopMain by getting {
+        getByName("desktopMain") {
             resources.srcDir("src/commonMain/composeResources")
             dependencies {
                 implementation(projects.kamelDecoder.kamelDecoderSvgBatik)

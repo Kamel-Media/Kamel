@@ -18,7 +18,7 @@ kotlin {
         minSdk = 21
     }
     jvm()
-    js(IR) {
+    js {
         useEsModules()
         browser()
     }
@@ -53,15 +53,15 @@ kotlin {
         }
 
         jsMain {
-            dependsOn(nonJvmMain)
+            dependsOn(get("nonJvmMain"))
         }
 
-        val wasmJsMain by getting {
-            dependsOn(nonJvmMain)
+        wasmJsMain {
+            dependsOn(get("nonJvmMain"))
         }
 
         appleMain {
-            dependsOn(nonJvmMain)
+            dependsOn(get("nonJvmMain"))
         }
     }
 }

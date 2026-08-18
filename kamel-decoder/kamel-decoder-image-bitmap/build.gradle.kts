@@ -18,7 +18,7 @@ kotlin {
         minSdk = 21
     }
     jvm()
-    js(IR) {
+    js {
         useEsModules()
         browser()
     }
@@ -48,24 +48,24 @@ kotlin {
             }
         }
 
-        val nonAndroidMain by creating {
+        create("nonAndroidMain") {
             dependsOn(commonMain.get())
         }
 
         jvmMain {
-            dependsOn(nonAndroidMain)
+            dependsOn(get("nonAndroidMain"))
         }
 
         jsMain {
-            dependsOn(nonAndroidMain)
+            dependsOn(get("nonAndroidMain"))
         }
 
-        val wasmJsMain by getting {
-            dependsOn(nonAndroidMain)
+        wasmJsMain {
+            dependsOn(get("nonAndroidMain"))
         }
 
         appleMain {
-            dependsOn(nonAndroidMain)
+            dependsOn(get("nonAndroidMain"))
         }
     }
 }
